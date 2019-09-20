@@ -1,0 +1,10 @@
+package poly.service.impl;
+
+import org.springframework.stereotype.Service;
+
+@Service("SggService")
+public class SggService implements ISggService{
+
+	
+	
+}

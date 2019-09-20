@@ -1,0 +1,10 @@
+package poly.service;
+
+import poly.dto.TunerDTO;
+import poly.dto.UserDTO;
+
+public interface IUserService {
+
+	int regTuner(UserDTO uDTO, TunerDTO tDTO) throws Exception;
+
+}

@@ -1,0 +1,12 @@
+package poly.persistance.mapper;
+
+import config.Mapper;
+import poly.dto.TunerDTO;
+import poly.dto.UserDTO;
+
+@Mapper("UserMapper")
+public interface UserMapper {
+
+	void regTuner(UserDTO uDTO, TunerDTO tDTO) throws Exception;
+
+}

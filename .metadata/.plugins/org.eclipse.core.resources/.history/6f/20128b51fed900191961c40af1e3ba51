@@ -1,0 +1,8 @@
+package poly.dto;
+
+public class SggDTO {
+	private String SggCode;
+	private String SggName;
+	
+	
+}

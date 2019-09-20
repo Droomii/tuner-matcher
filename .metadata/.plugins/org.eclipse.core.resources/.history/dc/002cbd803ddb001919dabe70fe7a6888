@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.UserMapper">
+	<insert id="regTuner">
+		INSERT ALL
+			INTO USERINFO(
+				USER_SEQ,
+				USER_TYPE,
+				ID,
+				EMAIL,
+				PASSWORD,
+				USER_NAME,
+				USER_SEX,
+				USER_NICK,
+				USER_TEL,
+				REGDATE,
+				UPDDATE,
+				UPDATER_SEQ
+			) VALUES(
+				USER_SEQ.NEXTVAL,
+				1,
+				#{u.id},
+				#{u.email},
+				#{u.password},
+				#{u.user_name},
+				#{u.user_sex},
+				#{u.user_nick},
+				#{u.user_tel},
+				SYSDATE,
+				SYSDATE,
+				USER_SEQ.CURRVAL
+			)
+		
+			INTO TUNER(
+				TUNER_SEQ,
+				ID_PHOTO_DIR,
+				CERT_DIR,
+				TUNER_COMMENT,
+				TUNER_LEVEL,
+				TUNER_EXP,
+				ADDR,
+				DETAIL_ADDR,
+				SGG_CODE,
+				AFFILIATION
+			)
+			VALUES(
+				USER_SEQ.CURRVAL,
+				#{t.id_photo_dir},
+				#{t.cert_dir},
+				#{t.tuner_comment},
+				#{t.tuner_level},
+				#{t.tuner_exp},
+				#{t.addr},
+				#{t.detail_addr},
+				#{t.sgg_code},
+				#{t.affiliation}
+			)
+	</insert>
+</mapper>

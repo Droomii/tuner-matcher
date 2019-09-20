@@ -1,0 +1,43 @@
+package poly.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import poly.dto.SggDTO;
+import poly.service.IUserService;
+import poly.service.impl.SggService;
+
+@Controller
+public class UserController {
+	
+	private Logger log = Logger.getLogger(this.getClass());
+	
+	@Resource(name="UserService")
+	private IUserService userService;
+	
+	@Resource(name="SggService")
+	private SggService sggService;
+	
+	@RequestMapping(value="user/Register")
+	public String Register() {
+		log.info(this.getClass());
+		
+		return "/user/Register";
+	}
+	
+	@RequestMapping(value="user/TunerRegister")
+	public String TunerRegister() {
+		log.info(this.getClass());
+		
+		List<SggDTO> sDTO = new ArrayList<>();
+		
+		return "/user/TunerRegister";
+	}
+	
+}

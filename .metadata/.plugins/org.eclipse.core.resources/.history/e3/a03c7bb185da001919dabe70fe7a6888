@@ -1,0 +1,18 @@
+<%@page import="poly.dto.SggDTO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%
+
+	List<SggDTO> sggList = (List<SggDTO>)request.getAttribute("sggList");
+
+%>
+	<%if(sggList.size()!=0){ %>
+	<label class="checkbox-inline col-xs-4 col-md-3"><input type="checkbox">전체</label>
+	    <%for(SggDTO sDTO : sggList){  %>
+	    
+	    <label class="checkbox-inline col-xs-4 col-md-3"><input type="checkbox" value=<%=sDTO.getSggCode()%>><%=sDTO.getSggName()%></label>
+	    
+	    <%}
+	}%>

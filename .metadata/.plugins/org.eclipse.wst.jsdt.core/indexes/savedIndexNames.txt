@@ -1,0 +1,17 @@
+INDEX VERSION 1.4+D:\piano_prj\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3132803195.index
+2694248779.index
+4008906567.index
+248087062.index
+3348958590.index
+1978975630.index
+2868899255.index
+3209647614.index
+313059545.index
+652699554.index
+209311118.index
+412371202.index
+2143187627.index
+3450869586.index
+2736274800.index
+408785995.index

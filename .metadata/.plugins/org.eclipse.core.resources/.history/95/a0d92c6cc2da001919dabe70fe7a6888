@@ -1,0 +1,16 @@
+package poly.dto;
+
+public class UserDTO {
+	String user_seq; 
+	String user_type;
+	String id;
+	String email;
+	String password;
+	String user_name;
+	String user_sex;
+	String user_nick;
+	String user_tel;
+	String regdate;
+	String upddate;
+	String updater_seq;
+}

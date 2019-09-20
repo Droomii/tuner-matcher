@@ -16,6 +16,49 @@ public class TunerDTO {
 	String detail_addr;
 	String sgg_code;
 	String affiliation;
+	String x_pos;
+	String y_pos;
+	String sido_name;
+	String sgg_name;
+	String emd_name;
+	String li_name;
+	
+	public String getSido_name() {
+		return sido_name;
+	}
+	public void setSido_name(String sido_name) {
+		this.sido_name = sido_name;
+	}
+	public String getSgg_name() {
+		return sgg_name;
+	}
+	public void setSgg_name(String sgg_name) {
+		this.sgg_name = sgg_name;
+	}
+	public String getEmd_name() {
+		return emd_name;
+	}
+	public void setEmd_name(String emd_name) {
+		this.emd_name = emd_name;
+	}
+	public String getLi_name() {
+		return li_name;
+	}
+	public void setLi_name(String li_name) {
+		this.li_name = li_name;
+	}
+	public String getX_pos() {
+		return x_pos;
+	}
+	public void setX_pos(String x_pos) {
+		this.x_pos = x_pos;
+	}
+	public String getY_pos() {
+		return y_pos;
+	}
+	public void setY_pos(String y_pos) {
+		this.y_pos = y_pos;
+	}
 	public String getTuner_seq() {
 		return tuner_seq;
 	}

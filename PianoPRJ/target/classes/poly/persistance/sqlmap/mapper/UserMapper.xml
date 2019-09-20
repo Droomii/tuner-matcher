@@ -40,9 +40,14 @@
 				TUNER_LEVEL,
 				TUNER_EXP,
 				ADDR,
-				DETAIL_ADDR,
 				SGG_CODE,
-				AFFILIATION
+				AFFILIATION,
+				X_POS,
+				Y_POS,
+				SIDO_NAME,
+				SGG_NAME,
+				EMD_NAME,
+				LI_NAME
 			)
 			VALUES(
 				USER_SEQ.CURRVAL,
@@ -52,9 +57,14 @@
 				#{t.tuner_level},
 				#{t.tuner_exp},
 				#{t.addr},
-				#{t.detail_addr},
 				#{t.sgg_code},
-				#{t.affiliation}
+				#{t.affiliation},
+				#{t.x_pos},
+				#{t.y_pos},
+				#{t.sido_name},
+				#{t.sgg_name},
+				#{t.emd_name},
+				#{t.li_name}
 			)
 		SELECT * FROM DUAL
 	</insert>

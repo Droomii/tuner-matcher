@@ -1,5 +1,5 @@
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=euc-kr"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="UTF-8"%>
 <%@ page import="poly.dto.SggDTO" %>
 
@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=euc-kr">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
@@ -50,24 +50,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/assets/css/style.css">
     <!-- END Custom CSS-->
     
-    <!-- addrInput popup -->
-    <script language="javascript">
-		function goPopup(){
-			// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrCoordUrl.do)를 호출하게 됩니다.
-		    var pop = window.open("/addr/AddrPopup.do","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-		}
-		function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
-								, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno
-								, emdNo, entX, entY){
-			// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-			document.form.roadAddrPart1.value = roadAddrPart1;
-			document.form.roadAddrPart2.value = roadAddrPart2;
-			document.form.addrDetail.value = addrDetail;
-			document.form.zipNo.value = zipNo;
-			document.form.entX.value = entX;
-			document.form.entY.value = entY;
-		}
-	</script>
+   
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -86,7 +69,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form class="form" action="/user/TunerRegProc.do" method="post">
+						<form name="form" class="form" action="/user/TunerRegProc.do" method="post">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -214,7 +197,15 @@
 									
 										<div class="form-group">
 											
-											<input type="text" id="user_name" class="form-control" placeholder="이름을 입력해주세요" name="user_name">
+											<input type="text" class="form-control" placeholder="주소를 검색해주세요" readonly name="addr" id="addr">
+											<input type="text" name="sido_name" id="sido_name" hidden="hidden">
+											<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
+											<input type="text" name="emd_name" id="emd_name" hidden="hidden">
+											<input type="text" name="li_name" id="li_name" hidden="hidden">
+
+											<input type="text" name="x_pos" id="x_pos" hidden="hidden">
+											<input type="text" name="y_pos" id="y_pos" hidden="hidden">
+											
 										</div>
 									</div>
 									<div class="col-xs-2">
@@ -222,6 +213,7 @@
 											<button type="button" class="btn btn-primary float-xs-right" onclick="goPopup();">주소검색</button>
 										</div>
 									</div>
+
 								</div>
 							<div id="svc-area-group">
 								<div class="form-group svc-area" style="margin-bottom:0">
@@ -342,5 +334,25 @@
    		}
    	}
     </script>
+    
+     <!-- addrInput popup -->
+    <script language="javascript">
+		function goPopup(){
+			// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrCoordUrl.do)를 호출하게 됩니다.
+		    var pop = window.open("/addr/AddrPopup.do","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
+		}
+		function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
+								, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno
+								, emdNo, entX, entY){
+			// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
+			document.form.addr.value = roadFullAddr.replace("& #40;", "(").replace("& #41;", ")");
+			document.form.sido_name.value = siNm;
+			document.form.sgg_name.value = sggNm;
+			document.form.emd_name.value = emdNm;
+			document.form.li_name.value = liNm;
+			document.form.x_pos.value = entX;
+			document.form.y_pos.value = entY;
+		}
+	</script>
   </body>
 </html>

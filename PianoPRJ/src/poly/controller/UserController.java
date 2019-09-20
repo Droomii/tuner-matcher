@@ -109,41 +109,22 @@ public class UserController {
 		tDTO.setSgg_code(uniqueSgg);
 		
 		// 더미
-		tDTO.setAddr("dummy");
 		tDTO.setId_photo_dir("dummy");
 		tDTO.setCert_dir("dummy");
-		tDTO.setDetail_addr("dummy");
 		int result;
 		
 		
-//		log.info("-------userDTO--------");
-//		log.info(uDTO.getEmail());
-//		log.info(uDTO.getId());
-//		log.info(uDTO.getPassword());
-//		log.info(uDTO.getRegdate());
-//		log.info(uDTO.getUpdater_seq());
-//		log.info(uDTO.getUpddate());
-//		log.info(uDTO.getUser_name());
-//		log.info(uDTO.getUser_nick());
-//		log.info(uDTO.getUser_seq());
-//		log.info(uDTO.getUser_sex());
-//		log.info(uDTO.getUser_tel());
-//		log.info(uDTO.getUser_type());
-//		log.info("-------tunerDTO--------");
-//		log.info(tDTO.getAddr());
-//		log.info(tDTO.getAffiliation());
-//		log.info(tDTO.getCert_dir());
-//		log.info(tDTO.getDeals_num());
-//		log.info(tDTO.getDetail_addr());
-//		log.info(tDTO.getFollower_num());
-//		log.info(tDTO.getId_photo_dir());
-//		log.info(tDTO.getReject_reason());
-//		log.info(tDTO.getSgg_code());
-//		log.info(tDTO.getTuner_comment());
-//		log.info(tDTO.getTuner_exp());
-//		log.info(tDTO.getTuner_level());
-//		log.info(tDTO.getTuner_seq());
-//		log.info(tDTO.getUser_state());
+
+		log.info("-------tunerDTO--------");
+		log.info("addr : " + tDTO.getAddr());
+		log.info("affiliation : " + tDTO.getAffiliation());
+		log.info("sgg_code : " + tDTO.getSgg_code());
+		log.info("x : " + tDTO.getX_pos());
+		log.info("y : " + tDTO.getY_pos());
+		log.info("sido : " + tDTO.getSido_name());
+		log.info("sgg : " + tDTO.getSgg_name());
+		log.info("li : " + tDTO.getLi_name());
+
 		log.info(uniqueSgg);
 		
 		result = userService.regTuner(uDTO, tDTO);

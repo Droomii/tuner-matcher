@@ -191,13 +191,13 @@
 							</div>
 							<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
 							<label for="user_name">근무지 주소</label>
-							<div class="row">
+							<div class="row" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다.">
 							
 									<div class="col-xs-10">
 									
 										<div class="form-group">
 											
-											<input type="text" class="form-control" placeholder="주소를 검색해주세요" readonly name="addr" id="addr">
+											<input type="text" class="form-control" placeholder="주소를 검색해주세요" readonly name="addr" id="addr" onclick="goPopup();" >
 											<input type="text" name="sido_name" id="sido_name" hidden="hidden">
 											<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
 											<input type="text" name="emd_name" id="emd_name" hidden="hidden">
@@ -209,14 +209,14 @@
 										</div>
 									</div>
 									<div class="col-xs-2">
-										<div class="form-group">
-											<button type="button" class="btn btn-primary float-xs-right" onclick="goPopup();">주소검색</button>
+										<div class="form-group" >
+											<button type="button" class="btn btn-primary float-xs-right" onclick="goPopup();" >주소검색</button>
 										</div>
 									</div>
 
 								</div>
-							<div id="svc-area-group">
-								<div class="form-group svc-area" style="margin-bottom:0">
+							<div id="svc-area-group" data-toggle="tooltip" data-placement="top" data-original-title="선택한 활동지역의 조율 요청을 조회할 수 있습니다.">
+								<div class="form-group svc-area" style="margin-bottom:0" >
 									<label>활동지역을 선택해주세요</label>
 									<select class="form-control" onchange="getDetailSgg(this);">
 										<option value="00">전국</option>
@@ -225,7 +225,6 @@
 										<%}%>	
 									</select>
 									<div class="detail-checkboxes row" style="margin-top:1em">
-										<div class="col-xs-4">세부지역 없음</div>
 										<input type="checkbox" name="sgg_code" class="sgg-detail" value="00" checked hidden="hidden">
 									</div>
 									<div class="text-xs-right">
@@ -237,7 +236,7 @@
 								</div>
 							</div>
 							<div class="form-actions text-xs-right">
-							<button type="button" class="btn btn-primary btn-sm" onclick="addArea();">
+							<button type="button" class="btn btn-primary btn-sm" onclick="addArea();" data-toggle="tooltip" data-placement="top" data-original-title="다른 지역을 추가로 선택할 수 있습니다.">
 									<i class="icon-check2 d-flex"></i> 지역 추가
 								</button>
 								</div>

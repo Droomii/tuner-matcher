@@ -1,9 +1,0 @@
-package poly.service.impl;
-
-import org.springframework.stereotype.Service;
-
-@Service("UserSevice")
-public interface UserService {
-
-	@Resource(name="UserMapper")
-}

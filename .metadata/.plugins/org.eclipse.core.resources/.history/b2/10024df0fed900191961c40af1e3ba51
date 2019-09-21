@@ -1,5 +1,0 @@
-package poly.service.impl;
-
-public interface ISggService {
-
-}

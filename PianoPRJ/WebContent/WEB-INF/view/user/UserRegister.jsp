@@ -19,7 +19,7 @@
     <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>조율사 회원가입 - 도와조율</title>
+    <title>일반 사용자 회원가입 - 도와조율</title>
     <link rel="apple-touch-icon" sizes="60x60" href="/resources/app-assets/images/ico/apple-icon-60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/resources/app-assets/images/ico/apple-icon-76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/resources/app-assets/images/ico/apple-icon-120.png">
@@ -49,11 +49,7 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="/resources/assets/css/style.css">
     <!-- END Custom CSS-->
-    <style>
-    	.has-error, .has-danger{
-    		color:crimson;
-    		}
-    </style>
+    
    
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
@@ -73,69 +69,54 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post">
+						<form name="form" class="form" action="/user/TunerRegProc.do" method="post">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group has-feedback">
-											<label for="user_name" class="control-label">이름</label>
-											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="15" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>										
+										<div class="form-group">
+											<label for="user_name">이름</label>
+											<input type="text" id="user_name" class="form-control" placeholder="이름을 입력해주세요" name="user_name">
 										</div>
-										
 									</div>
 									<div class="col-md-12">
-										<div class="form-group has-feedback">
+										<div class="form-group">
 											<label for="id">아이디</label>
-											<input type="text" id="id" class="form-control" maxlength="20" placeholder="아이디를 입력해주세요" name="id" data-remote="/user/CheckID.do">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="text" id="id" class="form-control" placeholder="아이디를 입력해주세요" name="id">
 										</div>
 									</div>
 									<div class="col-md-12">
-										<div class="form-group has-feedback">
+										<div class="form-group">
 											<label for="user_nick">닉네임</label>
-											<input type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="text" id="projectinput2" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick">
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group has-feedback">
+										<div class="form-group">
 											<label for="email">이메일</label>
-											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/CheckEmail.do" required data-error="유효한 이메일 주소가 아닙니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email">
 										</div>
 									</div>
-									<div class="col-md-12 has-feedback">
+									<div class="col-md-12">
 										<div class="form-group">
 											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" pattern="^[0-8]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required data-pattern-error="유효한 전화번호가 아닙니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel">
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12 has-feedback">
+									<div class="col-md-12">
 										<div class="form-group">
 											<label for="password">암호</label>
-											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password" required data-error="필수 입력사항입니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
 										</div>
 									</div>
 									<div class="col-md-12">
-										<div class="form-group has-feedback">
+										<div class="form-group">
 											<label for="verify_passwd">암호 확인</label>
-											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-match-error="암호가 일치하지 않습니다" required>
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
+											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -157,112 +138,6 @@
 										
 									</div>
 								</div>
-
-								<!--조율사 경력 정보-->
-								<h4 class="form-section"><i class="icon-clipboard4"></i> 조율사 정보</h4>
-
-										<div class="form-group">
-											<label>자격증 등급</label>
-											<div class="input-group">
-												<label class="display-inline-block custom-control custom-radio ml-1">
-													<input type="radio" name="tuner_level" value="0" checked="checked" class="custom-control-input">
-													<span class="custom-control-indicator"></span>
-													<span class="custom-control-description ml-0">기능사</span>
-												</label>
-												<label class="display-inline-block custom-control custom-radio">
-													<input type="radio" name="tuner_level" value="1" class="custom-control-input">
-													<span class="custom-control-indicator"></span>
-													<span class="custom-control-description ml-0">산업기사</span>
-												</label>
-											</div>
-										</div>
-										
-										<div class="form-group">
-											<label>자격증 사진</label>
-											<label id="projectinput7" class="file center-block">
-												<input type="file" id="file">
-												<span class="file-custom"></span>
-											</label>
-										</div>
-										
-										<div class="form-group">
-											<label>프로필 사진</label>
-											<label id="projectinput7" class="file center-block">
-												<input type="file" id="file">
-												<span class="file-custom"></span>
-											</label>
-										</div>
-
-										<div class="form-group has-feedback">
-											<label for="sosok">소속</label>
-											<input type="text" id="sosok" name="affiliation" class="form-control" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
-										</div>
-
-								<div class="form-group">
-									<label for="donationinput7">한줄 소개</label>
-									<textarea id="donationinput7" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"></textarea>
-								</div>
-								
-								<div class="form-group">
-									<label for="donationinput8">이력</label>
-									<textarea id="donationinput8" rows="10" class="form-control square" name="tuner_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
-								</div>
-							</div>
-							<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
-							<label for="user_name">근무지 주소</label>
-							<div class="row" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다.">
-							
-									<div class="col-xs-10">
-									
-										<div class="form-group has-feedback">
-											
-											<input type="text" class="form-control" placeholder="주소를 검색해주세요" readonly name="addr" id="addr" onclick="goPopup();" required data-error="필수 입력사항입니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
-											<input type="text" name="sido_name" id="sido_name" hidden="hidden">
-											<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
-											<input type="text" name="emd_name" id="emd_name" hidden="hidden">
-											<input type="text" name="li_name" id="li_name" hidden="hidden">
-
-											<input type="text" name="x_pos" id="x_pos" hidden="hidden">
-											<input type="text" name="y_pos" id="y_pos" hidden="hidden">
-											
-										</div>
-									</div>
-									<div class="col-xs-2">
-										<div class="form-group" >
-											<button type="button" class="btn btn-primary float-xs-right" onclick="goPopup();" >주소검색</button>
-										</div>
-									</div>
-
-								</div>
-							<div id="svc-area-group" data-toggle="tooltip" data-placement="top" data-original-title="선택한 활동지역의 조율 요청을 조회할 수 있습니다.">
-								<div class="form-group svc-area" style="margin-bottom:0" >
-									<label>활동지역을 선택해주세요</label>
-									<select class="form-control" onchange="getDetailSgg(this);">
-										<option value="00">전국</option>
-										<% for(SggDTO sDTO : sList){ %>
-										<option value=<%=sDTO.getSggCode()%>><%=sDTO.getSggName() %></option>
-										<%}%>	
-									</select>
-									<div class="detail-checkboxes row" style="margin-top:1em">
-										<input type="checkbox" name="sgg_code" class="sgg-detail" value="00" checked hidden="hidden">
-									</div>
-									<div class="text-xs-right">
-										<button type="button" class="btn btn-danger btn-sm" onclick="delArea(this);">
-											<i class="icon-cross2"></i> 지역 삭제
-										</button>
-									</div>
-	
-								</div>
-							</div>
-							<div class="form-actions text-xs-right">
-							<button type="button" class="btn btn-primary btn-sm" onclick="addArea();" data-toggle="tooltip" data-placement="top" data-original-title="다른 지역을 추가로 선택할 수 있습니다.">
-									<i class="icon-check2 d-flex"></i> 지역 추가
-								</button>
-								</div>
 							<div class="form-actions text-center">
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 가입신청
@@ -283,9 +158,6 @@
     </div>
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
-
-
-
     <!-- BEGIN VENDOR JS-->
     <script src="/resources/app-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="/resources/app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
@@ -305,9 +177,6 @@
     <!-- END ROBUST JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->
-    
-    <!-- FORM VALIDATOR JS -->
-	<script src="/resources/js/validator.js" type="text/javascript"></script>
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	

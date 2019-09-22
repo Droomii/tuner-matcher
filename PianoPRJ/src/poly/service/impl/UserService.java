@@ -20,6 +20,16 @@ public class UserService implements IUserService {
 		
 		return userMapper.regTuner(u, t);
 	}
+
+	@Override
+	public UserDTO checkID(String id) throws Exception {
+		return userMapper.checkID(id);
+	}
+
+	@Override
+	public UserDTO checkEmail(String email) throws Exception {
+		return userMapper.checkEmail(email);
+	}
 	
 	
 }

@@ -68,4 +68,10 @@
 			)
 		SELECT * FROM DUAL
 	</insert>
+	<select id="checkID" parameterType="String" resultType="UserDTO">
+	SELECT DISTINCT(ID) FROM USERINFO WHERE ID = #{value}
+	</select>
+	<select id="checkEmail" parameterType="String" resultType="UserDTO">
+	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{value}
+	</select>
 </mapper>

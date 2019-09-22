@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
@@ -64,6 +66,15 @@ public class UserController {
 		return "/user/TunerRegister";
 	}
 
+	@RequestMapping(value="user/UserRegister")
+	public String UserRegister(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+			throws Exception {
+		log.info(this.getClass());
+		
+		return "/user/UserRegister";
+	}
+
+	
 	@RequestMapping(value = "user/TunerRegProc")
 	public String TunerRegProc(HttpServletRequest request, HttpServletResponse response, ModelMap model, @ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO)
 			throws Exception {
@@ -130,12 +141,43 @@ public class UserController {
 		result = userService.regTuner(uDTO, tDTO);
 		
 		log.info(this.getClass());
-		
 
-		
-		
 		return null;
 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="user/CheckID.do")
+	public int idCheck(HttpServletRequest request) throws Exception {
+		log.info("idCheck");
+
+		String id = request.getParameter("id");
+		log.info(id);
+		UserDTO uDTO = userService.checkID(id);
+
+		int result = 0;
+
+		if (uDTO != null) {
+			result = 1;
+		}
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="user/CheckEmail.do")
+	public int emailCheck(HttpServletRequest request) throws Exception {
+		log.info("emailCheck");
+
+		String email = request.getParameter("email");
+		log.info(email);
+		UserDTO uDTO = userService.checkEmail(email);
+
+		int result = 0;
+
+		if (uDTO != null) {
+			result = 1;
+		}
+		return result;
 	}
 
 }

@@ -10,4 +10,8 @@ import poly.dto.UserDTO;
 public interface UserMapper {
 
 	int regTuner(@Param("u") UserDTO u, @Param("t") TunerDTO t) throws Exception;
+
+	UserDTO checkID(String id) throws Exception;
+
+	UserDTO checkEmail(String email) throws Exception;
 }

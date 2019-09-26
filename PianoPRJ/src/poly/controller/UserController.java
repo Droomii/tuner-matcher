@@ -147,37 +147,32 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="user/CheckID.do")
-	public int idCheck(HttpServletRequest request) throws Exception {
-		log.info("idCheck");
+	@RequestMapping(value="user/DupCheck.do")
+	public String DupCheck(HttpServletRequest request) throws Exception {
+		log.info("DupCheck");
 
 		String id = request.getParameter("id");
-		log.info(id);
-		UserDTO uDTO = userService.checkID(id);
-
-		int result = 0;
-
-		if (uDTO != null) {
-			result = 1;
-		}
-		return result;
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="user/CheckEmail.do")
-	public int emailCheck(HttpServletRequest request) throws Exception {
-		log.info("emailCheck");
-
 		String email = request.getParameter("email");
-		log.info(email);
-		UserDTO uDTO = userService.checkEmail(email);
-
+	
+		
+		log.info("id : " + id);
+		log.info("email : " + email);
+		
 		int result = 0;
-
+		
+		UserDTO uDTO = null;
+		
+		//아이디 중복확인인지 이메일 중복확인인지 체크
+		if(id!=null) {
+			uDTO = userService.checkID(id);
+		} else {
+			uDTO = userService.checkEmail(email);
+		}
+		
 		if (uDTO != null) {
 			result = 1;
 		}
-		return result;
+		return Integer.toString(result);
 	}
 
 }

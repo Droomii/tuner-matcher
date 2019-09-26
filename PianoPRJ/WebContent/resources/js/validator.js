@@ -194,9 +194,19 @@
     if (!errors.length && getValue($el) && $el.attr('data-remote')) {
       this.defer($el, function () {
         var data = {}
-        data[$el.attr('name')] = getValue($el)
+        var key= $el.attr('name')
+        var keyname = (key=='id') ? "아이디" : "이메일";
+        data[key] = getValue($el)
         $.get($el.attr('data-remote'), data)
-          .fail(function (jqXHR, textStatus, error) { errors.push(getErrorMessage('remote') || error) })
+          .done(function(data, textStatus, jqXHR){
+        	  if(data=="1"){
+        		  console.log('data==1')
+        		  errors.push("이미 사용중인 " + keyname + "입니다");
+        	  }
+          })
+          .fail(function (jqXHR, textStatus, error) {
+        	 errors.push(getErrorMessage('remote') || error) 
+        })
           .always(function () { deferred.resolve(errors)})
       })
     } else deferred.resolve(errors)
@@ -233,6 +243,7 @@
     var $group = $el.closest('.form-group')
     var $block = $group.find('.help-block.with-errors')
     var $feedback = $group.find('.form-control-feedback')
+     var $successmsg = $group.find('.success-msg')
 
     if (!errors.length) return
 
@@ -248,11 +259,13 @@
       && $feedback.removeClass(this.options.feedback.success)
       && $feedback.addClass(this.options.feedback.error)
       && $group.removeClass('has-success')
+      && $successmsg.css('display', 'none')
   }
 
   Validator.prototype.clearErrors = function ($el) {
     var $group = $el.closest('.form-group')
     var $block = $group.find('.help-block.with-errors')
+    var $successmsg = $group.find('.success-msg')
     var $feedback = $group.find('.form-control-feedback')
 
     $block.html($block.data('bs.validator.originalContent'))
@@ -264,6 +277,7 @@
       && getValue($el)
       && $feedback.addClass(this.options.feedback.success)
       && $group.addClass('has-success')
+      && $successmsg.css('display', 'inline')
   }
 
   Validator.prototype.hasErrors = function () {

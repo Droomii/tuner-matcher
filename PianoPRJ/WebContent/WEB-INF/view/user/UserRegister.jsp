@@ -19,7 +19,7 @@
     <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="PIXINVENT">
-    <title>일반 사용자 회원가입 - 도와조율</title>
+    <title>조율사 회원가입 - 도와조율</title>
     <link rel="apple-touch-icon" sizes="60x60" href="/resources/app-assets/images/ico/apple-icon-60.png">
     <link rel="apple-touch-icon" sizes="76x76" href="/resources/app-assets/images/ico/apple-icon-76.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/resources/app-assets/images/ico/apple-icon-120.png">
@@ -49,7 +49,16 @@
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="/resources/assets/css/style.css">
     <!-- END Custom CSS-->
-    
+    <style>
+    	.has-error, .has-danger{
+    		color:crimson;
+    		}
+    	.success-msg{
+    		color:#3c763d;
+    		display:none;
+    		line-height:1.8;
+    	}
+    </style>
    
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
@@ -69,54 +78,71 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form name="form" class="form" action="/user/TunerRegProc.do" method="post">
+						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group">
-											<label for="user_name">이름</label>
-											<input type="text" id="user_name" class="form-control" placeholder="이름을 입력해주세요" name="user_name">
+										<div class="form-group has-feedback">
+											<label for="user_name" class="control-label">이름</label>
+											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="15" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>										
 										</div>
+										
 									</div>
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="id">아이디</label>
-											<input type="text" id="id" class="form-control" placeholder="아이디를 입력해주세요" name="id">
+											<input type="text" pattern="^[_A-z0-9]{4,}$" id="id" class="form-control" maxlength="20" placeholder="아이디를 입력해주세요" name="id" data-pattern-error="대소문자 영문 및 언더바(_)만 사용 가능합니다(4글자 이상)" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 아이디입니다" required>
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="success-msg">사용 가능한 아이디입니다.</div>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임</label>
-											<input type="text" id="projectinput2" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick">
+											<input type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="email">이메일</label>
-											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email">
+											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="success-msg">사용 가능한 이메일입니다.</div>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel">
+											<input type="text" id="user_tel" pattern="^[0-9]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required data-pattern-error="유효한 전화번호가 아닙니다">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="password">암호</label>
-											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
+											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password" required data-error="필수 입력사항입니다">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 									<div class="col-md-12">
-										<div class="form-group">
+										<div class="form-group has-feedback">
 											<label for="verify_passwd">암호 확인</label>
-											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요">
+											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-match-error="암호가 일치하지 않습니다" required>
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -138,6 +164,7 @@
 										
 									</div>
 								</div>
+								</div>
 							<div class="form-actions text-center">
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 가입신청
@@ -158,6 +185,9 @@
     </div>
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
+
+
+
     <!-- BEGIN VENDOR JS-->
     <script src="/resources/app-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="/resources/app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
@@ -177,6 +207,9 @@
     <!-- END ROBUST JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->
+    
+    <!-- FORM VALIDATOR JS -->
+	<script src="/resources/js/validator.js" type="text/javascript"></script>
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
@@ -249,6 +282,7 @@
 			document.form.li_name.value = liNm;
 			document.form.x_pos.value = entX;
 			document.form.y_pos.value = entY;
+			$('#addr').attr("readonly", "readonly");
 		}
 	</script>
   </body>

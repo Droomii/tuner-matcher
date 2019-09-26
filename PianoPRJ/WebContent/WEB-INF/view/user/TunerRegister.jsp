@@ -53,6 +53,11 @@
     	.has-error, .has-danger{
     		color:crimson;
     		}
+    	.success-msg{
+    		color:#3c763d;
+    		display:none;
+    		line-height:1.8;
+    	}
     </style>
    
   </head>
@@ -73,13 +78,14 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post">
+						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
+								<div class="col-xs-12 red" style="margin-bottom:1em">*표시된 항목은 필수 입력사항입니다.</div>
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="user_name" class="control-label">이름</label>
+											<label for="user_name" class="control-label">이름<span class="red">*</span></label>
 											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="15" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>										
@@ -88,15 +94,16 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="id">아이디</label>
-											<input type="text" id="id" class="form-control" maxlength="20" placeholder="아이디를 입력해주세요" name="id" data-remote="/user/CheckID.do">
+											<label for="id">아이디<span class="red">*</span></label>
+											<input type="text" pattern="^[_A-z0-9]{4,}$" id="id" class="form-control" maxlength="20" placeholder="아이디를 입력해주세요" name="id" data-pattern-error="대소문자 영문 및 언더바(_)만 사용 가능합니다(4글자 이상)" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 아이디입니다" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="success-msg">사용 가능한 아이디입니다.</div>
 											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="user_nick">닉네임</label>
+											<label for="user_nick">닉네임<span class="red">*</span></label>
 											<input type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
@@ -106,25 +113,26 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="email">이메일</label>
-											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/CheckEmail.do" required data-error="유효한 이메일 주소가 아닙니다">
+											<label for="email">이메일<span class="red">*</span></label>
+											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
 										</div>
 									</div>
-									<div class="col-md-12 has-feedback">
-										<div class="form-group">
-											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" pattern="^[0-8]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required data-pattern-error="유효한 전화번호가 아닙니다">
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="user_tel">전화번호<span class="red">*</span></label>
+											<input type="text" id="user_tel" pattern="^[0-9]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required data-pattern-error="유효한 전화번호가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-12 has-feedback">
-										<div class="form-group">
-											<label for="password">암호</label>
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="password">암호<span class="red">*</span></label>
 											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password" required data-error="필수 입력사항입니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
@@ -132,7 +140,7 @@
 									</div>
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="verify_passwd">암호 확인</label>
+											<label for="verify_passwd">암호 확인<span class="red">*</span></label>
 											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-match-error="암호가 일치하지 않습니다" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
@@ -161,44 +169,44 @@
 								<!--조율사 경력 정보-->
 								<h4 class="form-section"><i class="icon-clipboard4"></i> 조율사 정보</h4>
 
-										<div class="form-group">
-											<label>자격증 등급</label>
-											<div class="input-group">
-												<label class="display-inline-block custom-control custom-radio ml-1">
-													<input type="radio" name="tuner_level" value="0" checked="checked" class="custom-control-input">
-													<span class="custom-control-indicator"></span>
-													<span class="custom-control-description ml-0">기능사</span>
-												</label>
-												<label class="display-inline-block custom-control custom-radio">
-													<input type="radio" name="tuner_level" value="1" class="custom-control-input">
-													<span class="custom-control-indicator"></span>
-													<span class="custom-control-description ml-0">산업기사</span>
-												</label>
-											</div>
-										</div>
-										
-										<div class="form-group">
-											<label>자격증 사진</label>
-											<label id="projectinput7" class="file center-block">
-												<input type="file" id="file">
-												<span class="file-custom"></span>
-											</label>
-										</div>
-										
-										<div class="form-group">
-											<label>프로필 사진</label>
-											<label id="projectinput7" class="file center-block">
-												<input type="file" id="file">
-												<span class="file-custom"></span>
-											</label>
-										</div>
+								<div class="form-group">
+									<label>자격증 등급</label>
+									<div class="input-group">
+										<label class="display-inline-block custom-control custom-radio ml-1">
+											<input type="radio" name="tuner_level" value="0" checked="checked" class="custom-control-input">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description ml-0">기능사</span>
+										</label>
+										<label class="display-inline-block custom-control custom-radio">
+											<input type="radio" name="tuner_level" value="1" class="custom-control-input">
+											<span class="custom-control-indicator"></span>
+											<span class="custom-control-description ml-0">산업기사</span>
+										</label>
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label>자격증 사진<span class="red">*</span></label>
+									<label id="projectinput7" class="file center-block">
+										<input type="file" id="file">
+										<span class="file-custom"></span>
+									</label>
+								</div>
+								
+								<div class="form-group">
+									<label>프로필 사진<span class="red">*</span></label>
+									<label id="projectinput7" class="file center-block">
+										<input type="file" id="file">
+										<span class="file-custom"></span>
+									</label>
+								</div>
 
-										<div class="form-group has-feedback">
-											<label for="sosok">소속</label>
-											<input type="text" id="sosok" name="affiliation" class="form-control" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
-										</div>
+								<div class="form-group has-feedback">
+									<label for="sosok">소속<span class="red">*</span></label>
+									<input type="text" id="sosok" name="affiliation" class="form-control" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
+								</div>
 
 								<div class="form-group">
 									<label for="donationinput7">한줄 소개</label>
@@ -209,55 +217,46 @@
 									<label for="donationinput8">이력</label>
 									<textarea id="donationinput8" rows="10" class="form-control square" name="tuner_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
 								</div>
-							</div>
-							<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
-							<label for="user_name">근무지 주소</label>
-							<div class="row" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다.">
 							
-									<div class="col-xs-10">
-									
-										<div class="form-group has-feedback">
-											
-											<input type="text" class="form-control" placeholder="주소를 검색해주세요" readonly name="addr" id="addr" onclick="goPopup();" required data-error="필수 입력사항입니다">
-											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-											<div class="help-block with-errors"></div>
-											<input type="text" name="sido_name" id="sido_name" hidden="hidden">
-											<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
-											<input type="text" name="emd_name" id="emd_name" hidden="hidden">
-											<input type="text" name="li_name" id="li_name" hidden="hidden">
-
-											<input type="text" name="x_pos" id="x_pos" hidden="hidden">
-											<input type="text" name="y_pos" id="y_pos" hidden="hidden">
-											
-										</div>
+								<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
+								<div class="form-group has-feedback" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다." onclick="goPopup();">
+									<label for="addr">근무지 주소<span class="red">*</span></label>
+									<div class="input-group">
+										<input type="text" name="addr" id="addr" class="form-control" placeholder="주소를 검색해주세요" required data-error="필수 입력사항입니다">
+										<div class="input-group-btn"><button type="button" class="btn btn-primary float-xs-right">주소검색</button></div>
 									</div>
-									<div class="col-xs-2">
-										<div class="form-group" >
-											<button type="button" class="btn btn-primary float-xs-right" onclick="goPopup();" >주소검색</button>
-										</div>
-									</div>
-
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
 								</div>
-							<div id="svc-area-group" data-toggle="tooltip" data-placement="top" data-original-title="선택한 활동지역의 조율 요청을 조회할 수 있습니다.">
-								<div class="form-group svc-area" style="margin-bottom:0" >
-									<label>활동지역을 선택해주세요</label>
-									<select class="form-control" onchange="getDetailSgg(this);">
-										<option value="00">전국</option>
-										<% for(SggDTO sDTO : sList){ %>
-										<option value=<%=sDTO.getSggCode()%>><%=sDTO.getSggName() %></option>
-										<%}%>	
-									</select>
-									<div class="detail-checkboxes row" style="margin-top:1em">
-										<input type="checkbox" name="sgg_code" class="sgg-detail" value="00" checked hidden="hidden">
+								<input type="text" name="sido_name" id="sido_name" hidden="hidden">
+								<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
+								<input type="text" name="emd_name" id="emd_name" hidden="hidden">
+								<input type="text" name="li_name" id="li_name" hidden="hidden">
+								<input type="text" name="x_pos" id="x_pos" hidden="hidden">
+								<input type="text" name="y_pos" id="y_pos" hidden="hidden">
+								<div id="svc-area-group" data-toggle="tooltip" data-placement="top" data-original-title="선택한 활동지역의 조율 요청을 조회할 수 있습니다.">
+									<div class="form-group svc-area" style="margin-bottom:0" >
+										<label>활동지역을 선택해주세요<span class="red">*</span></label>
+										<select class="form-control" onchange="getDetailSgg(this);">
+											<option value="00">전국</option>
+											<% for(SggDTO sDTO : sList){ %>
+											<option value=<%=sDTO.getSggCode()%>><%=sDTO.getSggName() %></option>
+											<%}%>	
+										</select>
+										<div class="detail-checkboxes row" style="margin-top:1em">
+											<input type="checkbox" name="sgg_code" class="sgg-detail" value="00" checked hidden="hidden">
+										</div>
+										<div class="text-xs-right">
+											<button type="button" class="btn btn-danger btn-sm" onclick="delArea(this);">
+												<i class="icon-cross2"></i> 지역 삭제
+											</button>
+										</div>
+		
 									</div>
-									<div class="text-xs-right">
-										<button type="button" class="btn btn-danger btn-sm" onclick="delArea(this);">
-											<i class="icon-cross2"></i> 지역 삭제
-										</button>
-									</div>
-	
 								</div>
-							</div>
+							</div><!-- end of form body -->
+							
+							
 							<div class="form-actions text-xs-right">
 							<button type="button" class="btn btn-primary btn-sm" onclick="addArea();" data-toggle="tooltip" data-placement="top" data-original-title="다른 지역을 추가로 선택할 수 있습니다.">
 									<i class="icon-check2 d-flex"></i> 지역 추가
@@ -380,6 +379,7 @@
 			document.form.li_name.value = liNm;
 			document.form.x_pos.value = entX;
 			document.form.y_pos.value = entY;
+			$('#addr').attr("readonly", "readonly");
 		}
 	</script>
   </body>

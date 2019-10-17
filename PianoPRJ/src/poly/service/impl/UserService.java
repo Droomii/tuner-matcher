@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
-import poly.persistance.mapper.UserMapper;
+import poly.persistance.mapper.IUserMapper;
 import poly.service.IUserService;
 
 @Service("UserService")
 public class UserService implements IUserService {
 
-	@Resource(name="UserMapper")
-	private UserMapper userMapper;
+	@Resource(name="IUserMapper")
+	private IUserMapper userMapper;
 
 	@Override
 	public int regTuner(UserDTO u, TunerDTO t) throws Exception {
@@ -29,6 +29,12 @@ public class UserService implements IUserService {
 	@Override
 	public UserDTO checkEmail(String email) throws Exception {
 		return userMapper.checkEmail(email);
+	}
+
+	@Override
+	public UserDTO loginProc(UserDTO uDTO) throws Exception {
+		
+		return userMapper.loginProc(uDTO);
 	}
 	
 	

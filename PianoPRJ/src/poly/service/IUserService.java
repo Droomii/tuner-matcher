@@ -11,4 +11,7 @@ public interface IUserService {
 
 	UserDTO checkEmail(String email) throws Exception;
 
+	UserDTO loginProc(UserDTO uDTO) throws Exception;
+
+
 }

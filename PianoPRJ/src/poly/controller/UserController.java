@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.service.ISggService;
 import poly.service.IUserService;
+import poly.util.CmmUtil;
 
 @Controller
 public class UserController {
@@ -37,12 +39,43 @@ public class UserController {
 	private ISggService sggService;
 
 	
-	// 로그인
+	// ------------------------ 로그인 관련 -------------------------------
+	
+	// 로그인창
 	@RequestMapping(value="user/UserLogin")
-	public String UserLogin() {
+	public String UserLogin(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) throws Exception{
+		
+		String error = CmmUtil.nvl(request.getParameter("error"));
+		
+		// error가 1이면 아이디 혹은 비밀번호 틀림
+		log.info("error : " + error);
+		if(error.equals("1")) {
+			model.addAttribute("error", "1");
+		}
 		log.info(this.getClass());
 		
 		return "/user/UserLogin";
+	}
+	
+	// 로그인 양식 제출
+	@RequestMapping(value="user/LoginProc", method=RequestMethod.POST)
+	public String loginProc(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model, HttpSession session,
+			 @ModelAttribute UserDTO uDTO)
+			throws Exception{
+		log.info(this.getClass());
+		uDTO = userService.loginProc(uDTO);
+		
+		// 아이디 혹은 비번 틀렸을 경우
+		if(uDTO==null) {
+			model.addAttribute("url", "/user/UserLogin.do?error=1");
+			return "/redirect";
+		}
+		
+		session.setAttribute("user_seq", uDTO.getUser_seq());
+		return "/success";
 	}
 	
 	// 회원가입
@@ -146,6 +179,7 @@ public class UserController {
 
 	}
 	
+	// 아이디 및 이메일 체크 코드
 	@ResponseBody
 	@RequestMapping(value="user/DupCheck.do")
 	public String DupCheck(HttpServletRequest request) throws Exception {
@@ -174,5 +208,29 @@ public class UserController {
 		}
 		return Integer.toString(result);
 	}
+	
+	// 아이디/암호 찾기
+	@RequestMapping(value="user/Find")
+	public String find() throws Exception{
+		log.info(this.getClass());
+		
+		return "/user/Find";
+	}
+	
+	// 아이디 찾기
+	@RequestMapping(value="user/FindID")
+	public String findID() throws Exception{
+		log.info(this.getClass());
+		
+		return "/user/FindID";
+	}
+	
+	// 암호 초기화
+		@RequestMapping(value="user/RecoverPw")
+		public String recoverPw() throws Exception{
+			log.info(this.getClass());
+			
+			return "/user/RecoverPw";
+		}
 
 }

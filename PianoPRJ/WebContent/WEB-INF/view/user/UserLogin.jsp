@@ -1,44 +1,18 @@
+<%@page import="poly.util.CmmUtil"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+
+	String error = CmmUtil.nvl((String)request.getAttribute("error"));
+
+%>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
-    <title>Login Page - Robust Free Bootstrap Admin Template</title>
-    <link rel="apple-touch-icon" sizes="60x60" href="/resources/app-assets/images/ico/apple-icon-60.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/resources/app-assets/images/ico/apple-icon-76.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/resources/app-assets/images/ico/apple-icon-120.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/resources/app-assets/images/ico/apple-icon-152.png">
-    <link rel="shortcut icon" type="image/x-icon" href="/resources/app-assets/images/ico/favicon.ico">
-    <link rel="shortcut icon" type="image/png" href="/resources/app-assets/images/ico/favicon-32.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-touch-fullscreen" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <!-- BEGIN VENDOR CSS-->
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/bootstrap.css">
-    <!-- font icons-->
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/fonts/icomoon.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/vendors/css/extensions/pace.css">
-    <!-- END VENDOR CSS-->
-    <!-- BEGIN ROBUST CSS-->
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/app.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/colors.css">
-    <!-- END ROBUST CSS-->
-    <!-- BEGIN Page Level CSS-->
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/core/menu/menu-types/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/core/menu/menu-types/vertical-overlay-menu.css">
-    <link rel="stylesheet" type="text/css" href="/resources/app-assets/css/pages/login-register.css">
-    <!-- END Page Level CSS-->
-    <!-- BEGIN Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="/resources/assets/css/style.css">
-    <!-- END Custom CSS-->
+	<%@ include file="../header.jsp" %>
+	<meta charset="UTF-8">
+    <title>로그인 - 도와조율</title>
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
     <!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -53,41 +27,33 @@
                 <div class="card-title text-xs-center">
                     <div class="p-1"><img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo"></div>
                 </div>
-                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login with Robust</span></h6>
+                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>도와조율에 로그인</span></h6>
             </div>
             <div class="card-body collapse in">
                 <div class="card-block">
-                    <form class="form-horizontal form-simple" action="index.html" novalidate>
+                    <form name="loginform" method="post" class="form-horizontal form-simple" action="/user/LoginProc.do" onsubmit="return validate();">
                         <fieldset class="form-group position-relative has-icon-left mb-0">
-                            <input type="text" class="form-control form-control-lg input-lg" id="user-name" placeholder="Your Username" required>
+                            <input type="text" class="form-control form-control-lg input-lg" id="id" name="id" placeholder="아이디">
                             <div class="form-control-position">
                                 <i class="icon-head"></i>
                             </div>
                         </fieldset>
                         <fieldset class="form-group position-relative has-icon-left">
-                            <input type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Enter Password" required>
+                            <input type="password" class="form-control form-control-lg input-lg" id="password" name="password" placeholder="암호">
                             <div class="form-control-position">
                                 <i class="icon-key3"></i>
                             </div>
+                            <div id="errorMsg" style="color:crimson"><%if(error.equals("1")){ out.print("아이디 또는 암호가 일치하지 않습니다.");} %></div>
+                            
                         </fieldset>
-                        <fieldset class="form-group row">
-                            <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
-                                <fieldset>
-                                    <input type="checkbox" id="remember-me" class="chk-remember">
-                                    <label for="remember-me"> Remember Me</label>
-                                </fieldset>
-                            </div>
-                            <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="recover-password.html" class="card-link">Forgot Password?</a></div>
-                        </fieldset>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> 로그인</button>
                     </form>
                 </div>
             </div>
             <div class="card-footer">
-                <div class="">
-                    <p class="float-sm-left text-xs-center m-0"><a href="recover-password.html" class="card-link">Recover password</a></p>
-                    <p class="float-sm-right text-xs-center m-0">New to Robust? <a href="register-simple.html" class="card-link">Sign Up</a></p>
-                </div>
+                <div class="float-xs-left col-xs-12 text-xs-center"><a href="/user/Find.do" class="card-link">아이디/암호 찾기</a></div>
+                    <p class="text-xs-center m-0">회원이 아니신가요? <a href="/user/Register.do" class="card-link">회원가입</a></p>
             </div>
         </div>
     </div>
@@ -98,6 +64,19 @@
     </div>
     <!-- ////////////////////////////////////////////////////////////////////////////-->
 
+<script>
+	function validate(){
+		if(document.loginform.id.value==""){
+			alert("아이디를 입력해주세요");
+			return false;
+		}else if(document.loginform.password.value==""){
+			alert("암호를 입력해주세요");
+			return false;
+		}else{
+			return true;
+		}
+	}
+</script>
     <!-- BEGIN VENDOR JS-->
     <script src="/resources/app-assets/js/core/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="/resources/app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- JAVA와 연결할 Mapper 파일 설정 -->
-<mapper namespace="poly.persistance.mapper.UserMapper">
+<mapper namespace="poly.persistance.mapper.IUserMapper">
+	<!-- 로그인 -->
+	<select id="loginProc" resultType="UserDTO">
+		SELECT * FROM USERINFO
+		WHERE
+		ID = #{id} AND PASSWORD = #{password}
+	</select>
+	<!-- 조율사 회원가입 -->
 	<insert id="regTuner">
 		INSERT ALL
 			INTO USERINFO(

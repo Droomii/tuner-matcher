@@ -19,14 +19,13 @@
 				<div class="card-title text-xs-center">
 					<img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo">
 				</div>
-				<h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>회원가입</span></h6>
+				<h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>아이디/암호 찾기</span></h6>
 			</div>
 			<div class="card-body collapse in">	
 				<div class="card-block" style="padding-top:0">
-					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/UserRegister.do'">일반 회원가입</button>
-					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/TunerRegister.do'">조율사 회원가입</button>
+					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/FindID.do'">아이디 찾기</button>
+					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/RecoverPw.do'">암호 초기화</button>
 				</div>
-				<p class="text-xs-center">이미 회원이신가요 ? <a href="login-simple.html" class="card-link">로그인</a></p>
 			</div>
 		</div>
 	</div>

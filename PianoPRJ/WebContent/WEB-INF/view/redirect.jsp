@@ -12,16 +12,31 @@
 <title></title>
 </head>
 <body>
+<form action=<%=url.split("?")[0] %> method="post" hidden="hidden">
+
+</form>
 <script>
 	window.onload = function() {
 		var redirectUrl = '<%=url %>';
-		console.log(redirectUrl)
 		var msg = '<%=msg%>' 
 		if(msg !=""){
 			alert(msg);
 		}
-		location.href = redirectUrl;
-
+		var redirectPage = redirectUrl.split('?')[0];
+		if(redirectUrl.split('?').length > 1){
+			formData = new FormData();
+			var queries = redirectUrl.split('?')[1].split('&');
+			for(var i=0;i<queries.length;i++){
+			    queries[i] = queries[i].split('=');
+			    formData.append(queries[i][0], queries[i][1]);
+			}
+			var request = new XMLHttpRequest();
+			request.open("POST", redirectPage);
+			request.send(formData);
+	
+		}else{
+			location.href = redirectUrl;
+		}
 	};
 </script>
 </body>

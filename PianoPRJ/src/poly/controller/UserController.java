@@ -75,7 +75,9 @@ public class UserController {
 		}
 		
 		session.setAttribute("user_seq", uDTO.getUser_seq());
-		return "/success";
+		session.setAttribute("user_type", uDTO.getUser_type());
+		model.addAttribute("url", "/main.do");
+		return "/redirect";
 	}
 	
 	// 회원가입

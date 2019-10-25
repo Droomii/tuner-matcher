@@ -4,7 +4,9 @@
     
 <%
 
-	String error = CmmUtil.nvl((String)request.getAttribute("error"));
+	String title = CmmUtil.nvl((String)request.getAttribute("title"));
+	String status = CmmUtil.nvl((String)request.getAttribute("status"));
+	String msg = CmmUtil.nvl((String)request.getAttribute("msg"));
 
 %>
 <!DOCTYPE html>
@@ -12,7 +14,7 @@
   <head>
 	<%@ include file="../header.jsp" %>
 	<meta charset="UTF-8">
-    <title>로그인 - 도와조율</title>
+    <title><%=title %></title>
   </head>
   <body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
     <!-- ////////////////////////////////////////////////////////////////////////////-->

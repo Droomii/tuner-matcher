@@ -81,4 +81,8 @@
 	<select id="checkEmail" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{value}
 	</select>
+	<select id="findUserEmail" parameterType="String" resultType="String">
+	SELECT ID FROM USERINFO WHERE EMAIL = #{email} 
+	
+	</select>
 </mapper>

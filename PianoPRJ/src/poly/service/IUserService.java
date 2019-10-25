@@ -13,5 +13,7 @@ public interface IUserService {
 
 	UserDTO loginProc(UserDTO uDTO) throws Exception;
 
+	String findUserID(String email) throws Exception;
+
 
 }

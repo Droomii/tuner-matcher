@@ -12,9 +12,6 @@
 <title></title>
 </head>
 <body>
-<form action=<%=url.split("?")[0] %> method="post" hidden="hidden">
-
-</form>
 <script>
 	window.onload = function() {
 		var redirectUrl = '<%=url %>';
@@ -22,6 +19,8 @@
 		if(msg !=""){
 			alert(msg);
 		}
+		location.href = redirectUrl;
+		/*
 		var redirectPage = redirectUrl.split('?')[0];
 		if(redirectUrl.split('?').length > 1){
 			formData = new FormData();
@@ -35,8 +34,10 @@
 			request.send(formData);
 	
 		}else{
-			location.href = redirectUrl;
+			
 		}
+		
+		*/
 	};
 </script>
 </body>

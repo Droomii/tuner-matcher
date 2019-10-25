@@ -28,6 +28,7 @@ import poly.service.IUserService;
 import poly.util.CmmUtil;
 
 @Controller
+@RequestMapping(value="user/")
 public class UserController {
 
 	private Logger log = Logger.getLogger(this.getClass());
@@ -42,7 +43,7 @@ public class UserController {
 	// ------------------------ 로그인 관련 -------------------------------
 	
 	// 로그인창
-	@RequestMapping(value="user/UserLogin")
+	@RequestMapping(value="UserLogin")
 	public String UserLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) throws Exception{
 		
@@ -59,13 +60,13 @@ public class UserController {
 	}
 	
 	// 로그인 양식 제출
-	@RequestMapping(value="user/LoginProc", method=RequestMethod.POST)
+	@RequestMapping(value="LoginProc", method=RequestMethod.POST)
 	public String loginProc(HttpServletRequest request,
 			HttpServletResponse response,
 			ModelMap model, HttpSession session,
 			 @ModelAttribute UserDTO uDTO)
 			throws Exception{
-		log.info(this.getClass());
+		log.info(this.getClass() + ".login start");
 		uDTO = userService.loginProc(uDTO);
 		
 		// 아이디 혹은 비번 틀렸을 경우
@@ -80,15 +81,33 @@ public class UserController {
 		return "/redirect";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="LoginTest", method=RequestMethod.POST)
+	public String loginTest(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model, HttpSession session,
+			 @ModelAttribute UserDTO uDTO)
+			throws Exception{
+		log.info(this.getClass() + ".loginTest start");
+		uDTO = userService.loginProc(uDTO);
+		
+		// 아이디 혹은 비번 틀렸을 경우
+		if(uDTO==null) {
+			model.addAttribute("url", "/user/UserLogin.do?error=1");
+			return "0";
+		}
+		return "1";
+	}
+	
 	// 회원가입
-	@RequestMapping(value = "user/Register")
+	@RequestMapping(value = "Register")
 	public String Register() {
 		log.info(this.getClass());
 
 		return "/user/Register";
 	}
 
-	@RequestMapping(value = "user/TunerRegister")
+	@RequestMapping(value = "TunerRegister")
 	public String TunerRegister(HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {
 		log.info(this.getClass());
@@ -101,7 +120,7 @@ public class UserController {
 		return "/user/TunerRegister";
 	}
 
-	@RequestMapping(value="user/UserRegister")
+	@RequestMapping(value="UserRegister")
 	public String UserRegister(HttpServletRequest request, HttpServletResponse response, ModelMap model)
 			throws Exception {
 		log.info(this.getClass());
@@ -110,7 +129,7 @@ public class UserController {
 	}
 
 	
-	@RequestMapping(value = "user/TunerRegProc")
+	@RequestMapping(value = "TunerRegProc")
 	public String TunerRegProc(HttpServletRequest request, HttpServletResponse response, ModelMap model, @ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO)
 			throws Exception {
 
@@ -183,7 +202,7 @@ public class UserController {
 	
 	// 아이디 및 이메일 체크 코드
 	@ResponseBody
-	@RequestMapping(value="user/DupCheck.do")
+	@RequestMapping(value="DupCheck.do")
 	public String DupCheck(HttpServletRequest request) throws Exception {
 		log.info("DupCheck");
 
@@ -212,7 +231,7 @@ public class UserController {
 	}
 	
 	// 아이디/암호 찾기
-	@RequestMapping(value="user/Find")
+	@RequestMapping(value="Find")
 	public String find() throws Exception{
 		log.info(this.getClass());
 		
@@ -220,19 +239,45 @@ public class UserController {
 	}
 	
 	// 아이디 찾기
-	@RequestMapping(value="user/FindID")
+	@RequestMapping(value="FindID")
 	public String findID() throws Exception{
 		log.info(this.getClass());
 		
 		return "/user/FindID";
 	}
 	
-	// 암호 초기화
-		@RequestMapping(value="user/RecoverPw")
-		public String recoverPw() throws Exception{
-			log.info(this.getClass());
+	@RequestMapping(value="FindUserIDProc")
+	public String findUserIDProc(HttpServletRequest request, ModelMap model) throws Exception{
+		log.info(this.getClass().getName()+ ".findUserIDProc Start!!");
+		
+		String email = request.getParameter("email");
+		String id = userService.findUserID(email);
+		model.addAttribute("title", "아이디 찾기 결과");
+		if(id==null) {
+			model.addAttribute("msg", "해당 이메일로 가입된 아이디가 없습니다.");
+			model.addAttribute("status", "1");
+			return "/user/FindResult";
 			
-			return "/user/RecoverPw";
+		}else {
+			String censoredId = id.substring(0, 2);
+			for(int i = 0; i < id.length()-2; i++) {
+				censoredId += "*";
+			}
+			censoredId += id.substring(censoredId.length(), id.length());
+			model.addAttribute("msg", "해당 이메일로 가입된 아이디는<br>"+censoredId+"입니다.");
+			model.addAttribute("status", "0");
+			return "/user/FindResult";
 		}
+		
+		
+	}
+	
+	// 암호 초기화
+	@RequestMapping(value="RecoverPw")
+	public String recoverPw() throws Exception{
+		log.info(this.getClass());
+		
+		return "/user/RecoverPw";
+	}
 
 }

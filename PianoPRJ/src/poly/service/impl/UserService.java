@@ -36,6 +36,11 @@ public class UserService implements IUserService {
 		
 		return userMapper.loginProc(uDTO);
 	}
+
+	@Override
+	public String findUserID(String email) throws Exception {
+		return userMapper.findUserID(email);
+	}
 	
 	
 }

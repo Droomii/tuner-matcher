@@ -16,4 +16,6 @@ public interface IUserMapper {
 	UserDTO checkEmail(String email) throws Exception;
 
 	UserDTO loginProc(UserDTO uDTO) throws Exception;
+
+	String findUserID(String email) throws Exception;
 }

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
 </head>
-<body>
+<body data-open="click" data-menu="vertical-menu" data-col="1-column" class="vertical-layout vertical-menu 1-column  blank-page blank-page">
 		<div class="app-content content container-fluid">
       <div class="content-wrapper">
         <div class="content-header row">
@@ -23,20 +23,24 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block">
-                    <form class="form-horizontal" action="/FindUserIDProc.do" method="post">
+                    <form name="findIdForm" class="form-horizontal" action="/FindUserIDProc.do" method="post" onsubmit="return validCheck();">
                         <fieldset class="form-group position-relative has-icon-left">
-                            <input type="text" class="form-control form-control-lg input-lg" id="email" name="email" placeholder="이메일 입력" required>
+                            <input type="text" class="form-control form-control-lg input-lg" id="email" name="email" placeholder="이메일 입력">
                             <div class="form-control-position">
                                 <i class="icon-mail6"></i>
                             </div>
                         </fieldset>
-                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-lock4"></i> 확인</button>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-lock4"></i> 아이디 찾기</button>
                     </form>
+                </div>
+                <hr>
+                <div class="card-block text-xs-center">
+                	<button type="button" class="btn btn-primary btn-lg" onclick="location.href='/user/UserLogin.do'">처음으로</button>
                 </div>
             </div>
             <div class="card-footer no-border">
                 <p class="float-sm-left text-xs-center"><a href="user/Userlogin.do" class="card-link">로그인</a></p>
-                <p class="float-sm-right text-xs-center">회원이 아니신가요? <a href="/user/UserReg.do" class="card-link">회원가입</a></p>
+                <p class="float-sm-right text-xs-center">회원이 아니신가요? <a href="/user/Register.do" class="card-link">회원가입</a></p>
             </div>
         </div>
     </div>
@@ -45,5 +49,16 @@
         </div>
       </div>
     </div>
+    <script>
+    function validCheck(){
+    	if(document.findIdForm.email.value==""){
+    		alert("이메일을 입력해주세요");
+    		return false;
+    	}else{
+    		return true;
+    	}
+    }
+    
+    </script>
 </body>
 </html>

@@ -96,6 +96,8 @@ public class UserController {
 			model.addAttribute("url", "/user/UserLogin.do?error=1");
 			return "0";
 		}
+		session.setAttribute("user_seq", uDTO.getUser_seq());
+		session.setAttribute("user_type", uDTO.getUser_type());
 		return "1";
 	}
 	
@@ -194,11 +196,55 @@ public class UserController {
 		
 		result = userService.regTuner(uDTO, tDTO);
 		
+		String msg = "";
+		String url = "/user/UserLogin.do";
+		if(result==0) {
+			msg = "가입에 실패하였습니다.";
+		}else {
+			userService.addTunerSgg(uDTO.getUser_seq(), tDTO);
+			msg = "가입이 완료되었습니다.";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
 		log.info(this.getClass());
 
-		return null;
+		return "/redirect";
 
 	}
+	
+	@RequestMapping(value = "UserRegProc")
+	public String userRegProc(HttpServletRequest request, HttpServletResponse response, ModelMap model, @ModelAttribute UserDTO uDTO)
+			throws Exception {
+		
+		log.info(this.getClass().getName()+".userRegProg start!!");
+		
+		// 조율사 초기설정
+		uDTO.setUser_type("0");
+
+		int result;
+		
+		result = userService.regUser(uDTO);
+		
+		String msg = "";
+		String url = "/user/UserLogin.do";
+		
+		if(result==0) {
+			msg = "가입에 실패하였습니다.";
+		}else {
+			msg = "가입이 완료되었습니다.";
+		}
+		
+		log.info(this.getClass().getName()+".userRegProg end!!");
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		
+		return "/redirect";
+
+	}
+	
 	
 	// 아이디 및 이메일 체크 코드
 	@ResponseBody
@@ -260,12 +306,14 @@ public class UserController {
 			
 		}else {
 			String censoredId = id.substring(0, 2);
-			for(int i = 0; i < id.length()-2; i++) {
+			for(int i = 2; i < id.length()-2; i++) {
 				censoredId += "*";
 			}
+			censoredId += id.substring(id.length()-2, id.length());
 			censoredId += id.substring(censoredId.length(), id.length());
 			model.addAttribute("msg", "해당 이메일로 가입된 아이디는<br>"+censoredId+"입니다.");
 			model.addAttribute("status", "0");
+			model.addAttribute("id");
 			return "/user/FindResult";
 		}
 		

@@ -23,7 +23,7 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block">
-                    <form name="findIdForm" class="form-horizontal" action="/FindUserIDProc.do" method="post" onsubmit="return validCheck();">
+                    <form name="findIdForm" class="form-horizontal" action="/user/FindUserIDProc.do" method="post" onsubmit="return validCheck();">
                         <fieldset class="form-group position-relative has-icon-left">
                             <input type="text" class="form-control form-control-lg input-lg" id="email" name="email" placeholder="이메일 입력">
                             <div class="form-control-position">

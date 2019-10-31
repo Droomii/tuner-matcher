@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>비밀번호 찾기</title>
+	<title>암호 초기화</title>
 	<%@include file="../header.jsp" %>
 </head>
 <body>
@@ -24,11 +24,11 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block">
-                    <form class="form-horizontal" action="/FindUserPwProc.do" method="post">
+                    <form class="form-horizontal" action="/RecoverPwProc.do" method="post">
                         <fieldset class="form-group position-relative has-icon-left">
-                            <input type="text" class="form-control form-control-lg input-lg" id="id" name="id" placeholder="이메일 입력" required>
+                            <input type="text" class="form-control form-control-lg input-lg" id="id" name="id" placeholder="아이디 입력" required>
                             <div class="form-control-position">
-                                <i class="icon-mail6"></i>
+                                <i class="icon-head"></i>
                             </div>
                         </fieldset>
                         <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-lock4"></i> 확인</button>

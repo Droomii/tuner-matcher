@@ -7,6 +7,7 @@
 	String title = CmmUtil.nvl((String)request.getAttribute("title"));
 	String status = CmmUtil.nvl((String)request.getAttribute("status"));
 	String msg = CmmUtil.nvl((String)request.getAttribute("msg"));
+	String id = CmmUtil.nvl((String)request.getAttribute("id"));
 
 %>
 <!DOCTYPE html>
@@ -27,35 +28,25 @@
         <div class="card border-grey border-lighten-3 m-0 px-2 py-3 p-0">
             <div class="card-header no-border pb-0">
                 <div class="card-title text-xs-center">
-                    <div class="p-1"><img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo"></div>
                 </div>
-                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>도와조율에 로그인</span></h6>
             </div>
             <div class="card-body collapse in">
-                <div class="card-block">
-                    <form name="loginForm" method="post" class="form-horizontal form-simple" action="/user/LoginProc.do" onsubmit="return validate();">
-                        <fieldset class="form-group position-relative has-icon-left mb-0">
-                            <input type="text" class="form-control form-control-lg input-lg" id="id" name="id" placeholder="아이디">
-                            <div class="form-control-position">
-                                <i class="icon-head"></i>
-                            </div>
-                        </fieldset>
-                        <fieldset class="form-group position-relative has-icon-left">
-                            <input type="password" class="form-control form-control-lg input-lg" id="password" name="password" placeholder="암호">
-                            <div class="form-control-position">
-                                <i class="icon-key3"></i>
-                            </div>
-                            <div id="errorMsg" style="color:crimson"></div>
-                            
-                        </fieldset>
-                        
-                        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> 로그인</button>
-                    </form>
+                <div class="card-block text-xs-center">
+                <div class="fonticon-wrap" style="margin-bottom:1.5rem">
+                <%if(status.equals("1")){%><i class="icon-android-cancel" style="font-size:10rem;color:rgb(255, 102, 102)"></i><%}else{ %>
+                <i class="icon-checkmark-circled" style="font-size:10rem;color:rgb(31, 189, 0)"></i><%} %>
+                
+                </div>
+                <%=msg %>
                 </div>
             </div>
+            <div class="card-block text-xs-center">
+                	<button type="button" class="btn btn-primary btn-lg" onclick="location.href='/user/UserLogin.do'">처음으로</button>
+                </div>
             <div class="card-footer">
-                <div class="float-xs-left col-xs-12 text-xs-center"><a href="/user/Find.do" class="card-link">아이디/암호 찾기</a></div>
-                    <p class="text-xs-center m-0">회원이 아니신가요? <a href="/user/Register.do" class="card-link">회원가입</a></p>
+                
+                    <%if(status.equals("1")){ %><p class="text-xs-center m-0"><a href="/user/Register.do" class="card-link">회원가입</a></p><%}else{ %>
+                    <div class="float-xs-left col-xs-12 text-xs-center"><a href="/user/RecoverPw.do" class="card-link">암호 초기화</a></div><%} %>
             </div>
         </div>
     </div>

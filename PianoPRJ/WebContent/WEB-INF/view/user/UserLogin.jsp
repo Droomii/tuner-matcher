@@ -88,7 +88,7 @@
 				console.log("data : " + data)
 				if(data=="1"){
 					console.log("validated")
-					document.loginForm.submit()
+					location.href = "/main.do";
 				}else{
 					console.log("login error")
 					$("#errorMsg").html("아이디 또는 암호가 일치하지 않습니다.")

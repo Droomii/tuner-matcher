@@ -47,7 +47,6 @@
 				TUNER_LEVEL,
 				TUNER_EXP,
 				ADDR,
-				SGG_CODE,
 				AFFILIATION,
 				X_POS,
 				Y_POS,
@@ -64,7 +63,6 @@
 				#{t.tuner_level},
 				#{t.tuner_exp},
 				#{t.addr},
-				#{t.sgg_code},
 				#{t.affiliation},
 				#{t.x_pos},
 				#{t.y_pos},
@@ -74,6 +72,43 @@
 				#{t.li_name}
 			)
 		SELECT * FROM DUAL
+		<selectKey keyProperty="u.user_seq" resultType="String" order="AFTER">
+			SELECT USER_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<!-- 일반 회원가입 -->
+	<insert id="regUser">
+		INSERT INTO USERINFO(
+				USER_SEQ,
+				USER_TYPE,
+				ID,
+				EMAIL,
+				PASSWORD,
+				USER_NAME,
+				USER_SEX,
+				USER_NICK,
+				USER_TEL,
+				REGDATE,
+				UPDDATE,
+				UPDATER_SEQ
+			) VALUES(
+				USER_SEQ.NEXTVAL,
+				0,
+				#{id},
+				#{email},
+				#{password},
+				#{user_name},
+				#{user_sex},
+				#{user_nick},
+				#{user_tel},
+				SYSDATE,
+				SYSDATE,
+				USER_SEQ.CURRVAL
+			)
+	</insert>
+	
+	<insert id="addTunerSgg" parameterType="String">
+	INSERT INTO TUNER_SGG VALUES(#{0}, #{1})
 	</insert>
 	<select id="checkID" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(ID) FROM USERINFO WHERE ID = #{value}
@@ -81,8 +116,7 @@
 	<select id="checkEmail" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{value}
 	</select>
-	<select id="findUserEmail" parameterType="String" resultType="String">
+	<select id="findUserID" parameterType="String" resultType="String">
 	SELECT ID FROM USERINFO WHERE EMAIL = #{email} 
-	
 	</select>
 </mapper>

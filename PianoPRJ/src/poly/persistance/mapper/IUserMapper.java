@@ -18,4 +18,8 @@ public interface IUserMapper {
 	UserDTO loginProc(UserDTO uDTO) throws Exception;
 
 	String findUserID(String email) throws Exception;
+
+	int addTunerSgg(String user_seq, String sggCode) throws Exception;
+
+	int regUser(UserDTO uDTO) throws Exception;
 }

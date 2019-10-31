@@ -46,7 +46,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off">
+						<form data-toggle="validator" role="form" name="form" class="form" action="/user/UserRegProc.do" method="post" autocomplete="off">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">

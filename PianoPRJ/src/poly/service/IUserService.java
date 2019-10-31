@@ -15,5 +15,9 @@ public interface IUserService {
 
 	String findUserID(String email) throws Exception;
 
+	void addTunerSgg(String user_seq, TunerDTO tDTO) throws Exception;
+
+	int regUser(UserDTO uDTO) throws Exception;
+
 
 }

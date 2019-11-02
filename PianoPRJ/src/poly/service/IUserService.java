@@ -19,5 +19,9 @@ public interface IUserService {
 
 	int regUser(UserDTO uDTO) throws Exception;
 
+	UserDTO recoverPw(UserDTO uDTO) throws Exception;
+
+	int recoverPwProc(String password, String code) throws Exception;
+
 
 }

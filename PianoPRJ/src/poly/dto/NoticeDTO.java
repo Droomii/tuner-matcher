@@ -5,106 +5,70 @@ package poly.dto;
  * @version 1.1 공지사항 DTO
  */
 public class NoticeDTO {
-
-	private String notice_seq; // 기본키, 순번
-	private String title; // 제목
-	private String notice_yn; // 공지글 여부
-	private String contents; // 글 내용
-	private String user_id; // 작성자
-	private String read_cnt; // 조회수
-	private String reg_id; // 등록자 아이디
-	private String reg_dt; // 등록일
-	private String chg_id; // 수정자 아이디
-	private String chg_dt; // 수정일
-
-	private String user_name; // 등록자명
-
-	public String getUser_name() {
-		return user_name;
+	private String notice_seq;
+	private String writer_seq;
+	private String notice_title;
+	private String notice_content;
+	private String notice_count;
+	private String regdate;
+	private String upddate;
+	private String updater_seq;
+	private String top;
+	
+	public String getTop() {
+		return top;
 	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setTop(String top) {
+		this.top = top;
 	}
-
 	public String getNotice_seq() {
 		return notice_seq;
 	}
-
 	public void setNotice_seq(String notice_seq) {
 		this.notice_seq = notice_seq;
 	}
-
-	public String getTitle() {
-		return title;
+	public String getWriter_seq() {
+		return writer_seq;
 	}
-
-	public void setTitle(String title) {
-		this.title = title;
+	public void setWriter_seq(String writer_seq) {
+		this.writer_seq = writer_seq;
 	}
-
-	public String getNotice_yn() {
-		return notice_yn;
+	public String getNotice_title() {
+		return notice_title;
 	}
-
-	public void setNotice_yn(String notice_yn) {
-		this.notice_yn = notice_yn;
+	public void setNotice_title(String notice_title) {
+		this.notice_title = notice_title;
 	}
-
-	public String getContents() {
-		return contents;
+	public String getNotice_content() {
+		return notice_content;
 	}
-
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setNotice_content(String notice_content) {
+		this.notice_content = notice_content;
 	}
-
-	public String getUser_id() {
-		return user_id;
+	public String getNotice_count() {
+		return notice_count;
 	}
-
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setNotice_count(String notice_count) {
+		this.notice_count = notice_count;
 	}
-
-	public String getRead_cnt() {
-		return read_cnt;
+	public String getRegdate() {
+		return regdate;
 	}
-
-	public void setRead_cnt(String read_cnt) {
-		this.read_cnt = read_cnt;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
-
-	public String getReg_id() {
-		return reg_id;
+	public String getUpddate() {
+		return upddate;
 	}
-
-	public void setReg_id(String reg_id) {
-		this.reg_id = reg_id;
+	public void setUpddate(String upddate) {
+		this.upddate = upddate;
 	}
-
-	public String getReg_dt() {
-		return reg_dt;
+	public String getUpdater_seq() {
+		return updater_seq;
 	}
-
-	public void setReg_dt(String reg_dt) {
-		this.reg_dt = reg_dt;
+	public void setUpdater_seq(String updater_seq) {
+		this.updater_seq = updater_seq;
 	}
-
-	public String getChg_id() {
-		return chg_id;
-	}
-
-	public void setChg_id(String chg_id) {
-		this.chg_id = chg_id;
-	}
-
-	public String getChg_dt() {
-		return chg_dt;
-	}
-
-	public void setChg_dt(String chg_dt) {
-		this.chg_dt = chg_dt;
-	}
-
+	
+	
 }

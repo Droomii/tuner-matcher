@@ -119,4 +119,13 @@
 	<select id="findUserID" parameterType="String" resultType="String">
 	SELECT ID FROM USERINFO WHERE EMAIL = #{email} 
 	</select>
+	<select id="recoverPw" resultType="UserDTO">
+	SELECT USER_SEQ, PASSWORD, EMAIL FROM USERINFO WHERE ID = #{id}
+	</select>
+	<update id="shufflePw" parameterType="String">
+	UPDATE USERINFO SET PASSWORD = #{0} WHERE ID = #{1}
+	</update>
+	<update id="recoverPwProc" parameterType="String">
+	UPDATE USERINFO SET PASSWORD = #{0} WHERE PASSWORD = #{1}
+	</update>
 </mapper>

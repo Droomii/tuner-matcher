@@ -1,83 +1,103 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ page import="poly.util.CmmUtil" %>
-<%@ page import="poly.dto.NoticeDTO" %>
-<%@ page import="java.util.List"%>   
-<%@ page import="java.util.ArrayList"%> 
-<%@ page import="java.util.HashMap"%>    
+<%@page import="java.util.ArrayList"%>
+<%@page import="poly.dto.NoticeDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!-- session.jsp ê²½ë¡œ ì„¤ì • -->
+<%@ include file="../user/session.jsp" %>
 <%
-session.setAttribute("SESSION_USER_ID", "USER01"); //¼¼¼Ç °­Á¦ Àû¿ë, ·Î±×ÀÎµÈ »óÅÂ·Î º¸¿©ÁÖ±â À§ÇÔ
-
-List<NoticeDTO> rList =	(List<NoticeDTO>)request.getAttribute("rList");
-
-//°Ô½ÃÆÇ Á¶È¸ °á°ú º¸¿©ÁÖ±â
-if (rList==null){
-	rList = new ArrayList<NoticeDTO>();
-	
-}
-
-%>        
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+	ArrayList<NoticeDTO> rList = (ArrayList<NoticeDTO>)request.getAttribute("rList");
+	ArrayList<NoticeDTO> topList = (ArrayList<NoticeDTO>)request.getAttribute("topList");
+%>
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°øÁö ¸®½ºÆ®</title>
-<script type="text/javascript">
 
-//»ó¼¼º¸±â ÀÌµ¿
-function doDetail(seq){
-	location.href="/notice/NoticeInfo.do?nSeq="+ seq;
-}
-
-</script>	
+<meta charset="UTF-8">
+<title>ê³µì§€ì‚¬í•­ - ë„ì™€ì¡°ìœ¨</title>
+<!-- header.jsp ê²½ë¡œ ì„¤ì • -->
+<%@ include file="../header.jsp" %>
+<style>
+	.title{
+		max-width: 40%;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    
+	}
+</style>
 </head>
-<body>
-<h2>°øÁö»çÇ×</h2>
-<hr/>
-<br/>
+<body  data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns  fixed-navbar">
+	<!-- menu.jsp ê²½ë¡œì„¤ì • -->
+	<%@ include file="../menu.jsp" %>
+	<div class="app-content content container-fluid">
+      <div class="content-wrapper">
+        <div class="content-body"><!-- Basic Tables start -->
+<div class="row">
+    <div class="col-xs-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">ê³µì§€ì‚¬í•­</h4>
+                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            </div>
+            <div class="card-body collapse in">
+                <div class="card-block card-dashboard">
+                    <div class="table-responsive">
+                        <table class="table table-bordred table-striped">
+                            <thead>
+                                <tr class="row">
+                                    <th style="max-width:16%">ê¸€ë²ˆí˜¸</th>
+                                    <th style="max-width:36%;" class="text-xs-center">ì œëª©</th>
+                                    <th style="max-width:16%">ì‘ì„±ì</th>
+                                    <th style="max-width:16%">ì‘ì„±ì¼</th>
+                                    <th style="max-width:16%">ì¡°íšŒìˆ˜</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <%for(NoticeDTO nDTO : topList){ %>
+                                <tr>
+                                    <th scope="row">ìƒë‹¨ê³µì§€</th>
+                                    <th class="title"><a href="/notice/NoticeInfo.do?notice_seq=<%=nDTO.getNotice_seq()%>"><%=nDTO.getNotice_title() %></a></th>
+                                    <th>ê´€ë¦¬ì</td>
+                                    <th><%=nDTO.getRegdate().substring(0,11) %></th>
+                                    <th><%=nDTO.getNotice_count() %></th>
+                                </tr>
+                            <%} %>
+                            <%for(NoticeDTO nDTO : rList){ %>
+                                <tr>
+                                    <th scope="row"><%=nDTO.getNotice_seq() %></th>
+                                    <td class="title"><a href="/notice/NoticeInfo.do?notice_seq=<%=nDTO.getNotice_seq()%>"><%=nDTO.getNotice_title() %></a></td>
+                                    <td>ê´€ë¦¬ì</td>
+                                    <td><%=nDTO.getRegdate().substring(0,11) %></td>
+                                    <td><%=nDTO.getNotice_count() %></td>
+                                </tr>
+                            <%} %>
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="float-xs-right">
+                <%if(user_type.equals("2")){ %><button class="btn btn-primary" onclick="location.href='/notice/NoticeReg.do'">ìƒˆ ê³µì§€</button><%} %>
+                
+                </div>
+                </div>
+                
+               
 
-<table border="1" width="600px">
-<tr>
-	<td width="100" align="center">¼ø¹ø</td>
-	<td width="200" align="center">Á¦¸ñ</td>
-	<td width="100" align="center">Á¶È¸¼ö</td>
-	<td width="100" align="center">µî·ÏÀÚ</td>
-	<td width="100" align="center">µî·ÏÀÏ</td>
-</tr>
-<%
-for (int i=0;i<rList.size();i++){
-	NoticeDTO rDTO = rList.get(i);
-
-	if (rDTO==null){
-		rDTO = new NoticeDTO();
-	}
+            
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- Basic Tables end -->
+        </div>
+      </div>
+    </div>
 	
-%>
-<tr>
-	<td align="center">
-	<%
-	//°øÁö±ÛÀÌ¶ó¸é, [°øÁö]Ç¥½Ã 
-	if (CmmUtil.nvl(rDTO.getNotice_yn()).equals("1")){
-		out.print("<b>[°øÁö]</b>");
-		
-	//°øÁö±ÛÀÌ ¾Æ´Ï¶ó¸é, ±Û¹øÈ£ º¸¿©ÁÖ±â 		
-	}else{
-		out.print(CmmUtil.nvl(rDTO.getNotice_seq()));
-			
-	}
-	%></td>
-	<td align="center">
-		<a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getNotice_seq())%>');">
-		<%=CmmUtil.nvl(rDTO.getTitle()) %></a>
-	</td>
-	<td align="center"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %></td>
-	<td align="center"><%=CmmUtil.nvl(rDTO.getUser_name()) %></td>
-	<td align="center"><%=CmmUtil.nvl(rDTO.getReg_dt()) %></td>
-</tr>
-<%
-}
-%>
-</table>
-<a href="/notice/NoticeReg.do">[±Û¾²±â]</a>
+	
+	
+	
+	
+	<!-- footer.jsp ê²½ë¡œì„¤ì • -->
+	<%@include file="../footer.jsp" %>
 </body>
 </html>

@@ -9,18 +9,22 @@ import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.persistance.mapper.IUserMapper;
 import poly.service.IUserService;
+import poly.util.EncryptUtil;
 
 @Service("UserService")
 public class UserService implements IUserService {
 
 	Logger log = Logger.getLogger(this.getClass());
-	
-	@Resource(name="IUserMapper")
+
+	@Resource(name = "UserMapper")
 	private IUserMapper userMapper;
 
 	@Override
 	public int regTuner(UserDTO u, TunerDTO t) throws Exception {
-		
+		String password = u.getPassword();
+		password = EncryptUtil.encHashSHA256(password);
+		u.setPassword(password);
+
 		return userMapper.regTuner(u, t);
 	}
 
@@ -36,7 +40,9 @@ public class UserService implements IUserService {
 
 	@Override
 	public UserDTO loginProc(UserDTO uDTO) throws Exception {
-		
+		String password = uDTO.getPassword();
+		password = EncryptUtil.encHashSHA256(password);
+		uDTO.setPassword(password);
 		return userMapper.loginProc(uDTO);
 	}
 
@@ -46,24 +52,54 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void addTunerSgg(String user_seq, TunerDTO tDTO) throws Exception{
+	public void addTunerSgg(String user_seq, TunerDTO tDTO) throws Exception {
 		log.info("addTunerSgg service start!!");
-		log.info("user_seq : " +user_seq);
-		log.info("sggcodes : " +tDTO.getSgg_code());
+		log.info("user_seq : " + user_seq);
+		log.info("sggcodes : " + tDTO.getSgg_code());
 		String[] sggCodes = tDTO.getSgg_code().split(",");
 		int result = 0;
-		for(String sggCode : sggCodes) {
+		for (String sggCode : sggCodes) {
 			result = userMapper.addTunerSgg(user_seq, sggCode);
 		}
 		log.info("added " + result + "sggcodes");
-		
+
 	}
 
 	@Override
 	public int regUser(UserDTO uDTO) throws Exception {
-		
+		String password = uDTO.getPassword();
+		password = EncryptUtil.encHashSHA256(password);
+		uDTO.setPassword(password);
 		return userMapper.regUser(uDTO);
 	}
-	
-	
+
+	@Override
+	public UserDTO recoverPw(UserDTO uDTO) throws Exception {
+		UserDTO rDTO = new UserDTO();
+		
+		//암호화된 암호와 이메일을 불러옴
+		rDTO = userMapper.recoverPw(uDTO);
+		if (rDTO == null) {
+			return null;
+		} else {
+			String id = uDTO.getId();
+			
+			// 암호화된 암호와 아이디를 섞어서 해시 코드 생성
+			String code = rDTO.getPassword();
+			String accessCode = EncryptUtil.encHashSHA256(id + code);
+			
+			// 앞서 만든 코드를 데이터베이스 암호란에 업데이트
+			userMapper.shufflePw(accessCode, id);
+			rDTO.setPassword(accessCode);
+			return rDTO;
+		}
+
+	}
+
+	@Override
+	public int recoverPwProc(String password, String code) throws Exception {
+		password = EncryptUtil.encHashSHA256(password);
+		return userMapper.recoverPwProc(password, code);
+	}
+
 }

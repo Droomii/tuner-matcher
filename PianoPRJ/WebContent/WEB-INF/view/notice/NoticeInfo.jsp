@@ -1,117 +1,97 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ page import="poly.util.CmmUtil" %>
-<%@ page import="poly.dto.NoticeDTO" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="poly.dto.NoticeDTO"%>
 <%
-NoticeDTO rDTO = (NoticeDTO)request.getAttribute("rDTO");
-
-//°øÁö±Û Á¤º¸¸¦ ¸øºÒ·¯¿Ô´Ù¸é, °´Ã¼ »ı¼º
-if (rDTO==null){
-	rDTO = new NoticeDTO();
-
-}
-
-String ss_user_id = CmmUtil.nvl((String)session.getAttribute("SESSION_USER_ID"));
-
-//º»ÀÎÀÌ ÀÛ¼ºÇÑ ±Û¸¸ ¼öÁ¤ °¡´ÉÇÏµµ·Ï ÇÏ±â(1:ÀÛ¼ºÀÚ ¾Æ´Ô / 2: º»ÀÎÀÌ ÀÛ¼ºÇÑ ±Û / 3: ·Î±×ÀÎ¾ÈÇÔ)
-int edit = 1;
-
-//·Î±×ÀÎ ¾ÈÇß´Ù¸é....
-if (ss_user_id.equals("")){
-	edit = 3;
-	
-//º»ÀÎÀÌ ÀÛ¼ºÇÑ ±ÛÀÌ¸é 2°¡ µÇµµ·Ï º¯°æ
-}else if (ss_user_id.equals(CmmUtil.nvl(rDTO.getUser_id()))){
-	edit = 2;
-	
-}
-
-System.out.println("user_id : "+ CmmUtil.nvl(rDTO.getUser_id()));
-System.out.println("ss_user_id : "+ss_user_id);
-
-%>   
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+	NoticeDTO rDTO = (NoticeDTO)request.getAttribute("rDTO");
+%>
+<!-- session.jsp ê²½ë¡œ ì„¤ì • -->
+<%@ include file="../user/session.jsp" %>
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>°Ô½ÃÆÇ ±Ûº¸±â</title>
-<script type="text/javascript">
 
-//¼öÁ¤ÇÏ±â
-function doEdit(){
-	if ("<%=edit%>"==2){
-		location.href="/notice/NoticeEditInfo.do?nSeq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
-		
-	}else if ("<%=edit%>"==3){
-		alert("·Î±×ÀÎ ÇÏ½Ã±æ ¹Ù¶ø´Ï´Ù.");
-		
-	}else {
-		alert("º»ÀÎÀÌ ÀÛ¼ºÇÑ ±Û¸¸ ¼öÁ¤ °¡´ÉÇÕ´Ï´Ù.");
-		
-	}
-}
-
-
-//»èÁ¦ÇÏ±â
-function doDelete(){
-	if ("<%=edit%>"==2){
-		if(confirm("ÀÛ¼ºÇÑ ±ÛÀ» »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?")){
-			location.href="/notice/NoticeDelete.do?nSeq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
-			
-		}
-		
-	}else if ("<%=edit%>"==3){
-		alert("·Î±×ÀÎ ÇÏ½Ã±æ ¹Ù¶ø´Ï´Ù.");
-		
-	}else {
-		alert("º»ÀÎÀÌ ÀÛ¼ºÇÑ ±Û¸¸ »èÁ¦ °¡´ÉÇÕ´Ï´Ù.");
-		
-	}
-}
-//¸ñ·ÏÀ¸·Î ÀÌµ¿
-function doList(){
-	location.href="/notice/NoticeList.do";
-		
-}
-
-</script>	
+<meta charset="UTF-8">
+<title>ê³µì§€ì‚¬í•­ - ë„ì™€ì¡°ìœ¨</title>
+<!-- header.jsp ê²½ë¡œ ì„¤ì • -->
+<%@ include file="../header.jsp" %>
 </head>
-<body>
-<table border="1">
-	<col width="100px" />
-	<col width="200px" />
-	<col width="100px" />
-	<col width="200px" />
-	<tr>
-		<td align="center">Á¦¸ñ</td>
-		<td colspan="3"><%=CmmUtil.nvl(rDTO.getTitle())%></td>
-	</tr>
-	<tr>
-		<td align="center">°øÁö±Û ¿©ºÎ</td>
-		<td colspan="3">¿¹<input type="radio" name="noticeYn" value="1" 
-				<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>/>
-		        ¾Æ´Ï¿À<input type="radio" name="noticeYn" value="2" 
-		        <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>/>
-		</td>
-	</tr>
-	<tr>
-		<td align="center">ÀÛ¼ºÀÏ</td>
-		<td><%=CmmUtil.nvl(rDTO.getReg_dt())%></td>
-		<td align="center">Á¶È¸¼ö</td>
-		<td><%=CmmUtil.nvl(rDTO.getRead_cnt())%></td>
-	</tr>	
-	<tr>
-		<td colspan="4" height="300px" valign="top">
-		<%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
-		</td>
-	</tr>
-<tr>
-	<td align="center" colspan="4">
-		<a href="javascript:doEdit();">[¼öÁ¤]</a>
-		<a href="javascript:doDelete();">[»èÁ¦]</a>
-		<a href="javascript:doList();">[¸ñ·Ï]</a>
-	</td>
-</tr>		
-</table>
+<body  data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns  fixed-navbar">
+	<!-- menu.jsp ê²½ë¡œì„¤ì • -->
+	<%@ include file="../menu.jsp" %>
+	<div class="app-content content container-fluid">
+		<div class="content-wrapper">
+			<div class="content-body">
+				<div class="row">
+					<div class="col-xs-12 col-lg-6 offset-lg-3">
+					<div class="card">
+					<div class="card-header">
+                <h4 class="card-title">ê³µì§€ì‚¬í•­</h4>
+                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+            </div>
+				<div class="card-body">
+					<div class="card-block">
+						<div class="row">
+							<div class="col-xs-8">
+								<h5 class="card-title" style="margin-bottom:5px"><%=rDTO.getNotice_title() %></h5>
+							</div>
+							<div class="col-xs-4 text-xs-right">
+								ê´€ë¦¬ì | <%=rDTO.getRegdate() %>
+							</div>
+						</div>
+						<hr style="margin-top:0;border-color:rgb(150,150,150)">
+						<div class="row" style="margin-top:5px;">
+							<div class="col-xs-12">
+								<p class="card-text"><%=rDTO.getNotice_content() %></p>
+							</div>
+						</div>
+						<hr style="margin-top:1rem;border-color:rgb(150,150,150)">
+						<div class="row">
+						<div class="col-xs-6">
+						<a href="/notice/NoticeList.do" class="btn btn-info">ëª©ë¡</a>
+						</div>
+						<%if(user_type.equals("2")){ %>
+						<div class="col-xs-6 text-xs-right">
+						<form name="noticeAction" method="post" hidden="hidden">
+						<input name="notice_seq" value="<%=rDTO.getNotice_seq() %>">
+						</form>
+						<button type="button" onclick="del();" class="btn btn-danger">ì‚­ì œ</button>
+						<button type="button" onclick="update();" class="btn btn-success">ìˆ˜ì •</button>
+						</div>
+						<%} %>
+						</div>
+					</div>
+				</div>
+			</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- footer.jsp ê²½ë¡œì„¤ì • -->
+	<%@include file="../footer.jsp" %>
+	<script type="text/javascript">
+	var form = document.noticeAction
+	function del(){
+		var conf = confirm("ì‚­ì œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?", "ì˜ˆ", "ì•„ë‹ˆì˜¤");
+		if(conf){
+			form.action="/notice/NoticeDelete.do";
+			form.submit();
+		}
+	}
+	
+	function update(){
+		form.action="/notice/NoticeEditInfo.do";
+		form.submit();
+	}
+	
+	</script>
 </body>
 </html>

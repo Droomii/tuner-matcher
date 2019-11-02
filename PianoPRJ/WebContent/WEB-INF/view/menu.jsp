@@ -11,7 +11,6 @@
     <div data-scroll-to-active="true" class="main-menu menu-fixed menu-dark menu-accordion menu-shadow">
       <!-- main menu header-->
       <div class="main-menu-header">
-        <input type="text" placeholder="Search" class="menu-search form-control round"/>
       </div>
       <!-- / main menu header-->
       
@@ -19,42 +18,99 @@
       <!-- 대쉬보드 설정 -->
       <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
-          <li class=" nav-item"><a href="/index.do"><i class="icon-home3"></i>홈</a>
-          </li>
-          <li class=" nav-item"><a href="/noti/notiList.do"><i class="icon-bullhorn"></i><span data-i18n="nav.bootstrap_tables.table_basic" class="menu-title">공지사항</span></a>
-          </li>
-          <li class="nav-item"><a href="#"><i class="icon-stack-2"></i><span data-i18n="nav.page_layouts.main" class="menu-title">내 정보</span></a>
+        <%if(user_type.equals("1")){ %>
+         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
+        </li>
+         <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
+        </li>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">마이페이지</span></a>
             <ul class="menu-content">
-              <li><a href="/myInfo/mySpeechReport.do?userNo=<%=CmmUtil.nvl(session.getAttribute("userNo").toString()) %>" class="menu-item">내 면접 기록</a><!-- 김한결 수정 부분  data-i18n="nav.page_layouts.1_column"  -->
-              </li>
-              <li><a href="layout-2-columns.html" data-i18n="nav.page_layouts.2_columns" class="menu-item">면접 즐겨찾기</a>
-              </li>
-              <li><a href="layout-static.html" data-i18n="nav.page_layouts.static_layout" class="menu-item">개인 정보</a>
-              <ul class="menu-content">
-                  <li><a href="/UserEdit.do" data-i18n="nav.error_pages.error_400" class="menu-item">개인정보 수정</a>
-                  </li>
-                  <li><a href="error-401.html" data-i18n="nav.error_pages.error_401" class="menu-item">회원 탈퇴</a>
-                  </li>
+              <li><a href="#" class="menu-item">개인정보</a></li>
+              <li><a href="#" class="menu-item">조율 일정</a></li>
+              <li><a href="#" class="menu-item">조율 내역</a>
+                <ul class="menu-content">
+                  <li><a href="#" class="menu-item">과거 조율 내역</a></li>
+                  <li><a href="#" class="menu-item">입찰 현황</a></li>
+                  <li><a href="#" class="menu-item">조율 현황</a></li>
                 </ul>
               </li>
+              <li><a href="#" class="menu-item">단골 고객</a></li>
+              <li><a href="#" class="menu-item">내 평판 조회</a></li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="#"><i class="icon-briefcase4"></i><span data-i18n="nav.project.main" class="menu-title">스피치 연습</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
             <ul class="menu-content">
-              <li><a href="invoice-template.html" data-i18n="nav.invoice.invoice_template" class="menu-item">면접 질문 세트 선택</a>
-              <ul class="question-set-select">
-                  <li><a href="/qset/QSetList.do" class="set-popular">인기 세트</a></li>
-                  <li><a href="/qset/QSetList.do" class="set-recommend">추천 세트</a></li>
-                  <li><a href="/qset/QSetList.do" class="set-new">신규 세트</a></li>
-              </ul>
+              <li><a href="#" class="menu-item">내 주변에서 찾기</a></li>
+              <li><a href="#" class="menu-item">1:1 요청</a></li>
+            </ul>
+          </li>
+          <%} else if(user_type.equals("0")){%>
+          <li class=" nav-item"><a href="form-layout-basic.html"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">요약 정보</span></a>
+          </li>
+          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">공지사항</span></a>
+          </li>
+          <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span class="menu-title">마이 페이지</span></a>
+            <ul class="menu-content">
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 피아노</a>
               </li>
-              <li><a href="/qset/CreateQSet.do" data-i18n="nav.gallery_pages.gallery_grid" class="menu-item">면접 질문 세트 작성</a>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">조율 내역</a>
               </li>
-              <li><a href="login-simple.html" data-i18n="nav.login_register_pages.login_simple" class="menu-item">면접 질문 세트 후기</a>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
+              </li>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 리뷰</a>
+              </li>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">개인정보 변경</a>
               </li>
             </ul>
           </li>
-        
+          <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span data-i18n="nav.dash.main" class="menu-title">조율하기</span></a>
+            <ul class="menu-content">
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 주변에서 찾기</a>
+              </li>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">1:1 요청</a>
+              </li>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">리뷰 등록</a>
+              </li>
+            </ul>
+          </li>
+          <%}else{ %>
+          <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
+        </li>
+         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">회원 관리</span></a>
+        </li>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율사 관리</span></a>
+            <ul class="menu-content">
+              <li><a href="#" class="menu-item">조율사 조회</a>
+              </li>
+              <li><a href="#" class="menu-item">조율사 가입요청 조회</a>
+              </li>
+            </ul>
+          </li>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율 요청/견적 관리</span></a>
+            <ul class="menu-content">
+              <li><a href="#" class="menu-item">조율 요청 관리</a>
+              </li>
+              <li><a href="#" class="menu-item">조율 견적 관리</a>
+              </li>
+            </ul>
+          </li>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">게시판 관리</span></a>
+            <ul class="menu-content">
+              <li><a href="/notice/NoticeList.do" class="menu-item">공지사항 관리</a>
+              </li>
+              <li><a href="#" class="menu-item">리뷰 관리</a>
+              </li>
+            </ul>
+          </li>
+          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
+            <ul class="menu-content">
+              <li><a href="#" class="menu-item">내 주변에서 찾기</a>
+              </li>
+              <li><a href="#" class="menu-item">1:1 요청</a>
+              </li>
+            </ul>
+          </li>
+          <%} %>
         </ul>
       </div>
       </div>

@@ -25,12 +25,24 @@ public class MainController {
 			HttpServletResponse response,
 			ModelMap model, HttpSession session) throws Exception{
 		
-		String user_seq = (String) session.getAttribute("user_seq");
-		String user_type = (String) session.getAttribute("user_type");
-		
 		
 		
 		return "/main";
 	}
 	
+	@RequestMapping(value="index")
+	public String index(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model, HttpSession session) throws Exception{
+		
+		String url;
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		if(user_seq==null) {
+			url="/user/UserLogin";
+		}else {
+			url="/main";
+		}
+		return url;
+	}
 }

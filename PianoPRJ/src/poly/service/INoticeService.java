@@ -8,7 +8,7 @@ public interface INoticeService {
 
 	List<NoticeDTO> getNoticeList() throws Exception;
 	
-	void InsertNoticeInfo(NoticeDTO pDTO) throws Exception;
+	void insertNoticeInfo(NoticeDTO pDTO) throws Exception;
 
 	NoticeDTO getNoticeInfo(NoticeDTO pDTO) throws Exception;
 	
@@ -17,5 +17,7 @@ public interface INoticeService {
 	void updateNoticeInfo(NoticeDTO pDTO) throws Exception;
 	
 	void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
+
+	List<NoticeDTO> getTopNoticeList() throws Exception;
 	
 }

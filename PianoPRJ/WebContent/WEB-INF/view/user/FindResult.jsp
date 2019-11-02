@@ -8,6 +8,7 @@
 	String status = CmmUtil.nvl((String)request.getAttribute("status"));
 	String msg = CmmUtil.nvl((String)request.getAttribute("msg"));
 	String id = CmmUtil.nvl((String)request.getAttribute("id"));
+	String findType = CmmUtil.nvl((String)request.getAttribute("findType"));
 
 %>
 <!DOCTYPE html>
@@ -45,7 +46,8 @@
                 </div>
             <div class="card-footer">
                 
-                    <%if(status.equals("1")){ %><p class="text-xs-center m-0"><a href="/user/Register.do" class="card-link">회원가입</a></p><%}else{ %>
+                    <%if(status.equals("1")){ %><p class="text-xs-center m-0"><a href="/user/Register.do" class="card-link">회원가입</a></p>
+                    <%}else if(!findType.equals("pw") && !findType.equals("pwProc")){ %>
                     <div class="float-xs-left col-xs-12 text-xs-center"><a href="/user/RecoverPw.do" class="card-link">암호 초기화</a></div><%} %>
             </div>
         </div>

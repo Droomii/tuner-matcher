@@ -23,8 +23,8 @@ public class NoticeService implements INoticeService{
 	}
 	
 	@Override
-	public void InsertNoticeInfo(NoticeDTO pDTO) throws Exception {
-		noticeMapper.InsertNoticeInfo(pDTO);;
+	public void insertNoticeInfo(NoticeDTO pDTO) throws Exception {
+		noticeMapper.insertNoticeInfo(pDTO);
 		
 	}
 	
@@ -50,5 +50,11 @@ public class NoticeService implements INoticeService{
 	public void deleteNoticeInfo(NoticeDTO pDTO) throws Exception {
 		noticeMapper.deleteNoticeInfo(pDTO);
 		
+	}
+
+	@Override
+	public List<NoticeDTO> getTopNoticeList() throws Exception {
+		
+		return noticeMapper.getTopNoticeList();
 	}
 }

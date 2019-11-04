@@ -102,4 +102,15 @@ public class UserService implements IUserService {
 		return userMapper.recoverPwProc(password, code);
 	}
 
+	@Override
+	public UserDTO getUserInfo(String user_seq) throws Exception {
+		
+		return userMapper.getUserInfo(user_seq);
+	}
+
+	@Override
+	public TunerDTO getTunerInfo(String user_seq) throws Exception {
+		return userMapper.getTunerInfo(user_seq);
+	}
+
 }

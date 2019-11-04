@@ -23,5 +23,9 @@ public interface IUserService {
 
 	int recoverPwProc(String password, String code) throws Exception;
 
+	UserDTO getUserInfo(String user_seq) throws Exception;
+
+	TunerDTO getTunerInfo(String user_seq) throws Exception;
+
 
 }

@@ -25,7 +25,7 @@
         </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">마이페이지</span></a>
             <ul class="menu-content">
-              <li><a href="#" class="menu-item">개인정보</a></li>
+              <li><a href="/myPage/MyInfo.do" class="menu-item">개인정보</a></li>
               <li><a href="#" class="menu-item">조율 일정</a></li>
               <li><a href="#" class="menu-item">조율 내역</a>
                 <ul class="menu-content">

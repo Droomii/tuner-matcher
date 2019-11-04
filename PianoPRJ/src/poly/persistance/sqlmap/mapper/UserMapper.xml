@@ -128,4 +128,28 @@
 	<update id="recoverPwProc" parameterType="String">
 	UPDATE USERINFO SET PASSWORD = #{0} WHERE PASSWORD = #{1}
 	</update>
+	
+	<!-- myPage -->
+	<select id="getUserInfo" parameterType="String" resultType="UserDTO">
+	SELECT
+		EMAIL,
+		USER_NAME,
+		USER_NICK,
+		USER_TEL
+	FROM USERINFO
+	WHERE
+		USER_SEQ = #{0}
+	</select>
+	<select id="getTunerInfo" parameterType="String" resultType="TunerDTO">
+	SELECT
+		ID_PHOTO_DIR,
+		TUNER_COMMENT,
+		TUNER_LEVEL,
+		TUNER_EXP,
+		ADDR,
+		AFFILIATION
+	FROM TUNER
+	WHERE
+		TUNER_SEQ = #{0}
+	</select>
 </mapper>

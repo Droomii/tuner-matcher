@@ -28,6 +28,10 @@ public interface IUserMapper {
 	int recoverPwProc(String password, String code) throws Exception;
 
 	void shufflePw(String accessCode, String id) throws Exception;
+
+	UserDTO getUserInfo(String user_seq) throws Exception;
+
+	TunerDTO getTunerInfo(String user_seq) throws Exception;
 	
 	
 }

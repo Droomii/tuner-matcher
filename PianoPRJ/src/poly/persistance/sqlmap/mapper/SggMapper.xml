@@ -10,4 +10,9 @@
 	<select id="getSgg" resultType="SggDTO">
 		SELECT * FROM SGG WHERE SGGCODE LIKE #{sidoCode} ORDER BY SGGNAME
 	</select>
+	<select id="getTunerSgg" parameterType="String" resultType="SggDTO">
+		SELECT * FROM SGG WHERE SGGCODE IN(
+			SELECT SGGCODE FROM TUNER_SGG WHERE USER_SEQ=#{0}
+		)
+	</select>
 </mapper>

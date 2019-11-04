@@ -12,7 +12,7 @@ public interface ISggMapper {
 
 	List<SggDTO> getSgg(String sidoCode) throws Exception;
 
-	SggDTO getTunerSgg(String user_seq) throws Exception;
+	List<SggDTO> getTunerSgg(String user_seq) throws Exception;
 
 
 }

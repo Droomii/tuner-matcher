@@ -1,5 +1,9 @@
 package poly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +39,8 @@ public class MyPageController {
 			
 			TunerDTO tDTO = userService.getTunerInfo(user_seq);
 			model.addAttribute("tDTO", tDTO);
-			SggDTO sDTO = sggService.getTunerSgg(user_seq);
+			List<SggDTO> sggList = new ArrayList<>();
+			Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(user_seq);
 		}
 		return "/myPage/MyInfo";
 	}

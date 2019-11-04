@@ -1,6 +1,9 @@
 package poly.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -26,8 +29,46 @@ public class SggService implements ISggService{
 	}
 
 	@Override
-	public SggDTO getTunerSgg(String user_seq) throws Exception {
-		return sggMapper.getTunerSgg(user_seq);
+	public Map<String, ArrayList<String>> getTunerSgg(String user_seq) throws Exception {
+		List<SggDTO> sggList = new ArrayList<>();
+		List<SggDTO> sidoList = new ArrayList<>();
+		Map<String, ArrayList<String>> sggGrouped = new HashMap<>();
+		// 키에 시도코드, 값에 시도 이름
+		Map<String, String> sidoMap = new HashMap<>();
+		
+		for(SggDTO sido : sidoList) {
+			sidoMap.put(sido.getSggCode(), sido.getSggName());
+		}
+		
+		sggList = sggMapper.getTunerSgg(user_seq);
+		if(sggList.get(0).getSggCode().equals("00")) {
+			sggGrouped.put("전국", null);
+			return sggGrouped;
+		}
+		
+		sidoList = sggMapper.getSido();
+		
+		
+		String sidoCode;
+		String sidoName;
+		ArrayList<String> tempList = null;
+		for(SggDTO sgg : sggList) {
+			sidoCode = sgg.getSggCode().substring(0,2);
+			sidoName = sidoMap.get(sidoCode);
+			
+			tempList = sggGrouped.getOrDefault(sidoName, new ArrayList<>());
+			
+			if(sidoName.equals(sgg.getSggName())) {
+				tempList.add("전체");
+			}else {
+				tempList.add(sgg.getSggName());
+			}
+			sggGrouped.put(sidoName, tempList);
+			tempList = null;
+		}
+		
+		return sggGrouped;
+		
 	}
 
 }

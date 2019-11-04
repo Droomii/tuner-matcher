@@ -25,4 +25,9 @@ public class SggService implements ISggService{
 		return sggMapper.getSgg(sidoCode);
 	}
 
+	@Override
+	public SggDTO getTunerSgg(String user_seq) throws Exception {
+		return sggMapper.getTunerSgg(user_seq);
+	}
+
 }

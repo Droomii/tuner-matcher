@@ -10,7 +10,9 @@ public interface ISggMapper {
 
 	List<SggDTO> getSido() throws Exception;
 
-	List<SggDTO> getSgg(String sidoCode);
+	List<SggDTO> getSgg(String sidoCode) throws Exception;
+
+	SggDTO getTunerSgg(String user_seq) throws Exception;
 
 
 }

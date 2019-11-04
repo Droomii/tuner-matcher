@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
+import poly.service.ISggService;
 import poly.service.IUserService;
 
 @Controller
@@ -18,6 +20,9 @@ public class MyPageController {
 
 	@Resource(name="UserService")
 	IUserService userService;
+	
+	@Resource(name="SggService")
+	ISggService sggService;
 	
 	@RequestMapping(value="MyInfo")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
@@ -30,6 +35,7 @@ public class MyPageController {
 			
 			TunerDTO tDTO = userService.getTunerInfo(user_seq);
 			model.addAttribute("tDTO", tDTO);
+			SggDTO sDTO = sggService.getTunerSgg(user_seq);
 		}
 		return "/myPage/MyInfo";
 	}

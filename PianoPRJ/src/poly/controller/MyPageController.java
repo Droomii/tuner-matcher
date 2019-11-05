@@ -18,6 +18,8 @@ import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.service.ISggService;
 import poly.service.IUserService;
+import poly.util.CmmUtil;
+import poly.util.EncryptUtil;
 
 @Controller
 @RequestMapping("/myPage")
@@ -65,6 +67,7 @@ public class MyPageController {
 	public String MyInfoEditForm(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
 		String password = request.getParameter("password");
 		String user_seq = (String)session.getAttribute("user_seq");
+		password = EncryptUtil.encHashSHA256(password);
 		int res = userService.pwCheck(user_seq, password);
 		if(res==0) {
 			model.addAttribute("msg", "암호가 올바르지 않습니다");
@@ -76,14 +79,25 @@ public class MyPageController {
 		TunerDTO tDTO = null;
 		uDTO.setUser_seq((String)session.getAttribute("user_seq"));
 		uDTO = userService.getUserEditInfo(uDTO);
-		model.addAttribute(uDTO);
+		model.addAttribute("uDTO", uDTO);
 		
-		String user_type = (String)session.getAttribute("user_tyoe");
+		String user_type = (String)session.getAttribute("user_type");
 		if(user_type.equals("1")) {
 			tDTO = userService.getTunerEditInfo(user_seq);
-			model.addAttribute(tDTO);
-			Map<String, ArrayList<String>> sggDTO = sggService.getTunerSgg(user_seq);
+			model.addAttribute("tDTO", tDTO);
+			List<SggDTO> sList = new ArrayList<>();
+			sList = sggService.getSido();
+			log.info("got sggservice");
+
+			model.addAttribute("sList", sList);
+			
+			
+			Map<String, ArrayList<String>> sggDTOList = sggService.getTunerSggCode(user_seq);
+			model.addAttribute("sggDTOList", sggDTOList);
+			return "/myPage/TunerInfoEdit";
 		}
+		
+		return "/myPage/UserInfoEdit";
 		
 		
 		

@@ -121,6 +121,9 @@
 	<select id="checkEmail" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{value}
 	</select>
+	<select id="checkEditEmail" parameterType="String" resultType="UserDTO">
+	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{0} AND USER_SEQ &lt;&gt; #{1}
+	</select>
 	<select id="findUserID" parameterType="String" resultType="String">
 	SELECT ID FROM USERINFO WHERE EMAIL = #{email} 
 	</select>

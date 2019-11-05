@@ -37,8 +37,7 @@
 					<div class="card-text text-xs-center">
 					<%=CmmUtil.nvl(forWhat).equals("update") ? "정보 수정을" : "회원 탈퇴를"%> 위하여 암호를 다시 입력해주세요
 					</div>
-						<form class="form" name="checkForm" action="<%=CmmUtil.nvl(action)%>">
-						<input name="forWhat" hidden="hidden" value="<%=CmmUtil.nvl(forWhat) %>">
+						<form class="form" name="checkForm" action="<%=CmmUtil.nvl(action)%>" method="post">
 							<div class="form-body">
 
 								<div class="form-group">
@@ -70,7 +69,7 @@
 	<script type="text/javascript">
 	var form = document.checkForm;
 	function doSubmit(){
-		if(form.whatfor.value=="delete"){
+		if("<%=forWhat%>"=="delete"){
 			if(!confirm("회원탈퇴를 하시겠습니까?")){
 				return;
 			}

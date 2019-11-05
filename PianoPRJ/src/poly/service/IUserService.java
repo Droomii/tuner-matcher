@@ -33,5 +33,7 @@ public interface IUserService {
 
 	TunerDTO getTunerEditInfo(String user_seq) throws Exception;
 
+	UserDTO checkEditEmail(String email, String user_seq) throws Exception;
+
 
 }

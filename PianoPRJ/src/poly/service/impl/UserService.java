@@ -128,4 +128,9 @@ public class UserService implements IUserService {
 		return userMapper.getTunerEditInfo(user_seq);
 	}
 
+	@Override
+	public UserDTO checkEditEmail(String email, String user_seq) throws Exception {
+		return userMapper.checkEditEmail(email, user_seq);
+	}
+
 }

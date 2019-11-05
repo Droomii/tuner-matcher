@@ -14,4 +14,6 @@ public interface ISggService {
 
 	Map<String, ArrayList<String>> getTunerSgg(String user_seq) throws Exception;
 
+	Map<String, ArrayList<String>> getTunerSggCode(String user_seq) throws Exception;
+
 }

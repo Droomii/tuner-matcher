@@ -80,5 +80,37 @@ public class SggService implements ISggService{
 		return sggGrouped;
 		
 	}
+	
+	public Map<String, ArrayList<String>> getTunerSggCode(String user_seq) throws Exception {
+		List<SggDTO> sggList = new ArrayList<>();
+		
+		Map<String, ArrayList<String>> sggGrouped = new HashMap<>();
+
+		sggList = sggMapper.getTunerSgg(user_seq);
+		if(sggList.get(0).getSggCode().equals("00")) {
+			sggGrouped.put("00", null);
+			return sggGrouped;
+		}
+
+		String sidoCode;
+		ArrayList<String> tempList = null;
+		for(SggDTO sgg : sggList) {
+			sidoCode = sgg.getSggCode().substring(0,2);
+			log.info("sidoCode : " + sidoCode);		
+			
+			tempList = sggGrouped.getOrDefault(sidoCode, new ArrayList<>());
+			
+			if(sidoCode.equals(sgg.getSggCode())) {
+				tempList.add(sgg.getSggCode());
+			}else {
+				tempList.add(sgg.getSggCode());
+			}
+			sggGrouped.put(sidoCode, tempList);
+			tempList = null;
+		}
+		
+		return sggGrouped;
+		
+	}
 
 }

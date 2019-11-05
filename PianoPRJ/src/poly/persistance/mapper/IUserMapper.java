@@ -38,6 +38,8 @@ public interface IUserMapper {
 	int pwCheck(String user_seq, String password) throws Exception;
 
 	TunerDTO getTunerEditInfo(String user_seq) throws Exception;
+
+	UserDTO checkEditEmail(String email, String user_seq) throws Exception;
 	
 	
 }

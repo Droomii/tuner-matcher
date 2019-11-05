@@ -253,6 +253,28 @@ public class UserController {
 		}
 		return Integer.toString(result);
 	}
+	
+	// 회원정보 수정시 이메일 체크 코드
+		@ResponseBody
+		@RequestMapping(value = "EditDupCheck.do")
+		public String EditDupCheck(HttpServletRequest request, HttpSession session) throws Exception {
+			log.info("EditDupCheck");
+			
+			String email = request.getParameter("email");
+			String user_seq = (String)session.getAttribute("user_seq");
+			log.info("email : " + email);
+
+			int result = 0;
+
+			UserDTO uDTO = null;
+			
+			uDTO = userService.checkEditEmail(email, user_seq);
+			
+			if (uDTO != null) {
+				result = 1;
+			}
+			return Integer.toString(result);
+		}
 
 	// 아이디/암호 찾기
 	@RequestMapping(value = "Find")

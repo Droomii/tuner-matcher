@@ -45,7 +45,7 @@
 								 
 								<div class="form-group">
 									<label for="notice_content">공지 내용</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"><%=rDTO.getNotice_content()%></textarea>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"><%=CmmUtil.revertXSS(rDTO.getNotice_content()).replaceAll("<br>", "\n")%></textarea>
 								</div>
 							</div>
 

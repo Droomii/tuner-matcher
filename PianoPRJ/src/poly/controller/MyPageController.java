@@ -63,6 +63,51 @@ public class MyPageController {
 		return "/myPage/CheckPw";
 	}
 	
+	@RequestMapping(value="DeleteAccount")
+	public String DeleteAccount(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		String action = "/myPage/DeleteAccountProc.do";
+		String back = "/myPage/DeleteAccount.do";
+		String forWhat = "delete";
+		model.addAttribute("action", action);
+		model.addAttribute("back", back);
+		model.addAttribute("forWhat", forWhat);
+		
+		return "/myPage/CheckPw";
+		
+	}
+	
+	@RequestMapping(value="DeleteAccountProc")
+	public String DeleteAccountProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		String password = request.getParameter("password");
+		String user_seq = (String)session.getAttribute("user_seq");
+		password = EncryptUtil.encHashSHA256(password);
+		int res = userService.pwCheck(user_seq, password);
+		if(res==0) {
+			model.addAttribute("msg", "암호가 올바르지 않습니다");
+			model.addAttribute("url", "/myPage/DeleteAccount.do");
+			return "/redirect";
+		}else {
+			int delRes = userService.deleteUser(user_seq);
+			if(delRes>0) {
+				model.addAttribute("msg", "회원 탈퇴에 성공했습니다.");
+				model.addAttribute("url", "/index.do");
+				session.invalidate();
+				return "/redirect";
+			}else {
+				model.addAttribute("msg", "회원 탈퇴에 실패했습니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+		}
+			
+		}
+		
+		
+		
+		
+		
+	
 	@RequestMapping(value="MyInfoEditForm")
 	public String MyInfoEditForm(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
 		String password = request.getParameter("password");

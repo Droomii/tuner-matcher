@@ -146,4 +146,9 @@ public class UserService implements IUserService {
 		
 	}
 
+	@Override
+	public int deleteUser(String user_seq) throws Exception {
+		return userMapper.deleteUser(user_seq);
+	}
+
 }

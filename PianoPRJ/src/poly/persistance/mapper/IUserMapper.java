@@ -46,6 +46,8 @@ public interface IUserMapper {
 	int updateTuner(TunerDTO tDTO) throws Exception;
 
 	void clearTunerSgg(String user_seq) throws Exception;
+
+	int deleteUser(String user_seq) throws Exception;
 	
 	
 }

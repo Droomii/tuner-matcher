@@ -111,7 +111,9 @@
 				USER_SEQ.CURRVAL
 			)
 	</insert>
-	
+	<delete id="deleteUser" parameterType="String">
+	DELETE FROM USERINFO WHERE USER_SEQ=#{0}
+	</delete>
 	<insert id="addTunerSgg" parameterType="String">
 	INSERT INTO TUNER_SGG VALUES(#{0}, #{1})
 	</insert>

@@ -151,4 +151,9 @@ public class UserService implements IUserService {
 		return userMapper.deleteUser(user_seq);
 	}
 
+	@Override
+	public int updateUser(UserDTO uDTO) throws Exception {
+		return userMapper.updateUser(uDTO);
+	}
+
 }

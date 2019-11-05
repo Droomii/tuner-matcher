@@ -468,10 +468,6 @@ public class UserController {
 
 			uniqueSgg = String.join(",", sggSet);
 		}
-
-		// 조율사 초기설정
-		uDTO.setUser_type("1");
-
 		// 중첩 지역 제거한 시군구코드
 		tDTO.setSgg_code(uniqueSgg);
 
@@ -479,16 +475,6 @@ public class UserController {
 		tDTO.setId_photo_dir("dummy");
 		tDTO.setCert_dir("dummy");
 		int result;
-
-		log.info("-------tunerDTO--------");
-		log.info("addr : " + tDTO.getAddr());
-		log.info("affiliation : " + tDTO.getAffiliation());
-		log.info("sgg_code : " + tDTO.getSgg_code());
-		log.info("x : " + tDTO.getX_pos());
-		log.info("y : " + tDTO.getY_pos());
-		log.info("sido : " + tDTO.getSido_name());
-		log.info("sgg : " + tDTO.getSgg_name());
-		log.info("li : " + tDTO.getLi_name());
 
 		log.info(uniqueSgg);
 
@@ -504,6 +490,32 @@ public class UserController {
 			
 			userService.clearTunerSgg(user_seq);
 			userService.addTunerSgg(user_seq, tDTO);
+			msg = "수정에 완료되었습니다.";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		log.info(this.getClass());
+
+		return "/redirect";
+
+	}
+	
+	@RequestMapping(value = "DoUserInfoEdit")
+	public String DoUserInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@ModelAttribute UserDTO uDTO) throws Exception {
+
+		String user_seq = (String)session.getAttribute("user_seq");
+
+		uDTO.setUser_seq(user_seq);
+		int result = userService.updateUser(uDTO);
+		
+		String msg = "";
+		String url = "/myPage/MyInfo.do";
+		if (result == 0) {
+			msg = "수정에 실패하였습니다.";
+		} else {
 			msg = "수정에 완료되었습니다.";
 		}
 

@@ -41,5 +41,7 @@ public interface IUserService {
 
 	int deleteUser(String user_seq) throws Exception;
 
+	int updateUser(UserDTO uDTO) throws Exception;
+
 
 }

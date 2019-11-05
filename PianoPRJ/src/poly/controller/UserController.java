@@ -430,5 +430,90 @@ public class UserController {
 		
 		return "/user/FindResult";
 	}
+	
+	@RequestMapping(value = "DoTunerInfoEdit")
+	public String DoTunerInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO) throws Exception {
+
+		String user_seq = (String)session.getAttribute("user_seq");
+		
+		// 지역 중첩 제거 코드
+		String[] sggCodes = tDTO.getSgg_code().split(",");
+		Set<String> sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
+		String uniqueSgg;
+		if (sggSet.contains("00")) {
+			uniqueSgg = "00";
+		} else {
+			List<String> sidoCode = new ArrayList<>();
+			List<String> sggCode = new ArrayList<>();
+
+			Iterator<String> sggIter = sggSet.iterator();
+			String sggTemp;
+			while (sggIter.hasNext()) {
+				sggTemp = sggIter.next();
+				if (sggTemp.length() == 2) {
+					sidoCode.add(sggTemp);
+				} else {
+					sggCode.add(sggTemp);
+				}
+			}
+
+			for (String sido : sidoCode) {
+				for (String sgg : sggCode) {
+					if (sido.equals(sgg.substring(0, 2))) {
+						sggSet.remove(sgg);
+					}
+				}
+			}
+
+			uniqueSgg = String.join(",", sggSet);
+		}
+
+		// 조율사 초기설정
+		uDTO.setUser_type("1");
+
+		// 중첩 지역 제거한 시군구코드
+		tDTO.setSgg_code(uniqueSgg);
+
+		// 더미
+		tDTO.setId_photo_dir("dummy");
+		tDTO.setCert_dir("dummy");
+		int result;
+
+		log.info("-------tunerDTO--------");
+		log.info("addr : " + tDTO.getAddr());
+		log.info("affiliation : " + tDTO.getAffiliation());
+		log.info("sgg_code : " + tDTO.getSgg_code());
+		log.info("x : " + tDTO.getX_pos());
+		log.info("y : " + tDTO.getY_pos());
+		log.info("sido : " + tDTO.getSido_name());
+		log.info("sgg : " + tDTO.getSgg_name());
+		log.info("li : " + tDTO.getLi_name());
+
+		log.info(uniqueSgg);
+
+		uDTO.setUser_seq(user_seq);
+		tDTO.setTuner_seq(user_seq);
+		result = userService.updateTuner(uDTO, tDTO);
+
+		String msg = "";
+		String url = "/myPage/MyInfo.do";
+		if (result == 0) {
+			msg = "수정에 실패하였습니다.";
+		} else {
+			
+			userService.clearTunerSgg(user_seq);
+			userService.addTunerSgg(user_seq, tDTO);
+			msg = "수정에 완료되었습니다.";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		log.info(this.getClass());
+
+		return "/redirect";
+
+	}
 
 }

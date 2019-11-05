@@ -115,6 +115,9 @@
 	<insert id="addTunerSgg" parameterType="String">
 	INSERT INTO TUNER_SGG VALUES(#{0}, #{1})
 	</insert>
+	<delete id="clearTunerSgg" parameterType="String">
+	DELETE FROM TUNER_SGG WHERE USER_SEQ=#{0}
+	</delete>
 	<select id="checkID" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(ID) FROM USERINFO WHERE ID = #{value}
 	</select>
@@ -188,4 +191,28 @@
 	WHERE
 		TUNER_SEQ = #{0}
 	</select>
+	<update id="updateTuner" parameterType="TunerDTO">
+	UPDATE TUNER SET
+		TUNER_COMMENT=#{tuner_comment},
+		TUNER_LEVEL=#{tuner_level},
+		TUNER_EXP=#{tuner_exp},
+		ADDR=#{addr},
+		AFFILIATION=#{affiliation},
+		X_POS=#{x_pos},
+		Y_POS=#{y_pos},
+		SIDO_NAME=#{sido_name},
+		SGG_NAME=#{sgg_name},
+		EMD_NAME=#{emd_name},
+		LI_NAME=#{li_name}
+	WHERE TUNER_SEQ=#{tuner_seq}
+	</update>
+	<update id="updateUser" parameterType="UserDTO">
+	UPDATE USERINFO SET
+		EMAIL=#{email},
+		USER_NICK=#{user_nick},
+		USER_TEL=#{user_tel},
+		UPDDATE=SYSDATE,
+		UPDATER_SEQ=#{user_seq}
+	WHERE USER_SEQ=#{user_seq}
+	</update>
 </mapper>

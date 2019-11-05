@@ -133,4 +133,17 @@ public class UserService implements IUserService {
 		return userMapper.checkEditEmail(email, user_seq);
 	}
 
+	@Override
+	public int updateTuner(UserDTO uDTO, TunerDTO tDTO) throws Exception {
+		int resUser = userMapper.updateUser(uDTO);
+		int resTuner= userMapper.updateTuner(tDTO);
+		return resUser+resTuner;
+	}
+
+	@Override
+	public void clearTunerSgg(String user_seq) throws Exception {
+		userMapper.clearTunerSgg(user_seq);
+		
+	}
+
 }

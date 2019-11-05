@@ -40,6 +40,12 @@ public interface IUserMapper {
 	TunerDTO getTunerEditInfo(String user_seq) throws Exception;
 
 	UserDTO checkEditEmail(String email, String user_seq) throws Exception;
+
+	int updateUser(UserDTO uDTO) throws Exception;
+
+	int updateTuner(TunerDTO tDTO) throws Exception;
+
+	void clearTunerSgg(String user_seq) throws Exception;
 	
 	
 }

@@ -35,5 +35,9 @@ public interface IUserService {
 
 	UserDTO checkEditEmail(String email, String user_seq) throws Exception;
 
+	int updateTuner(UserDTO uDTO, TunerDTO tDTO) throws Exception;
+
+	void clearTunerSgg(String user_seq) throws Exception;
+
 
 }

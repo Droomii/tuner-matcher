@@ -1,3 +1,5 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Set"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Map"%>
 <%@page import="poly.dto.TunerDTO"%>
@@ -16,6 +18,7 @@
 	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
 	Map<String, ArrayList<String>> sggDTOList = (Map<String, ArrayList<String>>)request.getAttribute("sggDTOList");
 	String tuner_level = tDTO.getTuner_level();
+	Set<String> sggKeys = sggDTOList.keySet();
 
 %>
 
@@ -259,6 +262,58 @@
    			elem.parentElement.parentElement.getElementsByClassName('select-all')[0].click();
    		}
    	}
+   	var sggKeys = <%=sggKeys%>;
+   	var sggDTOList = <%=sggDTOList.toString().replaceAll("=", ":")%>
+   	
+   	function getDetailSggWithChecks(elem, list){
+		var query = {sidoCode : elem.value};
+		console.log("sidocode : " + elem.value);
+		$.ajax({
+			url:"/addr/GetSgg.do",
+			type:"post",
+			data:query,
+			success:function(data){
+				var detailCheckboxes = elem.parentElement.getElementsByClassName('detail-checkboxes')[0]
+				detailCheckboxes.innerHTML = data;
+				
+				var checkboxes = detailCheckboxes.querySelectorAll('input')
+		   		console.log("checkboxes");
+		   		console.log(checkboxes[0].value);
+		   		for(var i=0; i<checkboxes.length; i++){
+		   			if(list.includes(parseInt(checkboxes[i].value))){
+		   				console.log(checkboxes[i].value)
+		   				checkboxes[i].click();
+		   			}
+		   		}
+			}
+		});
+   	}
+   	
+   	window.onload = function(){
+   		console.log("sggkeys length : " +sggKeys.length)
+   		for(var i=0; i<sggKeys.length; i++){
+   			
+	   		var svcArea = document.getElementsByClassName('svc-area');
+	   		svcArea = svcArea[svcArea.length-1];
+	   		var dropdown =svcArea.getElementsByClassName('form-control')[0];
+	   		var optLen = dropdown.options.length;
+	   		console.log("optlen = " + optLen)
+	   		console.log("sggkeys : " +sggKeys[i])
+	   		for (var k=0; k<optLen; k++){
+	   			console.log("into for")
+	   		    if (dropdown.options[k].value == sggKeys[i]){
+	   		        dropdown.options[k].selected = true;
+	   		     
+	   		     	getDetailSggWithChecks(dropdown, sggDTOList[sggKeys[i]]);
+	   		     	if(i!=sggKeys.length-1){
+	   		     		addArea();
+	   		     	}
+	   		        break;
+	   		    }
+	   		}
+   		}
+   	}
+   	
     </script>
     
      <!-- addrInput popup -->

@@ -1,5 +1,9 @@
+<%@page import="java.util.Set"%>
 <%@page import="poly.dto.TunerDTO"%>
 <%@page import="poly.dto.UserDTO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- session.jsp 경로 설정 -->
@@ -9,10 +13,13 @@
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	String userTypeKor = "일반 사용자";
 	TunerDTO tDTO = null;
+	Map<String, ArrayList<String>> sggGrouped = null;
+	Set<String> sggKeys = null;
 	if(user_type.equals("1")){
 		userTypeKor = "조율사";
 		tDTO = (TunerDTO)request.getAttribute("tDTO");
-		
+		sggGrouped = (Map<String, ArrayList<String>>)request.getAttribute("sggGrouped");
+		sggKeys = sggGrouped.keySet();
 	}
 	
 %>
@@ -54,7 +61,17 @@
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
 						<p class="card-text">소속 : <%=CmmUtil.revertXSS(tDTO.getAffiliation()) %></p>
 						<p class="card-text">근무지 : <%=CmmUtil.revertXSS(tDTO.getAddr()) %></p>
+						<%if(!sggKeys.contains("전국")) { %>
 						<p class="card-text">활동지역 : </p>
+						<%} %>
+						<%String sggString;%>
+						<%for(String key : sggKeys){
+							if(key.equals("전국")){ %>
+							<p class="card-text">활동지역 : 전국</p><%break; }%>
+							<%sggString = sggGrouped.get(key).toString(); %>
+						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
+						<%} %>
+						<p class="card-text"></p>
 						<p class="card-text">한줄소개 : <%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment(), "없음")) %></p>
 						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
 						<%}else{ %>

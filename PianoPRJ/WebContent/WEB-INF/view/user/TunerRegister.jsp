@@ -78,7 +78,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off">
+						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -214,8 +214,9 @@
 								</div>
 								
 								<div class="form-group">
-									<label for="donationinput8">이력</label>
-									<textarea id="donationinput8" rows="10" class="form-control square" name="tuner_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
+								<input hidden="hidden" id="tuner_exp" name="tuner_exp">
+									<label for="temp_exp">이력</label>
+									<textarea id="temp_exp" rows="20" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
 								</div>
 							
 								<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
@@ -310,6 +311,12 @@
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
+    function doSubmit(){
+		$("#tuner_exp").val(document.getElementById('temp_exp').value.replace(/\n/g, "<br>"));
+		$("#tuner_comment").val($("#tuner_comment").val().replace(/<br>/g, " "));
+		form.submit();
+	}
+    
     // 상세 시군구코드 구하기
     function getDetailSgg(elem){
 		var query = {sidoCode : elem.value};

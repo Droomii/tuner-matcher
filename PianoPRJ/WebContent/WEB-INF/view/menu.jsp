@@ -19,7 +19,7 @@
       <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
         <%if(user_type.equals("1")){ %>
-         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
+         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
         </li>
          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
         </li>
@@ -45,21 +45,21 @@
             </ul>
           </li>
           <%} else if(user_type.equals("0")){%>
-          <li class=" nav-item"><a href="form-layout-basic.html"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">요약 정보</span></a>
+          <li class=" nav-item"><a href="form-layout-basic.html"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">홈</span></a>
           </li>
           <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">공지사항</span></a>
           </li>
           <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span class="menu-title">마이 페이지</span></a>
             <ul class="menu-content">
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 피아노</a>
+              <li><a href="/myPage/MyInfo.do" data-i18n="nav.dash.main" class="menu-item">회원 정보</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">조율 내역</a>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 피아노 정보</a>
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 리뷰</a>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">조율 현황</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">개인정보 변경</a>
+              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 리뷰</a>
               </li>
             </ul>
           </li>

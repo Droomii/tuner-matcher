@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import poly.service.IUserService;
 @RequestMapping("/myPage")
 public class MyPageController {
 
+	private Logger log = Logger.getLogger(this.getClass());
 	@Resource(name="UserService")
 	IUserService userService;
 	
@@ -41,6 +43,8 @@ public class MyPageController {
 			model.addAttribute("tDTO", tDTO);
 			List<SggDTO> sggList = new ArrayList<>();
 			Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(user_seq);
+			log.info("sggGrouped : " + sggGrouped);
+			model.addAttribute("sggGrouped", sggGrouped);
 		}
 		return "/myPage/MyInfo";
 	}

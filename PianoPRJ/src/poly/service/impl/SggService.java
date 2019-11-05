@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import poly.dto.SggDTO;
@@ -16,6 +17,8 @@ import poly.service.ISggService;
 @Service("SggService")
 public class SggService implements ISggService{
 
+	private Logger log = Logger.getLogger(this.getClass());
+	
 	@Resource(name="ISggMapper")
 	private ISggMapper sggMapper;
 
@@ -32,9 +35,12 @@ public class SggService implements ISggService{
 	public Map<String, ArrayList<String>> getTunerSgg(String user_seq) throws Exception {
 		List<SggDTO> sggList = new ArrayList<>();
 		List<SggDTO> sidoList = new ArrayList<>();
+		sidoList = sggMapper.getSido();
+		
 		Map<String, ArrayList<String>> sggGrouped = new HashMap<>();
 		// 키에 시도코드, 값에 시도 이름
 		Map<String, String> sidoMap = new HashMap<>();
+		
 		
 		for(SggDTO sido : sidoList) {
 			sidoMap.put(sido.getSggCode(), sido.getSggName());
@@ -46,7 +52,7 @@ public class SggService implements ISggService{
 			return sggGrouped;
 		}
 		
-		sidoList = sggMapper.getSido();
+		
 		
 		
 		String sidoCode;
@@ -54,7 +60,11 @@ public class SggService implements ISggService{
 		ArrayList<String> tempList = null;
 		for(SggDTO sgg : sggList) {
 			sidoCode = sgg.getSggCode().substring(0,2);
+			log.info("sidoMap : " + sidoMap);
 			sidoName = sidoMap.get(sidoCode);
+			log.info("sidoCode : " + sidoCode);
+			log.info("sidoName : " + sidoName);
+			
 			
 			tempList = sggGrouped.getOrDefault(sidoName, new ArrayList<>());
 			

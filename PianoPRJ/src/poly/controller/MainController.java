@@ -45,4 +45,12 @@ public class MainController {
 		}
 		return url;
 	}
+	
+	@RequestMapping(value="home")
+	public String home(HttpServletRequest request,
+			HttpServletResponse response,
+			ModelMap model, HttpSession session) throws Exception{
+		
+		return "/main";
+	}
 }

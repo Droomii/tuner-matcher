@@ -113,4 +113,19 @@ public class UserService implements IUserService {
 		return userMapper.getTunerInfo(user_seq);
 	}
 
+	@Override
+	public UserDTO getUserEditInfo(UserDTO uDTO) throws Exception {
+		return userMapper.getUserEditInfo(uDTO);
+	}
+
+	@Override
+	public int pwCheck(String user_seq, String password) throws Exception {
+		return userMapper.pwCheck(user_seq, password);
+	}
+
+	@Override
+	public TunerDTO getTunerEditInfo(String user_seq) throws Exception {
+		return userMapper.getTunerEditInfo(user_seq);
+	}
+
 }

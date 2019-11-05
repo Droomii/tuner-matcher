@@ -8,6 +8,11 @@
 		WHERE
 		ID = #{id} AND PASSWORD = #{password}
 	</select>
+	<select id="pwCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(1) FROM USERINFO
+		WHERE
+		USER_SEQ = #{0} AND PASSWORD = #{1}
+	</select>
 	<!-- 조율사 회원가입 -->
 	<insert id="regTuner">
 		INSERT ALL
@@ -140,6 +145,15 @@
 	WHERE
 		USER_SEQ = #{0}
 	</select>
+		<select id="getUserEditInfo" parameterType="UserDTO" resultType="UserDTO">
+	SELECT
+		EMAIL,
+		USER_NICK,
+		USER_TEL
+	FROM USERINFO
+	WHERE
+		USER_SEQ = #{user_seq}
+	</select>
 	<select id="getTunerInfo" parameterType="String" resultType="TunerDTO">
 	SELECT
 		ID_PHOTO_DIR,
@@ -148,6 +162,25 @@
 		TUNER_EXP,
 		ADDR,
 		AFFILIATION
+	FROM TUNER
+	WHERE
+		TUNER_SEQ = #{0}
+	</select>
+	<select id="getTunerEditInfo" parameterType="String" resultType="TunerDTO">
+	SELECT
+		ID_PHOTO_DIR,
+		CERT_DIR,
+		TUNER_COMMENT,
+		TUNER_LEVEL,
+		TUNER_EXP,
+		ADDR,
+		AFFILIATION,
+		X_POS,
+		Y_POS,
+		SIDO_NAME,
+		SGG_NAME,
+		EMD_NAME,
+		LI_NAME
 	FROM TUNER
 	WHERE
 		TUNER_SEQ = #{0}

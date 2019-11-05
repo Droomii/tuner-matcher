@@ -82,8 +82,8 @@
 				</div>
 				<div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
 					<span class="float-xs-right">
-						<a href="#" class="button btn btn-sm btn-info">정보 수정 </a>
-						<a href="#" class="button btn btn-sm btn-danger">회원 탈퇴 </a>
+						<a href="/myPage/MyInfoEdit.do" class="button btn btn-sm btn-info">정보 수정 </a>
+						<a href="/user/AccountDelete.do" class="button btn btn-sm btn-danger">회원 탈퇴 </a>
 						
 					</span>
 				</div>

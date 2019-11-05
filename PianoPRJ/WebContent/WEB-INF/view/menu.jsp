@@ -45,7 +45,7 @@
             </ul>
           </li>
           <%} else if(user_type.equals("0")){%>
-          <li class=" nav-item"><a href="form-layout-basic.html"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">홈</span></a>
+          <li class=" nav-item"><a href="/main.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">홈</span></a>
           </li>
           <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">공지사항</span></a>
           </li>

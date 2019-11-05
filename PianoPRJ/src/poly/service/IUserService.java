@@ -27,5 +27,11 @@ public interface IUserService {
 
 	TunerDTO getTunerInfo(String user_seq) throws Exception;
 
+	UserDTO getUserEditInfo(UserDTO uDTO) throws Exception;
+
+	int pwCheck(String user_seq, String password) throws Exception;
+
+	TunerDTO getTunerEditInfo(String user_seq) throws Exception;
+
 
 }

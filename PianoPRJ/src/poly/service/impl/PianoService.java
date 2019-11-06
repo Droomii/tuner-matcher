@@ -26,4 +26,15 @@ public class PianoService implements IPianoService{
 		return pianoMapper.getMyPianoList(user_seq);
 	}
 
+	@Override
+	public PianoDTO getPianoDetail(String piano_seq) throws Exception {
+		return pianoMapper.getPianoDetail(piano_seq);
+	}
+
+	@Override
+	public int deletePiano(String piano_seq) throws Exception {
+		
+		return pianoMapper.deletePiano(piano_seq);
+	}
+
 }

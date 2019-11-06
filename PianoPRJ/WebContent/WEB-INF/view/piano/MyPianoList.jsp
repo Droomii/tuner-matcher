@@ -49,11 +49,11 @@
 		<div class="card" onclick="location.href='/piano/PianoDetail.do?no=<%=pDTO.getPiano_seq()%>'">
 				<div class="card-body">
 					<div class="card-block">
-						<h4 class="card-title"><%=CmmUtil.nvl(pDTO.getPiano_name()) %></h4>
-						<h6 class="card-subtitle text-muted"><%=CmmUtil.nvl(pDTO.getPiano_desc(), "설명 없음")  %></h6>
+						<h4 class="card-title text-truncate"><%=CmmUtil.nvl(pDTO.getPiano_name()) %></h4>
+						<h6 class="card-subtitle text-muted text-truncate"><%=CmmUtil.nvl(pDTO.getPiano_desc(), "설명 없음")  %></h6>
 						<img class="img-fluid my-1" src="/resources/app-assets/images/carousel/09.jpg" alt="Card image cap">
-						<div class="card-text"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
-						<div class="card-text"><%=pDTO.getPiano_type().equals("0") ? "업라이트" : "그랜드"%></div>
+						<div class="card-text text-truncate"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
+						<div class="card-text "><%=pDTO.getPiano_type().equals("0") ? "업라이트" : "그랜드"%></div>
 						<div class="card-text">마지막 조율 날짜: <%=pDTO.getLast_tuned_date()!=null? pDTO.getLast_tuned_date().substring(0, 10) : "모름" %></div>
 					</div>
 				</div>

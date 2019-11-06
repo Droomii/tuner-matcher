@@ -10,4 +10,8 @@ public interface IPianoService {
 
 	List<PianoDTO> getMyPianoList(String user_seq) throws Exception;
 
+	PianoDTO getPianoDetail(String piano_seq) throws Exception;
+
+	int deletePiano(String piano_seq) throws Exception;
+
 }

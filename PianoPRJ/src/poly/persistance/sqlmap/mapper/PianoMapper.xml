@@ -62,4 +62,24 @@
 	FROM PIANO
 	WHERE OWNER_SEQ=#{0}
 	</select>
+	<select id="getPianoDetail" parameterType="String" resultType="PianoDTO">
+	SELECT
+		OWNER_SEQ,
+		PIANO_SEQ,
+		SERIAL,
+		PLAYER_TYPE,
+		ADDR,
+		PIANO_PHOTO_DIR,
+		PIANO_NAME,
+		PIANO_DESC,
+		BRAND,
+		PIANO_TYPE,
+		LAST_TUNED_DATE
+	FROM PIANO
+	WHERE PIANO_SEQ=#{0}
+	</select>
+	<delete id="deletePiano" parameterType="String">
+	DELETE FROM PIANO
+	WHERE PIANO_SEQ=#{0}
+	</delete>
 </mapper>

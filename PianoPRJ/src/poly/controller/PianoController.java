@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dto.PianoDTO;
 import poly.service.IPianoService;
@@ -70,4 +71,37 @@ public class PianoController {
 
 		return "/piano/MyPianoList";
 	}
+	
+	@RequestMapping(value="PianoDetail")
+	public String PianoDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".MyPianoList start");
+		String user_seq = (String)session.getAttribute("user_seq");
+		String piano_seq = request.getParameter("no");
+		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq);
+		model.addAttribute("pDTO", pDTO);
+		
+		return "/piano/PianoDetail";
+	
+	
+	}
+	
+	@RequestMapping(value="DeletePiano", method=RequestMethod.POST)
+	public String DeletePiano(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".DeletePiano start");
+		String piano_seq = request.getParameter("piano_seq");
+		int res = pianoService.deletePiano(piano_seq);
+		
+		String msg = "";
+		
+		if(res>0) {
+			msg = "피아노 삭제에 성공했습니다";
+		}else {
+			msg = "피아노 삭제에 실패했습니다";
+		}
+		return "/piano/MyPianoList";
+	
+	
+	}
+	
+	
 }

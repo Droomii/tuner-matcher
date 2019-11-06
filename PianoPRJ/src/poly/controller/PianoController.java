@@ -98,7 +98,10 @@ public class PianoController {
 		}else {
 			msg = "피아노 삭제에 실패했습니다";
 		}
-		return "/piano/MyPianoList";
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/piano/MyPianoList.do");
+		
+		return "/redirect";
 	
 	
 	}

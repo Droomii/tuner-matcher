@@ -89,7 +89,7 @@
 					<span>
 						<a href="/piano/MyPianoList.do" class="button btn btn-sm btn-info">뒤로 </a>
 						
-						<button onclick="comfirmDelete();" class="button btn btn-sm btn-danger">피아노 삭제</button>
+						<button onclick="deleteConfirm()" class="button btn btn-sm btn-danger">피아노 삭제</button>
 						<button class="button btn btn-sm btn-success">정보 수정 </button>
 						
 					</span>
@@ -101,17 +101,14 @@
 <!-- Header footer section end -->
 
         </div>
-	
-	
-	
-	
-	
-	
-	
 	</div>
 	</div>
-	<script type="text/javascript">
-	function confirmDelete(){
+	
+	<!-- footer.jsp 경로설정 -->
+	<%@include file="/WEB-INF/view/footer.jsp" %>
+	
+	<script>
+	function deleteConfirm(){
 		if(confirm("삭제하시겠습니까?")){
 			var form = document.piano_action;
 			form.action = "/piano/DeletePiano.do";
@@ -125,9 +122,5 @@
 		form.submit();
 	}
 	</script>
-	<!-- footer.jsp 경로설정 -->
-	<%@include file="/WEB-INF/view/footer.jsp" %>
-	
-	
 </body>
 </html>

@@ -11,7 +11,7 @@ public class CmmUtil {
 		} else {
 			res = str;
 		}
-		return res;
+		return revertXSS(res);
 	}
 
 	public static String nvl(String str) {

@@ -387,6 +387,7 @@
 			document.form.x_pos.value = entX;
 			document.form.y_pos.value = entY;
 			$('#addr').attr("readonly", "readonly");
+			$("#addr").focusout();
 		}
 	</script>
   </body>

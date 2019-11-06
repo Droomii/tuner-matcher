@@ -11,7 +11,13 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
 <head>
-
+<style>
+	.card:hover{
+		background-color:rgb(219, 231, 255);
+		border-color:rgb(219, 231, 255);
+		cursor : pointer;
+	}
+</style>
 <meta charset="UTF-8">
 <title>페이지 타이틀</title>
 <!-- header.jsp 경로 설정 -->
@@ -32,15 +38,21 @@
         </div>
 	<div class="content-body">
 	<div class="row match-height">
+	<%if(pList.size()==0) {%>
+	<div class="text-xs-center" style="color:rgb(100,100,100)">
+	<div><i class="icon-android-alert" style="font-size:10rem;"></i></div>
+	<div style="font-size:2rem;">등록된 피아노가 없습니다.</div>
+	</div>
+	<%}else{ %>
 		<%for(PianoDTO pDTO : pList){ %>
 		<div class="col-xl-3">
-		<div class="card">
+		<div class="card" onclick="location.href='/piano/PianoDetail.do?no=<%=pDTO.getPiano_seq()%>'">
 				<div class="card-body">
 					<div class="card-block">
 						<h4 class="card-title"><%=CmmUtil.nvl(pDTO.getPiano_name()) %></h4>
 						<h6 class="card-subtitle text-muted"><%=CmmUtil.nvl(pDTO.getPiano_desc(), "설명 없음")  %></h6>
 						<img class="img-fluid my-1" src="/resources/app-assets/images/carousel/09.jpg" alt="Card image cap">
-						<div class="card-text"><%=pDTO.getBrand() %></div>
+						<div class="card-text"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 						<div class="card-text"><%=pDTO.getPiano_type().equals("0") ? "업라이트" : "그랜드"%></div>
 						<div class="card-text">마지막 조율 날짜: <%=pDTO.getLast_tuned_date()!=null? pDTO.getLast_tuned_date().substring(0, 10) : "모름" %></div>
 					</div>
@@ -48,6 +60,7 @@
 			</div>
 			</div>
 			<%} %>
+		<%} %>
 		</div>
 	</div>
 	</div>

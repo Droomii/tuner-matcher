@@ -42,7 +42,7 @@ public class PianoController {
 		int res;
 		res = pianoService.insertPiano(pDTO);
 		String msg = "";
-		String url = "/index.do";
+		String url = "/piano/MyPianoList.do";
 		if(res>0) {
 			msg = "피아노 등록에 성공했습니다";
 		}else {
@@ -66,12 +66,6 @@ public class PianoController {
 			log.info("plist is null!!");
 			pList = new ArrayList<>();
 		}
-		
-		PianoDTO pDTO = pList.get(0);
-		log.info(CmmUtil.nvl(pDTO.getPiano_seq(), "null"));
-		log.info(CmmUtil.nvl(pDTO.getPiano_name(), "null"));
-		log.info(CmmUtil.nvl(pDTO.getPiano_desc(), "null"));
-		log.info(CmmUtil.nvl(pDTO.getPiano_type(), "null"));
 		model.addAttribute("pList", pList);
 
 		return "/piano/MyPianoList";

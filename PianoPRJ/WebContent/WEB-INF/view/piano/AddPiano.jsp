@@ -165,7 +165,7 @@
 									<label for="addr">피아노 주소<span class="red">*</span></label>
 									<div class="input-group">
 										<input type="text" name="addr" id="addr" class="form-control" placeholder="주소를 검색해주세요" required  data-error="필수 입력사항입니다">
-										<div class="input-group-btn"><button type="button" class="btn btn-primary float-xs-right">주소검색</button></div>
+										<div class="input-group-btn"><button type="button" id="addrButton" class="btn btn-primary float-xs-right">주소검색</button></div>
 									</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
@@ -284,6 +284,8 @@
 			document.form.x_pos.value = entX;
 			document.form.y_pos.value = entY;
 			document.form.sgg_code.value = admCd;
+			$('#addr').attr("readonly", "readonly");
+			$("#addr").focusout();
 		}
 	</script>
 

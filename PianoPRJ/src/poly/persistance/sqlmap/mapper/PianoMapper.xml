@@ -51,4 +51,15 @@
 		#{owner_seq}
 	)
 	</insert>
+	<select id="getMyPianoList" parameterType="String" resultType="PianoDTO">
+	SELECT
+		PIANO_SEQ,
+		PIANO_NAME,
+		PIANO_DESC,
+		BRAND,
+		PIANO_TYPE,
+		LAST_TUNED_DATE
+	FROM PIANO
+	WHERE OWNER_SEQ=#{0}
+	</select>
 </mapper>

@@ -1,5 +1,7 @@
 package poly.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,11 @@ public class PianoService implements IPianoService{
 	@Override
 	public int insertPiano(PianoDTO pDTO) throws Exception {
 		return pianoMapper.insertPiano(pDTO);
+	}
+
+	@Override
+	public List<PianoDTO> getMyPianoList(String user_seq) throws Exception {
+		return pianoMapper.getMyPianoList(user_seq);
 	}
 
 }

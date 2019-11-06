@@ -200,5 +200,10 @@ public class PianoDTO {
 	public void setUpdseq(String updseq) {
 		this.updseq = updseq;
 	}
+	
+	@Override
+	public String toString() {
+		return "piano name : " + this.piano_name;
+	}
 
 }

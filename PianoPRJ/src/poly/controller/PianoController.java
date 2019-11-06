@@ -1,5 +1,8 @@
 package poly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import poly.dto.PianoDTO;
 import poly.service.IPianoService;
+import poly.util.CmmUtil;
 @RequestMapping(value="piano/")
 
 @Controller
@@ -50,5 +54,26 @@ public class PianoController {
 		return "/redirect";
 		
 		
+	}
+	
+	@RequestMapping(value="MyPianoList")
+	public String MyPianoList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".MyPianoList start");
+		String user_seq = (String)session.getAttribute("user_seq");
+		
+		List<PianoDTO> pList = pianoService.getMyPianoList(user_seq);
+		if(pList==null) {
+			log.info("plist is null!!");
+			pList = new ArrayList<>();
+		}
+		
+		PianoDTO pDTO = pList.get(0);
+		log.info(CmmUtil.nvl(pDTO.getPiano_seq(), "null"));
+		log.info(CmmUtil.nvl(pDTO.getPiano_name(), "null"));
+		log.info(CmmUtil.nvl(pDTO.getPiano_desc(), "null"));
+		log.info(CmmUtil.nvl(pDTO.getPiano_type(), "null"));
+		model.addAttribute("pList", pList);
+
+		return "/piano/MyPianoList";
 	}
 }

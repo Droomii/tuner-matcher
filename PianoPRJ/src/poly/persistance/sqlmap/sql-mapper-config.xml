@@ -8,5 +8,6 @@
 		<typeAlias type="poly.dto.SggDTO" alias="SggDTO"/>
 		<typeAlias type="poly.dto.UserDTO" alias="UserDTO"/>
 		<typeAlias type="poly.dto.TunerDTO" alias="TunerDTO"/>
+		<typeAlias type="poly.dto.PianoDTO" alias="PianoDTO"/>
     </typeAliases>
 </configuration>

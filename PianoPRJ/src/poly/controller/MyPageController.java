@@ -149,9 +149,5 @@ public class MyPageController {
 		
 	}
 	
-	@RequestMapping(value="AddPiano")
-	public String AddPiano(HttpServletRequest request, ModelMap model, HttpSession session) {
-		
-		return "/piano/AddPiano";
-	}
+	
 }

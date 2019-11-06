@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IPianoMapper">
+	<insert id="insertPiano">
+	INSERT INTO PIANO(
+		PIANO_SEQ,
+		OWNER_SEQ,
+		PIANO_NAME,
+		PIANO_DESC,
+		BRAND,
+		SERIAL,
+		PIANO_TYPE,
+		ADDR,
+		PLAYER_TYPE,
+		LAST_TUNED_DATE,
+		PIANO_PHOTO_DIR,
+		SGG_CODE,
+		X_POS,
+		Y_POS,
+		SIDO_NAME,
+		SGG_NAME,
+		EMD_NAME,
+		LI_NAME,
+		REGDATE,
+		REGSEQ,
+		UPDDATE,
+		UPDSEQ
+	)VALUES(
+		PIANO_SEQ.NEXTVAL,
+		#{owner_seq},
+		#{piano_name},
+		#{piano_desc},
+		#{brand},
+		#{serial},
+		#{piano_type},
+		#{addr},
+		#{player_type},
+		#{last_tuned_date},
+		#{piano_photo_dir},
+		#{sgg_code},
+		#{x_pos},
+		#{y_pos},
+		#{sido_name},
+		#{sgg_name},
+		#{emd_name},
+		#{li_name},
+		SYSDATE,
+		#{owner_seq},
+		SYSDATE,
+		#{owner_seq}
+	)
+	</insert>
+</mapper>

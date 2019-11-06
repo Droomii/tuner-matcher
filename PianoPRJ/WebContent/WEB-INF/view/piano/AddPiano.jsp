@@ -37,7 +37,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" id="form" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" id="form" role="form" name="form" class="form" action="/piano/DoAddPiano.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<div class="form-body">
 								<div class="row">
 								<div class="col-xs-12 red" style="margin-bottom:1em">*표시된 항목은 필수 입력사항입니다.</div>
@@ -53,8 +53,8 @@
 									
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="piano_brand">피아노 브랜드<span class="red">*</span></label>
-											<input type="text" id="piano_brand" class="form-control" maxlength="20" placeholder="예) 삼익, 영창, 야마하" name="piano_brand" required>
+											<label for="brand">피아노 브랜드<span class="red">*</span></label>
+											<input type="text" id="brand" class="form-control" maxlength="20" placeholder="예) 삼익, 영창, 야마하" name="brand" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -79,8 +79,28 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="piano_serial">피아노 일련번호</label>
-											<input type="text" id="piano_serial" class="form-control" placeholder="피아노 스케일(덮개를 열면 보이는 철재 구조물)에 적인 일련번호를 적어주세요" name="piano_serial">
+											<label for="serial">피아노 일련번호</label><a><i class="icon-help-circled" style="font-size:1.2rem;margin-left:0.5rem;color:rgb(31, 189, 0)" data-toggle="modal" data-target="#serial_help"></i></a>
+											<!-- modal -->
+											<div class="modal fade text-xs-left" id="serial_help" tabindex="-1" role="dialog" aria-labelledby="serialHelpLabel" style="display: none;" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+												<div class="modal-content">
+												  <div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													  <span aria-hidden="true">×</span>
+													</button>
+													<h4 class="modal-title" id="serialHelpLabel">피아노 일련번호 예시</h4>
+												  </div>
+												  <div class="modal-body">
+													<img alt="피아노 일련번호 예시" src="/resources/images/serial_help.png" style="max-width:100%;max-height:100%">
+												  </div>
+												  <div class="modal-footer">
+													<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">닫기</button>
+												  </div>
+												</div>
+											  </div>
+											</div>
+											<!-- /modal -->
+											<input type="text" id="serial" class="form-control" placeholder="피아노 스케일(덮개를 열면 보이는 철재 구조물)에 적인 일련번호를 적어주세요" name="serial">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -95,7 +115,27 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label>피아노 타입</label>
+											<label>피아노 타입</label><a><i class="icon-help-circled" style="font-size:1.2rem;margin-left:0.5rem;color:rgb(31, 189, 0)" data-toggle="modal" data-target="#type_help"></i></a>
+											<!-- modal -->
+											<div class="modal fade text-xs-left" id="type_help" tabindex="-1" role="dialog" aria-labelledby="typeHelpLabel" style="display: none;" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+												<div class="modal-content">
+												  <div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													  <span aria-hidden="true">×</span>
+													</button>
+													<h4 class="modal-title" id="typeHelpLabel">피아노 타입 예시</h4>
+												  </div>
+												  <div class="modal-body">
+													<img alt="피아노 일련번호 예시" src="/resources/images/type_help.png" style="max-width:100%;max-height:100%">
+												  </div>
+												  <div class="modal-footer">
+													<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">닫기</button>
+												  </div>
+												</div>
+											  </div>
+											</div>
+											<!-- /modal -->
 											<div class="input-group">
 												<label class="display-inline-block custom-control custom-radio ml-1">
 													<input type="radio" name="piano_type" value="0" checked="checked" class="custom-control-input">
@@ -122,15 +162,16 @@
 								</div>
 								</div>
 								<div class="form-group has-feedback" data-toggle="tooltip" data-placement="top" data-original-title="피아노 위치에 따라 주변 조율사에게 노출됩니다" onclick="goPopup();">
-									<label for="piano_addr">피아노 주소<span class="red">*</span></label>
+									<label for="addr">피아노 주소<span class="red">*</span></label>
 									<div class="input-group">
-										<input type="text" name="piano_addr" id="piano_addr" class="form-control" placeholder="주소를 검색해주세요" required  data-error="필수 입력사항입니다">
+										<input type="text" name="addr" id="addr" class="form-control" placeholder="주소를 검색해주세요" required  data-error="필수 입력사항입니다">
 										<div class="input-group-btn"><button type="button" class="btn btn-primary float-xs-right">주소검색</button></div>
 									</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 								
+								<input type="text" name="sgg_code" id="sgg_code" hidden="hidden">
 								<input type="text" name="sido_name" id="sido_name" hidden="hidden">
 								<input type="text" name="sgg_name" id="sgg_name" hidden="hidden">
 								<input type="text" name="emd_name" id="emd_name" hidden="hidden">
@@ -140,7 +181,7 @@
 							</div><!-- end of form body -->
 							<div class="form-actions text-center">
 							<button type="submit" class="btn btn-primary">
-									<i class="icon-check2 d-flex"></i> 가입신청
+									<i class="icon-check2 d-flex"></i> 등록
 								</button>
 								<button type="button" class="btn btn-warning mr-1 d-flex">
 									<i class="icon-cross2"></i> 취소
@@ -242,6 +283,7 @@
 			document.form.li_name.value = liNm;
 			document.form.x_pos.value = entX;
 			document.form.y_pos.value = entY;
+			document.form.sgg_code.value = admCd;
 		}
 	</script>
 

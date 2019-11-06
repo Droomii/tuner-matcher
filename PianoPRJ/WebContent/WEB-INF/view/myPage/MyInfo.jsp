@@ -71,7 +71,7 @@
 							<%sggString = sggGrouped.get(key).toString(); %>
 						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
 						<%} %>
-						<p class="card-text"></p>
+						<br>
 						<p class="card-text">한줄소개 : <%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment(), "없음")) %></p>
 						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
 						<%}else{ %>

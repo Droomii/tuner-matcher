@@ -136,7 +136,6 @@ public class MyPageController {
 
 			model.addAttribute("sList", sList);
 			
-			
 			Map<String, ArrayList<String>> sggDTOList = sggService.getTunerSggCode(user_seq);
 			model.addAttribute("sggDTOList", sggDTOList);
 			return "/myPage/TunerInfoEdit";
@@ -148,5 +147,11 @@ public class MyPageController {
 		
 		
 		
+	}
+	
+	@RequestMapping(value="AddPiano")
+	public String AddPiano(HttpServletRequest request, ModelMap model, HttpSession session) {
+		
+		return "/piano/AddPiano";
 	}
 }

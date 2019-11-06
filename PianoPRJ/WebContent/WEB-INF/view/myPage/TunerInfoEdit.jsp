@@ -47,6 +47,7 @@
 	<div class="app-content content container-fluid">
       <div class="content-wrapper">
         <div class="content-header row">
+        <h4 class="card-title">개인정보 수정</h4>
         </div>
         <div class="content-body"><section class="container">
     <div class="col-md-8 offset-md-2 col-xs-12 box-shadow-2 p-0">

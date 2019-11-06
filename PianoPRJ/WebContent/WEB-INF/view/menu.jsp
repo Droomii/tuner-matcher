@@ -53,7 +53,7 @@
             <ul class="menu-content">
               <li><a href="/myPage/MyInfo.do" data-i18n="nav.dash.main" class="menu-item">회원 정보</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 피아노 정보</a>
+              <li><a href="/myPage/AddPiano.do" data-i18n="nav.dash.main" class="menu-item">내 피아노 정보</a>
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
               </li>

@@ -26,7 +26,7 @@
 					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/UserRegister.do'">일반 회원가입</button>
 					<button type="button" class="btn btn-primary btn-block" onclick="window.location.href='/user/TunerRegister.do'">조율사 회원가입</button>
 				</div>
-				<p class="text-xs-center">이미 회원이신가요 ? <a href="login-simple.html" class="card-link">로그인</a></p>
+				<p class="text-xs-center">이미 회원이신가요 ? <a href="/user/UserLogin.do" class="card-link">로그인</a></p>
 			</div>
 		</div>
 	</div>

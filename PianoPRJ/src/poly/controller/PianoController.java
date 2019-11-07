@@ -75,7 +75,6 @@ public class PianoController {
 	@RequestMapping(value="PianoDetail")
 	public String PianoDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".MyPianoList start");
-		String user_seq = (String)session.getAttribute("user_seq");
 		String piano_seq = request.getParameter("no");
 		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq);
 		model.addAttribute("pDTO", pDTO);
@@ -97,6 +96,38 @@ public class PianoController {
 			msg = "피아노 삭제에 성공했습니다";
 		}else {
 			msg = "피아노 삭제에 실패했습니다";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/piano/MyPianoList.do");
+		
+		return "/redirect";
+	
+	
+	}
+	
+	@RequestMapping(value="EditPiano", method=RequestMethod.POST)
+	public String EditPiano(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".EditPiano start");
+		String piano_seq = request.getParameter("piano_seq");
+		PianoDTO pDTO = pianoService.getPianoEditInfo(piano_seq);
+		model.addAttribute("pDTO", pDTO);
+		
+		return "/piano/EditPiano";
+	
+	
+	}
+	
+	@RequestMapping(value="DoEditPiano", method=RequestMethod.POST)
+	public String DoEditPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO) throws Exception {
+		log.info(this.getClass().getName() + ".DoEditPiano start");
+		String user_seq = (String)session.getAttribute("user_seq");
+		pDTO.setOwner_seq(user_seq);
+		String msg = "";
+		int res = pianoService.updatePiano(pDTO);
+		if(res>0) {
+			msg = "피아노 수정에 성공했습니다";
+		}else {
+			msg = "피아노 수정에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", "/piano/MyPianoList.do");

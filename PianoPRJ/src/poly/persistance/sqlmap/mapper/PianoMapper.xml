@@ -82,4 +82,48 @@
 	DELETE FROM PIANO
 	WHERE PIANO_SEQ=#{0}
 	</delete>
+	<select id="getPianoEditInfo" parameterType="string" resultType="PianoDTO">
+	SELECT
+		PIANO_SEQ,
+		OWNER_SEQ,
+		PIANO_NAME,
+		PIANO_DESC,
+		BRAND,
+		SERIAL,
+		PIANO_TYPE,
+		ADDR,
+		PLAYER_TYPE,
+		LAST_TUNED_DATE,
+		SGG_CODE,
+		X_POS,
+		Y_POS,
+		SIDO_NAME,
+		SGG_NAME,
+		EMD_NAME,
+		LI_NAME
+	FROM PIANO
+	WHERE PIANO_SEQ = #{piano_seq}
+	</select>
+	<update id="updatePiano" parameterType="PianoDTO">
+	UPDATE PIANO SET
+		PIANO_NAME = #{piano_name},
+		PIANO_DESC = #{piano_desc},
+		BRAND = #{brand},
+		SERIAL = #{serial},
+		PIANO_TYPE = #{piano_type},
+		ADDR = #{addr},
+		PLAYER_TYPE = #{player_type},
+		LAST_TUNED_DATE = #{last_tuned_date},
+		SGG_CODE = #{sgg_code},
+		X_POS = #{x_pos},
+		Y_POS = #{y_pos},
+		SIDO_NAME = #{sido_name},
+		SGG_NAME = #{sgg_name},
+		EMD_NAME = #{emd_name},
+		LI_NAME = #{li_name},
+		UPDDATE = SYSDATE,
+		UPDSEQ = #{owner_seq}
+	WHERE PIANO_SEQ = #{piano_seq}
+	</update>
+	
 </mapper>

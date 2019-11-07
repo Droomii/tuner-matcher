@@ -37,4 +37,15 @@ public class PianoService implements IPianoService{
 		return pianoMapper.deletePiano(piano_seq);
 	}
 
+	@Override
+	public int updatePiano(PianoDTO pDTO) throws Exception {
+		return pianoMapper.updatePiano(pDTO);
+		
+	}
+
+	@Override
+	public PianoDTO getPianoEditInfo(String piano_seq) throws Exception {
+		return pianoMapper.getPianoEditInfo(piano_seq);
+	}
+
 }

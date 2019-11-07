@@ -90,7 +90,7 @@
 						<a href="/piano/MyPianoList.do" class="button btn btn-sm btn-info">뒤로 </a>
 						
 						<button onclick="deleteConfirm()" class="button btn btn-sm btn-danger">피아노 삭제</button>
-						<button class="button btn btn-sm btn-success">정보 수정 </button>
+						<button onclick="editPiano()" class="button btn btn-sm btn-success">정보 수정 </button>
 						
 					</span>
 				</div>
@@ -116,7 +116,7 @@
 		}
 	}
 	
-	function EditPiano(){
+	function editPiano(){
 		var form = document.piano_action;
 		form.action = "/piano/EditPiano.do";
 		form.submit();

@@ -113,11 +113,11 @@ public class PianoDTO {
 		this.piano_photo_dir = piano_photo_dir;
 	}
 
-	public String getsgg_code() {
+	public String getSgg_code() {
 		return sgg_code;
 	}
 
-	public void setsgg_code(String sgg_code) {
+	public void setSgg_code(String sgg_code) {
 		this.sgg_code = sgg_code;
 	}
 
@@ -200,10 +200,4 @@ public class PianoDTO {
 	public void setUpdseq(String updseq) {
 		this.updseq = updseq;
 	}
-	
-	@Override
-	public String toString() {
-		return "piano name : " + this.piano_name;
-	}
-
 }

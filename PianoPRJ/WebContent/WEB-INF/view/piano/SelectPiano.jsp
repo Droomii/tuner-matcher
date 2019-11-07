@@ -7,7 +7,6 @@
 
 <%
 	List<PianoDTO> pList = (List<PianoDTO>)request.getAttribute("pList"); 
-	String proc = CmmUtil.nvl((String)session.getAttribute("proc"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -20,16 +19,7 @@
 	}
 </style>
 <meta charset="UTF-8">
-<%if(proc.equals("public")){%>
-	<title>공개 요청하기</title>
-<%}else if(proc.equals("private")){%>
-<title>1:1 요청</title>
-	
-<%}else{%>
-<title>내 피아노 목록</title>
-<%} %>
-
-
+<title>공개 요청</title>
 <!-- header.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/header.jsp" %>
 </head>
@@ -40,16 +30,7 @@
 	<div class="content-wrapper">
 	<div class="content-header row">
           <div class="content-header-left col-xs-7">
-            
-            <%if(proc.equals("public")){%>
-				<h2 class="content-header-title">공개 요청하기</h2>
-				<h4 class="content-header-title">서비스를 받고자 하는 피아노를 선택해주세요</h4>
-			<%}else if(proc.equals("private")){%>
-			<h2 class="content-header-title">1:1 요청하기</h2>
-				<h4 class="content-header-title">서비스를 받고자 하는 피아노를 선택해주세요</h4>
-			<%}else{%>
-			<h2 class="content-header-title">내 피아노 정보</h2>
-			<%} %>
+            <h2 class="content-header-title">공개 요청서 작성</h2>
           </div>
           <div class="content-header-right col-xs-5">
             <button onclick="location.href='/piano/AddPiano.do';" class="btn btn-success float-xs-right">피아노 추가하기</button>

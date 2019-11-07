@@ -68,7 +68,7 @@ public class PianoController {
 			pList = new ArrayList<>();
 		}
 		model.addAttribute("pList", pList);
-
+		session.removeAttribute("proc");
 		return "/piano/MyPianoList";
 	}
 	
@@ -136,6 +136,8 @@ public class PianoController {
 	
 	
 	}
+	
+	
 	
 	
 }

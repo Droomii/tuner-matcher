@@ -65,7 +65,7 @@
           </li>
           <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span data-i18n="nav.dash.main" class="menu-title">조율하기</span></a>
             <ul class="menu-content">
-              <li><a href="/piano/NewPublicReq.do" data-i18n="nav.dash.main" class="menu-item">공개 요청</a>
+              <li><a href="/req/NewPublicReq.do" data-i18n="nav.dash.main" class="menu-item">공개 요청</a>
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">1:1 요청</a>
               </li>

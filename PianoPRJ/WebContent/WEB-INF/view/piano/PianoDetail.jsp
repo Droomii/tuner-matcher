@@ -135,9 +135,9 @@
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/deal/<%=proc %>ReqSubmit.do" method="post" autocomplete="off">
+					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/<%=proc %>ReqSubmit.do" method="post" autocomplete="off">
 							<input hidden="hidden" id="req_content" name="req_content">
-							<input value="<%=pDTO.getPiano_seq() %>" name="piano_seq">
+							<input value="<%=pDTO.getPiano_seq() %>" name="piano_seq" hidden>
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="req_title">요청서 제목</label>

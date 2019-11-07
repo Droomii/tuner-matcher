@@ -43,6 +43,7 @@ public class MainController {
 		}else {
 			url="/main";
 		}
+		session.removeAttribute("proc");
 		return url;
 	}
 	

@@ -12,7 +12,6 @@
 			REGDATE,
 			NOTICE_COUNT
 		FROM NOTICE
-		WHERE TOP&lt;&gt;'Y'
 		ORDER BY NOTICE_SEQ DESC
 	</select>
 	<select id="getTopNoticeList" resultType="NoticeDTO">

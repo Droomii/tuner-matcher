@@ -86,4 +86,9 @@ public class ReqController {
 		
 		
 	}
+	
+	@RequestMapping(value = "UserPublicReqList")
+	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+		
+	}
 }

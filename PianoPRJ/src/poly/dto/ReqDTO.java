@@ -11,7 +11,21 @@ public class ReqDTO {
 	private String regdate;
 	private String upddate;
 	private String updater_seq;
+	private String piano_name;
+	private String bids;
 	
+	public String getBids() {
+		return bids;
+	}
+	public void setBids(String bids) {
+		this.bids = bids;
+	}
+	public String getPiano_name() {
+		return piano_name;
+	}
+	public void setPiano_name(String piano_name) {
+		this.piano_name = piano_name;
+	}
 	public String getReq_seq() {
 		return req_seq;
 	}

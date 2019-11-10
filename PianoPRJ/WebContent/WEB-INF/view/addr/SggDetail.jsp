@@ -10,7 +10,7 @@
 
 %>
 	<%if(sggList.size()>1){ %>
-	<label class="checkbox-inline col-xs-4 col-md-3"><input type="checkbox" name="sgg_code" class="sgg-detail select-all" value=<%=sidoCode %> onclick="toggleAll(this);">전체</label>
+	<label class="checkbox-inline col-xs-4 col-md-3"><input type="checkbox" name="sgg_code" class="sgg-detail select-all sido-<%=sidoCode %>" value=<%=sidoCode %> onclick="toggleAll(this);">전체</label>
 	    <%for(SggDTO sDTO : sggList){  %>
 	    
 	    <label class="checkbox-inline col-xs-4 col-md-3"><input onclick="checkAllChecked(this);" type="checkbox" name="sgg_code" class="sgg-detail sub-detail" value=<%=sDTO.getSggCode()%>><%=sDTO.getSggName()%></label>

@@ -215,6 +215,10 @@
     
     // 상세 시군구코드 구하기
     function getDetailSgg(elem){
+    	if(document.getElementsByClassName('sido-'+elem.value).length!=0){
+			alert("이미 선택한 시도입니다");
+			return;
+		}
 		var query = {sidoCode : elem.value};
 		console.log("sidocode : " + elem.value);
 		$.ajax({

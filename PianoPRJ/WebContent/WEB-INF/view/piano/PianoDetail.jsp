@@ -224,6 +224,10 @@
 	}
 	
 	function getHour(elem){
+		if(document.getElementsByClassName(elem.value).length!=0){
+			alert("이미 선택한 날짜입니다");
+			return;
+		}
 		var query = {date : elem.value};
 		console.log("date : " + elem.value);
 		$.ajax({

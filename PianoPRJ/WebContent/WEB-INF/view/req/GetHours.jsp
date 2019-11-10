@@ -18,7 +18,7 @@
 %>
 <div class="date-option">
 <hr>
-<div class="card-text full-date text-bold-600"><%=date %>(<%=weekdays[dayOfWeek-1] %>)</div>
+<div class="card-text full-date text-bold-600 <%=date%>"><%=date %>(<%=weekdays[dayOfWeek-1] %>)</div>
 	<div class="row">
 		<div class="col-xs-3">
 		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h10">10시</label>

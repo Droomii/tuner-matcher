@@ -1,7 +1,9 @@
 package poly.service.impl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -32,6 +34,22 @@ public class ReqService implements IReqService {
 	public ReqDTO getReqDetail(String req_seq) throws Exception {
 		ReqDTO rDTO =reqMapper.getReqDetail(req_seq);
 		return rDTO;
+	}
+
+	@Override
+	public Map<String, List<String>> parseDates(String pref_date) throws Exception {
+		Map<String, List<String>> rMap = new HashMap<String, List<String>>();
+		String[] prefDates = pref_date.split(",");
+		String[] dateHour;
+		List<String> hours = null;
+		for(String s : prefDates) {
+			dateHour = s.split("h");
+			hours = rMap.getOrDefault(dateHour[0], new ArrayList<>());
+			hours.add(dateHour[1]);
+			rMap.put(dateHour[0], hours);
+			hours = null;
+		}
+		return rMap;
 	}
 
 }

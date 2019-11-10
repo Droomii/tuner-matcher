@@ -15,4 +15,6 @@ public interface IReqService {
 
 	Map<String, List<String>> parseDates(String pref_date) throws Exception;
 
+	int deleteReq(String req_seq) throws Exception;
+
 }

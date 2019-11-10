@@ -1,3 +1,4 @@
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
@@ -114,15 +115,18 @@
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">가능일시</div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc">
-									<%for(String s : prefDates.keySet()){
-									List<String> hours = prefDates.get(s);
-									Date d = new SimpleDateFormat("yyyy-M-dd").parse(s);
-									Calendar c = Calendar.getInstance();
-									c.setTime(d);
-									int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+									<%
+									String s = null;
+									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
+										s = keyIter.next();
+										List<String> hours = prefDates.get(s);
+										Date d = new SimpleDateFormat("yyyy-M-dd").parse(s);
+										Calendar c = Calendar.getInstance();
+										c.setTime(d);
+										int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 									%>
-									<%=s %>(<%=weekdays[dayOfWeek] %>) : <br>
-									&nbsp;&nbsp;- <%=String.join(":00, ", hours)%>:00<br>
+									<%=s %>(<%=weekdays[dayOfWeek-1] %>) : <br>
+									&nbsp;&nbsp;- <%=String.join(":00, ", hours)%>:00<br><%if(keyIter.hasNext()){ %><br><%} %>
 									<%} %>
 									</div>
 								</div>
@@ -132,6 +136,7 @@
 				</div>
 				<form method="post" hidden="hidden" name="req_action">
 					<input value="<%=rDTO.getReq_seq() %>" name="req_seq">
+					<input value="<%=rDTO.getReq_type() %>" name="req_type">
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
@@ -166,7 +171,7 @@
 	
 	<script>
 	function deleteConfirm(){
-		if(confirm("삭제하시겠습니까?")){
+		if(confirm("요청서를 삭제하시겠습니까?")){
 			var form = document.req_action;
 			form.action = "/req/DeleteReq.do";
 			form.submit();

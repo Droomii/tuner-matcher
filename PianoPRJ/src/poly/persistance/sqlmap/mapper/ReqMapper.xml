@@ -59,5 +59,8 @@
 	WHERE
 		REQ_SEQ=#{0}
 	</select>
+	<delete id="deleteReq" parameterType="String">
+	DELETE FROM REQUEST WHERE REQ_SEQ=#{0}
+	</delete>
 	
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
@@ -115,6 +116,29 @@ public class ReqController {
 		model.addAttribute("prefDates", prefDates);
 		
 		return "/req/ReqDetail";
+	
+	
+	}
+	
+	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
+	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".DeleteReq start");
+		String req_seq = request.getParameter("req_seq");
+		String req_type = request.getParameter("req_type");
+		int res = reqService.deleteReq(req_seq);
+		
+		String msg = "";
+		
+		if(res>0) {
+			msg = "요청서 삭제에 성공했습니다";
+		}else {
+			msg = "요청서 삭제에 실패했습니다";
+		}
+		String type = req_type.equals("0") ? "Public" : "Private";
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/req/User" + type + "ReqList.do");
+		
+		return "/redirect";
 	
 	
 	}

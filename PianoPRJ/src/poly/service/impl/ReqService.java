@@ -52,4 +52,9 @@ public class ReqService implements IReqService {
 		return rMap;
 	}
 
+	@Override
+	public int deleteReq(String req_seq) throws Exception {
+		return reqMapper.deleteReq(req_seq);
+	}
+
 }

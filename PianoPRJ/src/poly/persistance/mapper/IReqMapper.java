@@ -13,5 +13,7 @@ public interface IReqMapper {
 	List<ReqDTO> getPublicReqList(String user_seq) throws Exception;
 
 	ReqDTO getReqDetail(String req_seq) throws Exception;
+
+	int deleteReq(String req_seq) throws Exception;
 	
 }

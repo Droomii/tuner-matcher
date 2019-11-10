@@ -1,5 +1,6 @@
 package poly.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,6 +26,12 @@ public class ReqService implements IReqService {
 	public List<ReqDTO> getPublicReqList(String user_seq) throws Exception {
 		return reqMapper.getPublicReqList(user_seq);
 		
+	}
+
+	@Override
+	public ReqDTO getReqDetail(String req_seq) throws Exception {
+		ReqDTO rDTO =reqMapper.getReqDetail(req_seq);
+		return rDTO;
 	}
 
 }

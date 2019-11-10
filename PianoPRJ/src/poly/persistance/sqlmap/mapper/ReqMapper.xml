@@ -45,7 +45,20 @@
 	WHERE
 		USER_SEQ=#{0}
 		AND  R.PIANO_SEQ=P.PIANO_SEQ
+		AND R.REQ_TYPE=0
 	</select>
-	
+	<select id="getReqDetail" parameterType="String" resultType="ReqDTO">
+	SELECT
+		REQ_SEQ,
+		USER_SEQ,
+		PIANO_SEQ,
+		REQ_CONTENT,
+		REQ_TYPE,
+		PREF_DATE
+	FROM
+		REQUEST
+	WHERE
+		REQ_SEQ=#{0}
+	</select>
 	
 </mapper>

@@ -21,30 +21,30 @@
 <div class="card-text full-date text-bold-600"><%=date %>(<%=weekdays[dayOfWeek-1] %>)</div>
 	<div class="row">
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-10">10시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h10">10시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-11">11시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h11">11시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-12">12시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h12">12시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-13">13시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h13">13시</label>
 		</div>
 	</div>
 		<div class="row">
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-14">14시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h14">14시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-15">15시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h15">15시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-16">16시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h16">16시</label>
 		</div>
 		<div class="col-xs-3">
-		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>-17">17시</label>
+		<label class="checkbox-inline"><input type="checkbox" name="pref_date" class="pref-hour" value="<%=date%>h17">17시</label>
 		
 		</div>
 		<div class="col-xs-12">

@@ -80,7 +80,7 @@
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
-							<div class="row d-flex" style="display:flex;">
+							<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" >브랜드</div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 								</div>

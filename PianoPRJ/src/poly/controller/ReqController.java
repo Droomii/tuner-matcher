@@ -100,4 +100,18 @@ public class ReqController {
 		return "/req/MyReqList";
 		
 	}
+	
+	@RequestMapping(value = "ReqDetail")
+	public String Detail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".MyPianoList start");
+		String req_seq = request.getParameter("req_seq");
+		ReqDTO rDTO = reqService.getReqDetail(req_seq);
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		model.addAttribute("pDTO", pDTO);
+		model.addAttribute("rDTO", rDTO);
+		
+		return "/req/ReqDetail";
+	
+	
+	}
 }

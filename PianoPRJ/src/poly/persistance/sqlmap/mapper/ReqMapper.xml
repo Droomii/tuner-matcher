@@ -30,4 +30,22 @@
 	)
 	
 	</insert>
+	<select id="getPublicReqList" parameterType="String" resultType="ReqDTO">
+	SELECT
+		R.REQ_SEQ AS REQ_SEQ,
+		R.PIANO_SEQ AS PIANO_SEQ,
+		P.PIANO_NAME AS PIANO_NAME,
+		R.REQ_TITLE AS REQ_TITLE,
+		R.REGDATE AS REGDATE,
+		(SELECT COUNT(*) FROM DEAL GROUP BY REQ_SEQ HAVING REQ_SEQ=R.REQ_SEQ) AS BIDS
+	FROM
+		REQUEST R,
+		PIANO P,
+		DEAL D
+	WHERE
+		USER_SEQ=#{0}
+		AND  R.PIANO_SEQ=P.PIANO_SEQ
+	</select>
+	
+	
 </mapper>

@@ -1,5 +1,7 @@
 package poly.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,12 @@ public class ReqService implements IReqService {
 	@Override
 	public int insertReq(ReqDTO rDTO) throws Exception {
 		return reqMapper.insertReq(rDTO);
+	}
+
+	@Override
+	public List<ReqDTO> getPublicReqList(String user_seq) throws Exception {
+		return reqMapper.getPublicReqList(user_seq);
+		
 	}
 
 }

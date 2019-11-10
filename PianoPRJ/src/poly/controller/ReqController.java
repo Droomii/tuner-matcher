@@ -89,6 +89,15 @@ public class ReqController {
 	
 	@RequestMapping(value = "UserPublicReqList")
 	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+		String user_seq = (String)session.getAttribute("user_seq");
+		List<ReqDTO> reqList = reqService.getPublicReqList(user_seq);
+		
+		
+		if(reqList==null)
+			reqList = new ArrayList<ReqDTO>();
+		log.info(reqList.get(0).getPiano_name());
+		model.addAttribute("reqList", reqList);
+		return "/req/MyReqList";
 		
 	}
 }

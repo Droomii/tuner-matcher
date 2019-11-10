@@ -80,7 +80,7 @@ public class ReqController {
 			msg = "요청서 등록에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/index.do");
+		model.addAttribute("url", "/req/UserPublicRequest.do");
 		
 		return "/redirect";
 		
@@ -95,7 +95,7 @@ public class ReqController {
 		
 		if(reqList==null)
 			reqList = new ArrayList<ReqDTO>();
-		log.info(reqList.get(0).getPiano_name());
+
 		model.addAttribute("reqList", reqList);
 		return "/req/MyReqList";
 		

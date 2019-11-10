@@ -65,7 +65,7 @@
                         </table>
                     </div>
                 <div class="float-xs-right">
-                <%if(user_type.equals("2")){ %><button class="btn btn-primary" onclick="location.href='/notice/NoticeReg.do'">새 공지</button><%} %>
+                <button class="btn btn-primary" onclick="location.href='/req/NewPublicReq.do'">새 요청</button>
                 
                 </div>
                 </div>

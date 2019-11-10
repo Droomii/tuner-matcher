@@ -25,11 +25,14 @@
 	.has-error, .has-danger{
     		color:crimson;
     		}
-    	.success-msg{
-    		color:#3c763d;
-    		display:none;
-    		line-height:1.8;
-    	}
+   	.success-msg{
+   		color:#3c763d;
+   		display:none;
+   		line-height:1.8;
+   	}
+   	html, body {
+   		height:100%;
+   	}
 </style>
 
 
@@ -76,34 +79,34 @@
 				<div class="card-body">
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
-						<div class="col-xs-12 border no-border-bottom">
-							<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">브랜드</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
+						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" >브랜드</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">일련번호</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">일련번호</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">피아노 타입</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">피아노 타입</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">용도</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">용도</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">마지막 조율 날짜</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-3 text-xs-left text-sm-center text-bold-700">마지막 조율 날짜</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height col-xs-3 text-xs-left text-sm-center text-bold-700">주소</div>
-									<div class="  col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">주소</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
 								</div>
-								<div class="row border-bottom">
-									<div class=" full-height  col-xs-3 text-xs-left text-sm-center text-bold-700">사진</div>
-									<div class="  col-xs-9 desc">asd</div>
+								<div class="row d-flex" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">사진</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">asd</div>
 									
 							</div>
 							</div>

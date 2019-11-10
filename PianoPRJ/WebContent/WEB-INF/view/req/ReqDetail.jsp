@@ -1,3 +1,9 @@
+<%@page import="java.util.LinkedHashMap"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="poly.dto.ReqDTO"%>
 <%@page import="poly.dto.PianoDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,6 +17,11 @@
 	String back = proc.equals("public") ? "/req/UserPublicReqList"
 										:"/req/UserPrivateReqList";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
+	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
+
+	
+	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
+	
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -99,6 +110,21 @@
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">참고사진</div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
+								</div>
+								<div class="row" style="display:flex;">
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">가능일시</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc">
+									<%for(String s : prefDates.keySet()){
+									List<String> hours = prefDates.get(s);
+									Date d = new SimpleDateFormat("yyyy-M-dd").parse(s);
+									Calendar c = Calendar.getInstance();
+									c.setTime(d);
+									int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+									%>
+									<%=s %>(<%=weekdays[dayOfWeek] %>) : <br>
+									&nbsp;&nbsp;- <%=String.join(":00, ", hours)%>:00<br>
+									<%} %>
+									</div>
 								</div>
 							</div>
 						

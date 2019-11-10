@@ -108,7 +108,7 @@ public class ReqController {
 		String req_seq = request.getParameter("req_seq");
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
-		
+		log.info(prefDates);
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
 		model.addAttribute("pDTO", pDTO);
 		model.addAttribute("rDTO", rDTO);

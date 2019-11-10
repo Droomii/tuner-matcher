@@ -217,4 +217,7 @@
 		UPDATER_SEQ=#{user_seq}
 	WHERE USER_SEQ=#{user_seq}
 	</update>
+	<select id="getTunerAddr" parameterType="String" resultType="TunerDTO">
+	SELECT ADDR, X_POS, Y_POS FROM TUNER WHERE TUNER_SEQ=#{0}
+	</select>
 </mapper>

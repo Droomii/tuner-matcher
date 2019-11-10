@@ -43,5 +43,7 @@ public interface IUserService {
 
 	int updateUser(UserDTO uDTO) throws Exception;
 
+	TunerDTO getTunerAddr(String tuner_seq) throws Exception;
+
 
 }

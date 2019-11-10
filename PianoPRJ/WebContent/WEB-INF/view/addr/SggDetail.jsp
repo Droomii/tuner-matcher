@@ -17,7 +17,7 @@
 	    
 	    <%}
 	}else if(sidoCode.equals("00")){ %>
-		<input type="checkbox" name="sgg_code" class="sgg-detail" value="00" checked hidden>
+		<input type="checkbox" name="sgg_code" class="sgg-detail sido-all" value="00" checked hidden>
 	<%}else{%>
 		<div class="col-xs-4">세부지역 없음</div><label class="checkbox-inline col-xs-4 col-md-3"><input type="checkbox" name="sgg_code" class="sgg-detail" value=<%=sidoCode %> checked hidden></label>
 	<%}%>

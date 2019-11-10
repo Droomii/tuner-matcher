@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
+import poly.dto.TunerDTO;
 import poly.service.IPianoService;
 import poly.service.IReqService;
+import poly.service.IUserService;
+import poly.util.CmmUtil;
 
 @RequestMapping(value = "req/")
 @Controller
@@ -29,6 +32,9 @@ public class ReqController {
 	
 	@Resource(name = "ReqService")
 	private IReqService reqService;
+	
+	@Resource(name="UserService")
+	private IUserService userService;
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
@@ -91,7 +97,7 @@ public class ReqController {
 	
 	@RequestMapping(value = "UserPublicReqList")
 	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
-		String user_seq = (String)session.getAttribute("user_seq");
+		String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
 		List<ReqDTO> reqList = reqService.getPublicReqList(user_seq);
 		
 		
@@ -123,23 +129,48 @@ public class ReqController {
 	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
 	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".DeleteReq start");
-		String req_seq = request.getParameter("req_seq");
-		String req_type = request.getParameter("req_type");
-		int res = reqService.deleteReq(req_seq);
-		
 		String msg = "";
-		
-		if(res>0) {
-			msg = "요청서 삭제에 성공했습니다";
+		if(session.getAttribute("user_seq")==null) {
+			msg = "세션이 만료되었습니다. 다시 로그인 해주세요";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/index.do");
 		}else {
-			msg = "요청서 삭제에 실패했습니다";
+			String req_seq = request.getParameter("req_seq");
+			String req_type = request.getParameter("req_type");
+			int res = reqService.deleteReq(req_seq);
+			
+			
+			
+			if(res>0) {
+				msg = "요청서 삭제에 성공했습니다";
+			}else {
+				msg = "요청서 삭제에 실패했습니다";
+			}
+			String type = req_type.equals("0") ? "Public" : "Private";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", "/req/User" + type + "ReqList.do");
 		}
-		String type = req_type.equals("0") ? "Public" : "Private";
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/req/User" + type + "ReqList.do");
+		
 		
 		return "/redirect";
 	
 	
+	}
+	
+	
+	// ----------------------조율사-------------------------
+	// 내 주변에서 찾기
+	@RequestMapping(value = "NearReqList")
+	public String NearReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".NearReqList start");
+		String tuner_seq = (String)session.getAttribute("user_seq");
+		log.info("tuner_seq : "+tuner_seq);
+		TunerDTO tDTO = userService.getTunerAddr(tuner_seq);
+		log.info("Addr : " + tDTO.getAddr());
+		log.info("X_pos : " + tDTO.getX_pos());
+		log.info("Y_pos : " + tDTO.getY_pos());
+		model.addAttribute("tDTO", tDTO);
+		
+		return "/req/NearReqList";
 	}
 }

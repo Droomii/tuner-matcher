@@ -244,6 +244,10 @@
    	}
     
    	function addArea(){
+   		if(document.getElementsByClassName('sido-all').length>0){
+			alert("전국으로 설정해둔 지역이 있습니다");
+			return;
+		}
    		$('#svc-area-group').append(svcAreaForm);
    	}
    	

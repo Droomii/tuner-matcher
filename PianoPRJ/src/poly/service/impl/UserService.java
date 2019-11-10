@@ -9,6 +9,7 @@ import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.persistance.mapper.IUserMapper;
 import poly.service.IUserService;
+import poly.util.CmmUtil;
 import poly.util.EncryptUtil;
 
 @Service("UserService")
@@ -154,6 +155,16 @@ public class UserService implements IUserService {
 	@Override
 	public int updateUser(UserDTO uDTO) throws Exception {
 		return userMapper.updateUser(uDTO);
+	}
+
+	@Override
+	public TunerDTO getTunerAddr(String tuner_seq) throws Exception {
+		TunerDTO tDTO = userMapper.getTunerAddr(tuner_seq);
+		tDTO.setAddr(CmmUtil.nvl(tDTO.getAddr())
+				.replaceAll("&#40;", "(")
+				.replaceAll("&#41;", ")")
+				);
+		return tDTO;
 	}
 
 }

@@ -59,9 +59,10 @@ location.href="/index.do";
 					<h4 class="card-title">요청 목록</h4>
 				</div>
 				<div class="card-body" >
-					<div class="card-block overflow-auto" style="height:600px; padding-top:0">
-						<%for(ReqDTO rDTO : rList){ %>
-						<div class="req-container" style="padding-top:0.5rem">
+					<div class="card-block overflow-auto" style="height:600px; padding:0">
+						<%int i = 0;
+						for(ReqDTO rDTO : rList){ %>
+						<div class="req-container" style="padding:0.5rem 0.5rem 0 0.5rem" data-req="<%=i++%>">
 						<div class="card-text text-truncate"><strong><%=rDTO.getReq_title() %></strong></div>
 							<div class="card-text text-truncate"><%=rDTO.getReq_content() %></div>
 							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name() %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
@@ -91,7 +92,7 @@ location.href="/index.do";
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-		level: 4 //지도의 레벨(확대, 축소 정도)
+		level: 6 //지도의 레벨(확대, 축소 정도)
 	};
 
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -119,15 +120,18 @@ location.href="/index.do";
 	        marker.setMap(map);
 	    }
 	};
+	
+	var markerList = [];
 	function setMarker(result, status){
 		if (status === kakao.maps.services.Status.OK) {
 	        console.log(result);
+	        markerList.push(result[0])
 	        var reqAddr = result[0];
 	        var reqLoc = new kakao.maps.LatLng(reqAddr.y, reqAddr.x);
 	        
 	        var imageSrc = '/resources/images/help.png', // 마커이미지의 주소입니다    
-	        imageSize = new kakao.maps.Size(30, 35), // 마커이미지의 크기입니다
-	        imageOption = {offset: new kakao.maps.Point(15, 35)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	        imageSize = new kakao.maps.Size(31, 42), // 마커이미지의 크기입니다
+	        imageOption = {offset: new kakao.maps.Point(16, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 	        
 	        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
 	        marker = new kakao.maps.Marker({
@@ -149,6 +153,9 @@ location.href="/index.do";
 	// 요청 하이라이트
 	$(".req-container").mouseenter(function(){
 	    $(this).css("background-color", "rgb(227, 227, 227)")
+	    var target = markerList[$(this).attr('data-req')];
+	    var moveLatLng = new kakao.maps.LatLng(target.y, target.x);   
+	    map.panTo(moveLatLng);
 	});
 	$(".req-container").mouseleave(function(){
 	    $(this).css("background-color", "")

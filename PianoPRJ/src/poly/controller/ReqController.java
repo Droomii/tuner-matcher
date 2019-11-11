@@ -164,6 +164,11 @@ public class ReqController {
 	public String NearReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".NearReqList start");
 		String tuner_seq = (String)session.getAttribute("user_seq");
+		if(tuner_seq==null) {
+			model.addAttribute("msg", "세션이 만료되었습니다. 다시 로그인해주세요.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
 		log.info("tuner_seq : "+tuner_seq);
 		TunerDTO tDTO = userService.getTunerAddr(tuner_seq);
 		log.info("Addr : " + tDTO.getAddr());

@@ -40,7 +40,7 @@
           </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
             <ul class="menu-content">
-              <li><a href="/req/NearReqList.do" class="menu-item">내 주변에서 찾기</a></li>
+              <li><a href="/req/TunerPublicReqList.do" class="menu-item">내 주변에서 찾기</a></li>
               <li><a href="#" class="menu-item">1:1 요청</a></li>
             </ul>
           </li>

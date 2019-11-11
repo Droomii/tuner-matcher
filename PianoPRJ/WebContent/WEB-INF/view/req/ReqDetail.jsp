@@ -14,13 +14,12 @@
 
 <%
 	PianoDTO pDTO = (PianoDTO)request.getAttribute("pDTO");
+	String userTypeName = user_type.equals("0") ? "User" : "Tuner";
 	String proc = CmmUtil.nvl((String)session.getAttribute("proc"));
-	String back = proc.equals("public") ? "/req/UserPublicReqList"
-										:"/req/UserPrivateReqList";
+	String back = proc.equals("public") ? "/req/" + userTypeName + "PublicReqList"
+										:"/req/" + userTypeName + "PrivateReqList";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
-
-	
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
 	
 %>
@@ -90,7 +89,11 @@
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">주소</div>
+									<%if(user_type.equals("1")){ %>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
+									<%}else{ %>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
+									<%} %>
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">사진</div>
@@ -140,16 +143,20 @@
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>.do" class="button btn btn-sm btn-info">뒤로 </a>
-						<button onclick="editReq()" class="button btn btn-sm btn-success">수정 </button>
-						<button onclick="deleteConfirm()" class="button btn btn-sm btn-danger">삭제</button>
-						
+					<%if(user_type.equals("0")){ %>
+						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
+						<button onclick="editReq()" class="button btn btn-success">수정 </button>
+						<button onclick="deleteConfirm()" class="button btn btn-danger">삭제</button>
+					<%}else{ %>
+						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
+						<button onclick="placeBid()" class="button btn btn-success">입찰하기</button>
+					<%} %>
 					</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%if(rDTO.getReq_type().equals("0")) {%>
+	<%if(rDTO.getReq_type().equals("0") && user_type.equals("0")) {%>
 	<div class="row">
 					<div class="col-xs-12 col-lg-6 offset-lg-3">
 					<div class="card">
@@ -170,6 +177,7 @@
 	
 	
 	<script>
+	<%if(user_type.equals("2") || user_seq.equals(rDTO.getUser_seq())){%>
 	function deleteConfirm(){
 		if(confirm("요청서를 삭제하시겠습니까?")){
 			var form = document.req_action;
@@ -180,10 +188,19 @@
 	
 	function editReq(){
 		var form = document.req_action;
-		form.action = "/piano/EditReq.do";
+		form.action = "/req/EditReq.do";
 		form.submit();
 	}
 	
+	<%}%>
+	<%if(user_type.equals("1")){%>
+	function placeBid(){
+		var form = document.req_action;
+		form.action = "/deal/PlaceBid.do";
+		form.submit();
+	}
+	
+	<%}%>
 	
 	</script>
 </body>

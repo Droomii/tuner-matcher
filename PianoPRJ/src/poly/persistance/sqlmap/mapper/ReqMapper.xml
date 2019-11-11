@@ -48,16 +48,20 @@
 	</select>
 	<select id="getReqDetail" parameterType="String" resultType="ReqDTO">
 	SELECT
-		REQ_SEQ,
-		USER_SEQ,
-		PIANO_SEQ,
-		REQ_CONTENT,
-		REQ_TYPE,
-		PREF_DATE
+		R.REQ_SEQ,
+		R.USER_SEQ,
+		R.PIANO_SEQ,
+		R.REQ_CONTENT,
+		R.REQ_TYPE,
+		R.PREF_DATE,
+		P.SIDO_NAME,
+		P.SGG_NAME
+		
 	FROM
-		REQUEST
+		REQUEST R, PIANO P
 	WHERE
 		REQ_SEQ=#{0}
+		AND R.PIANO_SEQ=P.PIANO_SEQ
 	</select>
 	<delete id="deleteReq" parameterType="String">
 	DELETE FROM REQUEST WHERE REQ_SEQ=#{0}

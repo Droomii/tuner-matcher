@@ -160,8 +160,9 @@ public class ReqController {
 	
 	// ----------------------조율사-------------------------
 	// 내 주변에서 찾기
-	@RequestMapping(value = "NearReqList")
+	@RequestMapping(value = "TunerPublicReqList")
 	public String NearReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		session.setAttribute("proc", "public");
 		log.info(this.getClass().getName() + ".NearReqList start");
 		String tuner_seq = (String)session.getAttribute("user_seq");
 		if(tuner_seq==null) {
@@ -179,6 +180,7 @@ public class ReqController {
 		// 요청목록
 		List<ReqDTO> rList = reqService.getNearReqList(tuner_seq);
 		model.addAttribute("rList", rList);
-		return "/req/NearReqList";
+		return "/req/TunerPublicReqList";
 	}
+	
 }

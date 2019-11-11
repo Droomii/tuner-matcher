@@ -61,7 +61,7 @@ location.href="/index.do";
 				<div class="card-body" >
 					<div class="card-block overflow-auto" style="height:600px; padding:0">
 						<%for(ReqDTO rDTO : rList){ %>
-						<div class="req-container" style="padding:1rem 1rem 0 1rem" id="req-<%=rDTO.getReq_seq()%>" onclick="location.href='/req/TunerReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'" role="button">
+						<div class="req-container" style="padding:1rem 1rem 0 1rem" id="req-<%=rDTO.getReq_seq()%>" onclick="location.href='/req/ReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'" role="button">
 						<h5 class="card-text text-truncate mb-0"><strong><%=rDTO.getReq_title() %></strong></h5>
 							<div class="card-text text-truncate"><%=rDTO.getReq_content() %></div>
 							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name() %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
@@ -149,7 +149,7 @@ location.href="/index.do";
 	        marker.setMap(map);
 	        
 	        kakao.maps.event.addListener(marker, 'click', function(){
-	        	location.href="/req/TunerReqDetail.do?req_seq=<%=reqDTO2.getReq_seq()%>"
+	        	location.href="/req/ReqDetail.do?req_seq=<%=reqDTO2.getReq_seq()%>"
 	        });
 	        
 	        kakao.maps.event.addListener(marker, 'mouseover', function(){

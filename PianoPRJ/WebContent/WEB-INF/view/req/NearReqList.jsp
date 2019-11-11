@@ -60,10 +60,9 @@ location.href="/index.do";
 				</div>
 				<div class="card-body" >
 					<div class="card-block overflow-auto" style="height:600px; padding:0">
-						<%int i = 0;
-						for(ReqDTO rDTO : rList){ %>
-						<div class="req-container" style="padding:0.5rem 0.5rem 0 0.5rem" data-req="<%=i++%>">
-						<div class="card-text text-truncate"><strong><%=rDTO.getReq_title() %></strong></div>
+						<%for(ReqDTO rDTO : rList){ %>
+						<div class="req-container" style="padding:0.5rem 0.5rem 0 0.5rem" data-req="<%=rDTO.getReq_seq()%>">
+						<h5 class="card-text text-truncate mb-0"><strong><%=rDTO.getReq_title() %></strong></h5>
 							<div class="card-text text-truncate"><%=rDTO.getReq_content() %></div>
 							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name() %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
 							<hr style="margin-bottom:0">
@@ -121,12 +120,20 @@ location.href="/index.do";
 	    }
 	};
 	
-	var markerList = [];
-	function setMarker(result, status){
+	var markerObj = {};
+	function addMarker(req_seq, obj){
+		markerObj[req_seq] = obj;
+	}
+	
+	
+	
+	geocoder.addressSearch('<%=tunerAddr%>', init);
+	<%for(ReqDTO reqDTO2 : rList){%>
+	geocoder.addressSearch('<%=reqDTO2.getAddr().split("\\(")[0].split(",")[0]%>', function(result, status){
 		if (status === kakao.maps.services.Status.OK) {
 	        console.log(result);
-	        markerList.push(result[0])
 	        var reqAddr = result[0];
+	        addMarker('<%=reqDTO2.getReq_seq()%>', reqAddr);
 	        var reqLoc = new kakao.maps.LatLng(reqAddr.y, reqAddr.x);
 	        
 	        var imageSrc = '/resources/images/help.png', // 마커이미지의 주소입니다    
@@ -138,22 +145,15 @@ location.href="/index.do";
 	            position: reqLoc,
 	            image:markerImage
 	        });
-	        
-	        
 	        marker.setMap(map);
 	    }
-	}
-	
-	
-	geocoder.addressSearch('<%=tunerAddr%>', init);
-	<%for(ReqDTO reqDTO2 : rList){%>
-	geocoder.addressSearch('<%=reqDTO2.getAddr().split("\\(")[0].split(",")[0]%>', setMarker)
+	});
 	<%}%>
 	
 	// 요청 하이라이트
 	$(".req-container").mouseenter(function(){
 	    $(this).css("background-color", "rgb(227, 227, 227)")
-	    var target = markerList[$(this).attr('data-req')];
+	    var target = markerObj[$(this).attr('data-req')];
 	    var moveLatLng = new kakao.maps.LatLng(target.y, target.x);   
 	    map.panTo(moveLatLng);
 	});

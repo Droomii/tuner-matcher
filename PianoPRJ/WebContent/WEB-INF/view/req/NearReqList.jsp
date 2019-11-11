@@ -1,16 +1,17 @@
+<%@page import="poly.dto.ReqDTO"%>
 <%@page import="poly.dto.PianoDTO"%>
-<%@page import="java.util.Set"%>
 <%@page import="poly.dto.TunerDTO"%>
-<%@page import="poly.dto.UserDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- session.jsp 경로 설정 -->
 <%@ include file="../user/session.jsp" %>
 <%
 	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
+	List<ReqDTO> rList = (ArrayList<ReqDTO>)request.getAttribute("rList"); 
+	String tunerAddr = tDTO.getAddr();
+	tunerAddr = tunerAddr.split("\\(")[0].split(",")[0];
 %>
 
 <!DOCTYPE html>
@@ -37,7 +38,7 @@ location.href="/index.do";
         <div class="content-body"><!-- Basic example section start -->
 <!-- Header footer section start -->
 <section id="header-footer">
-	<div class="row match-height">
+	<div class="row">
 	<div class="col-xs-12 offset-lg-1">
 		<div class="col-xs-12 col-md-8 col-lg-7">
 			<div class="card">
@@ -45,8 +46,8 @@ location.href="/index.do";
 					<h4 class="card-title">내 주변에서 찾기</h4>
 				</div>
 				<div class="card-body">
-					<div class="card-block">
-					<div id="map" style="width:100%;height:500px;"></div>
+					<div style="height:600px">
+					<div id="map" style="width:100%;height:100%;"></div>
 					
 					</div>
 				</div>
@@ -58,21 +59,15 @@ location.href="/index.do";
 					<h4 class="card-title">요청 목록</h4>
 				</div>
 				<div class="card-body" >
-					<div class="card-block overflow-auto" style="height:500px;">
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
-						<p>gdgdg</p>
+					<div class="card-block overflow-auto" style="height:600px; padding-top:0">
+						<%for(ReqDTO rDTO : rList){ %>
+						<div class="req-container" style="padding-top:0.5rem">
+						<div class="card-text text-truncate"><strong><%=rDTO.getReq_title() %></strong></div>
+							<div class="card-text text-truncate"><%=rDTO.getReq_content() %></div>
+							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name() %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
+							<hr style="margin-bottom:0">
+						</div>
+						<%} %>
 					</div>
 				</div>
 			</div>
@@ -102,11 +97,11 @@ location.href="/index.do";
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
 	var geocoder = new kakao.maps.services.Geocoder();
-	var tunerAddr = null;
+	
 	function init(result, status) {
 	    if (status === kakao.maps.services.Status.OK) {
 	        console.log(result);
-	        tunerAddr = result[0];
+	        var tunerAddr = result[0];
 	        var moveLoc = new kakao.maps.LatLng(tunerAddr.y, tunerAddr.x);
 	        map.setCenter(moveLoc);
 	        
@@ -124,10 +119,40 @@ location.href="/index.do";
 	        marker.setMap(map);
 	    }
 	};
+	function setMarker(result, status){
+		if (status === kakao.maps.services.Status.OK) {
+	        console.log(result);
+	        var reqAddr = result[0];
+	        var reqLoc = new kakao.maps.LatLng(reqAddr.y, reqAddr.x);
+	        
+	        var imageSrc = '/resources/images/help.png', // 마커이미지의 주소입니다    
+	        imageSize = new kakao.maps.Size(30, 35), // 마커이미지의 크기입니다
+	        imageOption = {offset: new kakao.maps.Point(15, 35)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	        
+	        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+	        marker = new kakao.maps.Marker({
+	            position: reqLoc,
+	            image:markerImage
+	        });
+	        
+	        
+	        marker.setMap(map);
+	    }
+	}
 	
-	geocoder.addressSearch('<%=tDTO.getAddr()%>', init);
 	
+	geocoder.addressSearch('<%=tunerAddr%>', init);
+	<%for(ReqDTO reqDTO2 : rList){%>
+	geocoder.addressSearch('<%=reqDTO2.getAddr().split("\\(")[0].split(",")[0]%>', setMarker)
+	<%}%>
 	
+	// 요청 하이라이트
+	$(".req-container").mouseenter(function(){
+	    $(this).css("background-color", "rgb(227, 227, 227)")
+	});
+	$(".req-container").mouseleave(function(){
+	    $(this).css("background-color", "")
+	});
 	</script>
 </body>
 </html>

@@ -62,5 +62,21 @@
 	<delete id="deleteReq" parameterType="String">
 	DELETE FROM REQUEST WHERE REQ_SEQ=#{0}
 	</delete>
-	
+	<select id="getNearReqList" parameterType="String" resultType="ReqDTO">
+	SELECT
+		R.REQ_SEQ,
+		R.REQ_TITLE,
+		R.REQ_CONTENT,
+		NVL((SELECT COUNT(1) FROM DEAL GROUP BY REQ_SEQ HAVING REQ_SEQ=R.REQ_SEQ),0) AS BIDS,
+		P.SIDO_NAME,
+		P.SGG_NAME,
+		P.X_POS,
+		P.Y_POS,
+		P.ADDR
+	FROM REQUEST R, PIANO P
+	WHERE 
+		R.PIANO_SEQ=P.PIANO_SEQ
+		AND P.SGG_CODE LIKE #{0}
+		AND R.REQ_TYPE=0
+	</select>
 </mapper>

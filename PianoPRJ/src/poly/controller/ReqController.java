@@ -88,7 +88,7 @@ public class ReqController {
 			msg = "요청서 등록에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/req/UserPublicRequest.do");
+		model.addAttribute("url", "/req/UserPublicReqList.do");
 		
 		return "/redirect";
 		
@@ -103,7 +103,7 @@ public class ReqController {
 		
 		if(reqList==null)
 			reqList = new ArrayList<ReqDTO>();
-
+		session.setAttribute("proc", "public");
 		model.addAttribute("reqList", reqList);
 		return "/req/MyReqList";
 		
@@ -171,6 +171,9 @@ public class ReqController {
 		log.info("Y_pos : " + tDTO.getY_pos());
 		model.addAttribute("tDTO", tDTO);
 		
+		// 요청목록
+		List<ReqDTO> rList = reqService.getNearReqList(tuner_seq);
+		model.addAttribute("rList", rList);
 		return "/req/NearReqList";
 	}
 }

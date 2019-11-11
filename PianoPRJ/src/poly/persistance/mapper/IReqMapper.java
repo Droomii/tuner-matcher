@@ -15,5 +15,7 @@ public interface IReqMapper {
 	ReqDTO getReqDetail(String req_seq) throws Exception;
 
 	int deleteReq(String req_seq) throws Exception;
+
+	List<ReqDTO> getNearReqList(String tuner_seq) throws Exception;
 	
 }

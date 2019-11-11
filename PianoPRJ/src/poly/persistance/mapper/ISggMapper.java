@@ -4,6 +4,7 @@ import java.util.List;
 
 import config.Mapper;
 import poly.dto.SggDTO;
+import poly.dto.TunerDTO;
 
 @Mapper("ISggMapper")
 public interface ISggMapper {

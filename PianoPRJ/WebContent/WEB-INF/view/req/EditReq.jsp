@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
 <%@page import="poly.dto.ReqDTO"%>
 <%@page import="poly.dto.PianoDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,11 +9,10 @@
 
 <%
 	PianoDTO pDTO = (PianoDTO)request.getAttribute("pDTO");
-	String proc = CmmUtil.nvl((String)session.getAttribute("proc"));
-	String back = proc.equals("public") ? "/req/NewPublicReq"
-			: proc.equals("private") ? "/req/NewPrivateReq"
-					: "/piano/MyPianoList";
+	String proc = (String)request.getAttribute("proc");
+	String back = "/req/User"+proc+"ReqList";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
+	Map<String, List<String>> prefDates = (Map<String, List<String>>)request.getAttribute("prefDates");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -39,14 +40,12 @@
 
 
 <meta charset="UTF-8">
-<%if(proc.equals("public")){%>
-	<title>공개 요청하기</title>
-<%}else if(proc.equals("private")){%>
-<title>1:1 요청</title>
-	
-<%}else{%>
-<title>내 피아노 목록</title>
-<%} %>
+<%if(proc.equals("Public")){%>
+	<title>공개 요청서 수정</title>
+<%}else if(proc.equals("Private")){%>
+<title>1:1 요청서 수정</title>
+<%}%>
+
 <!-- header.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/header.jsp" %>
 </head>
@@ -57,14 +56,12 @@
 	<div class="content-wrapper">
 	<div class="content-header row">
           <div class="content-header-left col-xs-7">
-            <%if(proc.equals("public")){%>
-				<h2 class="content-header-title">공개 요청하기</h2>
-				<h4 class="content-header-title">요청사항을 작성해주세요</h4>
-			<%}else if(proc.equals("private")){%>
-			<h2 class="content-header-title">1:1 요청하기</h2>
-			<h4 class="content-header-title">요청사항을 작성해주세요</h4>
+            <%if(proc.equals("Public")){%>
+				<h2 class="content-header-title">공개 요청서 수정</h2>
+			<%}else if(proc.equals("Private")){%>
+			<h2 class="content-header-title">1:1 요청서 수정</h2>
 			<%}else{%>
-			<h2 class="content-header-title">내 피아노 정보</h2>
+			<h2 class="content-header-title">요청서 수정</h2>
 			<%} %>
           </div>
         </div>
@@ -75,8 +72,7 @@
 		<div class="col-xs-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title"><%=CmmUtil.nvl(pDTO.getPiano_name()) %></h4>
-					<p class="card-title text-muted text-truncate"><%=CmmUtil.nvl(pDTO.getPiano_desc(), "설명 없음")  %></p>
+					<h4 class="card-title">피아노 정보</h4>
 				</div>
 				<div class="card-body">
 					<div class="card-block">
@@ -121,22 +117,18 @@
 				<div class="card-footer text-xs-center">
 					<span>
 						<a href="<%=back %>.do" class="button btn btn-sm btn-info">뒤로 </a>
-						<button onclick="editPiano()" class="button btn btn-sm btn-success">정보 수정 </button>
-						<%if(!proc.startsWith("p")) {%>
-						<button onclick="deleteConfirm()" class="button btn btn-sm btn-danger">피아노 삭제</button>
-						<%}%>
 						
 					</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%if(proc.startsWith("p")) {%>
+	<%if(proc.startsWith("P")) {%>
 	<div class="row">
 					<div class="col-xs-12 col-lg-6 offset-lg-3">
 					<div class="card">
 				<div class="card-header">
-					<h4 class="card-title" id="basic-layout-form">요청서 작성</h4>
+					<h4 class="card-title" id="basic-layout-form">요청서 수정</h4>
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
@@ -146,13 +138,13 @@
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="req_title">요청서 제목</label>
-									<input type="text" id="notice_title" class="form-control" placeholder="요청서 제목을 입력해주세요" required name="req_title">
+									<input value="<%=rDTO.getReq_title() %>" type="text" id="notice_title" class="form-control" placeholder="요청서 제목을 입력해주세요" required name="req_title">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group has-feedback">
 									<label for="req_content">요청사항</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required><%=rDTO.getReq_content().replaceAll("& lt;br& gt;", "\n") %></textarea>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>

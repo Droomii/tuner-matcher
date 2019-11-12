@@ -126,6 +126,22 @@ public class ReqController {
 	
 	}
 	
+	@RequestMapping(value = "EditReq")
+	public String EditReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		log.info(this.getClass().getName() + ".EditReq start");
+		String req_seq = request.getParameter("req_seq");
+		ReqDTO rDTO = reqService.getReqDetail(req_seq);
+		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
+		log.info(prefDates);
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		model.addAttribute("proc", "Public");
+		model.addAttribute("pDTO", pDTO);
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("prefDates", prefDates);
+		
+		return "/req/EditReq";
+	}
+	
 	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
 	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".DeleteReq start");

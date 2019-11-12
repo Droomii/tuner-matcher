@@ -142,6 +142,25 @@ public class ReqController {
 		return "/req/EditReq";
 	}
 	
+	@RequestMapping(value = "DoEditReq")
+	public String DoEditReq(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute ReqDTO rDTO) throws Exception{
+		log.info(this.getClass().getName() + ".DoEditReq start");
+		String current_user = (String)session.getAttribute("user_seq");
+		String back = request.getParameter("back");
+		rDTO.setUpdater_seq(current_user);
+
+		int res = reqService.updateReq(rDTO);
+		String msg;
+		if(res>0) {
+			msg = "요청서 수정에 성공했습니다";
+		}else {
+			msg = "요청서 수정에 실패했습니다";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", back + ".do");
+		return "/redirect";
+	}
+	
 	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
 	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".DeleteReq start");

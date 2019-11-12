@@ -64,6 +64,15 @@
 		REQ_SEQ=#{0}
 		AND R.PIANO_SEQ=P.PIANO_SEQ
 	</select>
+	<update id="updateReq" parameterType="ReqDTO">
+	UPDATE REQUEST SET
+		REQ_TITLE=#{req_title},
+		REQ_CONTENT=#{req_content},
+		PREF_DATE=#{pref_date},
+		UPDDATE=SYSDATE,
+		UPDATER_SEQ=#{updater_seq}
+	WHERE REQ_SEQ=#{req_seq}
+	</update>
 	<delete id="deleteReq" parameterType="String">
 	DELETE FROM REQUEST WHERE REQ_SEQ=#{0}
 	</delete>
@@ -83,5 +92,5 @@
 		R.PIANO_SEQ=P.PIANO_SEQ
 		AND P.SGG_CODE LIKE #{0}
 		AND R.REQ_TYPE=0
-	</select>
+	</select>	
 </mapper>

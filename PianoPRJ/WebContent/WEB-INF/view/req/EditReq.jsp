@@ -1,3 +1,4 @@
+<%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="poly.dto.ReqDTO"%>
@@ -12,7 +13,7 @@
 	String proc = (String)request.getAttribute("proc");
 	String back = "/req/User"+proc+"ReqList";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
-	Map<String, List<String>> prefDates = (Map<String, List<String>>)request.getAttribute("prefDates");
+	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -132,9 +133,10 @@
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/<%=proc %>ReqSubmit.do" method="post" autocomplete="off">
+					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/DoEditReq.do" method="post" autocomplete="off">
 							<input hidden="hidden" id="req_content" name="req_content">
-							<input value="<%=pDTO.getPiano_seq() %>" name="piano_seq" hidden>
+							<input value="<%=rDTO.getReq_seq() %>" name="req_seq" hidden>
+							<input value="<%=back %>" name="back" hidden>
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="req_title">요청서 제목</label>
@@ -173,7 +175,7 @@
 									<i class="icon-cross2"></i> 취소
 								</button>
 								<button type="submit" class="btn btn-primary">
-									<i class="icon-check2"></i> 작성
+									<i class="icon-check2"></i> 수정
 								</button>
 							</div>
 						</form>
@@ -195,7 +197,8 @@
 	
 	
 	<script>
-	<%if(!proc.startsWith("p")) {%>
+	
+	<%if(!proc.startsWith("P")) {%>
 	function deleteConfirm(){
 		if(confirm("삭제하시겠습니까?")){
 			var form = document.piano_action;
@@ -234,6 +237,37 @@
 		});
    	}
 	<%} %>
+	
+	// 날짜들
+	var days = "<%=prefDates.keySet().toString().replaceAll(" ", "").replaceAll("[\\[\\]]", "")%>".split(",");
+	// 날짜 + 시간까지 (0000-00-00h00)
+	var prefDates = "<%=rDTO.getPref_date()%>".split(",");
+	
+	function getInitHour(hour){
+		var query = {date : hour};
+		$.ajax({
+			url:"/req/GetHour.do",
+			type:"post",
+			data:query,
+			success:function(data){
+				$("#hours").append(data);
+				var dateCheckBox = document.getElementsByClassName('pref-hour');
+				for(var i = 0; i < dateCheckBox.length; i++){
+					if(prefDates.includes(dateCheckBox[i].value)){
+						dateCheckBox[i].click();
+					}
+				}
+			
+				
+			}
+		});
+	}
+	
+	window.onload = function(){
+		for(var j = 0; j< days.length; j++){
+			getInitHour(days[j]);
+		}
+	}
 	
 	function editPiano(){
 		var form = document.piano_action;

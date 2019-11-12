@@ -63,7 +63,7 @@ location.href="/index.do";
 						<%for(ReqDTO rDTO : rList){ %>
 						<div class="req-container" style="padding:1rem 1rem 0 1rem" id="req-<%=rDTO.getReq_seq()%>" onclick="location.href='/req/ReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'" role="button">
 						<h5 class="card-text text-truncate mb-0"><strong><%=rDTO.getReq_title() %></strong></h5>
-							<div class="card-text text-truncate"><%=rDTO.getReq_content() %></div>
+							<div class="card-text text-truncate"><%=rDTO.getReq_content().replaceAll("& lt;br& gt;", " ") %></div>
 							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name().replaceAll("특별시","").replaceAll("광역시","").replaceAll("특별자치","") %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
 							<hr style="margin-bottom:0">
 						</div>

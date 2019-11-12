@@ -19,4 +19,6 @@ public interface IReqService {
 
 	List<ReqDTO> getNearReqList(String tuner_seq) throws Exception;
 
+	int updateReq(ReqDTO rDTO) throws Exception;
+
 }

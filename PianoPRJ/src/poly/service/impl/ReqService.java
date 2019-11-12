@@ -108,4 +108,9 @@ public class ReqService implements IReqService {
 		return rList;
 	}
 
+	@Override
+	public int updateReq(ReqDTO rDTO) throws Exception {
+		return reqMapper.updateReq(rDTO);
+	}
+
 }

@@ -149,7 +149,6 @@
 						<button onclick="deleteConfirm()" class="button btn btn-danger">삭제</button>
 					<%}else{ %>
 						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
-						<button onclick="placeBid()" class="button btn btn-success">입찰하기</button>
 					<%} %>
 					</span>
 				</div>
@@ -158,15 +157,77 @@
 	</div>
 	<%if(rDTO.getReq_type().equals("0") && user_type.equals("0")) {%>
 	<div class="row">
-					<div class="col-xs-12 col-lg-6 offset-lg-3">
-					<div class="card">
+		<div class="col-xs-12 col-lg-6 offset-lg-3">
+			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title" id="basic-layout-form">입찰 현황</h4>
 				</div>
 			</div>
+		</div>
+	</div>
+	<%}else if(user_type.equals("1")){%>
+		<div class="row">
+					<div class="col-xs-12 col-lg-6 offset-lg-3">
+					<div class="card">
+				<div class="card-header">
+					<h4 class="card-title" id="basic-layout-form">견적서 작성</h4>
+				</div>
+				<div class="card-body collapse in">
+					<div class="card-block">
+					<form onsubmit="return submitBid();" data-toggle="validator" role="form" name="regForm" class="form" action="/deal/PlaceBid.do" method="post" autocomplete="off">
+							<input hidden="hidden" id="req_content" name="req_content">
+							<input value="<%=rDTO.getReq_seq() %>" name="req_seq" hidden>
+							<div class="form-body">
+								<div class="form-group has-feedback">
+									<label for="req_content">소견</label>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
+								</div>
+							</div>
+							<div id="date-group has-feedback">
+									<div class="form-group" style="margin-bottom:0" >
+									<label>희망일시<span class="red">*</span></label>
+									<div>
+									<%
+									String ss = null;
+									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
+										ss = keyIter.next();
+										List<String> hours = prefDates.get(ss);
+										Date d = new SimpleDateFormat("yyyy-M-dd").parse(ss);
+										Calendar c = Calendar.getInstance();
+										c.setTime(d);
+										int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+									%>
+									<div class="card-text full-date text-bold-600"><%=ss %>(<%=weekdays[dayOfWeek-1] %>)</div>
+									<div class="row">
+									<%for(String hour : hours){ %>
+										<div class="col-xs-3">
+										<label class="checkbox-inline"><input type="radio" name="pref_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										</div>
+									<%} %>
+									</div>
+									<%if(keyIter.hasNext()){ %><hr style="margin:0 0 0.5rem 0"><%} %>
+									<%} %>
+									</div>
+									</div>
+
+		
+								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+								<div class="help-block with-errors"></div>
+								</div>
+							
+							<div class="card-footer text-xs-center">
+								<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
+								<button type="submit" class="button btn btn-success">입찰하기</button>
+							</div>
+						</form>
 					</div>
 				</div>
-				<%}%>
+			</div>
+					</div>
+			</div>
+	<%} %>
 </section>
 <!-- Header footer section end -->
 
@@ -194,10 +255,15 @@
 	
 	<%}%>
 	<%if(user_type.equals("1")){%>
-	function placeBid(){
-		var form = document.req_action;
-		form.action = "/deal/PlaceBid.do";
-		form.submit();
+	function submitBid(){
+		var checklen = document.querySelectorAll('.pref-hour:checked').length;
+		if(checklen==0){
+			alert("최소 하나의 희망일시는 선택해야 합니다.");
+			return false;
+		}
+		
+		$("#req_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
+		$("#req_title").val($("#req_title").val().replace(/<br>/g, " "));
 	}
 	
 	<%}%>

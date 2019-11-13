@@ -1,5 +1,8 @@
 package poly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +17,8 @@ import poly.dto.DealDTO;
 import poly.dto.ReqDTO;
 import poly.service.IDealService;
 import poly.service.IReqService;
+import poly.util.CmmUtil;
+import poly.util.SessionUtil;
 
 @Controller
 @RequestMapping(value = "deal/")
@@ -35,27 +40,6 @@ public class DealController {
 		dDTO.setDeal_state("0");
 		dDTO.setTuner_seq(user_seq);
 		
-		
-		log.info("Deal_seq : " + dDTO.getDeal_seq());
-		log.info("Req_seq : " + dDTO.getReq_seq());
-		log.info("Requester_seq : " + dDTO.getRequester_seq());
-		log.info("Tuner_seq : " + dDTO.getTuner_seq());
-		log.info("Possible_date : " + dDTO.getPossible_date());
-		log.info("Diagnosis_content : " + dDTO.getDiagnosis_content());
-		log.info("Tuning_price : " + dDTO.getTuning_price());
-		log.info("Regul_price : " + dDTO.getRegul_price());
-		log.info("Voicing_price : " + dDTO.getVoicing_price());
-		log.info("Transport_price : " + dDTO.getTransport_price());
-		log.info("Other_price : " + dDTO.getOther_price());
-		log.info("Regdate : " + dDTO.getRegdate());
-		log.info("Upddate : " + dDTO.getUpddate());
-		log.info("Updater_seq : " + dDTO.getUpdater_seq());
-		log.info("Deal_state : " + dDTO.getDeal_state());
-		log.info("Deal_type : " + dDTO.getDeal_type());
-		log.info("Tuning_ea : " + dDTO.getTuning_ea());
-		log.info("Regul_ea : " + dDTO.getRegul_ea());
-		log.info("Voicing_ea : " + dDTO.getVoicing_ea());
-		
 		int res = dealService.insertDeal(dDTO);
 		
 		String msg;
@@ -71,5 +55,23 @@ public class DealController {
 		
 	}
 	
-	
+	@RequestMapping(value = "TunerBidList")
+	public String TunerBidList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		String user_seq = (String)session.getAttribute("user_seq");
+		String user_type = (String)session.getAttribute("user_type");
+		
+		if(SessionUtil.verifySession(user_seq, user_type, "1", model)!=null) {
+			model = SessionUtil.verifySession(user_seq, user_type, "1", model);
+			return "/redirect";
+		}
+		
+		List<DealDTO> dList = dealService.getBiddingList(user_seq);
+		if(dList==null) {
+			dList = new ArrayList<>();
+		}
+		
+		model.addAttribute("dList", dList);
+		
+		return "/deal/TunerBidList";
+	}
 }

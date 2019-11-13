@@ -1,5 +1,7 @@
 package poly.persistance.mapper;
 
+import java.util.List;
+
 import config.Mapper;
 import poly.dto.DealDTO;
 
@@ -7,5 +9,7 @@ import poly.dto.DealDTO;
 public interface IDealMapper {
 
 	int insertDeal(DealDTO dDTO) throws Exception;
+
+	List<DealDTO> getBiddingList(String user_seq) throws Exception;
 
 }

@@ -1,9 +1,14 @@
 package poly.dto;
 
+import org.apache.log4j.Logger;
+
 public class DealDTO {
+	
+	Logger log = Logger.getLogger(this.getClass());
 	public String deal_seq;
 	public String req_seq;
 	public String requester_seq;
+	public String requester_nick;
 	public String tuner_seq;
 	public String possible_date;
 	public String diagnosis_content;
@@ -20,8 +25,50 @@ public class DealDTO {
 	public String tuning_ea;
 	public String regul_ea;
 	public String voicing_ea;
-	
-	
+	public String transport_ea;
+
+	public String getTotal() {
+		int total = 0;
+		int price;
+		String[] prices = {
+				this.tuning_price,
+				this.regul_price,
+				this.voicing_price,
+				this.transport_price
+		};
+		
+		String[] ea = {
+				this.tuning_ea,
+				this.regul_ea,
+				this.voicing_ea,
+				this.transport_ea
+		};
+		
+		for(int i=0; i<4; i++) {
+			if(prices[i]!=null) {
+				price = Integer.parseInt(prices[i]) * Integer.parseInt(ea[i]);
+				total += price;
+			}
+		}
+		if(this.other_price!=null) {
+			total += Integer.parseInt(this.other_price);
+		}
+		return String.format("%,d", total);
+		
+	}
+
+	public String getTransport_ea() {
+		return transport_ea;
+	}
+	public void setTransport_ea(String transport_ea) {
+		this.transport_ea = transport_ea;
+	}
+	public String getRequester_nick() {
+		return requester_nick;
+	}
+	public void setRequester_nick(String requester_nick) {
+		this.requester_nick = requester_nick;
+	}
 	public String getDeal_seq() {
 		return deal_seq;
 	}

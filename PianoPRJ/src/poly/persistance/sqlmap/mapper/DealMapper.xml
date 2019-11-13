@@ -22,7 +22,8 @@
 		DEAL_TYPE,
 		TUNING_EA,
 		REGUL_EA,
-		VOICING_EA
+		VOICING_EA,
+		TRANSPORT_EA
 	)VALUES(
 		DEAL_SEQ.NEXTVAL,
 		#{req_seq},
@@ -42,11 +43,27 @@
 		#{deal_type},
 		#{tuning_ea},
 		#{regul_ea},
-		#{voicing_ea}
+		#{voicing_ea},
+		#{transport_ea}
 	)
 	
 
 </insert>
-
+<select id="getBiddingList" parameterType="String" resultType="DealDTO">
+	SELECT
+		DEAL_SEQ,
+		(SELECT USER_NICK FROM USERINFO WHERE USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+		TUNING_PRICE,
+		REGUL_PRICE,
+		VOICING_PRICE,
+		TRANSPORT_PRICE,
+		OTHER_PRICE,
+		TUNING_EA,
+		REGUL_EA,
+		VOICING_EA,
+		TRANSPORT_EA
+	FROM DEAL WHERE TUNER_SEQ=#{0}
+	AND DEAL_STATE=0
+</select>
 
 </mapper>

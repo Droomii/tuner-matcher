@@ -30,7 +30,7 @@
               <li><a href="#" class="menu-item">조율 내역</a>
                 <ul class="menu-content">
                   <li><a href="#" class="menu-item">과거 조율 내역</a></li>
-                  <li><a href="#" class="menu-item">입찰 현황</a></li>
+                  <li><a href="/deal/TunerBidList.do" class="menu-item">입찰 현황</a></li>
                   <li><a href="#" class="menu-item">조율 현황</a></li>
                 </ul>
               </li>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
 import poly.dto.TunerDTO;
@@ -218,11 +219,6 @@ public class ReqController {
 		return "/req/TunerPublicReqList";
 	}
 	
-	@RequestMapping(value = "PlaceBid")
-	public String PlaceBid(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
-		String req_seq = request.getAttribute("req_seq");
-		String req_type = request.getAttribute("req_type");
-		
-	}
+	
 	
 }

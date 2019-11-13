@@ -29,10 +29,10 @@
 <style>
 	.text-bold-700{
 		background-color:rgb(220,220,220);
-		padding: 0.2rem;
+		padding: 0.3rem;
 	}
 	.desc{
-		padding: 0.2rem;
+		padding: 0.3rem;
 	}
 	.has-error, .has-danger{
     		color:crimson;
@@ -68,27 +68,27 @@
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" >브랜드</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">일련번호</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">피아노 타입</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">용도</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">마지막 조율 날짜</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">주소</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
 									<%if(user_type.equals("1")){ %>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
 									<%}else{ %>
@@ -96,7 +96,7 @@
 									<%} %>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">사진</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">사진</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">asd</div>
 									
 							</div>
@@ -108,15 +108,15 @@
 						<h5 class="form-section text-bold-600">요청서 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" >요청사항</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">요청사항</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getReq_content()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">참고사진</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">참고사진</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-3 text-xs-left text-sm-center text-bold-700">가능일시</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">가능일시</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc">
 									<%
 									String s = null;
@@ -174,18 +174,71 @@
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitBid();" data-toggle="validator" role="form" name="regForm" class="form" action="/deal/PlaceBid.do" method="post" autocomplete="off">
-							<input hidden="hidden" id="req_content" name="req_content">
+					<form onsubmit="return submitBid();" autocomplete="off" data-toggle="validator" role="form" name="regForm" class="form" action="/deal/PlaceBid.do" method="post" autocomplete="off">
+							<input hidden="hidden" id="diagnosis_content" name="diagnosis_content">
 							<input value="<%=rDTO.getReq_seq() %>" name="req_seq" hidden>
+							<input value="<%=proc.equals("public") ? "0" : "1" %>" name="deal_type" hidden>
 							<div class="form-body">
 								<div class="form-group has-feedback">
-									<label for="req_content">소견</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<label for="temp_content">소견</label>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="소견을 입력해주세요(가격 책정 이유 등 상세히)" required></textarea>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
-							</div>
-							<div id="date-group has-feedback">
+								<div class="form-group">
+									<label for="req_content">서비스 견적</label>
+									<table class="table mb-0" style="width:100%;">
+			                            <thead class="bg-teal bg-lighten-4">
+			                                <tr>
+			                                    <th style="width:40%;text-align:center" colspan="2">항목</th>
+			                                    <th style="text-align:center">수량</th>
+			                                    <th style="text-align:center">가격</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody>
+			                                <tr class="row">
+			                                    <td style="width:40%;" colspan="2">
+			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="tune" checked> 조율</label>
+			                                    </td>
+			                                    <td><input type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="tuning_ea" style="padding:0.1rem;width:3rem;"></td>
+			                                    <td style="display:flex;justify-content:flex-end"><input type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="tuning_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
+			                                </tr>
+			                                <tr>
+			                                    <td style="width:40%;" colspan="2">
+			                                     <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="regulation"> 조정</label>
+			                                    </td>
+			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="regul_ea" style="padding:0.1rem;width:3rem;"></td>
+			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="regul_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
+			                                </tr>
+			                                <tr>
+			                                    <td style="width:40%;" colspan="2">
+			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="voicing"> 정음</label>
+			                                    </td>
+			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="voicing_ea" style="padding:0.1rem;width:3rem;"></td>
+			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="voicing_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
+			                                </tr>
+			                                <tr>
+			                                    <td style="width:40%;" colspan="2">
+			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="transport"> 운반</label>
+			                                    </td>
+			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="transport_ea" style="padding:0.1rem;width:3rem;"></td>
+			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="transport_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
+			                                </tr>
+			                                <tr>
+			                                    <td style="width:40%;" colspan="2">
+			                                    <label class="checkbox-inline mb-0"><input type="checkbox"  class="checkbox" id="repair"> 기타(수리, 부품 등)</label>
+			                                    </td>
+			                                    <td><input type="number" min="1" value="1" hidden disabled id="projectinput2" class="form-control ea" style="padding:0.1rem;width:3rem;"></td>
+			                                    <td style="display:flex;justify-content:flex-end"><input type="text" disabled value="0" maxlength="7" id="projectinput2" class="form-control price" name="other_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
+			                                </tr>
+			                                <tr>
+			                                    <td colspan="5" style="text-align:right;background-color:rgb(179, 226, 255)">계 :&nbsp;<span id="total">0</span>원(<span id="koreanTotal">0</span>원)</td>
+			                                </tr>
+
+			                            </tbody>
+			                        </table>
+								</div>
+								<div id="date-group has-feedback">
 									<div class="form-group" style="margin-bottom:0" >
 									<label>희망일시<span class="red">*</span></label>
 									<div>
@@ -203,7 +256,7 @@
 									<div class="row">
 									<%for(String hour : hours){ %>
 										<div class="col-xs-3">
-										<label class="checkbox-inline"><input type="radio" name="pref_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
 										</div>
 									<%} %>
 									</div>
@@ -215,7 +268,9 @@
 		
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 								<div class="help-block with-errors"></div>
-								</div>
+								</div>							
+							</div>
+							
 							
 							<div class="card-footer text-xs-center">
 								<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
@@ -261,13 +316,116 @@
 			alert("최소 하나의 희망일시는 선택해야 합니다.");
 			return false;
 		}
+		if(getPrice()==0){
+			alert("견적가는 0원일 수 없습니다.");
+			return false;
+		}
+		if(!confirm("입찰하시겠습니까? 한번 등록하면 수정이 불가능합니다.")){
+			return false;
+		}
 		
-		$("#req_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
-		$("#req_title").val($("#req_title").val().replace(/<br>/g, " "));
+		$("#diagnosis_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
+	}
+	function totalPrice(total, elem){
+		return total+(parseInt(elem.value) || 0);	
 	}
 	
+	
+	
+	function getPrice(){
+		var prices = document.getElementsByClassName("price");
+	    var total = 0;
+	    for(var i = 0; i<prices.length; i++){
+	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
+	    	try{
+	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;	
+	    	}catch(err){
+	    		var checked = true;
+	    	}
+	    	if(checked){
+		    	ea = parseInt(ea) || 0;
+		    	var val = (parseInt(prices[i].value) || 0)
+		    	val = val * ea
+		    	total += val
+				}
+	    }
+		return total;
+	}
+	function updatePrice(){
+		var prices = document.getElementsByClassName("price");
+	    var total = 0;
+	    for(var i = 0; i<prices.length; i++){
+	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
+	    	try{
+	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;	
+	    	}catch(err){
+	    		var checked = true;
+	    	}
+	    	if(checked){
+		    	ea = parseInt(ea) || 0;
+		    	var val = (parseInt(prices[i].value) || 0)
+		    	val = val * ea
+		    	total += val
+				}
+	    }
+	    koreanTotal = numberToKorean(total)
+	    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	    $("#total").html(total);
+	    $("#koreanTotal").html(koreanTotal=="" ? "0" : koreanTotal);
+	}
+	
+	
+	
+	function numberToKorean(number){
+	    var inputNumber  = number < 0 ? false : number;
+	    var unitWords    = ['', '만', '억', '조', '경'];
+	    var splitUnit    = 10000;
+	    var splitCount   = unitWords.length;
+	    var resultArray  = [];
+	    var resultString = '';
+
+	    for (var i = 0; i < splitCount; i++){
+	         var unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+	        unitResult = Math.floor(unitResult);
+	        if (unitResult > 0){
+	            resultArray[i] = unitResult;
+	        }
+	    }
+
+	    for (var i = 0; i < resultArray.length; i++){
+	        if(!resultArray[i]) continue;
+	        resultString = String(resultArray[i]) + unitWords[i] + resultString;
+	    }
+
+	    return resultString;
+	}
+	
+	$(function() {
+		  $(".price").on("keyup", function(event) {
+			    var value = $(this).val();
+			    $(this).val(value.replace(/[^0-9]/g, ""));
+			    updatePrice();
+			    
+		  })
+		});
+	$(function() {
+		  $(".ea").on("change", function(event) {
+			    updatePrice();
+		  })
+		});
+	
+	$(function() {
+		  $(".checkbox").on("change", function(event) {
+			  var checkState = this.checked
+			  var inputs = this.parentElement.parentElement.parentElement.querySelectorAll('input')
+			  inputs[1].disabled = !checkState;
+			  inputs[2].disabled = !checkState;
+			  updatePrice();
+		  })
+		});
 	<%}%>
 	
 	</script>
+	<script src="/resources/js/validator.js" type="text/javascript"></script>
 </body>
 </html>

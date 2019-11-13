@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IDealMapper">
+<insert id="insertDeal">
+	INSERT INTO DEAL(
+		DEAL_SEQ,
+		REQ_SEQ,
+		REQUESTER_SEQ,
+		TUNER_SEQ,
+		POSSIBLE_DATE,
+		DIAGNOSIS_CONTENT,
+		TUNING_PRICE,
+		REGUL_PRICE,
+		VOICING_PRICE,
+		TRANSPORT_PRICE,
+		OTHER_PRICE,
+		REGDATE,
+		UPDDATE,
+		UPDATER_SEQ,
+		DEAL_STATE,
+		DEAL_TYPE,
+		TUNING_EA,
+		REGUL_EA,
+		VOICING_EA
+	)VALUES(
+		DEAL_SEQ.NEXTVAL,
+		#{req_seq},
+		#{requester_seq},
+		#{tuner_seq},
+		#{possible_date},
+		#{diagnosis_content},
+		#{tuning_price},
+		#{regul_price},
+		#{voicing_price},
+		#{transport_price},
+		#{other_price},
+		SYSDATE,
+		SYSDATE,
+		#{tuner_seq},
+		#{deal_state},
+		#{deal_type},
+		#{tuning_ea},
+		#{regul_ea},
+		#{voicing_ea}
+	)
+	
+
+</insert>
+
+
+</mapper>

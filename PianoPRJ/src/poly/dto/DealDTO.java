@@ -1,23 +1,27 @@
 package poly.dto;
 
 public class DealDTO {
-	private String deal_seq;
-	private String req_seq;
-	private String requester_seq;
-	private String tuner_seq;
-	private String possible_date;
-	private String diagnosis_content;
-	private String tuning_price;
-	private String regul_price;
-	private String voicing_price;
-	private String transport_price;
-	private String parts_price;
-	private String regdate;
-	private String upddate;
-	private String updater_seq;
-	private String deal_state;
-	private String deal_type;
-
+	public String deal_seq;
+	public String req_seq;
+	public String requester_seq;
+	public String tuner_seq;
+	public String possible_date;
+	public String diagnosis_content;
+	public String tuning_price;
+	public String regul_price;
+	public String voicing_price;
+	public String transport_price;
+	public String other_price;
+	public String regdate;
+	public String upddate;
+	public String updater_seq;
+	public String deal_state;
+	public String deal_type;
+	public String tuning_ea;
+	public String regul_ea;
+	public String voicing_ea;
+	
+	
 	public String getDeal_seq() {
 		return deal_seq;
 	}
@@ -78,11 +82,11 @@ public class DealDTO {
 	public void setTransport_price(String transport_price) {
 		this.transport_price = transport_price;
 	}
-	public String getParts_price() {
-		return parts_price;
+	public String getOther_price() {
+		return other_price;
 	}
-	public void setParts_price(String parts_price) {
-		this.parts_price = parts_price;
+	public void setOther_price(String other_price) {
+		this.other_price = other_price;
 	}
 	public String getRegdate() {
 		return regdate;
@@ -114,4 +118,24 @@ public class DealDTO {
 	public void setDeal_type(String deal_type) {
 		this.deal_type = deal_type;
 	}
+	public String getTuning_ea() {
+		return tuning_ea;
+	}
+	public void setTuning_ea(String tuning_ea) {
+		this.tuning_ea = tuning_ea;
+	}
+	public String getRegul_ea() {
+		return regul_ea;
+	}
+	public void setRegul_ea(String regul_ea) {
+		this.regul_ea = regul_ea;
+	}
+	public String getVoicing_ea() {
+		return voicing_ea;
+	}
+	public void setVoicing_ea(String voicing_ea) {
+		this.voicing_ea = voicing_ea;
+	}
+	
+	
 }

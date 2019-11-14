@@ -44,7 +44,7 @@
             <div class="card-body collapse in">
                 <div class="card-block card-dashboard">
                     <div class="table-responsive">
-                        <table class="table table-bordred table-striped">
+                        <table class="table table-bordred table-hover">
                             <thead>
                                 <tr class="row">
                                     <th>거래번호</th>
@@ -55,7 +55,7 @@
                             </thead>
                             <tbody>
                             <%for(DealDTO dDTO : dList){ %>
-                                <tr>
+                                <tr onclick="location.href='/deal/BidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
                                     <td><%=CmmUtil.nvl(dDTO.getDeal_seq())%></td>
                                     <td><%=CmmUtil.nvl(dDTO.getRequester_nick()) %></td>
                                     

@@ -26,4 +26,9 @@ public class DealService implements IDealService{
 		return dealMapper.getBiddingList(user_seq);
 	}
 
+	@Override
+	public DealDTO getDealDetail(String deal_seq) throws Exception {
+		return dealMapper.getdealDetail(deal_seq);
+	}
+
 }

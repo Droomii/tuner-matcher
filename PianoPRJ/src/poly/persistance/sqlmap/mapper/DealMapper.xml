@@ -65,5 +65,7 @@
 	FROM DEAL WHERE TUNER_SEQ=#{0}
 	AND DEAL_STATE=0
 </select>
-
+<select id="getDealDetail" parameterType="String" resultType="DealDTO">
+	SELECT * FROM DEAL WHERE DEAL_SEQ=#{0}
+</select>
 </mapper>

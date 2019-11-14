@@ -10,4 +10,6 @@ public interface IDealService {
 
 	List<DealDTO> getBiddingList(String user_seq) throws Exception;
 
+	DealDTO getDealDetail(String deal_seq) throws Exception;
+
 }

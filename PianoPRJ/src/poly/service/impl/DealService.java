@@ -28,7 +28,7 @@ public class DealService implements IDealService{
 
 	@Override
 	public DealDTO getDealDetail(String deal_seq) throws Exception {
-		return dealMapper.getdealDetail(deal_seq);
+		return dealMapper.getDealDetail(deal_seq);
 	}
 
 }

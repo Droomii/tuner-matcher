@@ -92,12 +92,12 @@ public class DealController {
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoEditInfo(rDTO.getPiano_seq());
+		model.addAttribute("dDTO",dDTO);
+		model.addAttribute("rDTO",rDTO);
+		model.addAttribute("pDTO",pDTO);
 		
-		model.addAttribute("dDTO : ",dDTO);
-		model.addAttribute("rDTO : ",rDTO);
-		model.addAttribute("pDTO : ",pDTO);
-		
+		return "/deal/BidDetail";
 		
 	}
 }

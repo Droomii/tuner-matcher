@@ -39,6 +39,12 @@ public class DealController {
 	@RequestMapping(value = "PlaceBid")
 	public String PlaceBid(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute DealDTO dDTO) throws Exception {
 		String user_seq = (String)session.getAttribute("user_seq");
+		
+		if(SessionUtil.verify(session, "1", model)!=null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		dDTO.setRequester_seq(rDTO.getUser_seq());
 		dDTO.setDeal_state("0");
@@ -62,10 +68,9 @@ public class DealController {
 	@RequestMapping(value = "TunerBidList")
 	public String TunerBidList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
 		String user_seq = (String)session.getAttribute("user_seq");
-		String user_type = (String)session.getAttribute("user_type");
-		
-		if(SessionUtil.verify(user_seq, user_type, "1", model)!=null) {
-			model = SessionUtil.verify(user_seq, user_type, "1", model);
+
+		if(SessionUtil.verify(session, "1", model)!=null) {
+			model = SessionUtil.verify(session, "1", model);
 			return "/redirect";
 		}
 		
@@ -81,11 +86,9 @@ public class DealController {
 	
 	@RequestMapping(value="BidDetail")
 	public String BidDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
-		String user_seq = (String)session.getAttribute("user_seq");
-		String user_type = (String)session.getAttribute("user_type");
 		
-		if(SessionUtil.verify(user_seq, user_type, "1", model)!=null) {
-			model = SessionUtil.verify(user_seq, user_type, "1", model);
+		if(SessionUtil.verify(session, "1", model)!=null) {
+			model = SessionUtil.verify(session, "1", model);
 			return "/redirect";
 		}
 		

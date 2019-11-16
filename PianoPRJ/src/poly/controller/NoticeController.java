@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import poly.dto.NoticeDTO;
 import poly.service.INoticeService;
 import poly.util.CmmUtil;
+import poly.util.SessionUtil;
 
 /*
  * Controller 선언해야만 Spring 프레임워크에서 Controller인지 인식 가능
@@ -82,8 +83,13 @@ public class NoticeController {
 	 * 존재하는 JSP를 호출하기 위해서는 반드시 Controller 등록해야함
 	 */
 	@RequestMapping(value = "NoticeReg", method = RequestMethod.GET)
-	public String NoticeReg(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+	public String NoticeReg(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) throws Exception {
 
+		if(SessionUtil.verify(session, "2", model)!=null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".NoticeReg start!");
 
 		log.info(this.getClass().getName() + ".NoticeReg end!");
@@ -98,6 +104,11 @@ public class NoticeController {
 	public String NoticeInsert(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ModelMap model, @ModelAttribute NoticeDTO nDTO) throws Exception {
 
+		if(SessionUtil.verify(session, "2", model)!=null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".NoticeInsert start!");
 		String user_seq = (String) session.getAttribute("user_seq");
 		nDTO.setWriter_seq(user_seq);
@@ -196,9 +207,14 @@ public class NoticeController {
 	 * 게시판 수정 보기
 	 */
 	@RequestMapping(value = "NoticeEditInfo")
-	public String NoticeEditInfo(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+	public String NoticeEditInfo(HttpServletRequest request, HttpSession session, HttpServletResponse response, ModelMap model)
 			throws Exception {
 
+		if(SessionUtil.verify(session, "2", model)!=null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		String notice_seq = request.getParameter("notice_seq");
 		NoticeDTO pDTO = new NoticeDTO();
 		pDTO.setNotice_seq(notice_seq);
@@ -236,9 +252,14 @@ public class NoticeController {
 	 * 게시판 글 수정
 	 */
 	@RequestMapping(value = "NoticeUpdate", method = RequestMethod.POST)
-	public String NoticeUpdate(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	public String NoticeUpdate(HttpServletRequest request, HttpSession session, HttpServletResponse response,
 			ModelMap model, @ModelAttribute NoticeDTO pDTO) throws Exception {
 
+		if(SessionUtil.verify(session, "2", model)!=null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		if(pDTO.getTop()==null) {
 			pDTO.setTop("N");
 		}
@@ -282,6 +303,11 @@ public class NoticeController {
 	public String NoticeDelete(HttpSession session, HttpServletRequest request, HttpServletResponse response,
 			ModelMap model) throws Exception {
 
+		if(SessionUtil.verify(session, "2", model)!=null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".NoticeDelete start!");
 
 		

@@ -316,8 +316,8 @@
 			alert("최소 하나의 희망일시는 선택해야 합니다.");
 			return false;
 		}
-		if(getPrice()==0){
-			alert("견적가는 0원일 수 없습니다.");
+		if(getPrice()){
+			alert("항목의 가격은 0원일 수 없습니다.");
 			return false;
 		}
 		if(!confirm("입찰하시겠습니까? 한번 등록하면 수정이 불가능합니다.")){
@@ -334,7 +334,7 @@
 	
 	function getPrice(){
 		var prices = document.getElementsByClassName("price");
-	    var total = 0;
+	    
 	    for(var i = 0; i<prices.length; i++){
 	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
 	    	try{
@@ -346,10 +346,13 @@
 		    	ea = parseInt(ea) || 0;
 		    	var val = (parseInt(prices[i].value) || 0)
 		    	val = val * ea
-		    	total += val
+		    	if(val==0){
+		    		return true
+		    	}
+		    	
 				}
 	    }
-		return total;
+		return false;
 	}
 	function updatePrice(){
 		var prices = document.getElementsByClassName("price");

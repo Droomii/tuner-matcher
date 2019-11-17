@@ -31,4 +31,9 @@ public class DealService implements IDealService{
 		return dealMapper.getDealDetail(deal_seq);
 	}
 
+	@Override
+	public int bidCancel(String deal_seq) throws Exception {
+		return dealMapper.bidCancel(deal_seq);
+	}
+
 }

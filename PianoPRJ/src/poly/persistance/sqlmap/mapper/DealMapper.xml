@@ -68,4 +68,9 @@
 <select id="getDealDetail" parameterType="String" resultType="DealDTO">
 	SELECT * FROM DEAL WHERE DEAL_SEQ=#{0}
 </select>
+<update id="bidCancel" parameterType="String">
+	UPDATE DEAL SET DEAL_STATE=1
+	WHERE DEAL_SEQ=#{0}
+	AND DEAL_STATE=0
+</update>
 </mapper>

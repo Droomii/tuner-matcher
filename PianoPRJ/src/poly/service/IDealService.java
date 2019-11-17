@@ -12,4 +12,6 @@ public interface IDealService {
 
 	DealDTO getDealDetail(String deal_seq) throws Exception;
 
+	int bidCancel(String deal_seq) throws Exception;
+
 }

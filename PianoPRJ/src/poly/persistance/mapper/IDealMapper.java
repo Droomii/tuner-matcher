@@ -14,4 +14,6 @@ public interface IDealMapper {
 
 	DealDTO getDealDetail(String deal_seq) throws Exception;
 
+	int bidCancel(String deal_seq) throws Exception;
+
 }

@@ -18,8 +18,47 @@
 	String back = "/deal/TunerBidList.do";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	DealDTO dDTO = (DealDTO)request.getAttribute("dDTO");
-	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
+	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"};
 	
+	String date = dDTO.getPossible_date();
+	Date d = new SimpleDateFormat("yyyy-M-dd").parse(date.split("h")[0]);
+	Calendar c = Calendar.getInstance();
+	c.setTime(d);
+	int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+	String weekday = weekdays[dayOfWeek-1];
+	
+	
+	int itemLen = 0;
+	Map<String, String> items = new LinkedHashMap<>();
+	if(dDTO.getTuning_price()!= null){
+		int eaPrice = Integer.parseInt(dDTO.getTuning_price()) * Integer.parseInt(dDTO.getTuning_ea()); 
+		items.put("조율", dDTO.getTuning_ea()+","+ Integer.toString(eaPrice));
+		itemLen++;
+	}
+	
+	if(dDTO.getRegul_price()!= null){
+		int eaPrice = Integer.parseInt(dDTO.getRegul_price()) * Integer.parseInt(dDTO.getRegul_ea()); 
+		items.put("조정", dDTO.getRegul_ea()+","+ Integer.toString(eaPrice));
+		itemLen++;
+	}
+	
+	if(dDTO.getVoicing_price()!= null){
+		int eaPrice = Integer.parseInt(dDTO.getVoicing_price()) * Integer.parseInt(dDTO.getVoicing_ea()); 
+		items.put("정음", dDTO.getVoicing_ea()+","+ Integer.toString(eaPrice));
+		itemLen++;
+	}
+	
+	if(dDTO.getTransport_price()!= null){
+		int eaPrice = Integer.parseInt(dDTO.getTransport_price()) * Integer.parseInt(dDTO.getTransport_ea()); 
+		items.put("운반", dDTO.getTransport_ea()+","+ Integer.toString(eaPrice));
+		itemLen++;
+	}
+	
+	if(dDTO.getOther_price()!= null){
+		int eaPrice = Integer.parseInt(dDTO.getOther_price()); 
+		items.put("기타", "1,"+ Integer.toString(eaPrice));
+		itemLen++;
+	}
 	
 %>
 <!DOCTYPE html>
@@ -40,6 +79,10 @@
    		color:#3c763d;
    		display:none;
    		line-height:1.8;
+   	}
+   	table, th, td{
+   		border:2px solid rgb(150,150,150);
+   	}
 </style>
 
 
@@ -117,11 +160,57 @@
 						<h5 class="form-section text-bold-600">견적 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">요청사항</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(dDTO.getDiagnosis_content()) %></div>
-								</div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">요청사항</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(dDTO.getDiagnosis_content()) %></div>
 							</div>
-						
+						</div>
+					</div>
+					<div class="card-block">
+						<table class="table table-bordered" style="border:2px solid rgb(150,150,150);">
+                        <thead>
+                            <tr style="background-color:rgb(220,220,220);">
+                                <th style="width:9rem;text-align:center;">거래번호</th>
+                                <th style="text-align:center">품목</th>
+                                <th style="width:8rem;text-align:center">수량</th>
+                                <th style="width:10rem;text-align:center">가격</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%Iterator<String> itemKeys = items.keySet().iterator(); 
+                        String itemKey = itemKeys.next();%>
+                            <tr>
+                                <th rowspan="<%=itemLen%>" style="vertical-align:middle;text-align:center"><%=dDTO.getDeal_seq() %></th>
+                                <td><%=itemKey %></td>
+                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
+                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
+                            </tr>
+                            <%while(itemKeys.hasNext()){ 
+                            itemKey = itemKeys.next();%>
+                            <tr>
+                                <td><%=itemKey %></td>
+                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
+                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
+                            </tr>
+                            <%} %>
+                            <tr>
+                                <th colspan="3" style="background-color:rgb(220,220,220);text-align:right">총합</th>
+                                <th style="text-align:right"><%=dDTO.getTotal() %> 원</th>
+                            </tr>
+                        </tbody>
+                    </table>
+					</div>
+					<div class="card-block">
+						<h5 class="form-section text-bold-600">위치 및 날짜 정보</h5>
+						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %>(세부 위치는 낙찰 후 공개됩니다)</div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">날짜</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<form method="post" hidden="hidden" name="req_action">
@@ -132,6 +221,11 @@
 					<span>
 						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
 					</span>
+					<%if(dDTO.getDeal_state().equals("0")) {%>
+					<span>
+						<button onclick="bidCancel();" class="button btn btn-danger">입찰 취소</button>
+					</span>
+					<%} %>
 				</div>
 			</div>
 		</div>
@@ -146,7 +240,11 @@
 	
 	
 	<script>
-
+	function bidCancel(){
+		if(confirm("입찰을 취소하시겠습니까?")){
+			location.href="/deal/BidCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
 </body>

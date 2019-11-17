@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -102,5 +103,32 @@ public class DealController {
 		
 		return "/deal/BidDetail";
 		
+	}
+
+	@RequestMapping(value="BidCancel")
+	public String BidCancel(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) throws Exception{
+		if(SessionUtil.verify(session, "0", model)==null) {
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		String deal_seq = request.getParameter("deal_seq");
+		
+		int res = dealService.bidCancel(deal_seq);
+		String msg = "";
+		
+		
+		if(res>0) {
+			msg = "입찰 취소에 성공했습니다";
+		}else {
+			msg = "입찰 취소에 실패했습니다";
+		}
+		model.addAttribute("msg", msg);
+		String user_type = (String)session.getAttribute("user_type");
+		
+		if(user_type.equals("1"))
+			model.addAttribute("url", "/deal/TunerBidList.do");
+		
+		return "/redirect";
 	}
 }

@@ -20,6 +20,7 @@ import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
 import poly.util.EncryptUtil;
+import poly.util.SessionUtil;
 
 @Controller
 @RequestMapping("/myPage")
@@ -36,6 +37,11 @@ public class MyPageController {
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
 		String user_seq = (String)session.getAttribute("user_seq");
 		String user_type = (String)session.getAttribute("user_type");
+		if(SessionUtil.verify(user_seq, model)!=null) {
+			model = SessionUtil.verify(user_seq, model);
+			return "/redirect";
+		}
+		
 		
 		UserDTO uDTO = userService.getUserInfo(user_seq);
 		model.addAttribute("uDTO", uDTO);
@@ -53,6 +59,11 @@ public class MyPageController {
 	
 	@RequestMapping(value="MyInfoEdit")
 	public String MyInfoEdit(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
 		String action = "/myPage/MyInfoEditForm.do";
 		String back = "/myPage/MyInfoEdit.do";
 		String forWhat = "update";
@@ -65,6 +76,12 @@ public class MyPageController {
 	
 	@RequestMapping(value="DeleteAccount")
 	public String DeleteAccount(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
 		String action = "/myPage/DeleteAccountProc.do";
 		String back = "/myPage/DeleteAccount.do";
 		String forWhat = "delete";
@@ -78,6 +95,12 @@ public class MyPageController {
 	
 	@RequestMapping(value="DeleteAccountProc")
 	public String DeleteAccountProc(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
 		String password = request.getParameter("password");
 		String user_seq = (String)session.getAttribute("user_seq");
 		password = EncryptUtil.encHashSHA256(password);
@@ -110,6 +133,12 @@ public class MyPageController {
 	
 	@RequestMapping(value="MyInfoEditForm")
 	public String MyInfoEditForm(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
 		String password = request.getParameter("password");
 		String user_seq = (String)session.getAttribute("user_seq");
 		password = EncryptUtil.encHashSHA256(password);

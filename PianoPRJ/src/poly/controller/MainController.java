@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import poly.service.IUserService;
+import poly.util.SessionUtil;
 
 @Controller
 public class MainController {
@@ -25,7 +26,10 @@ public class MainController {
 			HttpServletResponse response,
 			ModelMap model, HttpSession session) throws Exception{
 		
-		
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
 		
 		return "/main";
 	}
@@ -51,6 +55,11 @@ public class MainController {
 	public String home(HttpServletRequest request,
 			HttpServletResponse response,
 			ModelMap model, HttpSession session) throws Exception{
+		
+		if(SessionUtil.verify(session, model)!=null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
 		
 		return "/main";
 	}

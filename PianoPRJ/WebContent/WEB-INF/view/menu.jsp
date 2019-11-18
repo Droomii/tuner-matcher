@@ -19,7 +19,7 @@
       <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
         <%if(user_type.equals("1")){ %>
-         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
+         <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
         </li>
          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
         </li>
@@ -29,7 +29,7 @@
               <li><a href="#" class="menu-item">조율 일정</a></li>
               <li><a href="#" class="menu-item">조율 내역</a>
                 <ul class="menu-content">
-                  <li><a href="#" class="menu-item">과거 조율 내역</a></li>
+                  <li><a href="/deal/TunerPastDeals.do" class="menu-item">과거 조율 내역</a></li>
                   <li><a href="/deal/TunerBidList.do" class="menu-item">입찰 현황</a></li>
                   <li><a href="#" class="menu-item">조율 현황</a></li>
                 </ul>
@@ -74,7 +74,7 @@
             </ul>
           </li>
           <%}else{ %>
-          <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
+          <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
         </li>
          <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">회원 관리</span></a>
         </li>

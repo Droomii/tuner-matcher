@@ -66,6 +66,8 @@ public class DealController {
 		
 	}
 	
+	//-----------조율사입찰---------------
+	
 	@RequestMapping(value = "TunerBidList")
 	public String TunerBidList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
 		String user_seq = (String)session.getAttribute("user_seq");
@@ -93,6 +95,10 @@ public class DealController {
 			return "/redirect";
 		}
 		
+		String back = request.getParameter("back");
+		if(back.contentEquals("past")) {
+			model.addAttribute("back", "/deal/TunerPastDeals.do");
+		}
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
@@ -130,5 +136,27 @@ public class DealController {
 			model.addAttribute("url", "/deal/TunerBidList.do");
 		
 		return "/redirect";
+	}
+	
+	//-------------조율사 과거내역------------
+	
+	@RequestMapping(value="TunerPastDeals")
+	public String TunerPastDeals(HttpServletRequest request, HttpServletResponse response
+	, HttpSession session, ModelMap model) throws Exception{
+		if(SessionUtil.verify(session, "1", model)!=null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		List<DealDTO> dList = dealService.getPastDeals(user_seq);
+		if(dList==null) {
+			dList = new ArrayList<DealDTO>();
+		}
+		
+		model.addAttribute("dList", dList);
+		
+		return "/deal/TunerPastDeals";
+		
 	}
 }

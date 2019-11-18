@@ -36,4 +36,9 @@ public class DealService implements IDealService{
 		return dealMapper.bidCancel(deal_seq);
 	}
 
+	@Override
+	public List<DealDTO> getPastDeals(String user_seq) throws Exception {
+		return dealMapper.getPastDeals(user_seq);
+	}
+
 }

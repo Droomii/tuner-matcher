@@ -15,7 +15,8 @@
 
 <%
 	PianoDTO pDTO = (PianoDTO)request.getAttribute("pDTO");
-	String back = "/deal/TunerBidList.do";
+	String back = (String)request.getAttribute("back");
+	back = back==null ? "/deal/TunerBidList.do" : back;
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	DealDTO dDTO = (DealDTO)request.getAttribute("dDTO");
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"};
@@ -160,7 +161,7 @@
 						<h5 class="form-section text-bold-600">견적 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">요청사항</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">소견</div></div>
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(dDTO.getDiagnosis_content()) %></div>
 							</div>
 						</div>
@@ -219,7 +220,7 @@
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
+						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
 					</span>
 					<%if(dDTO.getDeal_state().equals("0")) {%>
 					<span>

@@ -18,4 +18,6 @@ public interface IDealMapper {
 
 	List<DealDTO> getPastDeals(String user_seq) throws Exception;
 
+	List<DealDTO> getReqBid(String req_seq) throws Exception;
+
 }

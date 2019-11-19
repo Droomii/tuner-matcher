@@ -41,4 +41,9 @@ public class DealService implements IDealService{
 		return dealMapper.getPastDeals(user_seq);
 	}
 
+	@Override
+	public List<DealDTO> getReqBid(String req_seq) throws Exception {
+		return dealMapper.getReqBid(req_seq);
+	}
+
 }

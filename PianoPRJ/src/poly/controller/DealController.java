@@ -96,7 +96,7 @@ public class DealController {
 		}
 		
 		String back = request.getParameter("back");
-		if(back.contentEquals("past")) {
+		if(back!=null) {
 			model.addAttribute("back", "/deal/TunerPastDeals.do");
 		}
 		String deal_seq = request.getParameter("deal_seq");

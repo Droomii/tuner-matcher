@@ -1,3 +1,4 @@
+<%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.LinkedHashMap"%>
 <%@page import="java.util.List"%>
@@ -155,13 +156,39 @@
 			</div>
 		</div>
 	</div>
-	<%if(rDTO.getReq_type().equals("0") && user_type.equals("0")) {%>
+	<%if(rDTO.getReq_type().equals("0") && user_type.equals("0")) {
+		List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
+	%>
 	<div class="row">
 		<div class="col-xs-12 col-lg-6 offset-lg-3">
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title" id="basic-layout-form">입찰 현황</h4>
 				</div>
+	            <div class="card-body collapse in">
+	                <div class="card-block card-dashboard">
+	                    <div class="table-responsive">
+	                        <table class="table table-bordred table-hover">
+	                            <thead>
+	                                <tr class="row">
+	                                    <th>조율사 성명</th>
+	                                    <th>견적가</th>
+	                                    <th>희망일시</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	                            <%for(DealDTO dDTO : dList){ %>
+	                                <tr onclick="location.href='/req/ReqBidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
+	                                    <td><%=CmmUtil.nvl(dDTO.getTuner_name())%></td>
+	                                    <td><%=CmmUtil.nvl(dDTO.getTotal()) %>원</td>
+	                                    <td><%=CmmUtil.nvl(dDTO.getFullDate()) %></td>
+	                                </tr>
+	                            <%} %>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div>
+	            </div>
 			</div>
 		</div>
 	</div>

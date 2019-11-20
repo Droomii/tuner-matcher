@@ -213,6 +213,11 @@
 	}
 	<%}else{%>
 	
+	var tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+	
+	document.getElementById("date").setAttribute('min', tomorrow.toISOString().split('T')[0]);
+	
 	var form = document.reqForm
 	function submitReq(){
 		var checklen = document.querySelectorAll('.pref-hour:checked').length;

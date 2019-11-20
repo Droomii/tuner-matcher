@@ -1,31 +1,58 @@
 package poly.dto;
 
-import org.apache.log4j.Logger;
+
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class DealDTO {
+	final private String[] WEEKDAYS = {"일", "월", "화", "수", "목", "금", "토"};
+	private String deal_seq;
+	private String req_seq;
+	private String requester_seq;
+	private String requester_nick;
+	private String tuner_nick;
+	private String tuner_name;
+	private String tuner_seq;
+	private String possible_date;
+	private String diagnosis_content;
+	private String tuning_price;
+	private String regul_price;
+	private String voicing_price;
+	private String transport_price;
+	private String other_price;
+	private String regdate;
+	private String upddate;
+	private String updater_seq;
+	private String deal_state;
+	private String deal_type;
+	private String tuning_ea;
+	private String regul_ea;
+	private String voicing_ea;
+	private String transport_ea;
+
 	
-	Logger log = Logger.getLogger(this.getClass());
-	public String deal_seq;
-	public String req_seq;
-	public String requester_seq;
-	public String requester_nick;
-	public String tuner_seq;
-	public String possible_date;
-	public String diagnosis_content;
-	public String tuning_price;
-	public String regul_price;
-	public String voicing_price;
-	public String transport_price;
-	public String other_price;
-	public String regdate;
-	public String upddate;
-	public String updater_seq;
-	public String deal_state;
-	public String deal_type;
-	public String tuning_ea;
-	public String regul_ea;
-	public String voicing_ea;
-	public String transport_ea;
+	
+	public String getTuner_name() {
+		return tuner_name;
+	}
+
+	public void setTuner_name(String tuner_name) {
+		this.tuner_name = tuner_name;
+	}
+
+	public String[] getWEEKDAYS() {
+		return WEEKDAYS;
+	}
+
+	public String getTuner_nick() {
+		return tuner_nick;
+	}
+
+	public void setTuner_nick(String tuner_nick) {
+		this.tuner_nick = tuner_nick;
+	}
 
 	public String getTotal() {
 		int total = 0;
@@ -184,5 +211,19 @@ public class DealDTO {
 		this.voicing_ea = voicing_ea;
 	}
 	
+	public String getFullDate() throws Exception{
+		
+		String[] date = this.possible_date.split("h");
+		
+		Date d = new SimpleDateFormat("yyyy-M-dd").parse(date[0]);
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) -1 ;
+		String fullDate = date[0] + String.format("(%s) ", WEEKDAYS[dayOfWeek]) + date[1] + ":00";
+		return fullDate;
+	}
+
+		
+
 	
 }

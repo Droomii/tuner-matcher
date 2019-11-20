@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -19,10 +20,13 @@ import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
 import poly.dto.TunerDTO;
+import poly.dto.UserDTO;
+import poly.service.IDealService;
 import poly.service.IPianoService;
 import poly.service.IReqService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.SessionUtil;
 
 @RequestMapping(value = "req/")
 @Controller
@@ -36,6 +40,9 @@ public class ReqController {
 	
 	@Resource(name="UserService")
 	private IUserService userService;
+	
+	@Resource(name="DealService")
+	private IDealService dealService;
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
@@ -113,8 +120,17 @@ public class ReqController {
 	@RequestMapping(value = "ReqDetail")
 	public String Detail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".MyPianoList start");
+		String user_type=(String)session.getAttribute("user_type");
+		
 		String req_seq = request.getParameter("req_seq");
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
+		
+		
+		if(user_type.equals("0")) {
+			List<DealDTO> dList = dealService.getReqBid(req_seq);
+			log.info("dList size : " + dList.size());
+			model.addAttribute("dList", dList);
+		}
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		log.info(prefDates);
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
@@ -124,7 +140,33 @@ public class ReqController {
 		
 		return "/req/ReqDetail";
 	
+	}
 	
+	@RequestMapping(value = "ReqBidDetail")
+	public String ReqBidDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReqBidDetail start");
+
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String deal_seq = request.getParameter("deal_seq");
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
+		String back = "/req/ReqDetail.do?req_seq=" + dDTO.getReq_seq();
+		
+		model.addAttribute("uDTO", uDTO);
+		model.addAttribute("dDTO", dDTO);
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("pDTO", pDTO);
+		model.addAttribute("back", back);
+		
+		log.info(this.getClass().getName() + ".ReqBidDetail end");
+		return "/req/ReqBidDetail";
 	}
 	
 	@RequestMapping(value = "EditReq")

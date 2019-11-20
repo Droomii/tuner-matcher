@@ -97,12 +97,13 @@ location.href="/index.do";
 	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	
 	var geocoder = new kakao.maps.services.Geocoder();
-	
+	var homeLoc;
 	function init(result, status) {
 	    if (status === kakao.maps.services.Status.OK) {
 	        console.log(result);
 	        var tunerAddr = result[0];
 	        var moveLoc = new kakao.maps.LatLng(tunerAddr.y, tunerAddr.x);
+	        homeLoc = moveLoc;
 	        map.setCenter(moveLoc);
 	        
 	        var imageSrc = '/resources/images/home.png', // 마커이미지의 주소입니다    
@@ -172,9 +173,12 @@ location.href="/index.do";
 	// 요청 하이라이트
 	$(".req-container").mouseenter(function(){
 	    $(this).css("background-color", "rgb(227, 227, 227)")
+	    var bounds = new kakao.maps.LatLngBounds();
+	    bounds.extend(homeLoc);
 	    var target = markerObj[$(this).attr('id').split('-')[1]];
-	    var moveLatLng = new kakao.maps.LatLng(target.y, target.x);   
-	    map.panTo(moveLatLng);
+	    var moveLatLng = new kakao.maps.LatLng(target.y, target.x);
+	    bounds.extend(moveLatLng);
+	    map.setBounds(bounds);
 	});
 	$(".req-container").mouseleave(function(){
 	    $(this).css("background-color", "")

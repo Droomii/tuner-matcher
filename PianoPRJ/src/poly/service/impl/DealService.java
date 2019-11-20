@@ -51,4 +51,14 @@ public class DealService implements IDealService{
 		return dealMapper.auctionOff(deal_seq, req_seq, user_seq);
 	}
 
+	@Override
+	public List<DealDTO> getUserDealList(String user_seq) throws Exception {
+		return dealMapper.getUserDealList(user_seq);
+	}
+
+	@Override
+	public int dealCancel(String deal_seq, String user_seq, int user_type) throws Exception {
+		return dealMapper.dealCancel(deal_seq, user_seq, user_type);
+	}
+
 }

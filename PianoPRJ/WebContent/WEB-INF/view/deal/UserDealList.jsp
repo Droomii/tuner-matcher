@@ -39,7 +39,7 @@
     <div class="col-xs-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">과거 내역</h4>
+                <h4 class="card-title">조율 현황</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
             <div class="card-body collapse in">
@@ -49,18 +49,18 @@
                             <thead>
                                 <tr class="row">
                                     <th>거래번호</th>
-                                    <th>고객 닉네임</th>
-                                    <th>견적가</th>
-                                    <th>결과</th>
+                                    <th>조율사</th>
+                                    <th>날짜</th>
+                                    <th>진행 상태</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <%for(DealDTO dDTO : dList){ %>
-                                <tr onclick="location.href='/deal/BidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>&back=past'" role="button">
+                                <tr onclick="location.href='/deal/UserDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
                                     <td><%=CmmUtil.nvl(dDTO.getDeal_seq())%></td>
-                                    <td><%=CmmUtil.nvl(dDTO.getRequester_nick()) %></td>
+                                    <td><%=CmmUtil.nvl(dDTO.getTuner_name()) %></td>
                                     
-                                    <td><%=dDTO.getTotal() %>원</td>
+                                    <td><%=dDTO.getFullDate()%></td>
                                     <td><%=states[Integer.parseInt(dDTO.getDeal_state())] %></td>
                                 </tr>
                             <%} %>

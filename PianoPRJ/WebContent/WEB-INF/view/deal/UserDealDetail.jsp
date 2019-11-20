@@ -22,6 +22,7 @@
 	String back = (String)request.getAttribute("back");
 	back = back==null ? "/deal/TunerBidList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
+	String deal_state = dDTO.getDeal_state();
 	
 	String tuner_name = uDTO.getUser_name();
 	
@@ -125,74 +126,7 @@
 								</div>
 							</div>
 						</div>
-		                <div class="card-block">
-						<h5 class="form-section text-bold-600">견적 정보</h5>
-						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
-							<div class="row" style="display:flex;">
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">소견</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(dDTO.getDiagnosis_content()) %></div>
-							</div>
-							<div class="row" style="display:flex;">
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
-							</div>
-						</div>
-					</div>
-					<div class="card-block">
-					<h5 class="form-section text-bold-600">가격</h5>
-						<table class="table table-bordered" style="border:2px solid rgb(150,150,150);">
-                        <thead>
-                            <tr style="background-color:rgb(220,220,220);">
-                                <th style="width:9rem;text-align:center;">거래번호</th>
-                                <th style="text-align:center">품목</th>
-                                <th style="width:8rem;text-align:center">수량</th>
-                                <th style="width:10rem;text-align:center">가격</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <%Iterator<String> itemKeys = items.keySet().iterator(); 
-                        String itemKey = itemKeys.next();%>
-                            <tr>
-                                <th rowspan="<%=itemLen%>" style="vertical-align:middle;text-align:center"><%=dDTO.getDeal_seq() %></th>
-                                <td><%=itemKey %></td>
-                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
-                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
-                            </tr>
-                            <%while(itemKeys.hasNext()){ 
-                            itemKey = itemKeys.next();%>
-                            <tr>
-                                <td><%=itemKey %></td>
-                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
-                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
-                            </tr>
-                            <%} %>
-                            <tr>
-                                <th colspan="3" style="background-color:rgb(220,220,220);text-align:right">총합</th>
-                                <th style="text-align:right"><%=dDTO.getTotal() %> 원</th>
-                            </tr>
-                        </tbody>
-                    </table>
-					</div>
-		            </div>
-		            <div class="card-footer text-xs-center">
-					<span>
-						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
-					</span>
-					<span>
-						<button onclick="auctionOff();" class="button btn btn-success">채택하기 </button>
-					</span>
-				</div>
-				</div>
-			</div>
-		</div>
-	<div class="row match-height">
-		<div class="col-xs-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-			<div class="card">
-				<div class="card-header">
-					<h4 class="card-title">요청 정보</h4>
-				</div>
-				<div class="card-body">
-					<div class="card-block">
+						<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
@@ -242,18 +176,85 @@
 							</div>
 						
 					</div>
-				</div>
-				<form method="post" hidden="hidden" name="req_action">
-					<input value="<%=rDTO.getReq_seq() %>" name="req_seq">
-				</form>
-				<div class="card-footer text-xs-center">
+		                <div class="card-block">
+						<h5 class="form-section text-bold-600">견적 정보</h5>
+						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">소견</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(dDTO.getDiagnosis_content()) %></div>
+							</div>
+						</div>
+					</div>
+					<div class="card-block">
+					<h5 class="form-section text-bold-600">가격</h5>
+						<table class="table table-bordered" style="border:2px solid rgb(150,150,150);">
+                        <thead>
+                            <tr style="background-color:rgb(220,220,220);">
+                                <th style="width:9rem;text-align:center;">거래번호</th>
+                                <th style="text-align:center">품목</th>
+                                <th style="width:8rem;text-align:center">수량</th>
+                                <th style="width:10rem;text-align:center">가격</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <%Iterator<String> itemKeys = items.keySet().iterator(); 
+                        String itemKey = itemKeys.next();%>
+                            <tr>
+                                <th rowspan="<%=itemLen%>" style="vertical-align:middle;text-align:center"><%=dDTO.getDeal_seq() %></th>
+                                <td><%=itemKey %></td>
+                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
+                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
+                            </tr>
+                            <%while(itemKeys.hasNext()){ 
+                            itemKey = itemKeys.next();%>
+                            <tr>
+                                <td><%=itemKey %></td>
+                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
+                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
+                            </tr>
+                            <%} %>
+                            <tr>
+                                <th colspan="3" style="background-color:rgb(220,220,220);text-align:right">총합</th>
+                                <th style="text-align:right"><%=dDTO.getTotal() %> 원</th>
+                            </tr>
+                        </tbody>
+                    </table>
+					</div>
+					<div class="card-block">
+						<h5 class="form-section text-bold-600">위치 및 날짜 정보</h5>
+						<div class="col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-block">
+						<div style="height:600px">
+							<div id="map" style="width:100%;height:100%;"></div>
+						</div>
+					</div>
+		            </div>
+		            <div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
+						<a href="/deal/UserDealList.do" class="button btn btn-info">뒤로 </a>
 					</span>
+					<%if(deal_state.matches("[26]")){ %>
+					<span>
+						<button onclick="dealCancel();"class="button btn btn-danger">거래 취소 </button>
+					</span>
+					<span>
+						<button onclick="dealConfirm();"class="button btn btn-success">거래 완료</button>
+					</span>
+					<%} %>
+				</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </section>
 <!-- Header footer section end -->
 
@@ -261,14 +262,56 @@
 	</div>
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript">
-	function auctionOff(){
-		if(confirm("해당 견적을 채택하시겠습니까?")){
-			location.href="/deal/AuctionOff.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+	<%if(deal_state.matches("[26]")){ %>
+	function dealCancel(){
+		if(confirm("해당 거래를 취소하시겠습니까?")){
+			location.href="/deal/UserDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	
+	function dealConfirm(){
+		if(confirm("거래를 완료하시겠습니까?")){
+			location.href="/deal/UserDealConfirm.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	<%} %>
 	
+	// 지도
+
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+		center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+		level: 6 //지도의 레벨(확대, 축소 정도)
+	};
+
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	function init(result, status) {
+	    if (status === kakao.maps.services.Status.OK) {
+	        console.log(result);
+	        var tunerAddr = result[0];
+	        var moveLoc = new kakao.maps.LatLng(tunerAddr.y, tunerAddr.x);
+	        map.setCenter(moveLoc);
+	        
+	        var imageSrc = '/resources/images/help.png', // 마커이미지의 주소입니다    
+	        imageSize = new kakao.maps.Size(31, 42), // 마커이미지의 크기입니다
+	        imageOption = {offset: new kakao.maps.Point(16, 42)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+	        
+	        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+	        marker = new kakao.maps.Marker({
+	            position: moveLoc,
+	            image:markerImage
+	        });
+	        
+	        
+	        marker.setMap(map);
+	    }
+	};
+	geocoder.addressSearch('<%=CmmUtil.nvl(pDTO.getAddr()).split("&#40")[0].split(",")[0] %>', init);
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>

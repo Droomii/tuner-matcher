@@ -57,7 +57,7 @@
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">조율 현황</a>
+              <li><a href="/deal/UserDealList.do" data-i18n="nav.dash.main" class="menu-item">조율 현황</a>
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 리뷰</a>
               </li>

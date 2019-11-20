@@ -2,6 +2,8 @@ package poly.persistance.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import config.Mapper;
 import poly.dto.DealDTO;
 
@@ -21,5 +23,9 @@ public interface IDealMapper {
 	List<DealDTO> getReqBid(String req_seq) throws Exception;
 
 	int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception;
+
+	List<DealDTO> getUserDealList(String user_seq) throws Exception;
+
+	int dealCancel(String deal_seq, String user_seq, @Param("user_type") int user_type) throws Exception;
 
 }

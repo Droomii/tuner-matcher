@@ -113,4 +113,9 @@ public class ReqService implements IReqService {
 		return reqMapper.updateReq(rDTO);
 	}
 
+	@Override
+	public void auctionOff(String req_seq) throws Exception {
+		reqMapper.auctionOff(req_seq);
+	}
+
 }

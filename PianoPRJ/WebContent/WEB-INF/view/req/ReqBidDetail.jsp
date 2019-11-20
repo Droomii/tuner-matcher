@@ -121,7 +121,7 @@
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=tuner_name %></div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=tuner_tel %></div></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel() %></div></div>
 								</div>
 							</div>
 						</div>
@@ -177,6 +177,9 @@
 		            <div class="card-footer text-xs-center">
 					<span>
 						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
+					</span>
+					<span>
+						<button onclick="auctionOff();" class="button btn btn-success">낙찰하기 </button>
 					</span>
 				</div>
 				</div>
@@ -258,14 +261,15 @@
 	</div>
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
-	
-	
-	<script>
-	function bidCancel(){
-		if(confirm("입찰을 취소하시겠습니까?")){
-			location.href="/deal/BidCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+	<script type="text/javascript">
+	function auctionOff(){
+		if(confirm("해당 입찰을 낙찰하시겠습니까?")){
+			location.href="/deal/AuctionOff.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
+	
+	
+	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
 </body>

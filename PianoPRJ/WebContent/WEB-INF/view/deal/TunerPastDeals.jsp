@@ -9,7 +9,7 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	List<DealDTO> dList = (ArrayList<DealDTO>)request.getAttribute("dList");
-	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래중", "거래취소", "거래성사"};
+	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래취소", "거래성사"};
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">

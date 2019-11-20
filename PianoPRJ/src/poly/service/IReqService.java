@@ -21,4 +21,6 @@ public interface IReqService {
 
 	int updateReq(ReqDTO rDTO) throws Exception;
 
+	void auctionOff(String req_seq) throws Exception;
+
 }

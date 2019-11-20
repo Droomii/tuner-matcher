@@ -45,6 +45,7 @@
 		USER_SEQ=#{0}
 		AND  R.PIANO_SEQ=P.PIANO_SEQ
 		AND R.REQ_TYPE=0
+		AND R.REQ_STATE=0
 	</select>
 	<select id="getReqDetail" parameterType="String" resultType="ReqDTO">
 	SELECT
@@ -92,5 +93,9 @@
 		R.PIANO_SEQ=P.PIANO_SEQ
 		AND P.SGG_CODE LIKE #{0}
 		AND R.REQ_TYPE=0
-	</select>	
+		AND R.REQ_STATE=0
+	</select>
+	<update id="auctionOff" parameterType="String">
+		UPDATE REQUEST SET REQ_STATE=1 WHERE REQ_SEQ=#{0}
+	</update>
 </mapper>

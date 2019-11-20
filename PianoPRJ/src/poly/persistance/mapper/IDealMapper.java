@@ -20,4 +20,6 @@ public interface IDealMapper {
 
 	List<DealDTO> getReqBid(String req_seq) throws Exception;
 
+	int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception;
+
 }

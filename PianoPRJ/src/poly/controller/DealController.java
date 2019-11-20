@@ -159,4 +159,38 @@ public class DealController {
 		return "/deal/TunerPastDeals";
 		
 	}
+	
+	//----------------사용자---------------------
+	
+	//사용자 입찰
+	@RequestMapping(value = "AuctionOff")
+	public String AuctionOff(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".AuctionOff start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String deal_seq = request.getParameter("deal_seq");
+		String req_seq = dealService.getDealDetail(deal_seq).getReq_seq();
+		// 세션 사용자와 요청자 번호의 일치 여부 확인
+		int res = 0;
+		res = dealService.auctionOff(deal_seq, req_seq, user_seq);
+		String url = "";
+		String msg = "";
+		if(res>0) {
+			reqService.auctionOff(req_seq);
+			msg = "낙찰에 성공했습니다";
+			url="/deal/UserOngoingDeal.do";
+		}else {
+			msg = "낙찰에 실패했습니다";
+			url="/deal/ReqBidDetail.do?deal_seq=" + deal_seq;
+		}
+		log.info(this.getClass().getName() + ".AuctionOff end");
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "/redirect";
+	}
 }

@@ -88,7 +88,7 @@
 		TRANSPORT_EA,
 		DEAL_STATE
 	FROM DEAL WHERE TUNER_SEQ=#{0}
-	AND DEAL_STATE IN (1,3,5,6)
+	AND DEAL_STATE IN (1,3,4,5)
 </select>
 <select id="getReqBid" parameterType="String" resultType="DealDTO">
 	SELECT
@@ -112,4 +112,12 @@
 		AND D.REQ_SEQ=#{0}
 		AND D.DEAL_STATE=0
 </select>
+<update id="auctionOff" parameterType="String">
+	UPDATE DEAL SET
+		DEAL_STATE = CASE
+			WHEN (DEAL_SEQ=#{0} AND REQUESTER_SEQ=#{2}) THEN 2
+			WHEN (REQ_SEQ=#{1} AND REQUESTER_SEQ=#{2} AND DEAL_STATE=0) THEN 3
+			ELSE DEAL_STATE
+		END
+</update>
 </mapper>

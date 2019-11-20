@@ -46,4 +46,9 @@ public class DealService implements IDealService{
 		return dealMapper.getReqBid(req_seq);
 	}
 
+	@Override
+	public int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception {
+		return dealMapper.auctionOff(deal_seq, req_seq, user_seq);
+	}
+
 }

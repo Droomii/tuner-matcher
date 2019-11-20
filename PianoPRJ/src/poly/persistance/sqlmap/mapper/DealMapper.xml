@@ -149,4 +149,21 @@
 		AND TUNER_SEQ=#{1}
 		</if>
 </update>
+<update id="dealConfirm">
+	UPDATE DEAL SET
+		<if test="user_type==0">
+		DEAL_STATE=7
+		</if>
+		<if test="user_type==1">
+		DEAL_STATE=6
+		</if>
+	WHERE
+		DEAL_SEQ=#{0}
+		<if test="user_type==0">
+		AND REQUESTER_SEQ=#{1}
+		</if>
+		<if test="user_type==1">
+		AND TUNER_SEQ=#{1}
+		</if>
+</update>
 </mapper>

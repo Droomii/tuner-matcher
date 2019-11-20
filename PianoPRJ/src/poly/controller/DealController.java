@@ -65,7 +65,7 @@ public class DealController {
 			msg = "입찰에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/index.do");
+		model.addAttribute("url", "/deal/TunerBidList.do");
 		return "/redirect";
 		
 		
@@ -272,6 +272,36 @@ public class DealController {
 		model.addAttribute("url", url);
 		
 		log.info(this.getClass().getName() + ".UserDealCancel end");
+		return "/redirect";
+	}
+	
+	@RequestMapping(value = "UserDealConfirm")
+	public String UserDealConfirm(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".UserDealConfirm start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String deal_seq = request.getParameter("deal_seq");
+		int user_type = 0;
+		
+		int res = dealService.dealConfirm(deal_seq, user_seq, user_type);
+		String url = "";
+		String msg = "";
+		if(res>0) {
+			msg = "거래를 완료하였습니다";
+			url="/deal/UserDealList.do";
+		}else {
+			msg = "거래 완료에 실패했습니다";
+			url="/deal/UserDealDetail.do?deal_seq=" + deal_seq;
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		log.info(this.getClass().getName() + ".UserDealConfirm end");
 		return "/redirect";
 	}
 }

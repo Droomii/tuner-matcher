@@ -61,4 +61,9 @@ public class DealService implements IDealService{
 		return dealMapper.dealCancel(deal_seq, user_seq, user_type);
 	}
 
+	@Override
+	public int dealConfirm(String deal_seq, String user_seq, int user_type) throws Exception {
+		return dealMapper.dealConfirm(deal_seq, user_seq, user_type);
+	}
+
 }

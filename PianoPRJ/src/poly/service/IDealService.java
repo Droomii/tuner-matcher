@@ -24,4 +24,6 @@ public interface IDealService {
 
 	int dealCancel(String deal_seq, String user_seq, int user_type) throws Exception;
 
+	int dealConfirm(String deal_seq, String user_seq, int user_type) throws Exception;
+
 }

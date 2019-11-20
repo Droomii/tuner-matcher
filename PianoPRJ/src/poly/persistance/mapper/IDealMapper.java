@@ -28,4 +28,6 @@ public interface IDealMapper {
 
 	int dealCancel(String deal_seq, String user_seq, @Param("user_type") int user_type) throws Exception;
 
+	int dealConfirm(String deal_seq, String user_seq, @Param("user_type") int user_type) throws Exception;
+
 }

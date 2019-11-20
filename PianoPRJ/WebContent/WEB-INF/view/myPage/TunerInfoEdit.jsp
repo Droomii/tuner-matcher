@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" pattern="^[0-9]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required data-pattern-error="유효한 전화번호가 아닙니다">
+											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required onKeyUp="phoneNumberFormat(this)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -204,6 +204,65 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
+	<script>
+    
+    // 전화번호 형식 자동변환
+    function phoneNumberFormat(obj) {
+    	obj.value = obj.value.replace(/[^0-9\-]/g, "");
+	    var number = obj.value.replace(/[^0-9]/g, "");
+	    var tel = "";
+	
+	    // 서울 지역번호(02)가 들어오는 경우
+	    if(number.substring(0, 2).indexOf('02') == 0) {
+	    	$("#user_tel").attr("maxlength", "12")
+	        if(number.length < 3) {
+	            return number;
+	        } else if(number.length < 6) {
+	            tel += number.substr(0, 2);
+	            tel += "-";
+	            tel += number.substr(2);
+	        } else if(number.length < 10) {
+	            tel += number.substr(0, 2);
+	            tel += "-";
+	            tel += number.substr(2, 3);
+	            tel += "-";
+	            tel += number.substr(5);
+	        } else {
+	            tel += number.substr(0, 2);
+	            tel += "-";
+	            tel += number.substr(2, 4);
+	            tel += "-";
+	            tel += number.substr(6);
+	        }
+	    
+	    // 서울 지역번호(02)가 아닌경우
+	    } else {
+	    	$("#user_tel").attr("maxlength", "13")
+	        if(number.length < 4) {
+	            return number;
+	        } else if(number.length < 7) {
+	            tel += number.substr(0, 3);
+	            tel += "-";
+	            tel += number.substr(3);
+	        } else if(number.length < 11) {
+	            tel += number.substr(0, 3);
+	            tel += "-";
+	            tel += number.substr(3, 3);
+	            tel += "-";
+	            tel += number.substr(6);
+	        } else {
+	            tel += number.substr(0, 3);
+	            tel += "-";
+	            tel += number.substr(3, 4);
+	            tel += "-";
+	            tel += number.substr(7);
+	        }
+	    }
+	
+	    obj.value = tel;
+	}
+
+    </script>
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	

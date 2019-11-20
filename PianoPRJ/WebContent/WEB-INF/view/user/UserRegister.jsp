@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" pattern="^[0-9]{9,}$" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" onKeyUp="phoneNumberFormat(this);"required data-pattern-error="유효한 전화번호가 아닙니다">
+											<input type="text" id="user_tel" maxlength="13" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" onKeyUp="phoneNumberFormat(this);"required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -182,12 +182,13 @@
     
     // 전화번호 형식 자동변환
     function phoneNumberFormat(obj) {
-
+    	obj.value = obj.value.replace(/[^0-9\-]/g, "");
 	    var number = obj.value.replace(/[^0-9]/g, "");
 	    var tel = "";
 	
 	    // 서울 지역번호(02)가 들어오는 경우
 	    if(number.substring(0, 2).indexOf('02') == 0) {
+	    	$("#user_tel").attr("maxlength", "12")
 	        if(number.length < 3) {
 	            return number;
 	        } else if(number.length < 6) {
@@ -210,6 +211,7 @@
 	    
 	    // 서울 지역번호(02)가 아닌경우
 	    } else {
+	    	$("#user_tel").attr("maxlength", "13")
 	        if(number.length < 4) {
 	            return number;
 	        } else if(number.length < 7) {
@@ -233,60 +235,7 @@
 	
 	    obj.value = tel;
 	}
-	    
-    
-    var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
-   	
-    // 상세 시군구코드 구하기
-    function getDetailSgg(elem){
-		var query = {sidoCode : elem.value};
-		console.log("sidocode : " + elem.value);
-		$.ajax({
-			url:"/addr/GetSgg.do",
-			type:"post",
-			data:query,
-			success:function(data){
-				elem.parentElement.getElementsByClassName('detail-checkboxes')[0].innerHTML = data;
-			}
-		});
-   	}
-   	
-    // 전체 선택/취소
-   	function toggleAll(elem){
-   		var checkboxes = elem.parentElement.parentElement.getElementsByClassName('sgg-detail');
-		for(var i=1; i < checkboxes.length; i++){
-			var checkbox = checkboxes[i];
-			checkbox.checked = elem.checked;
-			checkbox.disabled = elem.checked;
-			checkbox.name = elem.checked ? "" : "sgg_code";
-			
-		}
-   	}
-    
-   	function addArea(){
-   		$('#svc-area-group').append(svcAreaForm);
-   	}
-   	
-   	function delArea(elem){
-   		if(document.getElementsByClassName('svc-area').length == 1){
-   			alert("최소 한 개의 활동지역은 있어야 합니다.");
-   			return;
-   		}
-   			
-   		elem.parentElement.parentElement.remove();
-   	}
-   	
-   	// 모두 체크 되었는지 확인
-   	function checkAllChecked(elem){
-   		var subDetails = elem.parentElement.parentElement.getElementsByClassName('sub-detail');
-   		var allChecked = true;
-   		for(var i = 0; i < subDetails.length; i++){
-   			allChecked = allChecked && subDetails[i].checked;
-   		}
-   		if(allChecked){
-   			elem.parentElement.parentElement.getElementsByClassName('select-all')[0].click();
-   		}
-   	}
+
     </script>
     
      <!-- addrInput popup -->

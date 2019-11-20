@@ -23,7 +23,6 @@
 	back = back==null ? "/deal/TunerBidList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	
-	String tuner_tel = FormatUtil.phone(uDTO.getUser_tel());
 	String tuner_name = uDTO.getUser_name();
 	
 	

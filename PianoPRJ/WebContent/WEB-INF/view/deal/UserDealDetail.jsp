@@ -92,6 +92,9 @@
    	table, th, td{
    		border:2px solid rgb(150,150,150);
    	}
+   	.checked{
+   		color:orange;
+   	}
 </style>
 
 
@@ -238,6 +241,68 @@
 							<div id="map" style="width:100%;height:100%;"></div>
 						</div>
 					</div>
+					<%if(deal_state.matches("[26]")){ %>
+					
+					<div class="card-block">
+						<h5 class="form-section text-bold-600">고객 리뷰</h5>
+						<hr>
+						<p class="card-title text-muted text-truncate">리뷰 등록은 서비스 품질 향상에 도움이 됩니다</p>
+						<form onsubmit="return submitReview();" autocomplete="off" data-toggle="validator" role="form" name="regForm" class="form" action="/review/ReviewSubmit.do" method="post" autocomplete="off">
+						<!-- 별점 -->
+						<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
+						<div style="display:inline-block">
+						<span id="star-1" role="button" onclick="clickStar(this);"><i class="icon-android-star"></i></span>
+						<span id="star-2" role="button" onclick="clickStar(this);"><i class="icon-android-star"></i></span>
+						<span id="star-3" role="button" onclick="clickStar(this);"><i class="icon-android-star"></i></span>
+						<span id="star-4" role="button" onclick="clickStar(this);"><i class="icon-android-star"></i></span>
+						<span id="star-5" role="button" onclick="clickStar(this);"><i class="icon-android-star"></i></span>
+						</div>
+						<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;별을 클릭하면 별점이 선택됩니다.</div>
+						<input hidden="hidden" name="review_star" id="review_star" value="0">
+						</div>
+						<!-- 리뷰 내용 -->
+						<div class="form-group">
+							<input hidden="hidden" id="review_content" name="review_content">
+							<textarea id="temp_content" rows="5" class="form-control" placeholder="리뷰 내용을 작성해주세요" required></textarea>
+						</div>
+						<div class="row">
+						<div class="form-group col-sm-12 col-lg-4">
+						<div>기술 만족도</div>
+							<select id="projectinput6" name="reveiw_tech" class="form-control">
+								<option selected disabled>선택</option>
+								<option value="2">만족</option>
+								<option value="1">보통</option>
+								<option value="0">불만족</option>
+							</select>
+						</div>
+						<div class="form-group col-sm-12 col-lg-4">
+						<div>시간 엄수 만족도</div>
+							<select id="projectinput6" name="review_punctual" class="form-control">
+								<option selected disabled>선택</option>
+								<option value="2">만족</option>
+								<option value="1">보통</option>
+								<option value="0">불만족</option>
+							</select>
+						</div>
+						<div class="form-group col-sm-12 col-lg-4">
+						<div>친절 만족도</div>
+							<select id="projectinput6" name="review_kindness" class="form-control">
+								<option selected disabled>선택</option>
+								<option value="2">만족</option>
+								<option value="1">보통</option>
+								<option value="0">불만족</option>
+							</select>
+						</div>
+						</div>
+						<fieldset class="form-group row">
+                            <div class="col-md-6 col-xs-12">
+	                            <input type="checkbox" id="fav" name="fav" value="1">
+	                            <label for="fav">자주 찾는 조율사로 등록</label>
+                            </div>
+                        </fieldset>
+						</form>
+					</div>
+					<%} %>
 		            </div>
 		            <div class="card-footer text-xs-center">
 					<span>
@@ -265,6 +330,22 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript">
 	<%if(deal_state.matches("[26]")){ %>
+	
+	function clickStar(el){
+		var starNum = parseInt(el.id.substring(5))
+		var score = 0;
+		for(var i=0; i<5; i++){
+			if(i<starNum){
+				document.getElementById("star-" + (i+1)).classList.add("checked");
+				score++;
+			}else{
+				document.getElementById("star-" + (i+1)).classList.remove("checked");
+			}
+			
+		}
+		document.getElementById("review_star").value = score.toString();
+	}
+	
 	function dealCancel(){
 		if(confirm("해당 거래를 취소하시겠습니까?")){
 			location.href="/deal/UserDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";

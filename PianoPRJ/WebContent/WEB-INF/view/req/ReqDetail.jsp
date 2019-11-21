@@ -344,7 +344,7 @@
 			return false;
 		}
 		if(getPrice()){
-			alert("항목의 가격은 0원일 수 없습니다.");
+			alert("항목 및 총 견적가는 0원일 수 없습니다.");
 			return false;
 		}
 		if(!confirm("입찰하시겠습니까? 한번 등록하면 수정이 불가능합니다.")){
@@ -361,13 +361,15 @@
 	
 	function getPrice(){
 		var prices = document.getElementsByClassName("price");
-	    
+	    var anyChecked = false;
 	    for(var i = 0; i<prices.length; i++){
 	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
 	    	try{
-	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;	
+	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;
+	    		anyChecked = anyChecked || checked;
 	    	}catch(err){
 	    		var checked = true;
+	    		anyChecked = anyChecked || checked;
 	    	}
 	    	if(checked){
 		    	ea = parseInt(ea) || 0;
@@ -379,7 +381,7 @@
 		    	
 				}
 	    }
-		return false;
+		return !anyChecked;
 	}
 	function updatePrice(){
 		var prices = document.getElementsByClassName("price");
@@ -433,7 +435,8 @@
 	$(function() {
 		  $(".price").on("keyup", function(event) {
 			    var value = $(this).val();
-			    $(this).val(value.replace(/[^0-9]/g, ""));
+			  	value = value.replace(/[^0-9]/g, "")
+			    $(this).val(parseInt(value) || 0);
 			    updatePrice();
 			    
 		  })

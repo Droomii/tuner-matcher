@@ -1,3 +1,4 @@
+<%@page import="poly.dto.ReviewDTO"%>
 <%@page import="poly.util.FormatUtil"%>
 <%@page import="poly.dto.UserDTO"%>
 <%@page import="poly.dto.DealDTO"%>
@@ -22,6 +23,9 @@
 	String back = (String)request.getAttribute("back");
 	back = back==null ? "/deal/TunerBidList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
+	ReviewDTO revDTO = (ReviewDTO)request.getAttribute("revDTO");
+	
+	
 	String deal_state = dDTO.getDeal_state();
 	
 	String tuner_name = uDTO.getUser_name();
@@ -242,7 +246,7 @@
 						</div>
 					</div>
 					<%if(deal_state.equals("7")){ %>
-					
+					<%if(revDTO==null){ %>
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">고객 리뷰</h5>
 						<hr>
@@ -308,6 +312,39 @@
                         
 						</form>
 					</div>
+					<%}else{ %>
+					<div class="card-block">
+						<h5 class="form-section text-bold-600">고객 리뷰</h5>
+						<hr>
+						<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
+						<%
+						int stars = Integer.parseInt(revDTO.getReview_star());
+						String[] sat = {"불만족", "보통", "만족"};
+						for(int i=0; i<5; i++){ 
+							if(i < stars){%>
+							<span><i class="icon-android-star checked"></i></span>	
+							<%}else{ %>
+							<span><i class="icon-android-star"></i></span>
+							<%} %>
+						<%} %>
+						</div>
+						<p>
+						<%=CmmUtil.nvl(revDTO.getReview_content()) %>
+						</p>
+						<div class="text-muted float-xs-left">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
+						<%if(user_type.equals("0")){ %>
+						<div class="float-xs-right">
+							<span>
+						<button onclick="reviewDelete();" class="button btn btn-sm btn-danger">삭제 </button>
+						</span>
+						<span>
+							<button onclick="reviewEdit();" class="button btn btn-sm btn-success">수정</button>
+						</span>
+						</div>
+						<%} %>
+					</div>
+					
+					<%} %>
 					<%} %>
 		            </div>
 		            <div class="card-footer text-xs-center">
@@ -335,6 +372,15 @@
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript">
+	<%if(user_type.equals("0") && revDTO != null){ %>
+	function reviewDelete(){
+		if(confirm("리뷰를 삭제하시겠습니까?")){
+			location.href='/review/ReviewDelete.do?deal_seq=<%=dDTO.getDeal_seq()%>';
+		}
+	}
+	
+	<%}%>
+	
 	<%if(deal_state.matches("7")){ %>
 	
 	function clickStar(el){

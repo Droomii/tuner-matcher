@@ -12,7 +12,15 @@ public class ReviewDTO {
 	public String upddate;
 	public String updater_seq;
 	public String user_nick;
+	public String review_star;
 	
+	
+	public String getReview_star() {
+		return review_star;
+	}
+	public void setReview_star(String review_star) {
+		this.review_star = review_star;
+	}
 	public String getDeal_seq() {
 		return deal_seq;
 	}

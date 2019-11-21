@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import poly.dto.DealDTO;
 import poly.dto.ReviewDTO;
 import poly.service.IDealService;
+import poly.service.IFollowService;
 import poly.service.IReviewService;
+import poly.service.impl.FollowService;
+import poly.util.CmmUtil;
 import poly.util.SessionUtil;
 
 @Controller
@@ -30,6 +33,9 @@ public class ReviewController {
 	@Resource(name = "DealService")
 	private IDealService dealService;
 	
+	@Resource(name="FollowService")
+	private IFollowService followService;
+	
 	@RequestMapping(value = "ReviewSubmit", method = RequestMethod.POST)
 	public String ReviewSubmit(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
 			@ModelAttribute ReviewDTO revDTO)
@@ -43,6 +49,8 @@ public class ReviewController {
 		}
 		String user_seq = (String)session.getAttribute("user_seq");
 		DealDTO dDTO = dealService.getDealDetail(revDTO.getDeal_seq());
+		
+		String fav = CmmUtil.nvl(request.getParameter("fav"));
 		
 		String msg = "";
 		String url ="";
@@ -59,15 +67,26 @@ public class ReviewController {
 			int res = reviewService.insertReview(revDTO);
 			
 			if(res > 0) {
-				msg = "리뷰를 등록했습니다.";
+				msg = "리뷰 등록에 등록했습니다.";
+				if(fav.equals("1")) {
+					try {
+					followService.followTuner(user_seq, dDTO.getTuner_seq());
+					}catch(Exception e) {
+						
+					}finally {
+						msg = "리뷰 및 자주 찾는 조율사 등록에 성공했습니다.";
+					}
+					
+				}
+				
 			}else {
 				msg = "리뷰 등록에 실패했습니다.";
 			}
 		}catch(Exception e) {
 			log.info(e.toString());
 			msg = "리뷰 등록에 실패했습니다.";
-			url = String.format("/deal/UserDealDetail.do?deal_seq=%s", revDTO.getDeal_seq());
 		}finally {
+			url = String.format("/deal/UserDealDetail.do?deal_seq=%s", revDTO.getDeal_seq());
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 		}
@@ -75,4 +94,38 @@ public class ReviewController {
 		log.info(this.getClass().getName() + ".ReviewSubmit end");
 		return "/redirect";
 	}
+	
+	@RequestMapping(value = "ReviewDelete")
+	public String ReviewDelete(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReviewDelete start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String msg = "";
+		String deal_seq = request.getParameter("deal_seq");
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		try {
+			int res = reviewService.deleteReview(deal_seq, user_seq);
+			if(res > 0 ) {
+				msg = "리뷰 삭제에 성공했습니다";
+			}else{
+				msg = "리뷰 삭제에 실패했습니다";
+			}
+		}catch(Exception e) {
+			msg = "잘못된 접근입니다.";
+		}
+		String url = String.format("/deal/UserDealDetail.do?deal_seq=%s", deal_seq);
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		
+		
+		log.info(this.getClass().getName() + ".ReviewDelete end");
+		return "/redirect";
+	}
+	
 }

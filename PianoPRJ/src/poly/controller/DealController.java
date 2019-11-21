@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
+import poly.dto.ReviewDTO;
 import poly.dto.UserDTO;
 import poly.service.IDealService;
 import poly.service.IPianoService;
 import poly.service.IReqService;
+import poly.service.IReviewService;
 import poly.service.IUserService;
 import poly.util.SessionUtil;
 
@@ -41,6 +43,9 @@ public class DealController {
 	
 	@Resource(name = "PianoService")
 	private IPianoService pianoService;
+	
+	@Resource(name="ReviewService")
+	private IReviewService reviewService;
 	
 	@RequestMapping(value = "PlaceBid")
 	public String PlaceBid(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute DealDTO dDTO) throws Exception {
@@ -235,11 +240,14 @@ public class DealController {
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
-
+		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
+		
+		model.addAttribute("revDTO", revDTO);
 		model.addAttribute("uDTO", uDTO);
 		model.addAttribute("dDTO", dDTO);
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("pDTO", pDTO);
+		
 		
 		log.info(this.getClass().getName() + ".UserDealDetail end");
 		return "/deal/UserDealDetail";

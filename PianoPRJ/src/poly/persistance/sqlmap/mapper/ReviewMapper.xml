@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- JAVA와 연결할 Mapper 파일 설정 -->
 <mapper namespace="poly.persistance.mapper.IReviewMapper">
-<insert id="insertReview">
+<insert id="insertReview" parameterType="ReviewDTO">
 	INSERT INTO TUNER_REVIEW(
 		DEAL_SEQ,
 		WRITER_SEQ,
@@ -13,7 +13,8 @@
 		REVIEW_CONTENT,
 		REGDATE,
 		UPDDATE,
-		UPDATER_SEQ
+		UPDATER_SEQ,
+		REVIEW_STAR
 	)VALUES(
 		#{deal_seq},
 		#{writer_seq},
@@ -24,8 +25,26 @@
 		#{review_content},
 		SYSDATE,
 		SYSDATE,
-		#{writer_seq}
+		#{writer_seq},
+		#{review_star}
 	)
-
 </insert>
+<select id="getDealReview" parameterType="String" resultType="ReviewDTO">
+	SELECT
+		REVIEW_STAR,
+		REVIEW_TECH,
+		REVIEW_PUNCTUAL,
+		REVIEW_KINDNESS,
+		REVIEW_CONTENT
+	FROM
+		TUNER_REVIEW
+	WHERE
+		DEAL_SEQ=#{0}
+</select>
+<delete id="deleteReview" parameterType="String">
+	DELETE FROM TUNER_REVIEW
+	WHERE
+		DEAL_SEQ=#{0}
+		AND WRITER_SEQ=#{1}
+</delete>
 </mapper>

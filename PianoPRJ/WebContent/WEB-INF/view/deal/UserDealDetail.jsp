@@ -246,12 +246,13 @@
 						</div>
 					</div>
 					<%if(deal_state.equals("7")){ %>
+					<div id="review-container">
 					<%if(revDTO==null){ %>
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">고객 리뷰</h5>
 						<hr>
 						<p class="card-title text-muted text-truncate">리뷰 등록은 서비스 품질 향상에 도움이 됩니다</p>
-						<form onsubmit="return submitReview();" autocomplete="off" data-toggle="validator" role="form" name="reviewForm" class="form" action="/review/ReviewSubmit.do" method="post" autocomplete="off">
+						<form onsubmit="return submitReview('등록');" autocomplete="off" data-toggle="validator" role="form" name="reviewForm" class="form" action="/review/ReviewSubmit.do" method="post" autocomplete="off">
 						<!-- 별점 -->
 						<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
 						<div style="display:inline-block">
@@ -263,7 +264,7 @@
 						</div>
 						<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;별을 클릭하면 별점이 선택됩니다.</div>
 						<input hidden="hidden" name="review_star" id="review_star" value="0">
-						<input hidden="hidden" name="deal_seq" id="review_star" value="<%=dDTO.getDeal_seq()%>">
+						<input hidden="hidden" name="deal_seq" id="reviewDealSeq" value="<%=dDTO.getDeal_seq()%>">
 						</div>
 						<!-- 리뷰 내용 -->
 						<div class="form-group">
@@ -320,12 +321,8 @@
 						<%
 						int stars = Integer.parseInt(revDTO.getReview_star());
 						String[] sat = {"불만족", "보통", "만족"};
-						for(int i=0; i<5; i++){ 
-							if(i < stars){%>
-							<span><i class="icon-android-star checked"></i></span>	
-							<%}else{ %>
-							<span><i class="icon-android-star"></i></span>
-							<%} %>
+						for(int i=0; i<5; i++){ %>
+							<span><i class="icon-android-star <%=i<stars ? "checked" : "" %>"></i></span>	
 						<%} %>
 						</div>
 						<p>
@@ -343,7 +340,7 @@
 						</div>
 						<%} %>
 					</div>
-					
+					</div>
 					<%} %>
 					<%} %>
 		            </div>
@@ -377,6 +374,24 @@
 		if(confirm("리뷰를 삭제하시겠습니까?")){
 			location.href='/review/ReviewDelete.do?deal_seq=<%=dDTO.getDeal_seq()%>';
 		}
+	}
+	
+	function reviewEdit(){
+		var query = {deal_seq : "<%=dDTO.getDeal_seq()%>"};
+		$.ajax({
+			url:"/review/ReviewEdit.do",
+			type:"post",
+			data:query,
+			success:function(data){
+				if(data==null){
+					alert('비정상적인 접근입니다.');
+					return;
+				}else{
+					$("#review-container").html(data);
+				}
+			}
+		});
+		
 	}
 	
 	<%}%>
@@ -417,13 +432,12 @@
 	    return b
 	}
 	
-	function submitReview(){
+	function submitReview(type){
 		var form = document.reviewForm;
 		if(form.review_star.value=="0"){
 			alert("별점을 선택하세요");
 			return false;
 		}
-		
 		if(form.temp_content.value.trim()==""){
 			alert("리뷰 내용을 입력하세요");
 			return false;
@@ -441,7 +455,7 @@
 			return false;
 		}
 		form.review_content.value = form.temp_content.value.replace(/\n/g, " ");
-		if(confirm("리뷰를 등록하시겠습니까?"))
+		if(confirm("리뷰를 " +type+"하시겠습니까?"))
 			form.submit();
 		
 	}
@@ -491,8 +505,6 @@
 	            position: moveLoc,
 	            image:markerImage
 	        });
-	        
-	        
 	        marker.setMap(map);
 	    }
 	};

@@ -29,4 +29,14 @@ public class ReviewService implements IReviewService{
 		return reviewMapper.deleteReview(deal_seq, user_seq);
 	}
 
+	@Override
+	public ReviewDTO getReviewEditInfo(String deal_seq, String user_seq) throws Exception {
+		return reviewMapper.getReviewEditInfo(deal_seq, user_seq);
+	}
+
+	@Override
+	public int updateReview(ReviewDTO revDTO) throws Exception {
+		return reviewMapper.updateReview(revDTO);
+	}
+
 }

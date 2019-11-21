@@ -128,4 +128,71 @@ public class ReviewController {
 		return "/redirect";
 	}
 	
+	@RequestMapping(value = "ReviewEdit")
+	public String ReviewEdit(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReviewEdit start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			log.info("걸림");
+			return null;
+		}
+		
+		String deal_seq = request.getParameter("deal_seq");
+		String user_seq = (String)session.getAttribute("user_seq");
+		ReviewDTO revDTO = reviewService.getReviewEditInfo(deal_seq, user_seq);
+		revDTO.setDeal_seq(deal_seq);
+		model.addAttribute("revDTO", revDTO);
+		log.info(this.getClass().getName() + ".ReviewEdit end");
+		return "/review/ReviewEditForm";
+	}
+	
+	@RequestMapping(value = "ReviewEditProc")
+	public String ReviewEditProc(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@ModelAttribute ReviewDTO revDTO)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReviewEditProc start");
+
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String msg = "";
+		String url ="";
+		String user_seq = (String)session.getAttribute("user_seq");
+		DealDTO dDTO = dealService.getDealDetail(revDTO.getDeal_seq());
+		
+		if(!user_seq.equals(dDTO.getRequester_seq())) {
+			msg = "비정상적인 접근입니다.";
+			url = "/index.do";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "/redirect";
+		}
+		revDTO.setWriter_seq(user_seq);
+		
+		revDTO.setTuner_seq(dDTO.getTuner_seq());
+		try {
+			int res = reviewService.updateReview(revDTO);
+			
+			if(res > 0) {
+				msg = "리뷰 수정에 등록했습니다.";
+			}else {
+				msg = "리뷰 수정에 실패했습니다.";
+			}
+		}catch(Exception e) {
+			log.info(e.toString());
+			msg = "리뷰 수정에 실패했습니다.";
+		}finally {
+			url = String.format("/deal/UserDealDetail.do?deal_seq=%s", revDTO.getDeal_seq());
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+		}
+		
+		log.info(this.getClass().getName() + ".ReviewEditProc end");
+		return "/redirect";
+	}
+
 }

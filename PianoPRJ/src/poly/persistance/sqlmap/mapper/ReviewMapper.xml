@@ -47,4 +47,30 @@
 		DEAL_SEQ=#{0}
 		AND WRITER_SEQ=#{1}
 </delete>
+<select id="getReviewEditInfo" parameterType="String" resultType="ReviewDTO">
+	SELECT
+		REVIEW_STAR,
+		REVIEW_TECH,
+		REVIEW_PUNCTUAL,
+		REVIEW_KINDNESS,
+		REVIEW_CONTENT
+	FROM
+		TUNER_REVIEW
+	WHERE
+		DEAL_SEQ=#{0}
+		AND WRITER_SEQ=#{1}
+</select>
+<update id="updateReview">
+	UPDATE TUNER_REVIEW SET
+		REVIEW_STAR=#{review_star},
+		REVIEW_TECH=#{review_tech},
+		REVIEW_PUNCTUAL=#{review_punctual},
+		REVIEW_KINDNESS=#{review_kindness},
+		REVIEW_CONTENT=#{review_content},
+		UPDDATE=SYSDATE,
+		UPDATER_SEQ=#{writer_seq}
+	WHERE
+		DEAL_SEQ=#{deal_seq}
+		AND WRITER_SEQ=#{writer_seq}
+</update>
 </mapper>

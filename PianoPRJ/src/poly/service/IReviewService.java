@@ -10,4 +10,8 @@ public interface IReviewService {
 
 	int deleteReview(String deal_seq, String user_seq) throws Exception;
 
+	ReviewDTO getReviewEditInfo(String deal_seq, String user_seq) throws Exception;
+
+	int updateReview(ReviewDTO revDTO) throws Exception;
+
 }

@@ -195,8 +195,9 @@ public class MyPageController {
 		String user_seq = (String)session.getAttribute("user_seq");
 		RepuDTO rDTO = repuService.getRepu(user_seq);
 		
+		model.addAttribute("rDTO", rDTO);
 		log.info(this.getClass().getName() + ".MyRepu end");
-		return null;
+		return "/myPage/MyRepu";
 	}
 	
 	

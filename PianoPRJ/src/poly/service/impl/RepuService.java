@@ -16,8 +16,7 @@ public class RepuService implements IRepuService{
 	
 	@Override
 	public RepuDTO getRepu(String user_seq) throws Exception {
-		RepuDTO rDTO = repuMapper.getRepu(user_seq); 
-		return null;
+		return repuMapper.getRepu(user_seq);
 	}
 
 }

@@ -15,7 +15,16 @@ public class RepuDTO {
 	private String score;
 	private String total_deals;
 	private String success_deals;
+	private String total_reviews;
 	
+	public String getTotal_reviews() {
+		return total_reviews;
+	}
+
+	public void setTotal_reviews(String total_reviews) {
+		this.total_reviews = total_reviews;
+	}
+
 	public int getPositive_rate() {
 		int tech_pos = Integer.parseInt(this.tech_pos);
 		int tech_neg = Integer.parseInt(this.tech_neg);

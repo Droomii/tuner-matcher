@@ -241,13 +241,13 @@
 							<div id="map" style="width:100%;height:100%;"></div>
 						</div>
 					</div>
-					<%if(deal_state.matches("[26]")){ %>
+					<%if(deal_state.equals("7")){ %>
 					
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">고객 리뷰</h5>
 						<hr>
 						<p class="card-title text-muted text-truncate">리뷰 등록은 서비스 품질 향상에 도움이 됩니다</p>
-						<form onsubmit="return submitReview();" autocomplete="off" data-toggle="validator" role="form" name="regForm" class="form" action="/review/ReviewSubmit.do" method="post" autocomplete="off">
+						<form onsubmit="return submitReview();" autocomplete="off" data-toggle="validator" role="form" name="reviewForm" class="form" action="/review/ReviewSubmit.do" method="post" autocomplete="off">
 						<!-- 별점 -->
 						<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
 						<div style="display:inline-block">
@@ -259,16 +259,18 @@
 						</div>
 						<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;별을 클릭하면 별점이 선택됩니다.</div>
 						<input hidden="hidden" name="review_star" id="review_star" value="0">
+						<input hidden="hidden" name="deal_seq" id="review_star" value="<%=dDTO.getDeal_seq()%>">
 						</div>
 						<!-- 리뷰 내용 -->
 						<div class="form-group">
 							<input hidden="hidden" id="review_content" name="review_content">
-							<textarea id="temp_content" rows="5" class="form-control" placeholder="리뷰 내용을 작성해주세요" required></textarea>
+							<textarea onchange="checkBytes(this, 500);" onKeyUp="checkBytes(this, 500);" id="temp_content" rows="5" class="form-control" placeholder="리뷰 내용을 작성해주세요"></textarea>
+							<div class="float-xs-right"><span class="byte">0</span>/500 bytes</div>
 						</div>
 						<div class="row">
 						<div class="form-group col-sm-12 col-lg-4">
 						<div>기술 만족도</div>
-							<select id="projectinput6" name="reveiw_tech" class="form-control">
+							<select id="projectinput6" name="review_tech" class="form-control">
 								<option selected disabled>선택</option>
 								<option value="2">만족</option>
 								<option value="1">보통</option>
@@ -300,6 +302,10 @@
 	                            <label for="fav">자주 찾는 조율사로 등록</label>
                             </div>
                         </fieldset>
+                            <div class="col-xs-12 text-xs-center">
+	                            <button type="submit" class="button btn btn-success">리뷰 등록</button>
+                            </div>
+                        
 						</form>
 					</div>
 					<%} %>
@@ -329,7 +335,7 @@
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript">
-	<%if(deal_state.matches("[26]")){ %>
+	<%if(deal_state.matches("7")){ %>
 	
 	function clickStar(el){
 		var starNum = parseInt(el.id.substring(5))
@@ -346,6 +352,58 @@
 		document.getElementById("review_star").value = score.toString();
 	}
 	
+	function checkBytes(el, limit){
+		var b, i, c;
+		var s = el.value;
+		var last;
+	    for(b=i=0; c=s.charCodeAt(i);i++) {
+	    	b+=c>>11?3:c>>7?2:1;
+	    	if(b > limit){
+	    		alert('글자수를 초과하였습니다.');
+		    	el.value = el.value.substring(0, i);
+		    	el.parentElement.querySelector('span').innerHTML = last;
+		    	return
+	    	}
+	    	last = b;
+	    }
+	    el.parentElement.querySelector('span').innerHTML = b;
+	    
+	    return b
+	}
+	
+	function submitReview(){
+		var form = document.reviewForm;
+		if(form.review_star.value=="0"){
+			alert("별점을 선택하세요");
+			return false;
+		}
+		
+		if(form.temp_content.value.trim()==""){
+			alert("리뷰 내용을 입력하세요");
+			return false;
+		}
+		if(form.review_tech.value=='선택'){
+			alert('기술 만족도를 선택해주세요');
+			return false;
+		}
+		if(form.review_punctual.value=='선택'){
+			alert('시간 엄수 만족도를 선택해주세요');
+			return false;
+		}
+		if(form.review_kindness.value=='선택'){
+			alert('친절 만족도를 선택해주세요');
+			return false;
+		}
+		form.review_content.value = form.temp_content.value.replace(/\n/g, " ");
+		if(confirm("리뷰를 등록하시겠습니까?"))
+			form.submit();
+		
+	}
+	
+	
+	<%} %>
+	
+	<%if(deal_state.matches("[26]")){ %>
 	function dealCancel(){
 		if(confirm("해당 거래를 취소하시겠습니까?")){
 			location.href="/deal/UserDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IReviewMapper">
+<insert id="insertReview">
+	INSERT INTO TUNER_REVIEW(
+		DEAL_SEQ,
+		WRITER_SEQ,
+		TUNER_SEQ,
+		REVIEW_TECH,
+		REVIEW_PUNCTUAL,
+		REVIEW_KINDNESS,
+		REVIEW_CONTENT,
+		REGDATE,
+		UPDDATE,
+		UPDATER_SEQ
+	)VALUES(
+		#{deal_seq},
+		#{writer_seq},
+		#{tuner_seq},
+		#{review_tech},
+		#{review_punctual},
+		#{review_kindness},
+		#{review_content},
+		SYSDATE,
+		SYSDATE,
+		#{writer_seq}
+	)
+
+</insert>
+</mapper>

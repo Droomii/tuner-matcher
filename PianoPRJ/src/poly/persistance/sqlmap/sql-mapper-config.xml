@@ -15,5 +15,6 @@
 		<typeAlias type="poly.dto.ReqDTO" alias="ReqDTO"/>
 		<typeAlias type="poly.dto.DealDTO" alias="DealDTO"/>
 		<typeAlias type="poly.dto.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="poly.dto.RepuDTO" alias="RepuDTO"/>
     </typeAliases>
 </configuration>

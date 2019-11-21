@@ -35,7 +35,7 @@
                 </ul>
               </li>
               <li><a href="#" class="menu-item">단골 고객</a></li>
-              <li><a href="#" class="menu-item">내 평판 조회</a></li>
+              <li><a href="/myPage/MyRepu.do" class="menu-item">내 평판 조회</a></li>
             </ul>
           </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>

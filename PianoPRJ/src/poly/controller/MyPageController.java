@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -13,12 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import poly.dto.RepuDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
+import poly.service.IRepuService;
 import poly.service.ISggService;
 import poly.service.IUserService;
-import poly.util.CmmUtil;
 import poly.util.EncryptUtil;
 import poly.util.SessionUtil;
 
@@ -32,6 +34,9 @@ public class MyPageController {
 	
 	@Resource(name="SggService")
 	ISggService sggService;
+	
+	@Resource(name = "RepuService")
+	IRepuService repuService;
 	
 	@RequestMapping(value="MyInfo")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
@@ -49,7 +54,7 @@ public class MyPageController {
 			
 			TunerDTO tDTO = userService.getTunerInfo(user_seq);
 			model.addAttribute("tDTO", tDTO);
-			List<SggDTO> sggList = new ArrayList<>();
+//			List<SggDTO> sggList = new ArrayList<>();
 			Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(user_seq);
 			log.info("sggGrouped : " + sggGrouped);
 			model.addAttribute("sggGrouped", sggGrouped);
@@ -176,6 +181,22 @@ public class MyPageController {
 		
 		
 		
+	}
+	
+	@RequestMapping(value = "MyRepu")
+	public String MyRepu(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".MyRepu start");
+
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		String user_seq = (String)session.getAttribute("user_seq");
+		RepuDTO rDTO = repuService.getRepu(user_seq);
+		
+		log.info(this.getClass().getName() + ".MyRepu end");
+		return null;
 	}
 	
 	

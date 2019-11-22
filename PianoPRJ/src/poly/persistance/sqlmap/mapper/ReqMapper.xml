@@ -118,4 +118,17 @@
 	<update id="auctionOff" parameterType="String">
 		UPDATE REQUEST SET REQ_STATE=1 WHERE REQ_SEQ=#{0}
 	</update>
+	<select id="getTunerPrivateReqList" parameterType="String" resultType="ReqDTO">
+	SELECT
+		REQ_SEQ,
+		REQ_TITLE,
+		REGDATE,
+		(SELECT USER_NAME FROM USERINFO WHERE USER_SEQ=REQUEST.USER_SEQ) AS REQUESTER_NICK,
+		NVL((SELECT COUNT(1) FROM DEAL WHERE DEAL_STATE=0 GROUP BY REQ_SEQ HAVING REQ_SEQ=REQUEST.REQ_SEQ),0) AS BIDS
+	FROM
+		REQUEST
+	WHERE
+		PRIVATE_SEQ=#{0}
+		AND REQ_STATE=0
+	</select>
 </mapper>

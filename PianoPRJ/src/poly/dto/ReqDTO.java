@@ -2,6 +2,7 @@ package poly.dto;
 
 public class ReqDTO implements Comparable<ReqDTO>{
 	private String req_seq;
+	private String requester_nick;
 	private String user_seq;
 	private String piano_seq;
 	private String req_title;
@@ -22,6 +23,12 @@ public class ReqDTO implements Comparable<ReqDTO>{
 	private String addr;
 	private String private_tuner_name;
 	
+	public String getRequester_nick() {
+		return requester_nick;
+	}
+	public void setRequester_nick(String requester_nick) {
+		this.requester_nick = requester_nick;
+	}
 	public String getPrivate_tuner_name() {
 		return private_tuner_name;
 	}

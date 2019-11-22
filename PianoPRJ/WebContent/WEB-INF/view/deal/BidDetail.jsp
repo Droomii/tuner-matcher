@@ -216,7 +216,7 @@
 				</div>
 				<form method="post" hidden="hidden" name="req_action">
 					<input value="<%=rDTO.getReq_seq() %>" name="req_seq">
-					<input value="<%=rDTO.getReq_type() %>" name="req_type">
+					<input value="<%=rDTO.getPrivate_seq() %>" name="private_seq">
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>

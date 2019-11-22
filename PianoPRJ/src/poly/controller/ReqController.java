@@ -320,12 +320,15 @@ public class ReqController {
 		}else {
 			back = "/req/TunerPrivateReqList.do";
 		}
+		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		
 		model.addAttribute("uDTO", uDTO);
 		model.addAttribute("dDTO", dDTO);
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("pDTO", pDTO);
 		model.addAttribute("back", back);
+		model.addAttribute("prefDates", prefDates);
+		
 		
 		log.info(this.getClass().getName() + ".ReqBidDetail end");
 		return "/req/PrivateReqDetail";
@@ -488,6 +491,24 @@ public class ReqController {
 		List<ReqDTO> rList = reqService.getNearReqList(tuner_seq);
 		model.addAttribute("rList", rList);
 		return "/req/TunerPublicReqList";
+	}
+	
+	//1:1 요청서
+	@RequestMapping(value = "TunerPrivateReqList")
+	public String TunerPrivateReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		log.info(this.getClass().getName() + ".TunerPrivateReqList start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String tuner_seq = (String)session.getAttribute("user_seq");
+		log.info("tuner_seq : "+tuner_seq);
+		
+		// 요청목록
+		List<ReqDTO> rList = reqService.getTunerPrivateReqList(tuner_seq);
+		model.addAttribute("rList", rList);
+		return "/req/TunerPrivateReqList";
 	}
 	
 	

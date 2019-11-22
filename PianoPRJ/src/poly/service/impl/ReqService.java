@@ -123,4 +123,9 @@ public class ReqService implements IReqService {
 		return reqMapper.getPrivateReqList(user_seq);
 	}
 
+	@Override
+	public List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception {
+		return reqMapper.getTunerPrivateReqList(tuner_seq);
+	}
+
 }

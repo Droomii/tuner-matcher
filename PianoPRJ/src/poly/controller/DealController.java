@@ -56,21 +56,32 @@ public class DealController {
 			return "/redirect";
 		}
 		
+		String deal_type = request.getParameter("deal_type");
+		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		dDTO.setRequester_seq(rDTO.getUser_seq());
 		dDTO.setDeal_state("0");
 		dDTO.setTuner_seq(user_seq);
 		
 		int res = dealService.insertDeal(dDTO);
+		String type = "";
+		String url = "";
+		if(deal_type.equals("0")) {
+			type = "입찰";
+			url = "/deal/TunerBidList.do";
+		}else {
+			type = "견적 등록";
+			url = "/req/PrivateReqDetail.do?req_seq="+dDTO.getReq_seq();
+		}
 		
 		String msg;
 		if(res>0) {
-			msg = "입찰하였습니다";
+			msg = type + "에 성공하였습니다";
 		}else {
-			msg = "입찰에 실패했습니다";
+			msg = type + "에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/deal/TunerBidList.do");
+		model.addAttribute("url", url);
 		return "/redirect";
 		
 		
@@ -129,24 +140,53 @@ public class DealController {
 			return "/redirect";
 		}
 		String deal_seq = request.getParameter("deal_seq");
-		
+		String req_seq = request.getParameter("req_seq");
 		int res = dealService.bidCancel(deal_seq);
 		String msg = "";
-		
+		String url = "";
+		String what = "입찰 취소";
+		if(req_seq!=null) {
+			url = "/req/PrivateReqDetail.do?req_seq=" + req_seq;
+			what = "견적 삭제";
+		}else {
+			url =  "/deal/TunerBidList.do";
+		}
 		
 		if(res>0) {
-			msg = "입찰 취소에 성공했습니다";
+			msg = what + "에 성공했습니다";
 		}else {
-			msg = "입찰 취소에 실패했습니다";
+			msg = what + "에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
 		String user_type = (String)session.getAttribute("user_type");
 		
-		if(user_type.equals("1"))
-			model.addAttribute("url", "/deal/TunerBidList.do");
+		model.addAttribute("url", url);
 		
 		return "/redirect";
 	}
+	
+	// 조율사 조율현황
+	@RequestMapping(value = "TunerDealList")
+	public String TunerDealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerDealList start");
+		
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		String user_seq = (String)session.getAttribute("user_seq");
+		
+		List<DealDTO> dList = dealService.getTunerDealList(user_seq);
+		if(dList==null) {
+			dList = new ArrayList<DealDTO>();
+		}
+		model.addAttribute("dList", dList);
+		
+		log.info(this.getClass().getName() + ".TunerDealList end");
+		return "/deal/TunerDealList";
+	}
+	
 	
 	//-------------조율사 과거내역------------
 	
@@ -168,6 +208,42 @@ public class DealController {
 		
 		return "/deal/TunerPastDeals";
 		
+	}
+	
+
+	@RequestMapping(value = "TunerDealDetail")
+	public String TunerDealDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerDealDetail start");
+
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String back = request.getParameter("back");
+		log.info("back : " + back);
+		String deal_seq = request.getParameter("deal_seq");
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
+		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
+		
+		if(back!=null) {
+			log.info("back is not null");
+			model.addAttribute("back", "/deal/TunerPastDeals.do");
+		}
+		
+		model.addAttribute("revDTO", revDTO);
+		model.addAttribute("uDTO", uDTO);
+		model.addAttribute("dDTO", dDTO);
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("pDTO", pDTO);
+		
+		
+		log.info(this.getClass().getName() + ".TunerDealDetail end");
+		return "/deal/TunerDealDetail";
 	}
 	
 	//----------------사용자---------------------
@@ -192,10 +268,10 @@ public class DealController {
 		String msg = "";
 		if(res>0) {
 			reqService.auctionOff(req_seq);
-			msg = "낙찰에 성공했습니다";
+			msg = "채택에 성공했습니다";
 			url="/deal/UserDealList.do";
 		}else {
-			msg = "낙찰에 실패했습니다";
+			msg = "채택에 실패했습니다";
 			url="/deal/ReqBidDetail.do?deal_seq=" + deal_seq;
 		}
 		log.info(this.getClass().getName() + ".AuctionOff end");
@@ -310,6 +386,40 @@ public class DealController {
 		model.addAttribute("url", url);
 		
 		log.info(this.getClass().getName() + ".UserDealConfirm end");
+		return "/redirect";
+	}
+	
+	// ----------------------------1:1---------------------------------
+	
+	// 견적 거절
+	@RequestMapping(value = "DeclineDeal")
+	public String DeclineDeal(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".DeclineDeal start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String deal_seq = request.getParameter("deal_seq");
+		String req_seq = dealService.getDealDetail(deal_seq).getReq_seq();
+		// 세션 사용자와 요청자 번호의 일치 여부 확인
+		int res = 0;
+		res = dealService.declineDeal(deal_seq, req_seq, user_seq);
+		String url = "";
+		String msg = "";
+		if(res>0) {
+			reqService.auctionOff(req_seq);
+			msg = "거절하였습니다";
+			url="/deal/UserDealList.do";
+		}else {
+			msg = "거절에 실패했습니다";
+			url="/req/PrivateReqDetail.do?req_seq=" + req_seq;
+		}
+		log.info(this.getClass().getName() + ".DeclineDeal end");
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
 		return "/redirect";
 	}
 }

@@ -71,4 +71,14 @@ public class DealService implements IDealService{
 		return dealMapper.getPrivateEstimate(req_seq);
 	}
 
+	@Override
+	public int declineDeal(String deal_seq, String req_seq, String user_seq) throws Exception {
+		return dealMapper.declineDeal(deal_seq, req_seq, user_seq);
+	}
+
+	@Override
+	public List<DealDTO> getTunerDealList(String user_seq) throws Exception {
+		return dealMapper.getTunerDealList(user_seq);
+	}
+
 }

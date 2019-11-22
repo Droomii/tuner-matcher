@@ -28,4 +28,8 @@ public interface IDealService {
 
 	DealDTO getPrivateEstimate(String req_seq) throws Exception;
 
+	int declineDeal(String deal_seq, String req_seq, String user_seq) throws Exception;
+
+	List<DealDTO> getTunerDealList(String user_seq) throws Exception;
+
 }

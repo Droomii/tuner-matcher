@@ -6,7 +6,7 @@
 <!-- session.jsp 경로 설정 -->
 <%@ include file="../user/session.jsp" %>
 <%
-	ArrayList<ReqDTO> reqList = (ArrayList<ReqDTO>)request.getAttribute("reqList");
+	ArrayList<ReqDTO> rList = (ArrayList<ReqDTO>)request.getAttribute("rList");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -34,7 +34,8 @@
 	.table-head-cell {
 		display: table-cell;
 		padding: 10px;
-		border-bottom : 2px solid gray;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
 	}
 	.table-cell {
 	  display: table-cell;
@@ -62,33 +63,26 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block card-dashboard">
-                    <div class="table-responsive">
-                        <div class="table table-bordred table-striped">
+                        <div class="table">
                             <div class="table-row">
-                                    <div class="table-head-cell"><strong>피아노 이름</strong></div>
+									<div class="table-head-cell"><strong>요청자</strong></div>
                                     <div class="table-head-cell"><strong>요청서 제목</strong></div>
                                     <div class="table-head-cell"><strong>게시일</strong></div>
-                                    <div class="table-head-cell"><strong>조율사</strong></div>
                                     <div class="table-head-cell"><strong>답변여부</strong></div>
                             </div>
                             
-                            <%for(ReqDTO rDTO : reqList){ %>
+                            <%for(ReqDTO rDTO : rList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/PrivateReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'">
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getPiano_name())%></div>
+                                    <div class="table-cell"><%=rDTO.getRequester_nick() %></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(rDTO.getReq_title()) %></div>
-                                    
                                     <div class="table-cell"><%=rDTO.getRegdate().substring(0,11) %></div>
-                                    <div class="table-cell"><%=rDTO.getPrivate_tuner_name() %></div>
                                     <div class="table-cell"><%=rDTO.getBids().equals("0") ? "미답변" : "답변완료" %></div>
                             </div>
                             <%} %>
-                            
                         </div>
-                    </div>
-                <div class="float-xs-right">
-                <button class="btn btn-primary" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
-                
-                </div>
+                        <%if(rList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 1:1 요청이 없습니다 - </div>
+                            <%} %>
                 </div>
                 
                

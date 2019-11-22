@@ -1,3 +1,8 @@
+<%@page import="java.util.Set"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Map"%>
+<%@page import="poly.dto.TunerDTO"%>
+<%@page import="poly.dto.UserDTO"%>
 <%@page import="poly.dto.ReviewDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="poly.dto.RepuDTO"%>
@@ -6,6 +11,18 @@
 <!-- session.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/user/session.jsp" %>
 <%
+
+	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
+	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
+	Map<String, ArrayList<String>> sggGrouped = null;
+	Set<String> sggKeys = null;
+
+	
+	sggGrouped = (Map<String, ArrayList<String>>)request.getAttribute("sggGrouped");
+	sggKeys = sggGrouped.keySet();
+
+	
+
 	RepuDTO rDTO = (RepuDTO)request.getAttribute("rDTO");
 	int[] techRates = rDTO.getTechRates();
 	int[] timeRates = rDTO.getPunctualRates();
@@ -22,7 +39,7 @@
    	}
 </style>
 <meta charset="UTF-8">
-<title>내 평판 조회</title>
+<title>조율사 정보</title>
 <!-- header.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/header.jsp" %>
 </head>
@@ -31,14 +48,13 @@
 	<%@ include file="/WEB-INF/view/menu.jsp" %>
 	<div class="app-content content container-fluid">
 	<div class="content-wrapper">
-		<div class="content-body"><!-- Basic example section start -->
-		<!-- Header footer section start -->
-		<section id="header-footer">
+		<div class="content-body">
 			<div class="row match-height">
 				<div class="col-xs-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+					
 					<div class="card">
 						<div class="card-header">
-							<h4 class="card-title">내 평판 조회</h4>
+							<h4 class="card-title">조율사 정보</h4>
 						</div>
 						<div class="card-body">
 						<div class="card-block">
@@ -50,6 +66,31 @@
 							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate()%>%</div>
 						</div>
 						</div>
+						<div class="card-block">
+						<p class="card-text">이름 : <%=uDTO.getUser_name() %></p>
+						<p class="card-text">이메일 : <%=uDTO.getEmail() %></p>
+						<p class="card-text">전화번호 : <%=uDTO.getUser_tel() %></p>
+						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
+						<p class="card-text">소속 : <%=CmmUtil.revertXSS(tDTO.getAffiliation()) %></p>
+						<p class="card-text">근무지 : <%=CmmUtil.revertXSS(tDTO.getAddr()) %></p>
+						<%if(!sggKeys.contains("전국")) { %>
+						<p class="card-text">활동지역 : </p>
+						<%} %>
+						<%String sggString;%>
+						<%for(String key : sggKeys){
+							if(key.equals("전국")){ %>
+							<p class="card-text">활동지역 : 전국</p><%break; }%>
+							<%sggString = sggGrouped.get(key).toString(); %>
+						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
+						<%} %>
+						<br>
+						<p class="card-text">한줄소개 : <%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment(), "없음")) %></p>
+						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
+						<%}else{ %>
+						<p class="card-text"><%=CmmUtil.revertXSS(tDTO.getTuner_exp()) %></p>
+						<%} %>
+
+					</div>
 							<div class="card-block">
 								<div class="card-text"><strong>리뷰 요약정보(<%=rDTO.getTotal_reviews() %>건)</strong></div>
 								<hr style="border-color:gray;margin-top:0.2rem">
@@ -192,11 +233,19 @@
 								<!-- /리뷰 -->
 							
 						</div>
+						<div class="card-footer">
+						<div class="float-xs-left">
+						<a class="button btn btn-info" href="/req/NewPrivateReq.do">목록</a>
+						</div>						
+						<div class="float-xs-right">
+						<a class="button btn btn-success" href="/req/NewPrivateReq.do?tuner_seq=<%=tDTO.getTuner_seq()%>">1:1 요청</a>
+						</div>
+						
+						</div>
 					</div>
 				</div>
 			</div>
 			</div>
-		</section>
 		<!-- Header footer section end -->
 		
 		        </div>
@@ -205,6 +254,13 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript">
+	
+	// 목록에서 삭제 확인
+	function followingRemove(){
+		if(confirm("자주 찾는 조율사 목록에서 제거하시겠습니까?")){
+			location.href = "/follow/FollowingRemove.do?tuner_seq=<%=tDTO.getTuner_seq()%>";
+		}
+	}
 	
 	// 리뷰 열고 닫고
 	function toggleReview(el){

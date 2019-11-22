@@ -30,4 +30,6 @@ public interface IDealMapper {
 
 	int dealConfirm(String deal_seq, String user_seq, @Param("user_type") int user_type) throws Exception;
 
+	DealDTO getPrivateEstimate(String req_seq) throws Exception;
+
 }

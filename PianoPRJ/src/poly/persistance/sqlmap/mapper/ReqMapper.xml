@@ -15,7 +15,8 @@
 		REGDATE,
 		UPDDATE,
 		UPDATER_SEQ,
-		REQ_TITLE
+		REQ_TITLE,
+		PRIVATE_SEQ
 	)VALUES(
 		REQ_SEQ.NEXTVAL,
 		#{user_seq},
@@ -26,7 +27,8 @@
 		SYSDATE,
 		SYSDATE,
 		#{user_seq},
-		#{req_title}
+		#{req_title},
+		#{private_seq}
 	)
 	
 	</insert>
@@ -44,7 +46,25 @@
 	WHERE
 		USER_SEQ=#{0}
 		AND  R.PIANO_SEQ=P.PIANO_SEQ
-		AND R.REQ_TYPE=0
+		AND R.PRIVATE_SEQ IS NULL
+		AND R.REQ_STATE=0
+	</select>
+	<select id="getPrivateReqList" parameterType="String" resultType="ReqDTO">
+	SELECT
+		R.REQ_SEQ AS REQ_SEQ,
+		R.PIANO_SEQ AS PIANO_SEQ,
+		P.PIANO_NAME AS PIANO_NAME,
+		R.REQ_TITLE AS REQ_TITLE,
+		R.REGDATE AS REGDATE,
+		(SELECT USER_NAME FROM USERINFO WHERE USER_SEQ=R.PRIVATE_SEQ) AS PRIVATE_TUNER_NAME,
+		NVL((SELECT COUNT(1) FROM DEAL WHERE DEAL_STATE=0 GROUP BY REQ_SEQ HAVING REQ_SEQ=R.REQ_SEQ),0) AS BIDS
+	FROM
+		REQUEST R,
+		PIANO P
+	WHERE
+		USER_SEQ=#{0}
+		AND  R.PIANO_SEQ=P.PIANO_SEQ
+		AND R.PRIVATE_SEQ IS NOT NULL
 		AND R.REQ_STATE=0
 	</select>
 	<select id="getReqDetail" parameterType="String" resultType="ReqDTO">
@@ -54,11 +74,11 @@
 		R.PIANO_SEQ,
 		R.REQ_TITLE,
 		R.REQ_CONTENT,
-		R.REQ_TYPE,
+		R.PRIVATE_SEQ,
 		R.PREF_DATE,
 		P.SIDO_NAME,
-		P.SGG_NAME
-		
+		P.SGG_NAME,
+		R.PRIVATE_SEQ
 	FROM
 		REQUEST R, PIANO P
 	WHERE
@@ -92,7 +112,7 @@
 	WHERE 
 		R.PIANO_SEQ=P.PIANO_SEQ
 		AND P.SGG_CODE LIKE #{0}
-		AND R.REQ_TYPE=0
+		AND R.PRIVATE_SEQ IS NULL
 		AND R.REQ_STATE=0
 	</select>
 	<update id="auctionOff" parameterType="String">

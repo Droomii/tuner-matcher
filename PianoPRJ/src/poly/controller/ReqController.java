@@ -18,12 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
+import poly.dto.RepuDTO;
 import poly.dto.ReqDTO;
+import poly.dto.ReviewDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.service.IDealService;
+import poly.service.IFollowService;
 import poly.service.IPianoService;
+import poly.service.IRepuService;
 import poly.service.IReqService;
+import poly.service.IReviewService;
+import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
 import poly.util.SessionUtil;
@@ -43,6 +49,19 @@ public class ReqController {
 	
 	@Resource(name="DealService")
 	private IDealService dealService;
+	
+	@Resource(name = "FollowService")
+	IFollowService followService;
+	
+	@Resource(name = "SggService")
+	ISggService sggService;
+	
+	@Resource(name = "RepuService")
+	IRepuService repuService;
+	
+	@Resource(name = "ReviewService")
+	IReviewService reviewService;
+	
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
@@ -73,20 +92,14 @@ public class ReqController {
 	
 	@RequestMapping(value = "publicReqSubmit")
 	public String publicReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO) throws Exception{
-		
+
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
 		String user_seq = (String)session.getAttribute("user_seq");
 		rDTO.setUser_seq(user_seq);
 		rDTO.setPhoto_dir("dummy");
-		log.info("REQ_SEQ : " + rDTO.getReq_seq());
-		log.info("USER_SEQ : " + rDTO.getUser_seq());
-		log.info("PIANO_SEQ : " + rDTO.getPiano_seq());
-		log.info("REQ_CONTENT : " + rDTO.getReq_content());
-		log.info("PHOTO_DIR : " + rDTO.getPhoto_dir());
-		log.info("PREF_DATE : " + rDTO.getPref_date());
-		log.info("REGDATE : " + rDTO.getRegdate());
-		log.info("UPDDATE : " + rDTO.getUpddate());
-		log.info("UPDATER_SEQ : " + rDTO.getUpdater_seq());
-		log.info("REQ_TITLE : " + rDTO.getReq_title());
 		String msg = "";
 		int res = reqService.insertReq(rDTO);
 		
@@ -99,12 +112,15 @@ public class ReqController {
 		model.addAttribute("url", "/req/UserPublicReqList.do");
 		
 		return "/redirect";
-		
-		
 	}
 	
 	@RequestMapping(value = "UserPublicReqList")
 	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
 		String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
 		List<ReqDTO> reqList = reqService.getPublicReqList(user_seq);
 		
@@ -119,6 +135,11 @@ public class ReqController {
 	
 	@RequestMapping(value = "ReqDetail")
 	public String Detail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		if (SessionUtil.verify(session, model) != null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".MyPianoList start");
 		String user_type=(String)session.getAttribute("user_type");
 		
@@ -171,6 +192,11 @@ public class ReqController {
 	
 	@RequestMapping(value = "EditReq")
 	public String EditReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".EditReq start");
 		String req_seq = request.getParameter("req_seq");
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
@@ -187,6 +213,11 @@ public class ReqController {
 	
 	@RequestMapping(value = "DoEditReq")
 	public String DoEditReq(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute ReqDTO rDTO) throws Exception{
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".DoEditReq start");
 		String current_user = (String)session.getAttribute("user_seq");
 		String back = request.getParameter("back");
@@ -206,6 +237,11 @@ public class ReqController {
 	
 	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
 	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
 		log.info(this.getClass().getName() + ".DeleteReq start");
 		String msg = "";
 		if(session.getAttribute("user_seq")==null) {
@@ -214,7 +250,7 @@ public class ReqController {
 			model.addAttribute("url", "/index.do");
 		}else {
 			String req_seq = request.getParameter("req_seq");
-			String req_type = request.getParameter("req_type");
+			String private_seq = request.getParameter("private_seq");
 			int res = reqService.deleteReq(req_seq);
 			
 			
@@ -224,7 +260,7 @@ public class ReqController {
 			}else {
 				msg = "요청서 삭제에 실패했습니다";
 			}
-			String type = req_type.equals("0") ? "Public" : "Private";
+			String type = private_seq==null ? "Public" : "Private";
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", "/req/User" + type + "ReqList.do");
 		}
@@ -235,6 +271,199 @@ public class ReqController {
 	
 	}
 	
+	// ------------------------------1:1 요청---------------------------------------
+	
+	//1:1 요청 목록
+	@RequestMapping(value = "UserPrivateReqList")
+	public String UserPrivateReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
+		List<ReqDTO> reqList = reqService.getPrivateReqList(user_seq);
+		
+		
+		if(reqList==null)
+			reqList = new ArrayList<ReqDTO>();
+		session.setAttribute("proc", "public");
+		model.addAttribute("reqList", reqList);
+		return "/req/UserPrivateReqList";
+		
+	}
+	
+	
+	//1:1 요청 상세
+	@RequestMapping(value = "PrivateReqDetail")
+	public String PrivateReqDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReqBidDetail start");
+
+		if (SessionUtil.verify(session, model) != null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		String user_type=(String)session.getAttribute("user_type");
+		String req_seq = request.getParameter("req_seq");
+		
+		ReqDTO rDTO = reqService.getReqDetail(req_seq);
+		DealDTO dDTO = dealService.getPrivateEstimate(req_seq);
+		if(dDTO==null) {
+			log.info("dDTO is null");
+		}
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		UserDTO uDTO = userService.getUserInfo(rDTO.getPrivate_seq());
+		String back;
+		if(user_type.equals("0")) {
+			back = "/req/UserPrivateReqList.do";
+		}else {
+			back = "/req/TunerPrivateReqList.do";
+		}
+		
+		model.addAttribute("uDTO", uDTO);
+		model.addAttribute("dDTO", dDTO);
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("pDTO", pDTO);
+		model.addAttribute("back", back);
+		
+		log.info(this.getClass().getName() + ".ReqBidDetail end");
+		return "/req/PrivateReqDetail";
+	}
+	
+	// 새 1:1 요청
+	@RequestMapping(value = "NewPrivateReq")
+	public String NewPrivateReq(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".NewPrivateReq start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String tuner_seq = request.getParameter("tuner_seq");
+		
+		
+		// 조율사 이미 선택했을 경우
+		if(tuner_seq!=null) {
+			
+			List<PianoDTO> pList = pianoService.getMyPianoList(user_seq);
+			if(pList==null) {
+				log.info("plist is null!!");
+				pList = new ArrayList<>();
+			}
+			
+			model.addAttribute("pList", pList);
+			model.addAttribute("tuner_seq", tuner_seq);
+			return "/req/PrivateSelectPiano";
+		}
+		
+		// 조율사 선택 안했을 경우
+		List<TunerDTO> tList = followService.getFollowingList(user_seq); 
+		if(tList==null) {
+			tList = new ArrayList<TunerDTO>();
+		}
+		model.addAttribute("tList", tList);
+		
+		log.info(this.getClass().getName() + ".NewPrivateReq end");
+		return "/req/PrivateSelectTuner";
+		
+	}
+	
+	// 조율사 정보 가져오기
+		@RequestMapping(value = "PrivateTunerDetail")
+		public String PrivateTunerDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+				throws Exception {
+			log.info(this.getClass().getName() + ".TunerDetail start");
+			
+			if (SessionUtil.verify(session, model) != null) {
+				model = SessionUtil.verify(session, model);
+				return "/redirect";
+			}
+			
+			// 기본 정보 가져오기
+			String tuner_seq = request.getParameter("tuner_seq");
+			UserDTO uDTO = userService.getUserInfo(tuner_seq);
+			model.addAttribute("uDTO", uDTO);
+			
+			// 조율사 정보 가져오기
+			TunerDTO tDTO = userService.getTunerInfo(tuner_seq);
+			model.addAttribute("tDTO", tDTO);
+			
+			// 시군구 정보
+			Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(tuner_seq);
+			model.addAttribute("sggGrouped", sggGrouped);
+			
+
+			// 평판 가져옴
+					RepuDTO rDTO = repuService.getRepu(tuner_seq);
+					for(int rates : rDTO.getTechRates()) {
+						log.info("rate : " + rates);
+					}
+					model.addAttribute("rDTO", rDTO);
+					
+					// 리뷰 목록 가져옴
+					List<ReviewDTO> revList = reviewService.getTunerReviewList(tuner_seq);
+					if(revList==null) {
+						revList = new ArrayList<ReviewDTO>();
+					}
+					model.addAttribute("revList", revList);
+			
+			log.info(this.getClass().getName() + ".TunerDetail end");
+			return "/req/PrivateTunerDetail";
+		}
+	
+	
+	@RequestMapping(value = "PrivatePianoDetail")
+	public String PrivatePianoDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".PrivatePianoDetail start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String piano_seq = request.getParameter("no");
+		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq);
+		model.addAttribute("pDTO", pDTO);
+		
+		// 조율사 이미 선택했는지 확인
+		String tuner_seq = request.getParameter("tuner_seq");
+
+		model.addAttribute("tuner_seq", tuner_seq);
+		
+		
+		
+		log.info(this.getClass().getName() + ".PrivatePianoDetail end");
+		return "/req/PrivatePianoDetail";
+	}
+	
+	@RequestMapping(value = "PrivateReqSubmit")
+	public String PrivateReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO) throws Exception{
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		rDTO.setUser_seq(user_seq);
+		rDTO.setPhoto_dir("dummy");
+		String msg = "";
+		int res = reqService.insertReq(rDTO);
+		
+		if(res>0) {
+			msg = "1:1 요청에 성공했습니다";
+		}else {
+			msg = "1:1 요청에 실패했습니다";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/req/UserPrivateReqList.do");
+		
+		return "/redirect";
+	}
+	
+	
 	
 	// ----------------------조율사-------------------------
 	// 내 주변에서 찾기
@@ -242,12 +471,12 @@ public class ReqController {
 	public String NearReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		session.setAttribute("proc", "public");
 		log.info(this.getClass().getName() + ".NearReqList start");
-		String tuner_seq = (String)session.getAttribute("user_seq");
-		if(tuner_seq==null) {
-			model.addAttribute("msg", "세션이 만료되었습니다. 다시 로그인해주세요.");
-			model.addAttribute("url", "/index.do");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
 			return "/redirect";
 		}
+		
+		String tuner_seq = (String)session.getAttribute("user_seq");
 		log.info("tuner_seq : "+tuner_seq);
 		TunerDTO tDTO = userService.getTunerAddr(tuner_seq);
 		log.info("Addr : " + tDTO.getAddr());

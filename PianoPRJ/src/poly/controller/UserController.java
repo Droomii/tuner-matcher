@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -21,13 +22,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import poly.dto.MailDTO;
+import poly.dto.RepuDTO;
+import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.service.IMailService;
+import poly.service.IRepuService;
+import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.SessionUtil;
 
 @Controller
 @RequestMapping(value = "user/")
@@ -43,6 +49,12 @@ public class UserController {
 
 	@Resource(name = "MailService")
 	private IMailService mailService;
+	
+	@Resource(name = "ReviewService")
+	IReviewService reviewService;
+	
+	@Resource(name = "RepuService")
+	IRepuService repuService;
 
 	// ------------------------ 로그인 관련 -------------------------------
 
@@ -526,6 +538,49 @@ public class UserController {
 
 		return "/redirect";
 
+	}
+	
+	// 조율사 정보 가져오기
+	@RequestMapping(value = "TunerDetail")
+	public String TunerDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerDetail start");
+		
+		if (SessionUtil.verify(session, model) != null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
+		// 기본 정보 가져오기
+		String tuner_seq = request.getParameter("tuner_seq");
+		UserDTO uDTO = userService.getUserInfo(tuner_seq);
+		model.addAttribute("uDTO", uDTO);
+		
+		// 조율사 정보 가져오기
+		TunerDTO tDTO = userService.getTunerInfo(tuner_seq);
+		model.addAttribute("tDTO", tDTO);
+		
+		// 시군구 정보
+		Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(tuner_seq);
+		model.addAttribute("sggGrouped", sggGrouped);
+		
+
+		// 평판 가져옴
+				RepuDTO rDTO = repuService.getRepu(tuner_seq);
+				for(int rates : rDTO.getTechRates()) {
+					log.info("rate : " + rates);
+				}
+				model.addAttribute("rDTO", rDTO);
+				
+				// 리뷰 목록 가져옴
+				List<ReviewDTO> revList = reviewService.getTunerReviewList(tuner_seq);
+				if(revList==null) {
+					revList = new ArrayList<ReviewDTO>();
+				}
+				model.addAttribute("revList", revList);
+		
+		log.info(this.getClass().getName() + ".TunerDetail end");
+		return "/user/TunerDetail";
 	}
 
 }

@@ -67,7 +67,7 @@
             <ul class="menu-content">
               <li><a href="/req/UserPublicReqList.do" data-i18n="nav.dash.main" class="menu-item">공개 요청</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">1:1 요청</a>
+              <li><a href="/req/UserPrivateReqList.do" data-i18n="nav.dash.main" class="menu-item">1:1 요청</a>
               </li>
               <li><a href="#" data-i18n="nav.dash.main" class="menu-item">리뷰 등록</a>
               </li>

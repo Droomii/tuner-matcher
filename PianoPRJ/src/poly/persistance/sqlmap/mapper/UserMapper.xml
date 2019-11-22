@@ -164,6 +164,7 @@
 	</select>
 	<select id="getTunerInfo" parameterType="String" resultType="TunerDTO">
 	SELECT
+		TUNER_SEQ,
 		ID_PHOTO_DIR,
 		TUNER_COMMENT,
 		TUNER_LEVEL,

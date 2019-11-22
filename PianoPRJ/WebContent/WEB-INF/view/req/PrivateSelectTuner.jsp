@@ -20,7 +20,8 @@
 	}
 </style>
 <meta charset="UTF-8">
-<title>자주 찾는 조율사</title>
+<title>1:1 요청</title>
+
 <!-- header.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/header.jsp" %>
 </head>
@@ -32,7 +33,8 @@
 	<div class="content-header row">
           <div class="content-header-left col-xs-7">
 
-			<h2 class="content-header-title">자주 찾는 조율사</h2>
+			<h2 class="content-header-title">1:1 요청하기</h2>
+			<h4 class="content-header-title">조율을 요청할 조율사를 선택해주세요</h4>
           </div>
         </div>
 	<div class="content-body">
@@ -45,7 +47,7 @@
 	<%}else{ %>
 		<%for(TunerDTO tDTO : tList){ %>
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-		<div class="card" onclick="location.href='/user/TunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
+		<div class="card" onclick="location.href='/req/PrivateTunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
 				<div class="card-body">
 					<div class="card-block" style="display:flex">
 					<div class="col-xs-4" style="width:120px;min-width:120px;">

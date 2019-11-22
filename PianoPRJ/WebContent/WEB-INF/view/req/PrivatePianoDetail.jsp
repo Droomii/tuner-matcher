@@ -1,6 +1,3 @@
-<%@page import="java.util.LinkedHashMap"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Map"%>
 <%@page import="poly.dto.ReqDTO"%>
 <%@page import="poly.dto.PianoDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,13 +7,9 @@
 
 <%
 	PianoDTO pDTO = (PianoDTO)request.getAttribute("pDTO");
-	String proc = (String)request.getAttribute("proc");
-	String back = "/req/User"+proc+"ReqList";
+	String tuner_seq = (String)request.getAttribute("tuner_seq");
+	String back = String.format("/req/NewPrivateReq.do?tuner_seq=%s", tuner_seq);
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
-	if(rDTO.getPrivate_seq()!=null){
-		back = "/req/UserPrivateReqList";
-	}
-	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -44,12 +37,7 @@
 
 
 <meta charset="UTF-8">
-<%if(proc.equals("Public")){%>
-	<title>공개 요청서 수정</title>
-<%}else if(proc.equals("Private")){%>
-<title>1:1 요청서 수정</title>
-<%}%>
-
+<title>1:1 요청</title>
 <!-- header.jsp 경로 설정 -->
 <%@ include file="/WEB-INF/view/header.jsp" %>
 </head>
@@ -60,13 +48,8 @@
 	<div class="content-wrapper">
 	<div class="content-header row">
           <div class="content-header-left col-xs-7">
-            <%if(proc.equals("Public")){%>
-				<h2 class="content-header-title">공개 요청서 수정</h2>
-			<%}else if(proc.equals("Private")){%>
-			<h2 class="content-header-title">1:1 요청서 수정</h2>
-			<%}else{%>
-			<h2 class="content-header-title">요청서 수정</h2>
-			<%} %>
+			<h2 class="content-header-title">1:1 요청하기</h2>
+			<h4 class="content-header-title">요청사항을 작성해주세요</h4>
           </div>
         </div>
 	<div class="content-body"><!-- Basic example section start -->
@@ -76,7 +59,8 @@
 		<div class="col-xs-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">피아노 정보</h4>
+					<h4 class="card-title"><%=CmmUtil.nvl(pDTO.getPiano_name()) %></h4>
+					<p class="card-title text-muted text-truncate"><%=CmmUtil.nvl(pDTO.getPiano_desc(), "설명 없음")  %></p>
 				</div>
 				<div class="card-body">
 					<div class="card-block">
@@ -120,36 +104,35 @@
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>.do" class="button btn btn-sm btn-info">뒤로 </a>
+						<a href="<%=back %>" class="button btn btn-sm btn-info">뒤로 </a>
 						
 					</span>
 				</div>
 			</div>
 		</div>
 	</div>
-	<%if(proc.startsWith("P")) {%>
 	<div class="row">
 					<div class="col-xs-12 col-lg-6 offset-lg-3">
 					<div class="card">
 				<div class="card-header">
-					<h4 class="card-title" id="basic-layout-form">요청서 수정</h4>
+					<h4 class="card-title" id="basic-layout-form">요청서 작성</h4>
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/DoEditReq.do" method="post" autocomplete="off">
+					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/PrivateReqSubmit.do" method="post" autocomplete="off">
 							<input hidden="hidden" id="req_content" name="req_content">
-							<input value="<%=rDTO.getReq_seq() %>" name="req_seq" hidden>
-							<input value="<%=back %>" name="back" hidden>
+							<input value="<%=pDTO.getPiano_seq() %>" name="piano_seq" hidden>
+							<input value="<%=tuner_seq %>" name="private_seq" hidden>
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="req_title">요청서 제목</label>
-									<input value="<%=rDTO.getReq_title() %>" type="text" id="notice_title" class="form-control" placeholder="요청서 제목을 입력해주세요" required name="req_title">
+									<input type="text" id="notice_title" class="form-control" placeholder="요청서 제목을 입력해주세요" required name="req_title">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group has-feedback">
 									<label for="req_content">요청사항</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required><%=rDTO.getReq_content().replaceAll("& lt;br& gt;", "\n") %></textarea>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
@@ -174,11 +157,11 @@
 								</div>
 							
 							<div class="form-actions">
-								<button onclick="location.href='<%=back %>.do'" type="button" class="btn btn-warning mr-1">
+								<button onclick="location.href='<%=back %>'" type="button" class="btn btn-warning mr-1">
 									<i class="icon-cross2"></i> 취소
 								</button>
 								<button type="submit" class="btn btn-primary">
-									<i class="icon-check2"></i> 수정
+									<i class="icon-check2"></i> 작성
 								</button>
 							</div>
 						</form>
@@ -187,7 +170,6 @@
 			</div>
 					</div>
 				</div>
-				<%}%>
 </section>
 <!-- Header footer section end -->
 
@@ -200,16 +182,10 @@
 	
 	
 	<script>
+	var tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
 	
-	<%if(!proc.startsWith("P")) {%>
-	function deleteConfirm(){
-		if(confirm("삭제하시겠습니까?")){
-			var form = document.piano_action;
-			form.action = "/piano/DeletePiano.do";
-			form.submit();
-		}
-	}
-	<%}else{%>
+	document.getElementById("date").setAttribute('min', tomorrow.toISOString().split('T')[0]);
 	
 	var form = document.reqForm
 	function submitReq(){
@@ -239,38 +215,6 @@
 			}
 		});
    	}
-	<%} %>
-	
-	// 날짜들
-	var days = "<%=prefDates.keySet().toString().replaceAll(" ", "").replaceAll("[\\[\\]]", "")%>".split(",");
-	// 날짜 + 시간까지 (0000-00-00h00)
-	var prefDates = "<%=rDTO.getPref_date()%>".split(",");
-	
-	function getInitHour(hour){
-		var query = {date : hour};
-		$.ajax({
-			url:"/req/GetHour.do",
-			type:"post",
-			data:query,
-			success:function(data){
-				$("#hours").append(data);
-				var dateCheckBox = document.getElementsByClassName('pref-hour');
-				for(var i = 0; i < dateCheckBox.length; i++){
-					if(prefDates.includes(dateCheckBox[i].value)){
-						dateCheckBox[i].click();
-					}
-				}
-			
-				
-			}
-		});
-	}
-	
-	window.onload = function(){
-		for(var j = 0; j< days.length; j++){
-			getInitHour(days[j]);
-		}
-	}
 	
 	function editPiano(){
 		var form = document.piano_action;

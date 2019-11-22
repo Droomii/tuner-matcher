@@ -21,5 +21,7 @@ public interface IReqMapper {
 	int updateReq(ReqDTO rDTO) throws Exception;
 
 	void auctionOff(String req_seq) throws Exception;
+
+	List<ReqDTO> getPrivateReqList(String user_seq) throws Exception;
 	
 }

@@ -28,7 +28,7 @@
 						<img class="rounded float-xs-left" src="/resources/app-assets/images/portrait/small/avatar-s-2.png" alt="Card image cap">
 						<div class="card-text valign-top ml-1 float-xs-left">
 							<h5><strong><%=rDTO.getTuner_name() %></strong></h5>
-							<div class="card-text">평판 점수 : <%=CmmUtil.nvl(rDTO.getScore(), "0") %>점</div>
+							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
 							<div class="card-text">거래 성사율 : <%=rDTO.getSuccessRate()%>%</div>
 							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate()%>%</div>
 						</div>

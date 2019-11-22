@@ -140,7 +140,6 @@
 				</div>
 				<form method="post" hidden="hidden" name="req_action">
 					<input value="<%=rDTO.getReq_seq() %>" name="req_seq">
-					<input value="<%=rDTO.getReq_type() %>" name="req_type">
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
@@ -156,7 +155,7 @@
 			</div>
 		</div>
 	</div>
-	<%if(rDTO.getReq_type().equals("0") && user_type.equals("0")) {
+	<%if(rDTO.getPrivate_seq()==null && user_type.equals("0")) {
 		List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
 	%>
 	<div class="row">

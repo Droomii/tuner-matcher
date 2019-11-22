@@ -13,14 +13,27 @@ public class ReqDTO implements Comparable<ReqDTO>{
 	private String updater_seq;
 	private String piano_name;
 	private String bids;
-	private String req_type;
+	private String private_seq;
 	private String sido_name;
 	private String sgg_name;
 	private String x_pos;
 	private String y_pos;
 	private String dist;
 	private String addr;
+	private String private_tuner_name;
 	
+	public String getPrivate_tuner_name() {
+		return private_tuner_name;
+	}
+	public void setPrivate_tuner_name(String private_tuner_name) {
+		this.private_tuner_name = private_tuner_name;
+	}
+	public String getPrivate_seq() {
+		return private_seq;
+	}
+	public void setPrivate_seq(String private_seq) {
+		this.private_seq = private_seq;
+	}
 	public String getAddr() {
 		return addr;
 	}
@@ -32,12 +45,6 @@ public class ReqDTO implements Comparable<ReqDTO>{
 	}
 	public void setDist(String dist) {
 		this.dist = dist;
-	}
-	public String getReq_type() {
-		return req_type;
-	}
-	public void setReq_type(String req_type) {
-		this.req_type = req_type;
 	}
 	public String getBids() {
 		return bids;

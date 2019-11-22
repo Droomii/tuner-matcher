@@ -118,4 +118,9 @@ public class ReqService implements IReqService {
 		reqMapper.auctionOff(req_seq);
 	}
 
+	@Override
+	public List<ReqDTO> getPrivateReqList(String user_seq) throws Exception {
+		return reqMapper.getPrivateReqList(user_seq);
+	}
+
 }

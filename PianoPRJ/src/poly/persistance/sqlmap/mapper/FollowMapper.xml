@@ -23,4 +23,8 @@
 			SELECT TUNER_SEQ FROM TUNER_FOLLOW WHERE USER_SEQ=#{0}
 			)
 </select>
+<delete id="removeFollow" parameterType="String">
+	DELETE FROM TUNER_FOLLOW
+	WHERE USER_SEQ=#{0} AND TUNER_SEQ=#{1}
+</delete>
 </mapper>

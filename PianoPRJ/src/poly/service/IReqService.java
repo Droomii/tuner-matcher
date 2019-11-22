@@ -23,4 +23,6 @@ public interface IReqService {
 
 	void auctionOff(String req_seq) throws Exception;
 
+	List<ReqDTO> getPrivateReqList(String user_seq) throws Exception;
+
 }

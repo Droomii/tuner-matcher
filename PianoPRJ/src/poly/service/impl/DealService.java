@@ -66,4 +66,9 @@ public class DealService implements IDealService{
 		return dealMapper.dealConfirm(deal_seq, user_seq, user_type);
 	}
 
+	@Override
+	public DealDTO getPrivateEstimate(String req_seq) throws Exception {
+		return dealMapper.getPrivateEstimate(req_seq);
+	}
+
 }

@@ -73,4 +73,18 @@
 		DEAL_SEQ=#{deal_seq}
 		AND WRITER_SEQ=#{writer_seq}
 </update>
+<select id="getTunerReviewList" parameterType="String" resultType="ReviewDTO">
+	SELECT
+		REVIEW_STAR,
+		REVIEW_TECH,
+		REVIEW_PUNCTUAL,
+		REVIEW_KINDNESS,
+		REVIEW_CONTENT,
+		REGDATE,
+		(SELECT USER_NICK FROM USERINFO WHERE USER_SEQ=TUNER_REVIEW.WRITER_SEQ) AS USER_NICK
+	FROM
+		TUNER_REVIEW
+	WHERE
+		TUNER_SEQ=#{0}
+</select>
 </mapper>

@@ -1,5 +1,7 @@
 package poly.persistance.mapper;
 
+import java.util.List;
+
 import config.Mapper;
 import poly.dto.ReviewDTO;
 
@@ -15,5 +17,7 @@ public interface IReviewMapper {
 	ReviewDTO getReviewEditInfo(String deal_seq, String user_seq) throws Exception;
 
 	int updateReview(ReviewDTO revDTO) throws Exception;
+
+	List<ReviewDTO> getTunerReviewList(String user_seq);
 
 }

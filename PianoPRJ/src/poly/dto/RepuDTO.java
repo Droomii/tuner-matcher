@@ -2,7 +2,7 @@ package poly.dto;
 
 public class RepuDTO {
 	
-	
+	private String tuner_name;
 	private String tech_pos;
 	private String tech_neutral;
 	private String tech_neg;
@@ -16,6 +16,23 @@ public class RepuDTO {
 	private String total_deals;
 	private String success_deals;
 	private String total_reviews;
+	
+	public String getTuner_name() {
+		return tuner_name;
+	}
+
+
+	public void setTuner_name(String tuner_name) {
+		this.tuner_name = tuner_name;
+	}
+	
+	public int getSuccessRate() {
+		int total_deals = Integer.parseInt(this.total_deals);
+		int success_deals = Integer.parseInt(this.success_deals);
+		int successRate = Math.round((float)success_deals / total_deals * 100);
+		return successRate;
+	}
+	
 	
 	public String getTotal_reviews() {
 		return total_reviews;

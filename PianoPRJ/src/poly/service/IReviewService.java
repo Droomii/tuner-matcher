@@ -1,5 +1,7 @@
 package poly.service;
 
+import java.util.List;
+
 import poly.dto.ReviewDTO;
 
 public interface IReviewService {
@@ -13,5 +15,7 @@ public interface IReviewService {
 	ReviewDTO getReviewEditInfo(String deal_seq, String user_seq) throws Exception;
 
 	int updateReview(ReviewDTO revDTO) throws Exception;
+
+	List<ReviewDTO> getTunerReviewList(String user_seq) throws Exception;
 
 }

@@ -1,5 +1,7 @@
 package poly.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -37,6 +39,11 @@ public class ReviewService implements IReviewService{
 	@Override
 	public int updateReview(ReviewDTO revDTO) throws Exception {
 		return reviewMapper.updateReview(revDTO);
+	}
+
+	@Override
+	public List<ReviewDTO> getTunerReviewList(String user_seq) throws Exception {
+		return reviewMapper.getTunerReviewList(user_seq);
 	}
 
 }

@@ -123,7 +123,38 @@
 					</div>
 		            <div class="card-body collapse in">
 			            <div class="card-block">
-							<h5 class="form-section text-bold-600">조율사 정보</h5>
+			            <div>
+							<h5 class="form-section text-bold-600 float-xs-left" >조율사 정보</h5>
+							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#tuner-detail">조율사 상세정보</button>
+							<!-- modal -->
+							<div class="modal fade text-xs-left" id="tuner-detail" tabindex="-1" role="dialog" aria-labelledby="tuner-detail-title" style="display: none;" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">×</span>
+									</button>
+									<h6 class="modal-title" id="tuner-detail-title"><strong>조율사 상세정보</strong></h6>
+								  </div>
+								  <div class="modal-body">
+									<div class="card-block">
+						<img class="rounded float-xs-left" src="/resources/app-assets/images/portrait/small/avatar-s-2.png" alt="Card image cap">
+						<div class="card-text valign-top ml-1 float-xs-left">
+							<h5><strong>김튜너</strong></h5>
+							<div class="card-text">평판 점수 : 4점</div>
+							<div class="card-text">거래 성사율 : 67%</div>
+							<div class="card-text">긍정적 평판 : 40%</div>
+						</div>
+						</div>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">닫기</button>
+								  </div>
+								</div>
+							  </div>
+							</div>
+							<!-- /modal -->
+						</div>
 							<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>

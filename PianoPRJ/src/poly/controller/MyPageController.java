@@ -15,10 +15,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import poly.dto.RepuDTO;
+import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 import poly.service.IRepuService;
+import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.EncryptUtil;
@@ -37,6 +39,9 @@ public class MyPageController {
 	
 	@Resource(name = "RepuService")
 	IRepuService repuService;
+	
+	@Resource(name = "ReviewService")
+	IReviewService reviewService;
 	
 	@RequestMapping(value="MyInfo")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
@@ -192,10 +197,21 @@ public class MyPageController {
 			model = SessionUtil.verify(session, "1", model);
 			return "/redirect";
 		}
-		String user_seq = (String)session.getAttribute("user_seq");
-		RepuDTO rDTO = repuService.getRepu(user_seq);
 		
+		// 사용자 번호
+		String user_seq = (String)session.getAttribute("user_seq");
+		
+		// 평판 가져옴
+		RepuDTO rDTO = repuService.getRepu(user_seq);
 		model.addAttribute("rDTO", rDTO);
+		
+		// 리뷰 목록 가져옴
+		List<ReviewDTO> revList = reviewService.getTunerReviewList(user_seq);
+		if(revList==null) {
+			revList = new ArrayList<ReviewDTO>();
+		}
+		model.addAttribute("revList", revList);
+		
 		log.info(this.getClass().getName() + ".MyRepu end");
 		return "/myPage/MyRepu";
 	}

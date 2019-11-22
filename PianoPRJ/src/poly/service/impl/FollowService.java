@@ -1,9 +1,12 @@
 package poly.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import poly.dto.TunerDTO;
 import poly.persistance.mapper.IFollowMapper;
 import poly.service.IFollowService;
 
@@ -15,6 +18,11 @@ public class FollowService implements IFollowService{
 	
 	public void followTuner(String user_seq, String tuner_seq) throws Exception{
 		followMapper.followTuner(user_seq, tuner_seq);
+	}
+
+	@Override
+	public List<TunerDTO> getFollowingList(String user_seq) throws Exception {
+		return followMapper.getFollowingList(user_seq);
 	}
 
 }

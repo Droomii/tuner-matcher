@@ -1,28 +1,43 @@
 package poly.dto;
 
 public class TunerDTO {
-	String tuner_seq;
-	String user_state;
-	String reject_reason;
-	String id_photo_dir;
-	String cert_dir;
-	String tuner_comment;
-	String tuner_level;
-	String tuner_exp;
-	String follower_num;
-	String feedback_score;
-	String deals_num;
-	String addr;
-	String detail_addr;
-	String sgg_code;
-	String affiliation;
-	String x_pos;
-	String y_pos;
-	String sido_name;
-	String sgg_name;
-	String emd_name;
-	String li_name;
+	private String tuner_name;
+	private String tuner_seq;
+	private String user_state;
+	private String reject_reason;
+	private String id_photo_dir;
+	private String cert_dir;
+	private String tuner_comment;
+	private String tuner_level;
+	private String tuner_exp;
+	private String follower_num;
+	private String feedback_score;
+	private String deals_num;
+	private String addr;
+	private String detail_addr;
+	private String sgg_code;
+	private String affiliation;
+	private String x_pos;
+	private String y_pos;
+	private String sido_name;
+	private String sgg_name;
+	private String emd_name;
+	private String li_name;
+	private String score;
 	
+	
+	public String getScore() {
+		return score;
+	}
+	public void setScore(String score) {
+		this.score = score;
+	}
+	public String getTuner_name() {
+		return tuner_name;
+	}
+	public void setTuner_name(String tuner_name) {
+		this.tuner_name = tuner_name;
+	}
 	public String getSido_name() {
 		return sido_name;
 	}

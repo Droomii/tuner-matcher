@@ -55,7 +55,7 @@
               </li>
               <li><a href="/piano/MyPianoList.do" data-i18n="nav.dash.main" class="menu-item">내 피아노 정보</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
+              <li><a href="/myPage/FollowingList.do" data-i18n="nav.dash.main" class="menu-item">자주 찾는 조율사</a>
               </li>
               <li><a href="/deal/UserDealList.do" data-i18n="nav.dash.main" class="menu-item">조율 현황</a>
               </li>

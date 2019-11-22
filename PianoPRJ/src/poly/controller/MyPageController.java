@@ -19,6 +19,7 @@ import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
+import poly.service.IFollowService;
 import poly.service.IRepuService;
 import poly.service.IReviewService;
 import poly.service.ISggService;
@@ -42,6 +43,9 @@ public class MyPageController {
 	
 	@Resource(name = "ReviewService")
 	IReviewService reviewService;
+	
+	@Resource(name = "FollowService")
+	IFollowService followService;
 	
 	@RequestMapping(value="MyInfo")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
@@ -216,5 +220,25 @@ public class MyPageController {
 		return "/myPage/MyRepu";
 	}
 	
+	@RequestMapping(value = "FollowingList")
+	public String FollowingList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".FollowingList start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		List<TunerDTO> tList = followService.getFollowingList(user_seq); 
+		if(tList==null) {
+			tList = new ArrayList<TunerDTO>();
+		}
+		model.addAttribute("tList", tList);
+		
+		log.info(this.getClass().getName() + ".FollowingList end");
+		return "/myPage/FollowingList";
+	}
 	
 }

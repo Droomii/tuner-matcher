@@ -115,7 +115,13 @@
 					</div>
 		            <div class="card-body collapse in">
 			            <div class="card-block">
-							<h5 class="form-section text-bold-600">조율사 정보</h5>
+							<div>
+							<h5 class="form-section text-bold-600 float-xs-left" >조율사 정보</h5>
+							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#tuner-detail">조율사 상세정보</button>
+							<!-- modal -->
+							<div id="modal-container"></div>
+							<!-- /modal -->
+						</div>
 							<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
@@ -266,6 +272,24 @@
 		if(confirm("해당 견적을 채택하시겠습니까?")){
 			location.href="/deal/AuctionOff.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
+	}
+	
+	window.onload = function(){
+		var query = {tuner_seq : "<%=dDTO.getTuner_seq()%>"};
+		$.ajax({
+			url:"/repu/GetTunerRepu.do",
+			type:"post",
+			data:query,
+			success:function(data){
+				if(data==null){
+					alert('비정상적인 접근입니다.');
+					return;
+				}else{
+					$("#modal-container").html(data);
+				}
+			}
+		});
+		
 	}
 	
 	

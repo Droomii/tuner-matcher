@@ -62,14 +62,14 @@ public class RepuDTO {
 	}
 	
 	public int[] getTechRates() {
-		int kindness_neg = Integer.parseInt(this.kindness_neg);
-		int kindness_neutral = Integer.parseInt(this.kindness_neutral);
-		int kindness_pos = Integer.parseInt(this.kindness_pos);
-		int total = kindness_neg + kindness_neutral + kindness_pos;
+		int tech_neg = Integer.parseInt(this.tech_neg);
+		int tech_neutral = Integer.parseInt(this.tech_neutral);
+		int tech_pos = Integer.parseInt(this.tech_pos);
+		int total = tech_neg + tech_neutral + tech_pos;
 		int[] rates = new int[3];
-		rates[0] = Math.round((float)kindness_pos / total * 100);
-		rates[1] = Math.round((float)kindness_neutral / total * 100);
-		rates[2] = Math.round((float)kindness_neg / total * 100);
+		rates[0] = Math.round((float)tech_pos / total * 100);
+		rates[1] = Math.round((float)tech_neutral / total * 100);
+		rates[2] = Math.round((float)tech_neg / total * 100);
 		return rates;
 	}
 	public int[] getPunctualRates() {

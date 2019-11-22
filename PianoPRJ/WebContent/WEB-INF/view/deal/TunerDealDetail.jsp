@@ -495,13 +495,13 @@
 	<%if(deal_state.matches("[26]")){ %>
 	function dealCancel(){
 		if(confirm("해당 거래를 취소하시겠습니까?")){
-			location.href="/deal/UserDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+			location.href="/deal/TunerDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	
 	function dealConfirm(){
 		if(confirm("거래를 완료하시겠습니까?")){
-			location.href="/deal/UserDealConfirm.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+			location.href="/deal/TunerDealConfirm.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	<%} %>

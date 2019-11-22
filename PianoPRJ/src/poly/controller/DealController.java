@@ -246,6 +246,67 @@ public class DealController {
 		return "/deal/TunerDealDetail";
 	}
 	
+	@RequestMapping(value = "TunerDealCancel")
+	public String TunerDealCancel(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerDealCancel start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String deal_seq = request.getParameter("deal_seq");
+		int user_type = 1;
+		
+		int res = dealService.dealCancel(deal_seq, user_seq, user_type);
+		String url = "";
+		String msg = "";
+		if(res>0) {
+			msg = "거래를 취소하였습니다";
+			url="/deal/TunerDealList.do";
+		}else {
+			msg = "거래 취소에 실패했습니다";
+			url="/deal/TunerDealDetail.do?deal_seq=" + deal_seq;
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		log.info(this.getClass().getName() + ".TunerDealCancel end");
+		return "/redirect";
+	}
+	
+	@RequestMapping(value = "TunerDealConfirm")
+	public String TunerDealConfirm(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerDealConfirm start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String deal_seq = request.getParameter("deal_seq");
+		int user_type = 1;
+		
+		int res = dealService.dealConfirm(deal_seq, user_seq, user_type);
+		String url = "";
+		String msg = "";
+		if(res>0) {
+			msg = "거래를 완료하였습니다";
+			url="/deal/TunerDealList.do";
+		}else {
+			msg = "거래 완료에 실패했습니다";
+			url="/deal/TunerDealDetail.do?deal_seq=" + deal_seq;
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		log.info(this.getClass().getName() + ".TunerDealConfirm end");
+		return "/redirect";
+	}
+	
+	
 	//----------------사용자---------------------
 	
 	//사용자 입찰

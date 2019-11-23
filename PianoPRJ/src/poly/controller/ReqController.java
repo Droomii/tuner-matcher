@@ -512,5 +512,37 @@ public class ReqController {
 	}
 	
 	
+	// 1:1 요청서 거절
+	@RequestMapping(value = "DeclineReq")
+	public String DeclineReq(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".DeclineReq start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String tuner_seq = (String)session.getAttribute("user_seq");
+		String req_seq = request.getParameter("req_seq");
+		int res = reqService.declineReq(req_seq, tuner_seq);
+		
+		String msg = "";
+		
+		if(res>0) {
+			msg = "요청을 거절했습니다";
+		}else {
+			msg = "요청 거절에 실패했습니다";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", "/req/TunerPrivateReqList.do");
+		
+		
+		
+		log.info(this.getClass().getName() + ".DeclineReq end");
+		return "/redirect";
+	}
+	
+	
+	//------------------------조율사 끝 --------------------------
 	
 }

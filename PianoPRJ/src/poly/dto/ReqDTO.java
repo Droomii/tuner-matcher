@@ -22,7 +22,15 @@ public class ReqDTO implements Comparable<ReqDTO>{
 	private String dist;
 	private String addr;
 	private String private_tuner_name;
+	private String req_state;
 	
+	
+	public String getReq_state() {
+		return req_state;
+	}
+	public void setReq_state(String req_state) {
+		this.req_state = req_state;
+	}
 	public String getRequester_nick() {
 		return requester_nick;
 	}

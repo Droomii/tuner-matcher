@@ -27,4 +27,6 @@ public interface IReqService {
 
 	List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception;
 
+	int declineReq(String req_seq, String tuner_seq) throws Exception;
+
 }

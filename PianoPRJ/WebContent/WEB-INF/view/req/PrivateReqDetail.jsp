@@ -174,10 +174,12 @@
 					<span>
 						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
 						<%if(user_type.equals("0")){ %>
-						<%if(dDTO==null) {%>
+						<%if(dDTO==null  && !rDTO.getReq_state().equals("2")) {%>
 						<button onclick="editReq()" class="button btn btn-success">수정 </button>
 						<%} %>
 						<button onclick="deleteConfirm()" class="button btn btn-danger">삭제</button>
+						<%}else if(user_type.equals("1") && dDTO==null){ %>
+						<button onclick="declineReq();" class="button btn btn-danger">거절 </button>
 						<%} %>
 					</span>
 				</div>
@@ -298,9 +300,13 @@
                         </tbody>
                     </table>
 					</div>
-					<%}else{ %>
+					<%}else if(rDTO.getReq_state().equals("0")){ %>
 					<div class="card-block pt-0">
 					<h4 class="card-text text-xs-center">- 조율사가 견적서를 등록하지 않았습니다 -</h4>
+					</div>
+					<%}else{ %>
+					<div class="card-block pt-0">
+					<h4 class="card-text text-xs-center">- 조율사가 요청을 거절했습니다 -</h4>
 					</div>
 					<%} %>
 		            </div>
@@ -310,7 +316,7 @@
 					</span>
 					<%if(dDTO!=null) {%>
 					<span>
-						<button onclick="decline();" class="button btn btn-danger">거절 </button>
+						<button onclick="declineDeal();" class="button btn btn-danger">거절 </button>
 						<button onclick="auctionOff();" class="button btn btn-success">수락 </button>
 					</span>
 					<%} %>
@@ -598,9 +604,9 @@
 			location.href="/deal/AuctionOff.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
-	function decline(){
+	function declineDeal(){
 		if(confirm("해당 견적을 거절하시겠습니까?")){
-			location.href="/deal/DeclineDeal).do?deal_seq=<%=dDTO.getDeal_seq()%>";
+			location.href="/deal/DeclineDeal.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	<%}%>
@@ -674,6 +680,13 @@
 		
 		$("#diagnosis_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
 	}
+	
+	function declineReq(){
+		if(confirm("해당 요청을 거절하시겠습니까?")){
+			location.href="/req/DeclineReq.do?req_seq=<%=rDTO.getReq_seq()%>";
+		}
+	}
+	
 	<%}else{%>
 	function bidCancel(){
 		if(confirm("견적을 삭제하시겠습니까?")){

@@ -128,4 +128,9 @@ public class ReqService implements IReqService {
 		return reqMapper.getTunerPrivateReqList(tuner_seq);
 	}
 
+	@Override
+	public int declineReq(String req_seq, String tuner_seq) throws Exception {
+		return reqMapper.declineReq(req_seq, tuner_seq);
+	}
+
 }

@@ -79,7 +79,7 @@
                                     
                                     <div class="table-cell"><%=rDTO.getRegdate().substring(0,11) %></div>
                                     <div class="table-cell"><%=rDTO.getPrivate_tuner_name() %></div>
-                                    <div class="table-cell"><%=rDTO.getBids().equals("0") ? "미답변" : "답변완료" %></div>
+                                    <div class="table-cell"><%=rDTO.getReq_state().equals("2") ? "요청 거절" : rDTO.getBids().equals("0") ? "미답변" : "답변완료" %></div>
                             </div>
                             <%} %>
                             

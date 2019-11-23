@@ -2,6 +2,7 @@ package poly.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -482,5 +483,39 @@ public class DealController {
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "/redirect";
+	}
+	
+	// --------------------일정변경-----------------------
+	@RequestMapping(value = "Reschedule")
+	public String Reschedule(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".Reschedule start");
+		if (SessionUtil.verify(session, model) != null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String user_type = (String)session.getAttribute("user_type");
+		String deal_seq = request.getParameter("deal_seq");
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		// 정상적인 접근인지 확인
+		if(user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
+		}else if(user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
+		}else{
+			model.addAttribute("url", "/index.do");
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			return "/redirect";
+		}
+		
+		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
+		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("prefDates", prefDates);
+		
+		log.info(this.getClass().getName() + ".Reschedule end");
+		return "/deal/RescheduleForm";
 	}
 }

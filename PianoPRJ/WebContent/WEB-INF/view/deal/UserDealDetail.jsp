@@ -242,7 +242,7 @@
 							</div>
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
+								<div style="border-color:rgb(150,150,150);padding:0.3rem 0.3rem 0.3rem 0.5rem;"class="border col-xs-9 desc"><span class="valign-middle"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</span><span onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq() %>'" role="button" class="button btn btn-sm btn-info ml-1 valign-middle">변경 요청</span></div>
 							</div>
 						</div>
 					</div>

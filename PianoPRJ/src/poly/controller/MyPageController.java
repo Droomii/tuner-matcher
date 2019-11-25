@@ -243,4 +243,18 @@ public class MyPageController {
 		return "/myPage/FollowingList";
 	}
 	
+	@RequestMapping(value = "TunerSchedule")
+	public String TunerSchedule(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerSchedule start");
+		
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+
+		log.info(this.getClass().getName() + ".TunerSchedule end");
+		return "/myPage/TunerSchedule";
+	}
+	
 }

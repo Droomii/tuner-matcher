@@ -1,6 +1,8 @@
 package poly.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
+import poly.service.IDealService;
 import poly.service.IFollowService;
 import poly.service.IRepuService;
 import poly.service.IReviewService;
@@ -46,6 +49,9 @@ public class MyPageController {
 	
 	@Resource(name = "FollowService")
 	IFollowService followService;
+	
+	@Resource(name = "DealService")
+	IDealService dealService;
 	
 	@RequestMapping(value="MyInfo")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
@@ -253,6 +259,21 @@ public class MyPageController {
 			return "/redirect";
 		}
 
+		String tuner_seq = (String)session.getAttribute("user_seq");
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+	    Date date = new Date();  
+	    String today = formatter.format(date);
+	    log.info("today : " + today);
+	    
+	    List<String> rList = dealService.getUpcomingDeals(tuner_seq, today);
+		log.info("rList : "+ rList);
+		
+		if(rList==null) {
+			rList = new ArrayList<>();
+		}
+		
+		model.addAttribute("rList", rList);
 		log.info(this.getClass().getName() + ".TunerSchedule end");
 		return "/myPage/TunerSchedule";
 	}

@@ -35,4 +35,6 @@ public interface IDealService {
 
 	int insertReschedule(RescheduleDTO rDTO) throws Exception;
 
+	List<String> getUpcomingDeals(String tuner_seq, String today) throws Exception;
+
 }

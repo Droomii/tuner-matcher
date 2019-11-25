@@ -87,4 +87,9 @@ public class DealService implements IDealService{
 		return dealMapper.insertReschedule(rDTO);
 	}
 
+	@Override
+	public List<String> getUpcomingDeals(String tuner_seq, String today) throws Exception {
+		return dealMapper.getUpcomingDeals(tuner_seq, today);
+	}
+
 }

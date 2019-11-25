@@ -226,4 +226,16 @@
 		#{requester_seq}
 	)
 </insert>
+<select id="getUpcomingDeals" parameterType="String" resultType="String">
+<![CDATA[
+	SELECT
+		UNIQUE(SUBSTR(POSSIBLE_DATE, 1, 10))
+	FROM
+		DEAL
+	WHERE
+		SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
+		AND TUNER_SEQ=#{tuner_seq}
+]]>
+	
+</select>
 </mapper>

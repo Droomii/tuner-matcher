@@ -18,6 +18,8 @@
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
+	String deal_seq = (String)request.getAttribute("deal_seq");
+	String prev_date = (String)request.getAttribute("prev_date");
 	
 %>
 <!DOCTYPE html>
@@ -62,9 +64,9 @@
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitReschedule();" autocomplete="off" data-toggle="validator" role="form" name="regForm" class="form" action="/deal/PlaceBid.do" method="post" autocomplete="off">
-							<input hidden="hidden" id="diagnosis_content" name="diagnosis_content">
-							<input value="<%=rDTO.getReq_seq() %>" name="req_seq" hidden>
+					<form onsubmit="return submitReschedule();" autocomplete="off" data-toggle="validator" role="form" name="rescheduleForm" class="form" action="/deal/RescheduleProc.do" method="post" autocomplete="off">
+							<input hidden="hidden" id="chg_reason" name="chg_reason">
+							<input value="<%=deal_seq %>" name="deal_seq" hidden>
 							<div id="date-group has-feedback">
 									<div class="form-group" style="margin-bottom:0" >
 									<label>희망일시<span class="red">*</span></label>
@@ -83,11 +85,11 @@
 									<div class="row">
 									<%for(String hour : hours){ %>
 										<div class="col-xs-3">
-										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<label class="checkbox-inline"><input type="radio" name="chg_date" class="pref-hour" value="<%=ss %>h<%=hour%>" <%=String.format("%sh%s", ss, hour).equals(prev_date) ? "disabled" : ""%>><%=hour %>:00</label>
 										</div>
 									<%} %>
 									</div>
-									<%if(keyIter.hasNext()){ %><hr style="margin:0 0 0.5rem 0"><%} %>
+									<hr style="margin:0 0 0.5rem 0">
 									<%} %>
 									</div>
 									</div>
@@ -96,17 +98,19 @@
 								</div>
 							<div class="form-body">
 								<div class="form-group has-feedback">
-									<label for="temp_content">소견</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="소견을 입력해주세요(가격 책정 이유 등 상세히)" required></textarea>
+									<label for="temp_content">변경사유<span class="red">*</span></label>
+									<textarea id="temp_content" rows="10" class="form-control" placeholder="사유을 입력해주세요" required></textarea>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 															
 							</div>
-							
+							<p class="card-text" style="color:crimson">
+							주의 : <%=user_type.equals("0") ? "조율사가" : "고객이"%> 거절할 경우 변경이 되지 않습니다.
+							</p>
 							
 							<div class="card-footer text-xs-center">
-								<a href="#" class="button btn btn-info">뒤로 </a>
+								<a href="/deal/<%=user_type.equals("0") ? "User" : "Tuner" %>DealDetail.do?deal_seq=<%=deal_seq %>" class="button btn btn-info">뒤로 </a>
 								<button type="submit" class="button btn btn-success">변경 요청</button>
 							</div>
 						</form>
@@ -125,143 +129,23 @@
 	
 	
 	<script>
-	<%if(user_type.equals("2") || user_seq.equals(rDTO.getUser_seq())){%>
-	function deleteConfirm(){
-		if(confirm("요청서를 삭제하시겠습니까?")){
-			var form = document.req_action;
-			form.action = "/req/DeleteReq.do";
-			form.submit();
-		}
-	}
-	
-	function editReq(){
-		var form = document.req_action;
-		form.action = "/req/EditReq.do";
-		form.submit();
-	}
-	
-	<%}%>
-	<%if(user_type.equals("1")){%>
-	function submitBid(){
+	function submitReschedule(){
 		var checklen = document.querySelectorAll('.pref-hour:checked').length;
 		if(checklen==0){
-			alert("최소 하나의 희망일시는 선택해야 합니다.");
+			alert("변경일시를 선택해주세요.");
 			return false;
 		}
-		if(getPrice()){
-			alert("항목 및 총 견적가는 0원일 수 없습니다.");
-			return false;
-		}
-		if(!confirm("입찰하시겠습니까? 한번 등록하면 수정이 불가능합니다.")){
+		if($("#temp_content").val().trim()==""){
+			alert("변경사유를 입력해주세요.")
 			return false;
 		}
 		
-		$("#diagnosis_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
+		if(!confirm("날짜변경을 요청하시겠습니까?")){
+			return false;
+		}
+		
+		$("#chg_reason").val(document.getElementById('temp_content').value.trim().replace(/\n/g, " "));
 	}
-	function totalPrice(total, elem){
-		return total+(parseInt(elem.value) || 0);	
-	}
-	
-	
-	
-	function getPrice(){
-		var prices = document.getElementsByClassName("price");
-	    var anyChecked = false;
-	    for(var i = 0; i<prices.length; i++){
-	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
-	    	try{
-	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;
-	    		anyChecked = anyChecked || checked;
-	    	}catch(err){
-	    		var checked = true;
-	    		anyChecked = anyChecked || checked;
-	    	}
-	    	if(checked){
-		    	ea = parseInt(ea) || 0;
-		    	var val = (parseInt(prices[i].value) || 0)
-		    	val = val * ea
-		    	if(val==0){
-		    		return true
-		    	}
-		    	
-				}
-	    }
-		return !anyChecked;
-	}
-	function updatePrice(){
-		var prices = document.getElementsByClassName("price");
-	    var total = 0;
-	    for(var i = 0; i<prices.length; i++){
-	    	var ea = prices[i].parentElement.parentElement.getElementsByClassName("ea")[0].value
-	    	try{
-	    		var checked = prices[i].parentElement.parentElement.getElementsByClassName('checkbox')[0].checked;	
-	    	}catch(err){
-	    		var checked = true;
-	    	}
-	    	if(checked){
-		    	ea = parseInt(ea) || 0;
-		    	var val = (parseInt(prices[i].value) || 0)
-		    	val = val * ea
-		    	total += val
-				}
-	    }
-	    koreanTotal = numberToKorean(total)
-	    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	    $("#total").html(total);
-	    $("#koreanTotal").html(koreanTotal=="" ? "0" : koreanTotal);
-	}
-	
-	
-	
-	function numberToKorean(number){
-	    var inputNumber  = number < 0 ? false : number;
-	    var unitWords    = ['', '만', '억', '조', '경'];
-	    var splitUnit    = 10000;
-	    var splitCount   = unitWords.length;
-	    var resultArray  = [];
-	    var resultString = '';
-
-	    for (var i = 0; i < splitCount; i++){
-	         var unitResult = (inputNumber % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
-	        unitResult = Math.floor(unitResult);
-	        if (unitResult > 0){
-	            resultArray[i] = unitResult;
-	        }
-	    }
-
-	    for (var i = 0; i < resultArray.length; i++){
-	        if(!resultArray[i]) continue;
-	        resultString = String(resultArray[i]) + unitWords[i] + resultString;
-	    }
-
-	    return resultString;
-	}
-	
-	$(function() {
-		  $(".price").on("keyup", function(event) {
-			    var value = $(this).val();
-			  	value = value.replace(/[^0-9]/g, "")
-			    $(this).val(parseInt(value) || 0);
-			    updatePrice();
-			    
-		  })
-		});
-	$(function() {
-		  $(".ea").on("change", function(event) {
-			    updatePrice();
-		  })
-		});
-	
-	$(function() {
-		  $(".checkbox").on("change", function(event) {
-			  var checkState = this.checked
-			  var inputs = this.parentElement.parentElement.parentElement.querySelectorAll('input')
-			  inputs[1].disabled = !checkState;
-			  inputs[2].disabled = !checkState;
-			  updatePrice();
-		  })
-		});
-	<%}%>
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>

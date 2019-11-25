@@ -50,6 +50,9 @@
 		SYSDATE,
 		#{owner_seq}
 	)
+	<selectKey keyProperty="piano_seq" resultType="String" order="AFTER">
+			SELECT PIANO_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	<select id="getMyPianoList" parameterType="String" resultType="PianoDTO">
 	SELECT
@@ -58,6 +61,7 @@
 		PIANO_DESC,
 		BRAND,
 		PIANO_TYPE,
+		PIANO_PHOTO_DIR,
 		LAST_TUNED_DATE
 	FROM PIANO
 	WHERE OWNER_SEQ=#{0}
@@ -125,5 +129,7 @@
 		UPDSEQ = #{owner_seq}
 	WHERE PIANO_SEQ = #{piano_seq}
 	</update>
-	
+	<select id="getPianoCurrVal" resultType="Integer">
+	SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME='PIANO_SEQ'
+	</select>
 </mapper>

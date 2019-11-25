@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import config.Mapper;
 import poly.dto.DealDTO;
+import poly.dto.RescheduleDTO;
 
 @Mapper("DealMapper")
 public interface IDealMapper {
@@ -35,5 +36,7 @@ public interface IDealMapper {
 	int declineDeal(String deal_seq, String req_seq, String user_seq) throws Exception;
 
 	List<DealDTO> getTunerDealList(String user_seq) throws Exception;
+
+	int insertReschedule(RescheduleDTO rDTO) throws Exception;
 
 }

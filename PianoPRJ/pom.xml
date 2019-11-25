@@ -22,6 +22,10 @@
 			<name>ORACLE JDBC Repository</name>
 			<url>http://maven.jahia.org/maven2</url>
 		</repository>
+		<repository>
+		     <id>javaxt.com</id>
+		     <url>http://www.javaxt.com/maven</url>
+		   </repository>
 	</repositories>
 
 	<dependencies>
@@ -150,6 +154,12 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
+		</dependency>
+		<!-- 썸네일 관련 -->
+	   <dependency>
+		  <groupId>net.coobird</groupId>
+		  <artifactId>thumbnailator</artifactId>
+		  <version>[0.4, 0.5)</version>
 		</dependency>
 	</dependencies>
 

@@ -18,4 +18,7 @@ public interface IPianoService {
 
 	PianoDTO getPianoEditInfo(String piano_seq) throws Exception;
 
+	int getPianoCurrVal() throws Exception;
+
+
 }

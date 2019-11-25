@@ -1,5 +1,7 @@
 package poly.controller;
 
+import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +15,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Canvas;
+import net.coobird.thumbnailator.geometry.Positions;
 import poly.dto.PianoDTO;
 import poly.service.IPianoService;
-import poly.util.CmmUtil;
+import poly.util.FileUtil;
 @RequestMapping(value="piano/")
 
 @Controller
@@ -35,15 +42,45 @@ public class PianoController {
 	}
 	
 	@RequestMapping(value="DoAddPiano")
-	public String DoAddPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO) throws Exception{
-		pDTO.setPiano_photo_dir("dummy");
+	public String DoAddPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO, @RequestParam(value = "piano_img") MultipartFile mf) throws Exception{
 		String user_seq = (String)session.getAttribute("user_seq");
 		pDTO.setOwner_seq(user_seq);
 		
 		int res;
-		res = pianoService.insertPiano(pDTO);
+		
 		String msg = "";
 		String url = "/piano/MyPianoList.do";
+		
+		if(!mf.isEmpty()) {
+			if(!FileUtil.isImage(mf)) {
+				msg = "이미지 파일이 아닙니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
+		
+		res = pianoService.insertPiano(pDTO);
+		
+		if(!mf.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/piano/" + pDTO.getPiano_seq() + "/";
+			String ext = FileUtil.saveImage(mf, "image", path);
+			Thumbnails.of(new File(path + "image." + ext))
+			.size(800, 600)
+			.addFilter(new Canvas(600, 450, Positions.CENTER, Color.WHITE))
+			.toFile(path + "thumbnail." + ext);
+			
+			pDTO.setPiano_photo_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
+
 		if(res>0) {
 			msg = "피아노 등록에 성공했습니다";
 		}else {
@@ -118,11 +155,34 @@ public class PianoController {
 	}
 	
 	@RequestMapping(value="DoEditPiano", method=RequestMethod.POST)
-	public String DoEditPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO) throws Exception {
+	public String DoEditPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO, @RequestParam(value = "piano_img") MultipartFile mf) throws Exception {
 		log.info(this.getClass().getName() + ".DoEditPiano start");
 		String user_seq = (String)session.getAttribute("user_seq");
 		pDTO.setOwner_seq(user_seq);
+		
 		String msg = "";
+		String url = "/piano/MyPianoList.do";
+		if(!mf.isEmpty()) {
+			
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/piano/" + pDTO.getPiano_seq() + "/";
+			String ext = FileUtil.saveImage(mf, "image", path);
+			Thumbnails.of(new File(path + "image." + ext))
+					.size(800, 600)
+					.addFilter(new Canvas(600, 450, Positions.CENTER, Color.WHITE))
+					.toFile(path + "thumbnail." + ext);
+			pDTO.setPiano_photo_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
+		
+		
+		
 		int res = pianoService.updatePiano(pDTO);
 		if(res>0) {
 			msg = "피아노 수정에 성공했습니다";
@@ -130,7 +190,7 @@ public class PianoController {
 			msg = "피아노 수정에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/piano/MyPianoList.do");
+		model.addAttribute("url", url);
 		
 		return "/redirect";
 	

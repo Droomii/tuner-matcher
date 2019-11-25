@@ -60,7 +60,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/DoTunerInfoEdit.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/DoTunerInfoEdit.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -134,7 +134,13 @@
 									<label for="temp_exp">이력</label>
 									<textarea id="temp_exp" rows="20" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_exp())).replaceAll("<br>", "\n")%></textarea>
 								</div>
-							
+								<div class="form-group">
+									<label>프로필 사진<span class="red">*</span></label>
+									<label id="img_label"  class="file center-block">
+										<input type="file" name="profile_img" id="profile_img">
+										<span class="file-custom"></span>
+									</label>
+								</div>
 								<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
 								<div class="form-group has-feedback" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다." onclick="goPopup();">
 									<label for="addr">근무지 주소<span class="red">*</span></label>

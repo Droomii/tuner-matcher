@@ -1,3 +1,4 @@
+<%@page import="poly.dto.TunerDTO"%>
 <%@page import="poly.util.CmmUtil"%>
 <%@page import="poly.dto.ReviewDTO"%>
 <%@page import="java.util.List"%>
@@ -10,6 +11,7 @@
 	int[] techRates = rDTO.getTechRates();
 	int[] timeRates = rDTO.getPunctualRates();
 	int[] kindnessRates = rDTO.getKindnessRates();
+	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
 	
 	List<ReviewDTO> revList = (List<ReviewDTO>)request.getAttribute("revList");  
 %>
@@ -25,7 +27,7 @@
 	  </div>
 	  <div class="modal-body">
 						<div class="card-block">
-						<img class="rounded float-xs-left" src="/resources/app-assets/images/portrait/small/avatar-s-2.png" alt="Card image cap">
+						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 						<div class="card-text valign-top ml-1 float-xs-left">
 							<h5><strong><%=rDTO.getTuner_name() %></strong></h5>
 							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>

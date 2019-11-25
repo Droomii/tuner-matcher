@@ -48,8 +48,8 @@
 		<div class="card" onclick="location.href='/user/TunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
 				<div class="card-body">
 					<div class="card-block" style="display:flex">
-					<div class="col-xs-4" style="width:120px;min-width:120px;">
-						<img class="rounded img-fluid" src="/resources/app-assets/images/portrait/small/avatar-s-2.png" alt="Card image cap">
+					<div class="col-xs-4" style="width:160px;min-width:160px;">
+						<img class="rounded img-fluid img-thumbnail" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 					</div>
 					<div class="col-xs-8">
 						<h5><strong><%=tDTO.getTuner_name() %></strong></h5>

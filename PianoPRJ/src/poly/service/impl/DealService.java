@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import poly.dto.DealDTO;
+import poly.dto.RescheduleDTO;
 import poly.persistance.mapper.IDealMapper;
 import poly.service.IDealService;
 
@@ -79,6 +80,11 @@ public class DealService implements IDealService{
 	@Override
 	public List<DealDTO> getTunerDealList(String user_seq) throws Exception {
 		return dealMapper.getTunerDealList(user_seq);
+	}
+
+	@Override
+	public int insertReschedule(RescheduleDTO rDTO) throws Exception {
+		return dealMapper.insertReschedule(rDTO);
 	}
 
 }

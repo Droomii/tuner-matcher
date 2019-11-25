@@ -3,6 +3,7 @@ package poly.service;
 import java.util.List;
 
 import poly.dto.DealDTO;
+import poly.dto.RescheduleDTO;
 
 public interface IDealService {
 
@@ -31,5 +32,7 @@ public interface IDealService {
 	int declineDeal(String deal_seq, String req_seq, String user_seq) throws Exception;
 
 	List<DealDTO> getTunerDealList(String user_seq) throws Exception;
+
+	int insertReschedule(RescheduleDTO rDTO) throws Exception;
 
 }

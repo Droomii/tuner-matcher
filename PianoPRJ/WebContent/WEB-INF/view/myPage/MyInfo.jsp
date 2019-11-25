@@ -49,7 +49,11 @@
 				</div>
 				<div class="card-body">
 					<div class="card-block text-xs-center">
+					<%if(user_type.equals("1")) {%>
+					<img class="rounded mx-auto d-block img-thumbnail" style="height:200px"src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
+					<%}else{ %>
 					<img class="rounded mx-auto d-block" src="/resources/app-assets/images/portrait/small/avatar-s-2.png" alt="Card image cap">
+					<%} %>
 						<br>
 						<h5><%=uDTO.getUser_nick() %>(<%=userTypeKor %>)</h5>
 					</div>

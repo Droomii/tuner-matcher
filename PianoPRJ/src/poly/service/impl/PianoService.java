@@ -48,4 +48,10 @@ public class PianoService implements IPianoService{
 		return pianoMapper.getPianoEditInfo(piano_seq);
 	}
 
+	@Override
+	public int getPianoCurrVal() throws Exception {
+		return pianoMapper.getPianoCurrVal();
+	}
+
+
 }

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import poly.dto.RepuDTO;
 import poly.dto.ReviewDTO;
+import poly.dto.TunerDTO;
 import poly.service.IRepuService;
 import poly.service.IReviewService;
+import poly.service.IUserService;
 
 @Controller
 @RequestMapping("/repu")
@@ -29,6 +31,9 @@ public class RepuController {
 	
 	@Resource(name = "ReviewService")
 	IReviewService reviewService;
+	
+	@Resource(name = "UserService")
+	IUserService userService;
 	
 	@RequestMapping(value = "GetTunerRepu")
 	public String MyRepu(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
@@ -43,6 +48,9 @@ public class RepuController {
 		for(int rates : rDTO.getTechRates()) {
 			log.info("rate : " + rates);
 		}
+		
+		TunerDTO tDTO = userService.getTunerInfo(tuner_seq);
+		model.addAttribute("tDTO", tDTO);
 		model.addAttribute("rDTO", rDTO);
 		
 		// 리뷰 목록 가져옴

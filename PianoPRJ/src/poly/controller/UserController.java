@@ -19,7 +19,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import poly.dto.MailDTO;
 import poly.dto.RepuDTO;
@@ -33,6 +35,7 @@ import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.FileUtil;
 import poly.util.SessionUtil;
 
 @Controller
@@ -445,9 +448,10 @@ public class UserController {
 	
 	@RequestMapping(value = "DoTunerInfoEdit")
 	public String DoTunerInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO) throws Exception {
+			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO, @RequestParam(value = "profile_img") MultipartFile mf) throws Exception {
 
 		String user_seq = (String)session.getAttribute("user_seq");
+		
 		
 		// 지역 중첩 제거 코드
 		String[] sggCodes = tDTO.getSgg_code().split(",");
@@ -483,26 +487,42 @@ public class UserController {
 		// 중첩 지역 제거한 시군구코드
 		tDTO.setSgg_code(uniqueSgg);
 
-		// 더미
-		tDTO.setId_photo_dir("dummy");
-		tDTO.setCert_dir("dummy");
 		int result;
 
+		String msg = "";
+		String url = "/myPage/MyInfo.do";
+		
 		log.info(uniqueSgg);
 
+		if(!mf.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/tuner/" + user_seq + "/";
+			String ext = FileUtil.saveImage(mf, "profile", path);
+			tDTO.setId_photo_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			
+			
+		}
+		
 		uDTO.setUser_seq(user_seq);
 		tDTO.setTuner_seq(user_seq);
 		result = userService.updateTuner(uDTO, tDTO);
 
-		String msg = "";
-		String url = "/myPage/MyInfo.do";
+		
 		if (result == 0) {
 			msg = "수정에 실패하였습니다.";
 		} else {
 			
 			userService.clearTunerSgg(user_seq);
 			userService.addTunerSgg(user_seq, tDTO);
-			msg = "수정에 완료되었습니다.";
+			
+			msg = "수정하였습니다.";
 		}
 
 		model.addAttribute("msg", msg);
@@ -528,12 +548,14 @@ public class UserController {
 		if (result == 0) {
 			msg = "수정에 실패하였습니다.";
 		} else {
-			msg = "수정에 완료되었습니다.";
+			msg = "수정에 성공했습니다.";
+			session.setAttribute("user_nick", uDTO.getUser_nick());
 		}
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 
+		
 		log.info(this.getClass());
 
 		return "/redirect";

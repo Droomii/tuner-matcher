@@ -28,4 +28,6 @@ public interface IReqMapper {
 
 	int declineReq(String req_seq, String tuner_seq) throws Exception;
 
+	int getReqCurrVal() throws Exception;
+
 }

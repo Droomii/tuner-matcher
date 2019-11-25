@@ -199,6 +199,9 @@
 		TUNER_COMMENT=#{tuner_comment},
 		TUNER_LEVEL=#{tuner_level},
 		TUNER_EXP=#{tuner_exp},
+		<if test="id_photo_dir!=null">
+		ID_PHOTO_DIR=#{id_photo_dir},
+		</if>
 		ADDR=#{addr},
 		AFFILIATION=#{affiliation},
 		X_POS=#{x_pos},

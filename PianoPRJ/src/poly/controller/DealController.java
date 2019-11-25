@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.ReqDTO;
+import poly.dto.RescheduleDTO;
 import poly.dto.ReviewDTO;
 import poly.dto.UserDTO;
 import poly.service.IDealService;
@@ -235,6 +236,7 @@ public class DealController {
 			log.info("back is not null");
 			model.addAttribute("back", "/deal/TunerPastDeals.do");
 		}
+		
 		
 		model.addAttribute("revDTO", revDTO);
 		model.addAttribute("uDTO", uDTO);
@@ -503,7 +505,11 @@ public class DealController {
 		
 		// 정상적인 접근인지 확인
 		if(user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
+			log.info("user_type : " + user_type);
+			log.info("requester_seq : " + dDTO.getRequester_seq());
 		}else if(user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
+			log.info("user_type : " + user_type);
+			log.info("tuner_seq : " + dDTO.getTuner_seq());
 		}else{
 			model.addAttribute("url", "/index.do");
 			model.addAttribute("msg", "비정상적인 접근입니다.");
@@ -514,8 +520,58 @@ public class DealController {
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("prefDates", prefDates);
+		model.addAttribute("deal_seq", deal_seq);
+		model.addAttribute("prev_date", dDTO.getPossible_date());
 		
 		log.info(this.getClass().getName() + ".Reschedule end");
 		return "/deal/RescheduleForm";
+	}
+	
+	@RequestMapping(value = "RescheduleProc")
+	public String RescheduleProc(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model, @ModelAttribute RescheduleDTO rDTO)
+			throws Exception {
+		log.info(this.getClass().getName() + ".RescheduleProc start");
+
+		if (SessionUtil.verify(session, model) != null) {
+			model = SessionUtil.verify(session, model);
+			return "/redirect";
+		}
+		
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String user_type = (String)session.getAttribute("user_type");
+		String deal_seq = request.getParameter("deal_seq");
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		
+		
+		// 정상적인 접근인지 확인
+		if(user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
+		}else if(user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
+		}else{
+			model.addAttribute("url", "/index.do");
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			return "/redirect";
+		}
+		
+		rDTO.setRequester_seq(user_seq);
+		int res = 0;
+		res = dealService.insertReschedule(rDTO);
+		String url = "";
+		String msg = "";
+		String userTypeName = user_type.equals("0") ? "User" : "Tuner"; 
+		if(res>0) {
+			msg = "일정 변경 요청을 하였습니다.";
+			url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+		}else {
+			msg = "일정 변경 요청에 실패했습니다";
+			url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		log.info(this.getClass().getName() + ".RescheduleProc end");
+		return "/redirect";
+		
+
 	}
 }

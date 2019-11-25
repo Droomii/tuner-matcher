@@ -207,6 +207,8 @@ public class MyPageController {
 		
 		// 평판 가져옴
 		RepuDTO rDTO = repuService.getRepu(user_seq);
+		TunerDTO tDTO = userService.getTunerInfo(user_seq);
+		model.addAttribute("tDTO", tDTO);
 		model.addAttribute("rDTO", rDTO);
 		
 		// 리뷰 목록 가져옴

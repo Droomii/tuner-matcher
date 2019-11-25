@@ -42,7 +42,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" id="form" role="form" name="form" class="form" action="/piano/DoEditPiano.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" enctype="multipart/form-data" id="form" role="form" name="form" class="form" action="/piano/DoEditPiano.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<input type="text" value="<%=pDTO.getPiano_seq()%>" hidden="hidden" name="piano_seq">
 							<div class="form-body">
 								<div class="row">
@@ -157,7 +157,14 @@
 										</div>
 										
 									</div>
-									<div class="col-xs-12">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label>피아노 사진 </label>
+										<label id="piano_image" class="file center-block">
+											<input type="file" id="piano_img" name="piano_img">
+											<span class="file-custom"></span>
+										</label>
+									</div>
 								</div>
 								</div>
 								<div class="form-group has-feedback" data-toggle="tooltip" data-placement="top" data-original-title="피아노 위치에 따라 주변 조율사에게 노출됩니다" onclick="goPopup();">
@@ -180,7 +187,7 @@
 							</div><!-- end of form body -->
 							<div class="form-actions text-center">
 							<button type="submit" class="btn btn-primary">
-									<i class="icon-check2 d-flex"></i> 등록
+									<i class="icon-check2 d-flex"></i> 수정
 								</button>
 								<button type="button" class="btn btn-warning mr-1 d-flex">
 									<i class="icon-cross2"></i> 취소

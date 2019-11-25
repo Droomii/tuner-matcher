@@ -37,7 +37,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" id="form" role="form" name="form" class="form" action="/piano/DoAddPiano.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" id="form" enctype="multipart/form-data" role="form" name="form" class="form" action="/piano/DoAddPiano.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<div class="form-body">
 								<div class="row">
 								<div class="col-xs-12 red" style="margin-bottom:1em">*표시된 항목은 필수 입력사항입니다.</div>
@@ -155,7 +155,7 @@
 									<div class="form-group">
 										<label>피아노 사진 </label>
 										<label id="piano_image" class="file center-block">
-											<input type="file" id="piano_image" name="piano_image">
+											<input type="file" id="piano_img" name="piano_img">
 											<span class="file-custom"></span>
 										</label>
 									</div>

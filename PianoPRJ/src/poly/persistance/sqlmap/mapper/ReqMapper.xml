@@ -30,7 +30,9 @@
 		#{req_title},
 		#{private_seq}
 	)
-	
+	<selectKey keyProperty="req_seq" resultType="String" order="AFTER">
+			SELECT REQ_SEQ.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	<select id="getPublicReqList" parameterType="String" resultType="ReqDTO">
 	SELECT
@@ -80,7 +82,8 @@
 		P.SIDO_NAME,
 		P.SGG_NAME,
 		R.PRIVATE_SEQ,
-		R.REQ_STATE
+		R.REQ_STATE,
+		R.PHOTO_DIR
 	FROM
 		REQUEST R, PIANO P
 	WHERE
@@ -89,6 +92,9 @@
 	</select>
 	<update id="updateReq" parameterType="ReqDTO">
 	UPDATE REQUEST SET
+		<if test="photo_dir!=null">
+		PHOTO_DIR=#{photo_dir},
+		</if>
 		REQ_TITLE=#{req_title},
 		REQ_CONTENT=#{req_content},
 		PREF_DATE=#{pref_date},
@@ -140,4 +146,7 @@
 		REQ_SEQ=#{0}
 		AND PRIVATE_SEQ=#{1}
 	</update>
+	<select id="getReqCurrVal" resultType="Integer">
+	SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME='REQ_SEQ'
+	</select>
 </mapper>

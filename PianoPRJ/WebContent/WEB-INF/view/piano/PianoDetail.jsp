@@ -107,8 +107,15 @@
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
 								</div>
 								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-3 text-xs-left text-sm-center text-bold-700">사진</div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">asd</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
+									<%if(pDTO.getPiano_photo_dir()!=null){ %>
+									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
+									<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap">
+									<%}else{ %>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
+									
+									<%} %>
+									</div>
 									
 							</div>
 							</div>
@@ -140,7 +147,7 @@
 				</div>
 				<div class="card-body collapse in">
 					<div class="card-block">
-					<form onsubmit="return submitReq();" data-toggle="validator" role="form" name="regForm" class="form" action="/req/<%=proc %>ReqSubmit.do" method="post" autocomplete="off">
+					<form onsubmit="return submitReq();" enctype="multipart/form-data" data-toggle="validator" role="form" name="regForm" class="form" action="/req/<%=proc %>ReqSubmit.do" method="post" autocomplete="off">
 							<input hidden="hidden" id="req_content" name="req_content">
 							<input value="<%=pDTO.getPiano_seq() %>" name="piano_seq" hidden>
 							<div class="form-body">
@@ -158,8 +165,8 @@
 								</div>
 								<div class="form-group">
 									<label>참고사진</label>
-									<label id="pianoImage" class="file center-block">
-										<input type="file" id="pianoImage">
+									<label id="req_img_label" class="file center-block">
+										<input type="file" id="req_img" name="req_img">
 										<span class="file-custom"></span>
 									</label>
 								</div>

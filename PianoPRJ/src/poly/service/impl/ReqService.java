@@ -133,4 +133,9 @@ public class ReqService implements IReqService {
 		return reqMapper.declineReq(req_seq, tuner_seq);
 	}
 
+	@Override
+	public int getReqCurrVal() throws Exception {
+		return reqMapper.getReqCurrVal();
+	}
+
 }

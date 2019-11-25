@@ -52,6 +52,7 @@
                                     <th>고객 닉네임</th>
                                     <th>견적가</th>
                                     <th>약속일시</th>
+                                    <th>진행상태</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,6 +63,7 @@
                                     
                                     <td><%=dDTO.getTotal() %>원</td>
                                     <td><%=dDTO.getFullDate()%></td>
+                                    <td><%=dDTO.getDeal_state().equals("2") ? "진행중" : "완료대기중" %></td>
                                 </tr>
                             <%} %>
                             </tbody>

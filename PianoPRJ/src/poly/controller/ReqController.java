@@ -1,5 +1,7 @@
 package poly.controller;
 
+import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +17,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Canvas;
+import net.coobird.thumbnailator.geometry.Positions;
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.RepuDTO;
@@ -32,6 +39,7 @@ import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.FileUtil;
 import poly.util.SessionUtil;
 
 @RequestMapping(value = "req/")
@@ -91,25 +99,51 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value = "publicReqSubmit")
-	public String publicReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO) throws Exception{
+	public String publicReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO,
+			@RequestParam(value = "req_img") MultipartFile mf) throws Exception{
 
+		
 		if (SessionUtil.verify(session, "0", model) != null) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
 		String user_seq = (String)session.getAttribute("user_seq");
 		rDTO.setUser_seq(user_seq);
-		rDTO.setPhoto_dir("dummy");
 		String msg = "";
+		String url = "/req/UserPublicReqList.do";
+		
+		if(!mf.isEmpty()) {
+			if(!FileUtil.isImage(mf)) {
+				msg = "이미지 파일이 아닙니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			rDTO.setPhoto_dir(FileUtil.getExt(mf));
+		}
+		
 		int res = reqService.insertReq(rDTO);
 		
+		if(!mf.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/req/" + rDTO.getReq_seq() + "/";
+			String ext = FileUtil.saveImage(mf, "image", path);
+			rDTO.setPhoto_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
 		if(res>0) {
 			msg = "요청서 등록에 성공했습니다";
 		}else {
 			msg = "요청서 등록에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/req/UserPublicReqList.do");
+		model.addAttribute("url", url);
 		
 		return "/redirect";
 	}
@@ -212,7 +246,8 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value = "DoEditReq")
-	public String DoEditReq(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute ReqDTO rDTO) throws Exception{
+	public String DoEditReq(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute ReqDTO rDTO,
+			@RequestParam(value="req_img") MultipartFile mf) throws Exception{
 		if (SessionUtil.verify(session, "0", model) != null) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
@@ -223,8 +258,39 @@ public class ReqController {
 		String back = request.getParameter("back");
 		rDTO.setUpdater_seq(current_user);
 
-		int res = reqService.updateReq(rDTO);
+		
 		String msg;
+		
+		if(!mf.isEmpty()) {
+			if(!FileUtil.isImage(mf)) {
+				msg = "이미지 파일이 아닙니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", back + ".do");
+				return "/redirect";
+			}
+			rDTO.setPhoto_dir(FileUtil.getExt(mf));
+		}
+		
+		int res = reqService.updateReq(rDTO);
+		
+		if(!mf.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/req/" + rDTO.getReq_seq() + "/";
+			String ext = FileUtil.saveImage(mf, "image", path);
+			rDTO.setPhoto_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", back + ".do");
+				return "/redirect";
+			}
+		}
+		
+		
+		
+		
+		
 		if(res>0) {
 			msg = "요청서 수정에 성공했습니다";
 		}else {
@@ -442,7 +508,8 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value = "PrivateReqSubmit")
-	public String PrivateReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO) throws Exception{
+	public String PrivateReqSubmit(HttpSession session, HttpServletRequest request, ModelMap model, @ModelAttribute ReqDTO rDTO,
+			@RequestParam(value="req_img") MultipartFile mf) throws Exception{
 		if (SessionUtil.verify(session, "0", model) != null) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
@@ -451,17 +518,41 @@ public class ReqController {
 		
 		String user_seq = (String)session.getAttribute("user_seq");
 		rDTO.setUser_seq(user_seq);
-		rDTO.setPhoto_dir("dummy");
 		String msg = "";
+		String url = "/req/UserPrivateReqList.do";
+		
+		if(!mf.isEmpty()) {
+			if(!FileUtil.isImage(mf)) {
+				msg = "이미지 파일이 아닙니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			rDTO.setPhoto_dir(FileUtil.getExt(mf));
+		}
+		
 		int res = reqService.insertReq(rDTO);
 		
+		if(!mf.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/req/" + rDTO.getReq_seq() + "/";
+			String ext = FileUtil.saveImage(mf, "image", path);
+			rDTO.setPhoto_dir(ext);
+			}catch(Exception e) {
+				msg = "이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
 		if(res>0) {
 			msg = "1:1 요청에 성공했습니다";
 		}else {
 			msg = "1:1 요청에 실패했습니다";
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", "/req/UserPrivateReqList.do");
+		model.addAttribute("url", url);
 		
 		return "/redirect";
 	}

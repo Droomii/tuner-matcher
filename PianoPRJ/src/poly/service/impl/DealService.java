@@ -102,4 +102,9 @@ public class DealService implements IDealService{
 		return dealMapper.getUpcomingDealDates(tuner_seq, today);
 	}
 
+	@Override
+	public List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception {
+		return dealMapper.getBidPlacedReqs(tuner_seq);
+	}
+
 }

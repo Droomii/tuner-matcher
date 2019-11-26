@@ -10,6 +10,7 @@
 <%
 	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
 	List<ReqDTO> rList = (ArrayList<ReqDTO>)request.getAttribute("rList"); 
+	List<Integer> dList = (ArrayList<Integer>)request.getAttribute("dList"); 
 	String tunerAddr = tDTO.getAddr();
 	tunerAddr = tunerAddr.split("\\(")[0].split(",")[0];
 %>
@@ -60,13 +61,20 @@ location.href="/index.do";
 				</div>
 				<div class="card-body" >
 					<div class="card-block overflow-auto" style="height:600px; padding:0">
-						<%for(ReqDTO rDTO : rList){ %>
+						<%for(ReqDTO rDTO : rList){
+							if(dList.contains(Integer.parseInt(rDTO.getReq_seq()))){
+								continue;
+							}
+							%>
 						<div class="req-container" style="padding:1rem 1rem 0 1rem" id="req-<%=rDTO.getReq_seq()%>" onclick="location.href='/req/ReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'" role="button">
 						<h5 class="card-text text-truncate mb-0"><strong><%=rDTO.getReq_title() %></strong></h5>
 							<div class="card-text text-truncate"><%=rDTO.getReq_content().replaceAll("& lt;br& gt;", " ") %></div>
 							<div class="card-text text-truncate text-muted"><%=rDTO.getSido_name().replaceAll("특별시","").replaceAll("광역시","").replaceAll("특별자치","") %> <%=rDTO.getSgg_name() %> | <%=rDTO.getBids() %>명 입찰중</div>
 							<hr style="margin-bottom:0">
 						</div>
+						<%} 
+						if(rList.size()==0){	%>
+						<div class="card-tect text-xs-center"><br>- 주변 조율 요청이 없습니다. -</div>
 						<%} %>
 					</div>
 				</div>

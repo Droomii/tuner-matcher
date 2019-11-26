@@ -45,4 +45,6 @@ public interface IDealMapper {
 
 	List<String> getUpcomingDealDates(@Param("tuner_seq") String tuner_seq, @Param("today") String today) throws Exception;
 
+	List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception;
+
 }

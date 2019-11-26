@@ -29,7 +29,6 @@
               <li><a href="/myPage/TunerSchedule.do" class="menu-item">조율 일정</a></li>
               <li><a href="#" class="menu-item">조율 내역</a>
                 <ul class="menu-content">
-                  <li><a href="/deal/TunerBidList.do" class="menu-item">입찰 현황</a></li>
                   <li><a href="/deal/TunerDealList.do" class="menu-item">조율 현황</a></li>
                   <li><a href="/deal/TunerPastDeals.do" class="menu-item">과거 조율 내역</a></li>
                 </ul>
@@ -39,7 +38,7 @@
           </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
             <ul class="menu-content">
-              <li><a href="/req/TunerPublicReqList.do" class="menu-item">내 주변에서 찾기</a></li>
+              <li><a href="/deal/TunerBidList.do" class="menu-item">내 주변에서 찾기</a></li>
               <li><a href="/req/TunerPrivateReqList.do" class="menu-item">1:1 요청</a></li>
             </ul>
           </li>

@@ -580,7 +580,14 @@ public class ReqController {
 		
 		// 요청목록
 		List<ReqDTO> rList = reqService.getNearReqList(tuner_seq);
+		List<Integer> dList = dealService.getBidPlacedReqs(tuner_seq);
+		log.info("dList : " + dList);
+		if(rList == null) {
+			rList = new ArrayList<>();
+		}
+		
 		model.addAttribute("rList", rList);
+		model.addAttribute("dList", dList);
 		return "/req/TunerPublicReqList";
 	}
 	

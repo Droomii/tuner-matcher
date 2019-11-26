@@ -41,4 +41,6 @@ public interface IDealService {
 
 	List<String> getUpcomingDealDates(String tuner_seq, String today) throws Exception;
 
+	List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception;
+
 }

@@ -294,4 +294,12 @@
 	AND SUBSTR(POSSIBLE_DATE, 1, 10)=#{1}
 	ORDER BY POSSIBLE_DATE
 </select>
+<select id="getBidPlacedReqs" parameterType="String" resultType="Integer">
+	SELECT
+		REQ_SEQ
+	FROM
+		DEAL
+	WHERE TUNER_SEQ=#{0}
+	AND DEAL_STATE=0
+</select>
 </mapper>

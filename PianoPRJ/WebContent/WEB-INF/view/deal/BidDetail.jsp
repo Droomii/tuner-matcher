@@ -136,11 +136,11 @@
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
-									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
 									<%if(pDTO.getPiano_photo_dir()!=null){ %>
+									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
 									<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap">
 									<%}else{ %>
-									사진 없음
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음
 									<%} %>
 									</div>
 									

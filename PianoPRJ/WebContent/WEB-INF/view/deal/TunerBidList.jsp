@@ -66,6 +66,10 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="float-xs-right">
+                <button class="btn btn-primary" onclick="location.href='/req/TunerPublicReqList.do'">새 견적</button>
+                
+                </div>
                 </div>
             </div>
             

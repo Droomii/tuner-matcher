@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
@@ -26,6 +27,7 @@ import poly.service.IPianoService;
 import poly.service.IReqService;
 import poly.service.IReviewService;
 import poly.service.IUserService;
+import poly.util.Pagination;
 import poly.util.SessionUtil;
 
 @Controller
@@ -351,7 +353,8 @@ public class DealController {
 	}
 	
 	@RequestMapping(value = "UserDealList")
-	public String UserDealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+	public String UserDealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1") int page)
 			throws Exception {
 		log.info(this.getClass().getName() + ".UserDealList start");
 		
@@ -359,9 +362,21 @@ public class DealController {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
-		String user_seq = (String)session.getAttribute("user_seq");
 		
-		List<DealDTO> dList = dealService.getUserDealList(user_seq);
+		String user_seq = (String)session.getAttribute("user_seq");
+		int listCnt = dealService.getUserDealListCnt(user_seq);
+		
+		Pagination pg = new Pagination(listCnt, page);
+		
+		DealDTO dDTO = new DealDTO();
+		dDTO.setStartIndex(pg.getStartIndex());
+		dDTO.setCntPerPage(pg.getPageSize());
+		dDTO.setCnt(listCnt);
+		dDTO.setRequester_seq(user_seq);
+		log.info("start index : " + dDTO.getStartIndex());
+		log.info("count per page : " + dDTO.getCntPerPage());
+		
+		List<DealDTO> dList = dealService.getUserDealList(dDTO);
 		if(dList==null) {
 			dList = new ArrayList<DealDTO>();
 		}

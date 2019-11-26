@@ -151,12 +151,30 @@
 		DEAL_STATE = 9
 	WHERE REQ_SEQ=#{1} AND REQUESTER_SEQ=#{2}
 </update>
-<select id="getUserDealList" parameterType="String" resultType="DealDTO">
-	SELECT
+<select id="getUserDealList" parameterType="DealDTO" resultType="DealDTO">
+<![CDATA[
+SELECT DEAL_SEQ, TUNER_NAME, POSSIBLE_DATE, DEAL_STATE FROM
+(SELECT ROWNUM AS RN, DEAL_SEQ, TUNER_NAME, POSSIBLE_DATE, DEAL_STATE FROM
+	(SELECT
 		DEAL_SEQ,
 		(SELECT USER_NAME FROM USERINFO WHERE USERINFO.USER_SEQ=DEAL.TUNER_SEQ) AS TUNER_NAME,
 		POSSIBLE_DATE,
-		DEAL_STATE
+		DEAL_STATE,
+	    REQUESTER_SEQ
+	FROM
+		DEAL
+    WHERE
+      REQUESTER_SEQ=#{requester_seq}
+      AND DEAL_STATE NOT IN (0, 1, 3)
+	  ORDER BY DEAL_SEQ DESC))
+    WHERE RN BETWEEN #{startIndex}+1 AND #{startIndex}+#{cntPerPage}
+
+]]>
+	
+</select>
+<select id="getUserDealListCnt" parameterType="String" resultType="Integer">
+	SELECT
+		COUNT(*)
 	FROM
 		DEAL
 	WHERE REQUESTER_SEQ=#{0}

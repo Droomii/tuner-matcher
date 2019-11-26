@@ -25,7 +25,7 @@ public interface IDealMapper {
 
 	int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception;
 
-	List<DealDTO> getUserDealList(String user_seq) throws Exception;
+	List<DealDTO> getUserDealList(DealDTO dDTO) throws Exception;
 
 	int dealCancel(String deal_seq, String user_seq, @Param("user_type") int user_type) throws Exception;
 
@@ -46,5 +46,7 @@ public interface IDealMapper {
 	List<String> getUpcomingDealDates(@Param("tuner_seq") String tuner_seq, @Param("today") String today) throws Exception;
 
 	List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception;
+
+	int getUserDealListCnt(String user_seq) throws Exception;
 
 }

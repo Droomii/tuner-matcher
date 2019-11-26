@@ -32,8 +32,37 @@ public class DealDTO {
 	private String voicing_ea;
 	private String transport_ea;
 
+	private int startIndex;
+	private int cntPerPage;
+	private int cnt;
 	
 	
+	
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+	public int getCntPerPage() {
+		return cntPerPage;
+	}
+
+	public void setCntPerPage(int cntPerPage) {
+		this.cntPerPage = cntPerPage;
+	}
+
+	public int getStartIndex() {
+		return startIndex;
+	}
+
+	public void setStartIndex(int startIndex) {
+		this.startIndex = startIndex;
+	}
+
+
 	public String getTuner_name() {
 		return tuner_name;
 	}

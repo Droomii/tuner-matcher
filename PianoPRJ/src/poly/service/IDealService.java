@@ -21,7 +21,7 @@ public interface IDealService {
 
 	int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception;
 
-	List<DealDTO> getUserDealList(String user_seq) throws Exception;
+	List<DealDTO> getUserDealList(DealDTO dDTO) throws Exception;
 
 	int dealCancel(String deal_seq, String user_seq, int user_type) throws Exception;
 
@@ -42,5 +42,7 @@ public interface IDealService {
 	List<String> getUpcomingDealDates(String tuner_seq, String today) throws Exception;
 
 	List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception;
+
+	int getUserDealListCnt(String user_seq) throws Exception;
 
 }

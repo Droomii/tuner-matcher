@@ -53,8 +53,8 @@ public class DealService implements IDealService{
 	}
 
 	@Override
-	public List<DealDTO> getUserDealList(String user_seq) throws Exception {
-		return dealMapper.getUserDealList(user_seq);
+	public List<DealDTO> getUserDealList(DealDTO dDTO) throws Exception {
+		return dealMapper.getUserDealList(dDTO);
 	}
 
 	@Override
@@ -105,6 +105,11 @@ public class DealService implements IDealService{
 	@Override
 	public List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception {
 		return dealMapper.getBidPlacedReqs(tuner_seq);
+	}
+
+	@Override
+	public int getUserDealListCnt(String user_seq) throws Exception {
+		return dealMapper.getUserDealListCnt(user_seq);
 	}
 
 }

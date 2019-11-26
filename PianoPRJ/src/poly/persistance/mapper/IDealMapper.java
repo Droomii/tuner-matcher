@@ -39,8 +39,10 @@ public interface IDealMapper {
 
 	int insertReschedule(RescheduleDTO rDTO) throws Exception;
 
-	List<String> getUpcomingDeals(@Param("tuner_seq") String tuner_seq, @Param("today") String today) throws Exception;
+	List<DealDTO> getUpcomingDeals(@Param("tuner_seq") String tuner_seq, @Param("today") String today) throws Exception;
 
 	List<DealDTO> getDealByDay(String tuner_seq, String today) throws Exception;
+
+	List<String> getUpcomingDealDates(@Param("tuner_seq") String tuner_seq, @Param("today") String today) throws Exception;
 
 }

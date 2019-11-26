@@ -88,13 +88,18 @@ public class DealService implements IDealService{
 	}
 
 	@Override
-	public List<String> getUpcomingDeals(String tuner_seq, String today) throws Exception {
+	public List<DealDTO> getUpcomingDeals(String tuner_seq, String today) throws Exception {
 		return dealMapper.getUpcomingDeals(tuner_seq, today);
 	}
 
 	@Override
 	public List<DealDTO> getDealByDay(String tuner_seq, String today) throws Exception {
 		return dealMapper.getDealByDay(tuner_seq, today);
+	}
+
+	@Override
+	public List<String> getUpcomingDealDates(String tuner_seq, String today) throws Exception {
+		return dealMapper.getUpcomingDealDates(tuner_seq, today);
 	}
 
 }

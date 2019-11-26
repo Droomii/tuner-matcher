@@ -271,7 +271,7 @@ public class MyPageController {
 	    log.info("today : " + today);
 	    
 	    // 다가올 일정 날짜 받아오기
-	    List<String> rList = dealService.getUpcomingDeals(tuner_seq, today);
+	    List<String> rList = dealService.getUpcomingDealDates(tuner_seq, today);
 	    
 		log.info("rList : "+ rList);
 		

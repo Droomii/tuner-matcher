@@ -193,11 +193,11 @@
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">참고사진</span></div>
 									<%if(rDTO.getPhoto_dir()!=null){ %>
 									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
-									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap">
+									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap"></div>
 									<%}else{ %>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
 									<%} %>
-									</div>
+									
 								</div>
 							</div>
 						
@@ -362,8 +362,7 @@
 					</div>
 					<%} %>
 					<%} %>
-		            </div>
-		            <div class="card-footer text-xs-center">
+					<div class="card-footer text-xs-center">
 					<span>
 						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
 					</span>
@@ -380,6 +379,8 @@
 						<button onclick="dealConfirm();"class="button btn btn-success">거래 완료</button>
 					</span>
 					<%} %>
+		            </div>
+		            
 					<%} %>
 				</div>
 				</div>

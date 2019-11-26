@@ -17,5 +17,6 @@
 		<typeAlias type="poly.dto.ReviewDTO" alias="ReviewDTO"/>
 		<typeAlias type="poly.dto.RepuDTO" alias="RepuDTO"/>
 		<typeAlias type="poly.dto.RescheduleDTO" alias="RescheduleDTO"/>
+		<typeAlias type="poly.dto.MainDTO" alias="MainDTO"/>
     </typeAliases>
 </configuration>

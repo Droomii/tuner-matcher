@@ -1,5 +1,10 @@
 package poly.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import poly.dto.DealDTO;
+import poly.dto.MainDTO;
+import poly.dto.ReqDTO;
+import poly.service.IDealService;
+import poly.service.IMainService;
+import poly.service.IReqService;
 import poly.service.IUserService;
 import poly.util.SessionUtil;
 
@@ -21,6 +32,15 @@ public class MainController {
 	@Resource(name="UserService")
 	private IUserService userService;
 	
+	@Resource(name = "MainService")
+	IMainService mainService;
+	
+	@Resource(name = "ReqService")
+	IReqService reqService;
+	
+	@Resource(name = "DealService")
+	IDealService dealService;
+	
 	@RequestMapping(value="main")
 	public String main(HttpServletRequest request,
 			HttpServletResponse response,
@@ -30,6 +50,39 @@ public class MainController {
 			model = SessionUtil.verify(session, model);
 			return "/redirect";
 		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String user_type = (String)session.getAttribute("user_type");
+		
+		MainDTO mDTO = null;
+		
+		if(user_type.equals("1")) {
+			mDTO = mainService.getTunerMain(user_seq);
+			
+			// 요청목록
+			List<ReqDTO> rList = reqService.getNearReqList(user_seq);
+			int nearRes = 0;
+			if(rList!=null) {
+				nearRes = rList.size();
+			}
+			mDTO.setNear_request(Integer.toString(nearRes));
+				
+			// 다가올 일정
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = new Date();  
+		    String today = formatter.format(date);
+		    
+		    // 다가올 일정 날짜 받아오기
+		    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
+		    
+			if(rList==null) {
+				rList = new ArrayList<>();
+			}
+			model.addAttribute("dList", dList);
+
+		}
+		
+		model.addAttribute("mDTO", mDTO);
 		
 		return "/main";
 	}
@@ -45,6 +98,36 @@ public class MainController {
 		if(user_seq==null) {
 			url="/user/UserLogin";
 		}else {
+			String user_type = (String)session.getAttribute("user_type");
+			
+			
+			if(user_type.equals("1")) {
+				MainDTO mDTO = mainService.getTunerMain(user_seq);
+				
+				// 요청목록
+				List<ReqDTO> rList = reqService.getNearReqList(user_seq);
+				int nearRes = 0;
+				if(rList!=null) {
+					nearRes = rList.size();
+				}
+				mDTO.setNear_request(Integer.toString(nearRes));
+				model.addAttribute("mDTO", mDTO);
+				
+				// 다가올 일정
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+			    Date date = new Date();  
+			    String today = formatter.format(date);
+			    
+			    // 다가올 일정 날짜 받아오기
+			    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
+			    
+				if(rList==null) {
+					rList = new ArrayList<>();
+				}
+				model.addAttribute("dList", dList);
+			}
+			
+			
 			url="/main";
 		}
 		session.removeAttribute("proc");
@@ -60,6 +143,39 @@ public class MainController {
 			model = SessionUtil.verify(session, model);
 			return "/redirect";
 		}
+		
+		String user_seq = (String)session.getAttribute("user_seq");
+		String user_type = (String)session.getAttribute("user_type");
+		
+		MainDTO mDTO = null;
+		
+		if(user_type.equals("1")) {
+			mDTO = mainService.getTunerMain(user_seq);
+			
+			// 요청목록
+			List<ReqDTO> rList = reqService.getNearReqList(user_seq);
+			int nearRes = 0;
+			if(rList!=null) {
+				nearRes = rList.size();
+			}
+			mDTO.setNear_request(Integer.toString(nearRes));
+				
+			// 다가올 일정
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = new Date();  
+		    String today = formatter.format(date);
+		    
+		    // 다가올 일정 날짜 받아오기
+		    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
+		    
+			if(rList==null) {
+				rList = new ArrayList<>();
+			}
+			model.addAttribute("dList", dList);
+
+		}
+		
+		model.addAttribute("mDTO", mDTO);
 		
 		return "/main";
 	}

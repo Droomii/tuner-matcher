@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="poly.persistance.mapper.IMainMapper">
+<select id="getTunerMain" parameterType="String" resultType="MainDTO">
+	SELECT
+		(SELECT SUM(REVIEW_STAR) FROM TUNER_REVIEW WHERE TUNER_SEQ=#{0}) AS REPU,
+		(SELECT COUNT(1) FROM REQUEST WHERE PRIVATE_SEQ=#{0} AND REQ_STATE=0) AS PRIVATE_REQUEST,
+		(SELECT COUNT(1) FROM DEAL WHERE TUNER_SEQ=#{0} AND DEAL_STATE IN(2,6)) AS ONGOING_DEALS
+	FROM DUAL
+</select>
+</mapper>

@@ -235,7 +235,32 @@
 		#{requester_seq}
 	)
 </insert>
-<select id="getUpcomingDeals" parameterType="String" resultType="String">
+<select id="getUpcomingDeals" parameterType="String" resultType="DealDTO">
+<![CDATA[
+	SELECT
+		DEAL_SEQ,
+		(SELECT USER_NICK FROM USERINFO WHERE USERINFO.USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+		POSSIBLE_DATE,
+		DEAL_STATE,
+		TUNING_PRICE,
+		REGUL_PRICE,
+		VOICING_PRICE,
+		TRANSPORT_PRICE,
+		OTHER_PRICE,
+		TUNING_EA,
+		REGUL_EA,
+		VOICING_EA,
+		TRANSPORT_EA
+	FROM
+		DEAL
+	WHERE TUNER_SEQ=#{tuner_seq}
+	AND DEAL_STATE=2
+	AND SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
+	ORDER BY POSSIBLE_DATE
+]]>
+	
+</select>
+<select id="getUpcomingDealDates" parameterType="String" resultType="String">
 <![CDATA[
 	SELECT
 		UNIQUE(SUBSTR(POSSIBLE_DATE, 1, 10))

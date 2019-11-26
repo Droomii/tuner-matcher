@@ -1,3 +1,4 @@
+<%@page import="poly.util.Pagination"%>
 <%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="poly.dto.ReqDTO"%>
@@ -10,6 +11,7 @@
 <%
 	List<DealDTO> dList = (ArrayList<DealDTO>)request.getAttribute("dList");
 	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래취소(고객)", "거래취소(조율사)", "완료 대기중", "거래완료", "거절(조율사)", "견적 거절"};
+	Pagination pg = (Pagination)request.getAttribute("pg");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -83,7 +85,44 @@
                         </div>
                         <%if(dList.size()==0) {%>
                             <div class="card-text text-xs-center">- 거래 이력이 없습니다 - </div>
-                            <%} %>
+                        <%}else{ %>
+                        <div class="text-xs-center">
+                        <ul class="pagination">
+                        <%if(pg.getCurRange()!=1){ %>
+							<li class="page-item">
+								<a class="page-link" href="UserDealList.do?page=1" aria-label="Previous">
+									<span aria-hidden="true">&lt;&lt;</span>
+								</a>
+							</li>
+							<%} %>
+						<%if(pg.getCurPage()!=1){ %>
+							<li class="page-item">
+								<a class="page-link" href="UserDealList.do?page=<%=pg.getPrevPage() %>" aria-label="Previous">
+									<span aria-hidden="true">&lt;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+							<%} %>
+							<%for(int i=pg.getStartPage(); i< pg.getEndPage()+1; i++) {%>
+							<li class="page-item <%=pg.getCurPage()==i ?  "active" : ""%>"><a class="page-link" href="UserDealList.do?page=<%=i%>"><%=i %></a></li>
+							<%} %>
+							<%if((pg.getCurPage() != pg.getPageCnt()) && (pg.getPageCnt() > 0) ) {%>
+							<li class="page-item">
+								<a class="page-link" href="UserDealList.do?page=<%=pg.getNextPage() %>" aria-label="Next">
+									<span aria-hidden="true">&gt;</span>
+								</a>
+							</li>
+							<%} %>
+							<%if((pg.getCurRange() != pg.getRangeCnt()) && (pg.getRangeCnt() > 0) ) {%>
+							<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&gt;&gt;</span>
+								</a>
+							</li>
+							<%} %>
+						</ul>
+                        </div>
+                        <%} %>
                 </div>
                 
                

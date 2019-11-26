@@ -364,8 +364,9 @@ public class DealController {
 		}
 		
 		String user_seq = (String)session.getAttribute("user_seq");
-		int listCnt = dealService.getUserDealListCnt(user_seq);
 		
+		// 페이징
+		int listCnt = dealService.getUserDealListCnt(user_seq);
 		Pagination pg = new Pagination(listCnt, page);
 		
 		DealDTO dDTO = new DealDTO();
@@ -380,6 +381,8 @@ public class DealController {
 		if(dList==null) {
 			dList = new ArrayList<DealDTO>();
 		}
+
+		model.addAttribute("pg", pg);
 		model.addAttribute("dList", dList);
 		
 		log.info(this.getClass().getName() + ".UserDealList end");

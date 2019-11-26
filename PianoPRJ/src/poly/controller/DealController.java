@@ -234,7 +234,11 @@ public class DealController {
 		
 		if(back!=null) {
 			log.info("back is not null");
+			if(back.equals("schedule")) {
+				model.addAttribute("back", "/myPage/TunerSchedule.do");
+			}else {
 			model.addAttribute("back", "/deal/TunerPastDeals.do");
+			}
 		}
 		
 		

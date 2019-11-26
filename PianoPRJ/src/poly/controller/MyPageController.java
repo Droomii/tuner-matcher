@@ -2,6 +2,7 @@ package poly.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import poly.dto.DealDTO;
 import poly.dto.RepuDTO;
 import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
@@ -34,6 +36,8 @@ import poly.util.SessionUtil;
 @RequestMapping("/myPage")
 public class MyPageController {
 
+	final private String[] WEEKDAYS = {"일", "월", "화", "수", "목", "금", "토"};
+	
 	private Logger log = Logger.getLogger(this.getClass());
 	@Resource(name="UserService")
 	IUserService userService;
@@ -266,16 +270,67 @@ public class MyPageController {
 	    String today = formatter.format(date);
 	    log.info("today : " + today);
 	    
+	    // 다가올 일정 날짜 받아오기
 	    List<String> rList = dealService.getUpcomingDeals(tuner_seq, today);
+	    
 		log.info("rList : "+ rList);
 		
 		if(rList==null) {
 			rList = new ArrayList<>();
 		}
-		
 		model.addAttribute("rList", rList);
+		
+		
+		// 오늘 일정 받아오기
+		List<DealDTO> dList = dealService.getDealByDay(tuner_seq, today);
+		if(dList==null) {
+			dList = new ArrayList<>();
+		}
+		model.addAttribute("dList", dList);
+		
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) -1 ;
+		String selectedFullDate = today + String.format("(%s) ", WEEKDAYS[dayOfWeek]);
+		
+		model.addAttribute("selectedFullDate", selectedFullDate);
+		
 		log.info(this.getClass().getName() + ".TunerSchedule end");
 		return "/myPage/TunerSchedule";
+	}
+	
+	@RequestMapping(value = "GetDealByDay")
+	public String GetDealByDay(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".GetDealByDay start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return null;
+		}
+		
+		String tuner_seq = (String)session.getAttribute("user_seq");
+		
+		
+		String date = request.getParameter("date");
+		Date d = new SimpleDateFormat("yyyy-M-dd").parse(date);
+		
+		// 오늘 일정 받아오기
+		List<DealDTO> dList = dealService.getDealByDay(tuner_seq, date);
+		if(dList==null) {
+			dList = new ArrayList<>();
+		}
+		model.addAttribute("dList", dList);
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) -1 ;
+		String selectedFullDate = date + String.format("(%s) ", WEEKDAYS[dayOfWeek]);
+		
+		model.addAttribute("selectedFullDate", selectedFullDate);
+		
+		log.info(this.getClass().getName() + ".GetDealByDay end");
+		return "/deal/DealByDay";
 	}
 	
 }

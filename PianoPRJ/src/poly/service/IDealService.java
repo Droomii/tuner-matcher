@@ -37,4 +37,6 @@ public interface IDealService {
 
 	List<String> getUpcomingDeals(String tuner_seq, String today) throws Exception;
 
+	List<DealDTO> getDealByDay(String tuner_seq, String today) throws Exception;
+
 }

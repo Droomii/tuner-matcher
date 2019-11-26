@@ -92,4 +92,9 @@ public class DealService implements IDealService{
 		return dealMapper.getUpcomingDeals(tuner_seq, today);
 	}
 
+	@Override
+	public List<DealDTO> getDealByDay(String tuner_seq, String today) throws Exception {
+		return dealMapper.getDealByDay(tuner_seq, today);
+	}
+
 }

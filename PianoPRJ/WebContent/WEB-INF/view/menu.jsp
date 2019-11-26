@@ -29,12 +29,11 @@
               <li><a href="/myPage/TunerSchedule.do" class="menu-item">조율 일정</a></li>
               <li><a href="#" class="menu-item">조율 내역</a>
                 <ul class="menu-content">
-                  <li><a href="/deal/TunerPastDeals.do" class="menu-item">과거 조율 내역</a></li>
                   <li><a href="/deal/TunerBidList.do" class="menu-item">입찰 현황</a></li>
                   <li><a href="/deal/TunerDealList.do" class="menu-item">조율 현황</a></li>
+                  <li><a href="/deal/TunerPastDeals.do" class="menu-item">과거 조율 내역</a></li>
                 </ul>
               </li>
-              <li><a href="#" class="menu-item">단골 고객</a></li>
               <li><a href="/myPage/MyRepu.do" class="menu-item">내 평판 조회</a></li>
             </ul>
           </li>

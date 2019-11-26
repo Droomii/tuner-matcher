@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.LinkedHashMap"%>
@@ -21,6 +22,10 @@
 										:"/req/" + userTypeName + "PrivateReqList";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
+	List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
+	if(dList==null){
+		dList=new ArrayList<>();
+	}
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
 	
 %>
@@ -158,7 +163,9 @@
 					<span>
 					<%if(user_type.equals("0")){ %>
 						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
+						<%if(dList.size()==0){ %>
 						<button onclick="editReq()" class="button btn btn-success">수정 </button>
+						<%} %>
 						<button onclick="deleteConfirm()" class="button btn btn-danger">삭제</button>
 					<%}else{ %>
 						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
@@ -169,7 +176,7 @@
 		</div>
 	</div>
 	<%if(rDTO.getPrivate_seq()==null && user_type.equals("0")) {
-		List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
+		
 	%>
 	<div class="row">
 		<div class="col-xs-12 col-lg-6 offset-lg-3">

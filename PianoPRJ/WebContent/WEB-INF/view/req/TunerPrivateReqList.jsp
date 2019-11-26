@@ -33,13 +33,13 @@
 	}
 	.table-head-cell {
 		display: table-cell;
-		padding: 10px;
+		padding: 10px 20px 10px 20px;
 		border-bottom : 2px solid rgb(200,200,200);
 		border-top : 1px solid rgb(200,200,200);
 	}
 	.table-cell {
 	  display: table-cell;
-	  padding: 10px;
+	  padding: 10px 20px 10px 20px;
 	  border-bottom: 1px solid lightgray;
 	}
 	.item:hover{
@@ -62,6 +62,8 @@
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
             <div class="card-body collapse in">
+            
+            
                 <div class="card-block card-dashboard">
                         <div class="table">
                             <div class="table-row">
@@ -85,6 +87,7 @@
                             <%} %>
                 </div>
                 
+            
                
 
             

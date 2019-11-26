@@ -27,6 +27,27 @@
 	    white-space: nowrap;
 	    
 	}
+	
+	.table {
+	  display: table;
+	}
+	.table-row {
+	  display: table-row;
+	}
+	.table-head-cell {
+		display: table-cell;
+		padding: 10px 20px 10px 20px;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
+	}
+	.table-cell {
+	  display: table-cell;
+	  padding: 10px 20px 10px 20px;
+	  border-bottom: 1px solid lightgray;
+	}
+	.item:hover{
+		background-color:rgb(240,240,240);
+	}
 </style>
 </head>
 <body  data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns  fixed-navbar">
@@ -44,29 +65,25 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block card-dashboard">
-                    <div class="table-responsive">
-                        <table class="table table-bordred table-hover">
-                            <thead>
-                                <tr class="row">
-                                    <th>거래번호</th>
-                                    <th>조율사</th>
-                                    <th>날짜</th>
-                                    <th>진행 상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table">
+                            <div class="table-row">
+									<div class="table-head-cell"><strong>거래번호</strong></div>
+                                    <div class="table-head-cell"><strong>조율사</strong></div>
+                                    <div class="table-head-cell"><strong>날짜</strong></div>
+                                    <div class="table-head-cell"><strong>진행상태</strong></div>
+                            </div>
                             <%for(DealDTO dDTO : dList){ %>
-                                <tr onclick="location.href='/deal/UserDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
-                                    <td><%=CmmUtil.nvl(dDTO.getDeal_seq())%></td>
-                                    <td><%=CmmUtil.nvl(dDTO.getTuner_name()) %></td>
-                                    
-                                    <td><%=dDTO.getFullDate()%></td>
-                                    <td><%=states[Integer.parseInt(dDTO.getDeal_state())] %></td>
-                                </tr>
+                            <div class="table-row item" role="button" onclick="location.href='/deal/UserDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getDeal_seq())%></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name()) %></div>
+                                    <div class="table-cell"><%=dDTO.getFullDate() %></div>
+                                    <div class="table-cell"><%=states[Integer.parseInt(dDTO.getDeal_state())] %></div>
+                            </div>
                             <%} %>
-                            </tbody>
-                        </table>
-                    </div>
+                        </div>
+                        <%if(dList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 거래 이력이 없습니다 - </div>
+                            <%} %>
                 </div>
                 
                

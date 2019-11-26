@@ -59,6 +59,12 @@ public class NoticeController {
 			rList = new ArrayList<NoticeDTO>();
 
 		}
+		
+		if (topList == null) {
+			topList = new ArrayList<NoticeDTO>();
+			
+		}
+		
 		for (NoticeDTO rDTO : rList) {
 			rDTO.setNotice_title(CmmUtil.revertXSS(rDTO.getNotice_title()));
 		}

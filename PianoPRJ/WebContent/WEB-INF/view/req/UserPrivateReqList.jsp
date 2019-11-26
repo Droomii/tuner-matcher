@@ -33,12 +33,13 @@
 	}
 	.table-head-cell {
 		display: table-cell;
-		padding: 10px;
-		border-bottom : 2px solid gray;
+		padding: 10px 20px 10px 20px;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
 	}
 	.table-cell {
 	  display: table-cell;
-	  padding: 10px;
+	  padding: 10px 20px 10px 20px;
 	  border-bottom: 1px solid lightgray;
 	}
 	.item:hover{
@@ -85,6 +86,9 @@
                             
                         </div>
                     </div>
+                    <%if(reqList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 1:1 요청 이력이 없습니다 - </div>
+                            <%} %>
                 <div class="float-xs-right">
                 <button class="btn btn-primary" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
                 

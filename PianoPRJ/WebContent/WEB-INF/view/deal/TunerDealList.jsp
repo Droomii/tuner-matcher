@@ -27,6 +27,27 @@
 	    white-space: nowrap;
 	    
 	}
+	
+	.table {
+	  display: table;
+	}
+	.table-row {
+	  display: table-row;
+	}
+	.table-head-cell {
+		display: table-cell;
+		padding: 10px 20px 10px 20px;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
+	}
+	.table-cell {
+	  display: table-cell;
+	  padding: 10px 20px 10px 20px;
+	  border-bottom: 1px solid lightgray;
+	}
+	.item:hover{
+		background-color:rgb(240,240,240);
+	}
 </style>
 </head>
 <body  data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns  fixed-navbar">
@@ -44,36 +65,29 @@
             </div>
             <div class="card-body collapse in">
                 <div class="card-block card-dashboard">
-                    <div class="table-responsive">
-                        <table class="table table-bordred table-hover">
-                            <thead>
-                                <tr class="row">
-                                    <th>거래번호</th>
-                                    <th>고객 닉네임</th>
-                                    <th>견적가</th>
-                                    <th>약속일시</th>
-                                    <th>진행상태</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="table">
+                            <div class="table-row">
+									<div class="table-head-cell"><strong>거래번호</strong></div>
+                                    <div class="table-head-cell"><strong>고객 닉네임</strong></div>
+                                    <div class="table-head-cell"><strong>견적가</strong></div>
+                                    <div class="table-head-cell"><strong>약속일시</strong></div>
+                                    <div class="table-head-cell"><strong>진행상태</strong></div>
+                            </div>
+                            
                             <%for(DealDTO dDTO : dList){ %>
-                                <tr onclick="location.href='/deal/TunerDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
-                                    <td><%=CmmUtil.nvl(dDTO.getDeal_seq())%></td>
-                                    <td><%=CmmUtil.nvl(dDTO.getRequester_nick()) %></td>
-                                    
-                                    <td><%=dDTO.getTotal() %>원</td>
-                                    <td><%=dDTO.getFullDate()%></td>
-                                    <td><%=dDTO.getDeal_state().equals("2") ? "진행중" : "완료대기중" %></td>
-                                </tr>
+                            <div class="table-row item" role="button" onclick="location.href='/deal/TunerDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getDeal_seq())%></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getRequester_nick()) %></div>
+                                    <div class="table-cell"><%=dDTO.getTotal() %>원</div>
+                                    <div class="table-cell"><%=dDTO.getFullDate() %></div>
+                                    <div class="table-cell"><%=dDTO.getDeal_state().equals("2") ? "진행중" : "완료대기중" %></div>
+                            </div>
                             <%} %>
-                            </tbody>
-                        </table>
-                    </div>
+                        </div>
+                        <%if(dList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 진행중인 거래가 없습니다 - </div>
+                            <%} %>
                 </div>
-                
-               
-
-            
             </div>
             
         </div>

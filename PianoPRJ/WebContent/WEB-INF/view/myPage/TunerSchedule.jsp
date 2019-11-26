@@ -31,13 +31,13 @@
 	}
 	.table-head-cell {
 		display: table-cell;
-		padding: 10px;
+		padding: 10px 20px 10px 20px;
 		border-bottom : 2px solid rgb(200,200,200);
 		border-top : 1px solid rgb(200,200,200);
 	}
 	.table-cell {
 	  display: table-cell;
-	  padding: 10px;
+	  padding: 10px 20px 10px 20px;
 	  border-bottom: 1px solid lightgray;
 	}
 	.item:hover{

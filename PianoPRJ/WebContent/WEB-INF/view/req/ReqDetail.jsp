@@ -47,6 +47,36 @@
    		color:#3c763d;
    		display:none;
    		line-height:1.8;
+
+	}
+	.title{
+		max-width: 40%;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    
+	}
+	
+	.table {
+	  display: table;
+	}
+	.table-row {
+	  display: table-row;
+	}
+	.table-head-cell {
+		display: table-cell;
+		padding: 10px 20px 10px 20px;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
+	}
+	.table-cell {
+	  display: table-cell;
+	  padding: 10px 20px 10px 20px;
+	  border-bottom: 1px solid lightgray;
+	}
+	.item:hover{
+		background-color:rgb(240,240,240);
+	}
 </style>
 
 
@@ -186,27 +216,26 @@
 				</div>
 	            <div class="card-body collapse in">
 	                <div class="card-block card-dashboard">
-	                    <div class="table-responsive">
-	                        <table class="table table-bordred table-hover">
-	                            <thead>
-	                                <tr class="row">
-	                                    <th>조율사 성명</th>
-	                                    <th>견적가</th>
-	                                    <th>희망일시</th>
-	                                </tr>
-	                            </thead>
-	                            <tbody>
-	                            <%for(DealDTO dDTO : dList){ %>
-	                                <tr onclick="location.href='/req/ReqBidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'" role="button">
-	                                    <td><%=CmmUtil.nvl(dDTO.getTuner_name())%></td>
-	                                    <td><%=CmmUtil.nvl(dDTO.getTotal()) %>원</td>
-	                                    <td><%=CmmUtil.nvl(dDTO.getFullDate()) %></td>
-	                                </tr>
-	                            <%} %>
-	                            </tbody>
-	                        </table>
-	                    </div>
-	                </div>
+                        <div class="table">
+                            <div class="table-row">
+                                    <div class="table-head-cell"><strong>조율사 성명</strong></div>
+                                    <div class="table-head-cell"><strong>견적가</strong></div>
+                                    <div class="table-head-cell"><strong>희망일시</strong></div>
+                            </div>
+                            
+                            <%for(DealDTO dDTO : dList){ %>
+                            <div class="table-row item" role="button" onclick="location.href='/req/ReqBidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name())%></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTotal()) %>원</div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getFullDate()) %></div>
+                            </div>
+                            <%} %>
+                        </div>
+                        <%if(dList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 아무도 입찰하지 않았습니다 - </div>
+                            <%} %>
+                	</div>
+	                
 	            </div>
 			</div>
 		</div>

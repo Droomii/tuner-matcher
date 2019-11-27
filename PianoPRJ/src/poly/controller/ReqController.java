@@ -199,7 +199,7 @@ public class ReqController {
 		if(user_type.equals("0")) {
 			// 페이징
 			int listCnt = dealService.getReqBidCnt(req_seq);
-			Pagination pg = new Pagination(listCnt, page, 3);
+			Pagination pg = new Pagination(listCnt, page, 5);
 
 			int start = pg.getStartIndex() + 1;
 			int end = pg.getStartIndex() + pg.getPageSize();
@@ -234,7 +234,7 @@ public class ReqController {
 		
 		// 페이징
 		int listCnt = dealService.getReqBidCnt(req_seq);
-		Pagination pg = new Pagination(listCnt, page, 3);
+		Pagination pg = new Pagination(listCnt, page, 5);
 
 		int start = pg.getStartIndex() + 1;
 		int end = pg.getStartIndex() + pg.getPageSize();

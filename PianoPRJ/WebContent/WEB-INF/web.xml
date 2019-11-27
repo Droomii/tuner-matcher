@@ -17,6 +17,15 @@
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
   
+  	<!-- 멀티파트용 XSS필터 -->
+	<filter>
+	    <filter-name>multipartFilter</filter-name>
+	    <filter-class>org.springframework.web.multipart.support.MultipartFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>multipartFilter</filter-name>
+	    <url-pattern>*.do</url-pattern>
+	</filter-mapping>
 	<!-- 해킹 등 공격에 대처하기 위해 위험 문자열 필터링 처리 -->  
 	<filter>
 		<filter-name>XSSFilter</filter-name>
@@ -27,6 +36,8 @@
 		<filter-name>XSSFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>  
+	
+
 	
 	<!-- WAS 부팅시 설정파일 읽어오기 -->
 	<context-param>

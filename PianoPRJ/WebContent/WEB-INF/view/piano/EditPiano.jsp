@@ -185,13 +185,14 @@
 								<input value="<%=CmmUtil.nvl(pDTO.getX_pos())%>" type="text" name="x_pos" id="x_pos" hidden="hidden">
 								<input value="<%=CmmUtil.nvl(pDTO.getY_pos())%>" type="text" name="y_pos" id="y_pos" hidden="hidden">
 							</div><!-- end of form body -->
-							<div class="form-actions text-center">
+							<div class="form-actions text-xs-center">
+							<button type="button" onclick="location.href='/piano/MyPianoList.do'" class="btn btn-warning d-flex">
+									<i class="icon-cross2"></i> 취소
+								</button>
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 수정
 								</button>
-								<button type="button" class="btn btn-warning mr-1 d-flex">
-									<i class="icon-cross2"></i> 취소
-								</button>
+								
 								
 							</div>
 						</form>

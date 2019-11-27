@@ -73,7 +73,7 @@
 						<%if(pDTO.getPiano_photo_dir()!=null) {%>
 						<img class="img-fluid my-1" src="/img/piano/<%=pDTO.getPiano_seq() %>/thumbnail.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap">
 						<%}else{ %>
-						<img class="img-fluid my-1" src="/resources/app-assets/images/carousel/09.jpg" alt="Card image cap">
+						<img class="img-fluid my-1" src="/resources/images/piano_default.png" alt="piano">
 						<%} %>
 						<div class="card-text text-truncate"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 						<div class="card-text "><%=pDTO.getPiano_type().equals("0") ? "업라이트" : "그랜드"%></div>

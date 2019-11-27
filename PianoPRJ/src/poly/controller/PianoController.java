@@ -181,6 +181,7 @@ public class PianoController {
 			}
 		}
 		
+		log.info("piano desc : " + pDTO.getPiano_desc());
 		
 		
 		int res = pianoService.updatePiano(pDTO);

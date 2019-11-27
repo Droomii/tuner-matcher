@@ -85,13 +85,18 @@
                         </div>
                         <%if(dList.size()==0) {%>
                             <div class="card-text text-xs-center">- 진행중인 입찰이 없습니다 - </div>
-                            <%}else{ %>
-                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
-                        <%} %>
-                <div class="float-xs-right">
-	                <button class="btn btn-primary" onclick="location.href='/req/TunerPublicReqList.do'">새 입찰</button>
+                            <div class="text-xs-right">
+	                <button class="btn btn-success" onclick="location.href='/req/TunerPublicReqList.do'">새 입찰</button>
 	                
 	                </div>
+                            <%}else{ %>
+                            <div class="text-xs-right">
+	                <button class="btn btn-success" onclick="location.href='/req/TunerPublicReqList.do'">새 입찰</button>
+	                
+	                </div>
+                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
+                        <%} %>
+                
                 </div>
             </div>
             

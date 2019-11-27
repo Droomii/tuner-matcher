@@ -15,7 +15,7 @@ public interface IDealService {
 
 	int bidCancel(String deal_seq) throws Exception;
 
-	List<DealDTO> getPastDeals(String user_seq) throws Exception;
+	List<DealDTO> getPastDeals(String user_seq, int start, int end) throws Exception;
 
 	List<DealDTO> getReqBid(String req_seq) throws Exception;
 
@@ -48,5 +48,7 @@ public interface IDealService {
 	int getTunerDealListCnt(String user_seq) throws Exception;
 
 	int getBiddingListCnt(String user_seq) throws Exception;
+
+	int getPastDealsCnt(String tuner_seq) throws Exception;
 
 }

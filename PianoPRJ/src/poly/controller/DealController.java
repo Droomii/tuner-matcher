@@ -217,14 +217,24 @@ public class DealController {
 	
 	@RequestMapping(value="TunerPastDeals")
 	public String TunerPastDeals(HttpServletRequest request, HttpServletResponse response
-	, HttpSession session, ModelMap model) throws Exception{
+	, HttpSession session, ModelMap model, @RequestParam(defaultValue = "1")int page) throws Exception{
 		if(SessionUtil.verify(session, "1", model)!=null) {
 			model = SessionUtil.verify(session, "1", model);
 			return "/redirect";
 		}
+		String tuner_seq = (String)session.getAttribute("user_seq");
 		
-		String user_seq = (String)session.getAttribute("user_seq");
-		List<DealDTO> dList = dealService.getPastDeals(user_seq);
+		// 페이징
+		int listCnt = dealService.getPastDealsCnt(tuner_seq);
+		Pagination pg = new Pagination(listCnt, page);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		
+		
+		List<DealDTO> dList = dealService.getPastDeals(tuner_seq, start, end);
 		if(dList==null) {
 			dList = new ArrayList<DealDTO>();
 		}

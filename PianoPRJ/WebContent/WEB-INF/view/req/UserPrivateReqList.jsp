@@ -91,13 +91,16 @@
                     </div>
                     <%if(reqList.size()==0) {%>
                             <div class="card-text text-xs-center">- 1:1 요청 이력이 없습니다 - </div>
+                    <div class="text-xs-right">
+                <button class="btn btn-success" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
+                </div>
                     <%}else{ %>
+                    <div class="text-xs-right">
+                <button class="btn btn-success" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
+                </div>
                     	<%@include file="/WEB-INF/view/Pagination.jsp"%>
                     <%} %>
-                <div class="float-xs-right">
-                <button class="btn btn-primary" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
                 
-                </div>
                 </div>
                 
                

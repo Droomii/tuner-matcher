@@ -10,6 +10,8 @@
 <%
 	List<DealDTO> dList = (ArrayList<DealDTO>)request.getAttribute("dList");
 	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래취소(고객)", "거래취소(조율사)", "완료 대기중", "거래완료", "거절(조율사)", "견적 거절"};
+	Pagination pg = (Pagination)request.getAttribute("pg");
+	String pageName = "TunerPastDeals";
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -83,7 +85,9 @@
                         </div>
                         <%if(dList.size()==0) {%>
                             <div class="card-text text-xs-center">- 과거 이력이 없습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
+                        <%} %>
                 </div>
             </div>
         </div>

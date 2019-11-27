@@ -27,14 +27,14 @@ public class PianoService implements IPianoService{
 	}
 
 	@Override
-	public PianoDTO getPianoDetail(String piano_seq) throws Exception {
-		return pianoMapper.getPianoDetail(piano_seq);
+	public PianoDTO getPianoDetail(String piano_seq, String user_seq) throws Exception {
+		return pianoMapper.getPianoDetail(piano_seq, user_seq);
 	}
 
 	@Override
-	public int deletePiano(String piano_seq) throws Exception {
+	public int deletePiano(String piano_seq, String user_seq) throws Exception {
 		
-		return pianoMapper.deletePiano(piano_seq);
+		return pianoMapper.deletePiano(piano_seq, user_seq);
 	}
 
 	@Override
@@ -44,8 +44,8 @@ public class PianoService implements IPianoService{
 	}
 
 	@Override
-	public PianoDTO getPianoEditInfo(String piano_seq) throws Exception {
-		return pianoMapper.getPianoEditInfo(piano_seq);
+	public PianoDTO getPianoEditInfo(String piano_seq, String user_seq) throws Exception {
+		return pianoMapper.getPianoEditInfo(piano_seq, user_seq);
 	}
 
 	@Override

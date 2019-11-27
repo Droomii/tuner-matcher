@@ -28,4 +28,13 @@
 	DELETE FROM TUNER_FOLLOW
 	WHERE USER_SEQ=#{0} AND TUNER_SEQ=#{1}
 </delete>
+<select id="verifyFollow" parameterType="String" resultType="Integer">
+	SELECT 
+		COUNT(1)
+	FROM 
+		TUNER_FOLLOW
+	WHERE
+		TUNER_SEQ=#{tuner_seq}
+		AND USER_SEQ=#{user_seq}
+</select>
 </mapper>

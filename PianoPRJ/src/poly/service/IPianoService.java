@@ -10,13 +10,13 @@ public interface IPianoService {
 
 	List<PianoDTO> getMyPianoList(String user_seq) throws Exception;
 
-	PianoDTO getPianoDetail(String piano_seq) throws Exception;
+	PianoDTO getPianoDetail(String piano_seq, String user_seq) throws Exception;
 
-	int deletePiano(String piano_seq) throws Exception;
+	int deletePiano(String piano_seq, String user_seq) throws Exception;
 
 	int updatePiano(PianoDTO pDTO) throws Exception;
 
-	PianoDTO getPianoEditInfo(String piano_seq) throws Exception;
+	PianoDTO getPianoEditInfo(String piano_seq, String user_seq) throws Exception;
 
 	int getPianoCurrVal() throws Exception;
 

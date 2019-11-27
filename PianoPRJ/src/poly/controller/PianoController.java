@@ -24,6 +24,7 @@ import net.coobird.thumbnailator.geometry.Positions;
 import poly.dto.PianoDTO;
 import poly.service.IPianoService;
 import poly.util.FileUtil;
+import poly.util.SessionUtil;
 @RequestMapping(value="piano/")
 
 @Controller
@@ -112,8 +113,20 @@ public class PianoController {
 	@RequestMapping(value="PianoDetail")
 	public String PianoDetail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".MyPianoList start");
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String user_seq = (String)session.getAttribute("user_seq");
+		
 		String piano_seq = request.getParameter("no");
-		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq);
+		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq, user_seq);
+		if(pDTO==null) {
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
 		model.addAttribute("pDTO", pDTO);
 		
 		return "/piano/PianoDetail";
@@ -124,15 +137,24 @@ public class PianoController {
 	@RequestMapping(value="DeletePiano", method=RequestMethod.POST)
 	public String DeletePiano(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".DeletePiano start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String user_seq = (String) session.getAttribute("user_seq");
+		
 		String piano_seq = request.getParameter("piano_seq");
-		int res = pianoService.deletePiano(piano_seq);
+		int res = pianoService.deletePiano(piano_seq, user_seq);
 		
 		String msg = "";
 		
 		if(res>0) {
 			msg = "피아노 삭제에 성공했습니다";
 		}else {
-			msg = "피아노 삭제에 실패했습니다";
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", "/piano/MyPianoList.do");
@@ -145,8 +167,21 @@ public class PianoController {
 	@RequestMapping(value="EditPiano", method=RequestMethod.POST)
 	public String EditPiano(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 		log.info(this.getClass().getName() + ".EditPiano start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String user_seq = (String) session.getAttribute("user_seq");
 		String piano_seq = request.getParameter("piano_seq");
-		PianoDTO pDTO = pianoService.getPianoEditInfo(piano_seq);
+		PianoDTO pDTO = pianoService.getPianoEditInfo(piano_seq, user_seq);
+		
+		if(pDTO==null) {
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
 		model.addAttribute("pDTO", pDTO);
 		
 		return "/piano/EditPiano";
@@ -157,7 +192,20 @@ public class PianoController {
 	@RequestMapping(value="DoEditPiano", method=RequestMethod.POST)
 	public String DoEditPiano(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute PianoDTO pDTO, @RequestParam(value = "piano_img") MultipartFile mf) throws Exception {
 		log.info(this.getClass().getName() + ".DoEditPiano start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		
 		String user_seq = (String)session.getAttribute("user_seq");
+		if(pianoService.getPianoDetail(pDTO.getPiano_seq(), user_seq)==null) {
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		
 		pDTO.setOwner_seq(user_seq);
 		
 		String msg = "";

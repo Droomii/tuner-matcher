@@ -211,7 +211,7 @@ public class ReqController {
 		}
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		log.info(prefDates);
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		model.addAttribute("pDTO", pDTO);
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("prefDates", prefDates);
@@ -261,7 +261,7 @@ public class ReqController {
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
 		String back = "/req/ReqDetail.do?req_seq=" + dDTO.getReq_seq();
 		
@@ -287,7 +287,7 @@ public class ReqController {
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		log.info(prefDates);
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		model.addAttribute("proc", "Public");
 		model.addAttribute("pDTO", pDTO);
 		model.addAttribute("rDTO", rDTO);
@@ -441,7 +441,7 @@ public class ReqController {
 		if(dDTO==null) {
 			log.info("dDTO is null");
 		}
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(rDTO.getPrivate_seq());
 		String back;
 		if(user_type.equals("0")) {
@@ -480,6 +480,13 @@ public class ReqController {
 		// 조율사 이미 선택했을 경우
 		if(tuner_seq!=null) {
 			
+			if(followService.verifyFollow(tuner_seq, user_seq)==0) {
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			
 			List<PianoDTO> pList = pianoService.getMyPianoList(user_seq);
 			if(pList==null) {
 				log.info("plist is null!!");
@@ -514,8 +521,19 @@ public class ReqController {
 				return "/redirect";
 			}
 			
+			
+			
 			// 기본 정보 가져오기
 			String tuner_seq = request.getParameter("tuner_seq");
+			String user_seq = (String) session.getAttribute("user_seq");
+			
+			if(followService.verifyFollow(tuner_seq, user_seq)==0) {
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			
 			UserDTO uDTO = userService.getUserInfo(tuner_seq);
 			model.addAttribute("uDTO", uDTO);
 			
@@ -562,8 +580,10 @@ public class ReqController {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
+		String user_seq = (String) session.getAttribute("user_seq");
+		
 		String piano_seq = request.getParameter("no");
-		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq);
+		PianoDTO pDTO = pianoService.getPianoDetail(piano_seq, user_seq);
 		model.addAttribute("pDTO", pDTO);
 		
 		// 조율사 이미 선택했는지 확인

@@ -12,4 +12,6 @@ public interface IFollowService {
 
 	int removeFollow(String user_seq, String tuner_seq) throws Exception;
 
+	int verifyFollow(String tuner_seq, String user_seq) throws Exception;
+
 }

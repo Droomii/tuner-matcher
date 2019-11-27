@@ -137,7 +137,7 @@ public class DealController {
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
-		PianoDTO pDTO = pianoService.getPianoEditInfo(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoEditInfo(rDTO.getPiano_seq(), null);
 		model.addAttribute("dDTO",dDTO);
 		model.addAttribute("rDTO",rDTO);
 		model.addAttribute("pDTO",pDTO);
@@ -261,7 +261,7 @@ public class DealController {
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
 		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
 		
@@ -430,7 +430,7 @@ public class DealController {
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
-		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
 		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
 		

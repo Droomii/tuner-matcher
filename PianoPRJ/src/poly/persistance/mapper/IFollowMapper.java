@@ -2,6 +2,8 @@ package poly.persistance.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import config.Mapper;
 import poly.dto.TunerDTO;
 
@@ -13,5 +15,7 @@ public interface IFollowMapper {
 	List<TunerDTO> getFollowingList(String user_seq) throws Exception;
 
 	int removeFollow(String user_seq, String tuner_seq) throws Exception;
+
+	int verifyFollow(@Param("tuner_seq")String tuner_seq, @Param("user_seq")String user_seq);
 
 }

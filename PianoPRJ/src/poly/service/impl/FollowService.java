@@ -30,4 +30,9 @@ public class FollowService implements IFollowService{
 		return followMapper.removeFollow(user_seq, tuner_seq);
 	}
 
+	@Override
+	public int verifyFollow(String tuner_seq, String user_seq) throws Exception {
+		return followMapper.verifyFollow(tuner_seq, user_seq);
+	}
+
 }

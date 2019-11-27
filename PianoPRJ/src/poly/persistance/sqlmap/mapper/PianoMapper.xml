@@ -80,13 +80,19 @@
 		PIANO_TYPE,
 		LAST_TUNED_DATE
 	FROM PIANO
-	WHERE PIANO_SEQ=#{0}
+	WHERE PIANO_SEQ=#{piano_seq}
+	<if test="user_seq!=null">
+	AND OWNER_SEQ=#{user_seq}
+	</if>
 	</select>
 	<delete id="deletePiano" parameterType="String">
 	DELETE FROM PIANO
-	WHERE PIANO_SEQ=#{0}
+	WHERE PIANO_SEQ=#{piano_seq}
+	<if test="user_seq!=null">
+	AND OWNER_SEQ=#{user_seq}
+	</if>
 	</delete>
-	<select id="getPianoEditInfo" parameterType="string" resultType="PianoDTO">
+	<select id="getPianoEditInfo" parameterType="String" resultType="PianoDTO">
 	SELECT
 		PIANO_SEQ,
 		OWNER_SEQ,
@@ -107,6 +113,9 @@
 		LI_NAME
 	FROM PIANO
 	WHERE PIANO_SEQ = #{piano_seq}
+	<if test="user_seq!=null">
+	AND OWNER_SEQ=#{user_seq}
+	</if>
 	</select>
 	<update id="updatePiano" parameterType="PianoDTO">
 	UPDATE PIANO SET

@@ -2,6 +2,8 @@ package poly.persistance.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import config.Mapper;
 import poly.dto.ReviewDTO;
 
@@ -18,6 +20,8 @@ public interface IReviewMapper {
 
 	int updateReview(ReviewDTO revDTO) throws Exception;
 
-	List<ReviewDTO> getTunerReviewList(String user_seq);
+	List<ReviewDTO> getTunerReviewList(@Param("user_seq")String user_seq, @Param("start")int start, @Param("end")int end);
+
+	int getTunerReviewListCnt(String tuner_seq) throws Exception;
 
 }

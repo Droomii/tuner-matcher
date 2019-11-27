@@ -42,8 +42,13 @@ public class ReviewService implements IReviewService{
 	}
 
 	@Override
-	public List<ReviewDTO> getTunerReviewList(String user_seq) throws Exception {
-		return reviewMapper.getTunerReviewList(user_seq);
+	public List<ReviewDTO> getTunerReviewList(String user_seq, int start, int end) throws Exception {
+		return reviewMapper.getTunerReviewList(user_seq, start, end);
+	}
+
+	@Override
+	public int getTunerReviewListCnt(String tuner_seq) throws Exception {
+		return reviewMapper.getTunerReviewListCnt(tuner_seq);
 	}
 
 }

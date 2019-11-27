@@ -30,6 +30,7 @@ import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.EncryptUtil;
+import poly.util.Pagination;
 import poly.util.SessionUtil;
 
 @Controller
@@ -215,17 +216,27 @@ public class MyPageController {
 		// 사용자 번호
 		String user_seq = (String)session.getAttribute("user_seq");
 		
+		
+		
+		
 		// 평판 가져옴
 		RepuDTO rDTO = repuService.getRepu(user_seq);
 		TunerDTO tDTO = userService.getTunerInfo(user_seq);
 		model.addAttribute("tDTO", tDTO);
 		model.addAttribute("rDTO", rDTO);
 		
+		// 페이징
+		int page = 1;
+		int listCnt = reviewService.getTunerReviewListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page, 3);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		
 		// 리뷰 목록 가져옴
-		List<ReviewDTO> revList = reviewService.getTunerReviewList(user_seq);
-		if(revList==null) {
-			revList = new ArrayList<ReviewDTO>();
-		}
+		List<ReviewDTO> revList = reviewService.getTunerReviewList(user_seq, start, end);
 		model.addAttribute("revList", revList);
 		
 		log.info(this.getClass().getName() + ".MyRepu end");

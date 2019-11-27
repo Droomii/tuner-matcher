@@ -13,7 +13,8 @@
 	int[] kindnessRates = rDTO.getKindnessRates();
 	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
 	
-	List<ReviewDTO> revList = (List<ReviewDTO>)request.getAttribute("revList");  
+	List<ReviewDTO> revList = (List<ReviewDTO>)request.getAttribute("revList");
+	Pagination pg = (Pagination)request.getAttribute("pg");
 %>
     
 <div class="modal fade text-xs-left" id="tuner-detail" tabindex="-1" role="dialog" aria-labelledby="tuner-detail-title" style="display: none;" aria-hidden="true">
@@ -154,6 +155,7 @@
 							<div class="card-text"><strong>리뷰 목록</strong></div>
 								<hr style="border-color:gray;margin-top:0.2rem;margin-bottom:0.2rem">
 								<!-- 리뷰 -->
+								<div id="review-container">
 								<%for(ReviewDTO revDTO : revList){ %>
 									<div role="button" class="review" onclick="toggleReview(this);" data-toggle="0">
 										<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
@@ -175,8 +177,11 @@
 									</div>
 								<%} %>
 								<%if(revList.size()==0) {%>
-								<div class="card-text">리뷰가 없습니다.</div>
-								<%} %>
+								<div class="card-text text-xs-center">- 리뷰가 없습니다. -</div>
+								<%}else{ %>
+	                        <%@include file="/WEB-INF/view/Pagination-ajax.jsp"%>
+	                        <%} %>
+	                        </div>
 								<!-- /리뷰 -->
 						</div>
 					</div>
@@ -216,5 +221,18 @@ function closeOthers(el){
 	content.classList.add('text-truncate');
 	evalItems.classList.add('hidden');
 	el.setAttribute('data-toggle', "0");
+}
+function gotoPage(el){
+	var page = el.getAttribute('data-page');
+	$.ajax({
+		url : "/repu/RepuReviewList.do",
+		data : {page : page,
+			tuner_seq : "<%=tDTO.getTuner_seq()%>"},
+		type : "post",
+		success : function(data){
+			$("#review-container").html(data);
+		}
+		
+	})
 }
 </script>

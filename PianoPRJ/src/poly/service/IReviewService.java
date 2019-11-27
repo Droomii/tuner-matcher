@@ -16,6 +16,8 @@ public interface IReviewService {
 
 	int updateReview(ReviewDTO revDTO) throws Exception;
 
-	List<ReviewDTO> getTunerReviewList(String user_seq) throws Exception;
+	List<ReviewDTO> getTunerReviewList(String user_seq, int start, int end) throws Exception;
+
+	int getTunerReviewListCnt(String tuner_seq) throws Exception;
 
 }

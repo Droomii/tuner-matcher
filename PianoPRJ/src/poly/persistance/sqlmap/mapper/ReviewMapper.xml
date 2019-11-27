@@ -74,7 +74,18 @@
 		AND WRITER_SEQ=#{writer_seq}
 </update>
 <select id="getTunerReviewList" parameterType="String" resultType="ReviewDTO">
-	SELECT
+SELECT * FROM
+	(SELECT
+		ROWNUM AS RN,
+		REVIEW_STAR,
+		REVIEW_TECH,
+		REVIEW_PUNCTUAL,
+		REVIEW_KINDNESS,
+		REVIEW_CONTENT,
+		REGDATE,
+		USER_NICK
+	FROM
+	(SELECT
 		REVIEW_STAR,
 		REVIEW_TECH,
 		REVIEW_PUNCTUAL,
@@ -82,6 +93,15 @@
 		REVIEW_CONTENT,
 		REGDATE,
 		(SELECT USER_NICK FROM USERINFO WHERE USER_SEQ=TUNER_REVIEW.WRITER_SEQ) AS USER_NICK
+	FROM
+		TUNER_REVIEW
+	WHERE
+		TUNER_SEQ=#{user_seq}))
+	WHERE RN BETWEEN #{start} AND #{end}
+</select>
+<select id="getTunerReviewListCnt" parameterType="String" resultType="Integer">
+	SELECT
+		COUNT(1)
 	FROM
 		TUNER_REVIEW
 	WHERE

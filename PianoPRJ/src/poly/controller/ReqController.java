@@ -535,11 +535,18 @@ public class ReqController {
 					}
 					model.addAttribute("rDTO", rDTO);
 					
+					// 페이징
+					int page = 1;
+					int listCnt = reviewService.getTunerReviewListCnt(tuner_seq);
+					Pagination pg = new Pagination(listCnt, page, 3);
+
+					int start = pg.getStartIndex() + 1;
+					int end = pg.getStartIndex() + pg.getPageSize();
+					model.addAttribute("pg", pg);
+					
+					
 					// 리뷰 목록 가져옴
-					List<ReviewDTO> revList = reviewService.getTunerReviewList(tuner_seq);
-					if(revList==null) {
-						revList = new ArrayList<ReviewDTO>();
-					}
+					List<ReviewDTO> revList = reviewService.getTunerReviewList(tuner_seq, start, end);
 					model.addAttribute("revList", revList);
 			
 			log.info(this.getClass().getName() + ".TunerDetail end");

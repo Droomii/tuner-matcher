@@ -9,6 +9,8 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	List<DealDTO> dList = (ArrayList<DealDTO>)request.getAttribute("dList");
+	String pageName = "TunerBidList";
+	Pagination pg = (Pagination)request.getAttribute("pg");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -59,7 +61,7 @@
     <div class="col-xs-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">진행중인 입찰</h4>
+                <h4 class="card-title">주변 요청 입찰 목록</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
             <div class="card-body collapse in">
@@ -83,7 +85,13 @@
                         </div>
                         <%if(dList.size()==0) {%>
                             <div class="card-text text-xs-center">- 진행중인 입찰이 없습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
+                        <%} %>
+                <div class="float-xs-right">
+	                <button class="btn btn-primary" onclick="location.href='/req/TunerPublicReqList.do'">새 입찰</button>
+	                
+	                </div>
                 </div>
             </div>
             

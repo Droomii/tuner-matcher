@@ -23,8 +23,8 @@ public class DealService implements IDealService{
 	}
 
 	@Override
-	public List<DealDTO> getBiddingList(String user_seq) throws Exception {
-		return dealMapper.getBiddingList(user_seq);
+	public List<DealDTO> getBiddingList(String user_seq, int start, int end) throws Exception {
+		return dealMapper.getBiddingList(user_seq, start, end);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class DealService implements IDealService{
 	}
 
 	@Override
-	public List<DealDTO> getTunerDealList(String user_seq) throws Exception {
-		return dealMapper.getTunerDealList(user_seq);
+	public List<DealDTO> getTunerDealList(String user_seq, int start, int end) throws Exception {
+		return dealMapper.getTunerDealList(user_seq, start, end);
 	}
 
 	@Override
@@ -110,6 +110,16 @@ public class DealService implements IDealService{
 	@Override
 	public int getUserDealListCnt(String user_seq) throws Exception {
 		return dealMapper.getUserDealListCnt(user_seq);
+	}
+
+	@Override
+	public int getTunerDealListCnt(String user_seq) throws Exception {
+		return dealMapper.getTunerDealListCnt(user_seq);
+	}
+
+	@Override
+	public int getBiddingListCnt(String user_seq) throws Exception {
+		return dealMapper.getBiddingListCnt(user_seq);
 	}
 
 }

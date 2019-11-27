@@ -94,7 +94,8 @@ public class DealController {
 	//-----------조율사입찰---------------
 	
 	@RequestMapping(value = "TunerBidList")
-	public String TunerBidList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+	public String TunerBidList(HttpServletRequest request, ModelMap model, HttpSession session,
+			@RequestParam(defaultValue = "1")int page) throws Exception{
 		String user_seq = (String)session.getAttribute("user_seq");
 
 		if(SessionUtil.verify(session, "1", model)!=null) {
@@ -102,7 +103,16 @@ public class DealController {
 			return "/redirect";
 		}
 		
-		List<DealDTO> dList = dealService.getBiddingList(user_seq);
+		// 페이징
+		int listCnt = dealService.getBiddingListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page);
+		
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		
+		List<DealDTO> dList = dealService.getBiddingList(user_seq, start, end);
 		if(dList==null) {
 			dList = new ArrayList<>();
 		}
@@ -171,7 +181,8 @@ public class DealController {
 	
 	// 조율사 조율현황
 	@RequestMapping(value = "TunerDealList")
-	public String TunerDealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+	public String TunerDealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
 			throws Exception {
 		log.info(this.getClass().getName() + ".TunerDealList start");
 		
@@ -181,10 +192,20 @@ public class DealController {
 		}
 		String user_seq = (String)session.getAttribute("user_seq");
 		
-		List<DealDTO> dList = dealService.getTunerDealList(user_seq);
+		// 페이징
+		int listCnt = dealService.getTunerDealListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page);
+		
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		List<DealDTO> dList = dealService.getTunerDealList(user_seq, start, end);
 		if(dList==null) {
 			dList = new ArrayList<DealDTO>();
 		}
+		
+		
 		model.addAttribute("dList", dList);
 		
 		log.info(this.getClass().getName() + ".TunerDealList end");

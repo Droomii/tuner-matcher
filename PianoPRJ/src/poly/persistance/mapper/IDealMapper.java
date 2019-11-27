@@ -13,7 +13,7 @@ public interface IDealMapper {
 
 	int insertDeal(DealDTO dDTO) throws Exception;
 
-	List<DealDTO> getBiddingList(String user_seq) throws Exception;
+	List<DealDTO> getBiddingList(@Param("user_seq") String user_seq, @Param("start") int start, @Param("end") int end) throws Exception;
 
 	DealDTO getDealDetail(String deal_seq) throws Exception;
 
@@ -35,7 +35,7 @@ public interface IDealMapper {
 
 	int declineDeal(String deal_seq, String req_seq, String user_seq) throws Exception;
 
-	List<DealDTO> getTunerDealList(String user_seq) throws Exception;
+	List<DealDTO> getTunerDealList(@Param("user_seq")String user_seq, @Param("start") int start, @Param("end") int end) throws Exception;
 
 	int insertReschedule(RescheduleDTO rDTO) throws Exception;
 
@@ -48,5 +48,9 @@ public interface IDealMapper {
 	List<Integer> getBidPlacedReqs(String tuner_seq) throws Exception;
 
 	int getUserDealListCnt(String user_seq) throws Exception;
+
+	int getTunerDealListCnt(String user_seq) throws Exception;
+
+	int getBiddingListCnt(String user_seq) throws Exception;
 
 }

@@ -158,11 +158,11 @@
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">참고사진</span></div>
 									<%if(rDTO.getPhoto_dir()!=null){ %>
 									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
-									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap">
+									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap"></div>
 									<%}else{ %>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
 									<%} %>
-									</div>
+									
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">가능일시</div></div>
@@ -185,8 +185,7 @@
 							</div>
 						
 					</div>
-				</div>
-				<form method="post" hidden="hidden" name="req_action">
+					<form method="post" hidden="hidden" name="req_action">
 					<input value="<%=rDTO.getReq_seq() %>" name="req_seq">
 				</form>
 				<div class="card-footer text-xs-center">
@@ -202,6 +201,8 @@
 					<%} %>
 					</span>
 				</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>

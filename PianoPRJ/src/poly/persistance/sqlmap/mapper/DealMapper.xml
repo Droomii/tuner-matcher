@@ -49,10 +49,12 @@
 	
 
 </insert>
-<select id="getBiddingList" parameterType="String" resultType="DealDTO">
-	SELECT
+<select id="getBiddingList" resultType="DealDTO">
+SELECT * FROM
+	(SELECT
+		ROWNUM AS RN,
 		DEAL_SEQ,
-		(SELECT USER_NICK FROM USERINFO WHERE USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+		REQUESTER_NICK,
 		TUNING_PRICE,
 		REGUL_PRICE,
 		VOICING_PRICE,
@@ -62,9 +64,30 @@
 		REGUL_EA,
 		VOICING_EA,
 		TRANSPORT_EA
+	FROM
+		(SELECT
+			DEAL_SEQ,
+			(SELECT USER_NICK FROM USERINFO WHERE USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+			TUNING_PRICE,
+			REGUL_PRICE,
+			VOICING_PRICE,
+			TRANSPORT_PRICE,
+			OTHER_PRICE,
+			TUNING_EA,
+			REGUL_EA,
+			VOICING_EA,
+			TRANSPORT_EA
+		FROM DEAL WHERE TUNER_SEQ=#{user_seq}
+		AND DEAL_STATE=0
+		ORDER BY DEAL_SEQ DESC))
+	WHERE RN BETWEEN #{start} AND #{end}
+	
+</select>
+<select id="getBiddingListCnt" parameterType="String" resultType="Integer">
+	SELECT
+		COUNT(1)
 	FROM DEAL WHERE TUNER_SEQ=#{0}
 	AND DEAL_STATE=0
-	ORDER BY DEAL_SEQ DESC
 </select>
 <select id="getDealDetail" parameterType="String" resultType="DealDTO">
 	SELECT * FROM DEAL WHERE DEAL_SEQ=#{0}
@@ -181,10 +204,12 @@ WHERE RN BETWEEN #{startIndex}+1 AND #{startIndex}+#{cntPerPage}
 	AND DEAL_STATE NOT IN (0, 1, 3)
 	ORDER BY DEAL_SEQ DESC
 </select>
-<select id="getTunerDealList" parameterType="String" resultType="DealDTO">
-	SELECT
+<select id="getTunerDealList" resultType="DealDTO">
+SELECT * FROM
+	(SELECT 
+		ROWNUM AS RN,
 		DEAL_SEQ,
-		(SELECT USER_NICK FROM USERINFO WHERE USERINFO.USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+		REQUESTER_NICK,
 		POSSIBLE_DATE,
 		DEAL_STATE,
 		TUNING_PRICE,
@@ -197,10 +222,31 @@ WHERE RN BETWEEN #{startIndex}+1 AND #{startIndex}+#{cntPerPage}
 		VOICING_EA,
 		TRANSPORT_EA
 	FROM
-		DEAL
+		(SELECT
+			DEAL_SEQ,
+			(SELECT USER_NICK FROM USERINFO WHERE USERINFO.USER_SEQ=DEAL.REQUESTER_SEQ) AS REQUESTER_NICK,
+			POSSIBLE_DATE,
+			DEAL_STATE,
+			TUNING_PRICE,
+			REGUL_PRICE,
+			VOICING_PRICE,
+			TRANSPORT_PRICE,
+			OTHER_PRICE,
+			TUNING_EA,
+			REGUL_EA,
+			VOICING_EA,
+			TRANSPORT_EA
+		FROM
+			DEAL
+		WHERE TUNER_SEQ=#{user_seq}
+		AND DEAL_STATE IN(2, 6)
+		ORDER BY DEAL_SEQ DESC))
+WHERE RN BETWEEN #{start} AND #{end}
+</select>
+<select id="getTunerDealListCnt" parameterType="String" resultType="Integer">
+SELECT COUNT(1) FROM DEAL
 	WHERE TUNER_SEQ=#{0}
 	AND DEAL_STATE IN(2, 6)
-	ORDER BY DEAL_SEQ DESC
 </select>
 <update id="dealCancel">
 	UPDATE DEAL SET

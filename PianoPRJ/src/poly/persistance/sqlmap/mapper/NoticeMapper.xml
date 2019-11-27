@@ -5,14 +5,27 @@
 
 	<!-- 게시판 리스트 쿼리 -->
 	<select id="getNoticeList" resultType="NoticeDTO">
-		SELECT
+	SELECT * FROM
+		(SELECT 
+			ROWNUM AS RN,
 			NOTICE_SEQ,
 			WRITER_SEQ,
 			NOTICE_TITLE,
 			REGDATE,
 			NOTICE_COUNT
-		FROM NOTICE
-		ORDER BY NOTICE_SEQ DESC
+		FROM
+			(SELECT
+				NOTICE_SEQ,
+				WRITER_SEQ,
+				NOTICE_TITLE,
+				REGDATE,
+				NOTICE_COUNT
+			FROM NOTICE
+			ORDER BY NOTICE_SEQ DESC))
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getNoticeListCnt" resultType="Integer">
+	SELECT COUNT(1) FROM NOTICE
 	</select>
 	<select id="getTopNoticeList" resultType="NoticeDTO">
 		SELECT

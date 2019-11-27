@@ -1,3 +1,4 @@
+<%@page import="poly.util.Pagination"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.NoticeDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,6 +8,8 @@
 <%
 	ArrayList<NoticeDTO> rList = (ArrayList<NoticeDTO>)request.getAttribute("rList");
 	ArrayList<NoticeDTO> topList = (ArrayList<NoticeDTO>)request.getAttribute("topList");
+	String pageName = "NoticeList";
+	Pagination pg = (Pagination)request.getAttribute("pg");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -89,9 +92,11 @@
                                 </div>
                             <%} %>
                         </div>
-                        <%if(rList.size()==0 && topList.size()==0) {%>
+                        <%if(rList.size()==0) {%>
                             <div class="card-text text-xs-center">- 공지가 없습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
+                        <%} %>
 	                <div class="float-xs-right">
 	                <%if(user_type.equals("2")){ %><button class="btn btn-primary" onclick="location.href='/notice/NoticeReg.do'">새 공지</button><%} %>
 	                

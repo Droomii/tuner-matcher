@@ -2,6 +2,8 @@ package poly.persistance.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import config.Mapper;
 import poly.dto.NoticeDTO;
 
@@ -9,7 +11,7 @@ import poly.dto.NoticeDTO;
 public interface INoticeMapper {
 
 	//게시판 리스트
-	List<NoticeDTO> getNoticeList() throws Exception;
+	List<NoticeDTO> getNoticeList(@Param("start")int start, @Param("end")int end) throws Exception;
 	
 	//게시판 글 등록
 	void insertNoticeInfo(NoticeDTO pDTO) throws Exception;
@@ -28,5 +30,7 @@ public interface INoticeMapper {
 
 	//상단공지 불러오기
 	List<NoticeDTO> getTopNoticeList() throws Exception;
+
+	int getNoticeListCnt() throws Exception;
 	
 }

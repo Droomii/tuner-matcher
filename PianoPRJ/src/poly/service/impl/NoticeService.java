@@ -17,8 +17,8 @@ public class NoticeService implements INoticeService{
 	private INoticeMapper noticeMapper;
 	
 	@Override
-	public List<NoticeDTO> getNoticeList() throws Exception {
-		return noticeMapper.getNoticeList();
+	public List<NoticeDTO> getNoticeList(int start, int end) throws Exception {
+		return noticeMapper.getNoticeList(start, end);
 		
 	}
 	
@@ -56,5 +56,10 @@ public class NoticeService implements INoticeService{
 	public List<NoticeDTO> getTopNoticeList() throws Exception {
 		
 		return noticeMapper.getTopNoticeList();
+	}
+
+	@Override
+	public int getNoticeListCnt() throws Exception {
+		return noticeMapper.getNoticeListCnt();
 	}
 }

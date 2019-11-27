@@ -6,7 +6,7 @@ import poly.dto.NoticeDTO;
 
 public interface INoticeService {
 
-	List<NoticeDTO> getNoticeList() throws Exception;
+	List<NoticeDTO> getNoticeList(int start, int end) throws Exception;
 	
 	void insertNoticeInfo(NoticeDTO pDTO) throws Exception;
 
@@ -19,5 +19,7 @@ public interface INoticeService {
 	void deleteNoticeInfo(NoticeDTO pDTO) throws Exception;
 
 	List<NoticeDTO> getTopNoticeList() throws Exception;
+
+	int getNoticeListCnt() throws Exception;
 	
 }

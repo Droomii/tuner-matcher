@@ -14,10 +14,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import poly.dto.NoticeDTO;
+import poly.dto.ReqDTO;
 import poly.service.INoticeService;
 import poly.util.CmmUtil;
+import poly.util.Pagination;
 import poly.util.SessionUtil;
 
 /*
@@ -45,14 +48,23 @@ public class NoticeController {
 	 * 게시판 리스트 보여주기
 	 */
 	@RequestMapping(value = "NoticeList")
-	public String NoticeList(HttpServletRequest request, HttpServletResponse response, ModelMap model)
+	public String NoticeList(HttpServletRequest request, HttpServletResponse response, ModelMap model, @RequestParam(defaultValue = "1")int page)
 			throws Exception {
 
 		// 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
 		log.info(this.getClass().getName() + ".NoticeList start!");
 
+		// 페이징
+				int listCnt =  noticeService.getNoticeListCnt();
+				Pagination pg = new Pagination(listCnt, page);
+				model.addAttribute("pg", pg);
+				
+				int start = pg.getStartIndex() + 1;
+				int end = pg.getStartIndex() + pg.getPageSize();
+		
+		
 		// 공지사항 리스트 가져오기
-		List<NoticeDTO> rList = noticeService.getNoticeList();
+		List<NoticeDTO> rList = noticeService.getNoticeList(start, end);
 		List<NoticeDTO> topList = noticeService.getTopNoticeList();
 
 		if (rList == null) {

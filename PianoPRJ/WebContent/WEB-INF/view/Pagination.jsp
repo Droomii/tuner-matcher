@@ -19,7 +19,11 @@
 							</li>
 							<%} %>
 							<%for(int i=pg.getStartPage(); i< pg.getEndPage()+1; i++) {%>
-							<li class="page-item <%=pg.getCurPage()==i ?  "active" : ""%>"><a class="page-link" href="<%=pageName%>.do?page=<%=i%>"><%=i %></a></li>
+							<%if(pg.getCurPage()==i) {%>
+							<li class="page-item active"><a class="page-link"><%=i %></a></li>
+							<%}else{ %>
+							<li class="page-item"><a class="page-link" href="<%=pageName%>.do?page=<%=i%>"><%=i %></a></li>
+							<%} %>
 							<%} %>
 							<%if((pg.getCurPage() != pg.getPageCnt()) && (pg.getPageCnt() > 0) ) {%>
 							<li class="page-item">
@@ -30,7 +34,7 @@
 							<%} %>
 							<%if((pg.getCurRange() != pg.getRangeCnt()) && (pg.getRangeCnt() > 0) ) {%>
 							<li class="page-item">
-								<a class="page-link" href="#" aria-label="Next">
+								<a class="page-link" href="<%=pageName%>.do?page=<%=pg.getPageCnt() %>" aria-label="Next">
 									<span aria-hidden="true">&gt;&gt;</span>
 								</a>
 							</li>

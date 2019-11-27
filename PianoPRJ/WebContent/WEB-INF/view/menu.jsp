@@ -57,8 +57,6 @@
               </li>
               <li><a href="/deal/UserDealList.do" data-i18n="nav.dash.main" class="menu-item">조율 현황</a>
               </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">내 리뷰</a>
-              </li>
             </ul>
           </li>
           <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span data-i18n="nav.dash.main" class="menu-title">조율하기</span></a>
@@ -66,8 +64,6 @@
               <li><a href="/req/UserPublicReqList.do" data-i18n="nav.dash.main" class="menu-item">공개 요청</a>
               </li>
               <li><a href="/req/UserPrivateReqList.do" data-i18n="nav.dash.main" class="menu-item">1:1 요청</a>
-              </li>
-              <li><a href="#" data-i18n="nav.dash.main" class="menu-item">리뷰 등록</a>
               </li>
             </ul>
           </li>

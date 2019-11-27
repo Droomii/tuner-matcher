@@ -75,7 +75,7 @@
                                     <div class="table-head-cell"><strong>조율사</strong></div>
                                     <div class="table-head-cell"><strong>답변여부</strong></div>
                             </div>
-                            
+                           	
                             <%for(ReqDTO rDTO : reqList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/PrivateReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'">
                                     <div class="table-cell"><%=CmmUtil.nvl(rDTO.getPiano_name())%></div>

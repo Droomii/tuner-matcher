@@ -119,8 +119,8 @@ public class ReqService implements IReqService {
 	}
 
 	@Override
-	public List<ReqDTO> getPrivateReqList(String user_seq) throws Exception {
-		return reqMapper.getPrivateReqList(user_seq);
+	public List<ReqDTO> getPrivateReqList(ReqDTO rDTO) throws Exception {
+		return reqMapper.getPrivateReqList(rDTO);
 	}
 
 	@Override
@@ -141,6 +141,11 @@ public class ReqService implements IReqService {
 	@Override
 	public int getPublicReqListCnt(String user_seq) throws Exception {
 		return reqMapper.getPublicReqListCnt(user_seq);
+	}
+
+	@Override
+	public int getPrivateReqListCnt(String user_seq) throws Exception {
+		return reqMapper.getPrivateReqListCnt(user_seq);
 	}
 
 }

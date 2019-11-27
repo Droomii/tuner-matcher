@@ -22,7 +22,7 @@ public interface IReqMapper {
 
 	void auctionOff(String req_seq) throws Exception;
 
-	List<ReqDTO> getPrivateReqList(String user_seq) throws Exception;
+	List<ReqDTO> getPrivateReqList(ReqDTO rDTO) throws Exception;
 
 	List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception;
 
@@ -31,5 +31,7 @@ public interface IReqMapper {
 	int getReqCurrVal() throws Exception;
 
 	int getPublicReqListCnt(String user_seq) throws Exception;
+
+	int getPrivateReqListCnt(String user_seq) throws Exception;
 
 }

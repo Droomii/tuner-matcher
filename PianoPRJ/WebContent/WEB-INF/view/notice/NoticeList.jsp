@@ -73,7 +73,7 @@
                              <%for(NoticeDTO nDTO : topList){ %>
                                 <div class="table-row item" role="button" onclick="location.href='/notice/NoticeInfo.do?notice_seq=<%=nDTO.getNotice_seq()%>'">
                                     <div class="table-cell"><strong>상단공지</strong></div>
-                                    <div class="table-cell"><strong><%=nDTO.getNotice_title() %></strong></div>
+                                    <div class="table-cell"><strong><%=CmmUtil.nvl(nDTO.getNotice_title()) %></strong></div>
                                     <div class="table-cell"><strong>관리자</strong></div>
                                     <div class="table-cell"><strong><%=nDTO.getRegdate().substring(0,11) %></strong></div>
                                     <div class="table-cell"><strong><%=nDTO.getNotice_count() %></strong></div>

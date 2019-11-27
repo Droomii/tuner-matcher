@@ -353,15 +353,27 @@ public class ReqController {
 	
 	//1:1 요청 목록
 	@RequestMapping(value = "UserPrivateReqList")
-	public String UserPrivateReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+	public String UserPrivateReqList(HttpSession session, HttpServletRequest request, ModelMap model, @RequestParam(defaultValue = "1") int page) throws Exception{
 		if (SessionUtil.verify(session, "0", model) != null) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
 		
 		String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
-		List<ReqDTO> reqList = reqService.getPrivateReqList(user_seq);
 		
+		// 페이징
+		int listCnt =  reqService.getPrivateReqListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page);
+		model.addAttribute("pg", pg);
+		
+		ReqDTO rDTO = new ReqDTO();
+		rDTO.setStartIndex(pg.getStartIndex());
+		rDTO.setCntPerPage(pg.getPageSize());
+		rDTO.setUser_seq(user_seq);
+		
+		
+		
+		List<ReqDTO> reqList = reqService.getPrivateReqList(rDTO);
 		
 		if(reqList==null)
 			reqList = new ArrayList<ReqDTO>();

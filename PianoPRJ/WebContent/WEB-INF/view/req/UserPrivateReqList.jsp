@@ -1,3 +1,4 @@
+<%@page import="poly.util.Pagination"%>
 <%@page import="poly.dto.ReqDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.NoticeDTO"%>
@@ -7,6 +8,8 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	ArrayList<ReqDTO> reqList = (ArrayList<ReqDTO>)request.getAttribute("reqList");
+	Pagination pg = (Pagination)request.getAttribute("pg");
+	String pageName = "UserPrivateReqList";
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -88,7 +91,9 @@
                     </div>
                     <%if(reqList.size()==0) {%>
                             <div class="card-text text-xs-center">- 1:1 요청 이력이 없습니다 - </div>
-                            <%} %>
+                    <%}else{ %>
+                    	<%@include file="/WEB-INF/view/Pagination.jsp"%>
+                    <%} %>
                 <div class="float-xs-right">
                 <button class="btn btn-primary" onclick="location.href='/req/NewPrivateReq.do'">새  1:1 요청</button>
                 

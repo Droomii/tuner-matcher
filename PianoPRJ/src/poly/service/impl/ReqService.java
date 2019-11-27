@@ -40,8 +40,8 @@ public class ReqService implements IReqService {
 	}
 
 	@Override
-	public List<ReqDTO> getPublicReqList(String user_seq) throws Exception {
-		return reqMapper.getPublicReqList(user_seq);
+	public List<ReqDTO> getPublicReqList(ReqDTO rDTO) throws Exception {
+		return reqMapper.getPublicReqList(rDTO);
 		
 	}
 
@@ -136,6 +136,11 @@ public class ReqService implements IReqService {
 	@Override
 	public int getReqCurrVal() throws Exception {
 		return reqMapper.getReqCurrVal();
+	}
+
+	@Override
+	public int getPublicReqListCnt(String user_seq) throws Exception {
+		return reqMapper.getPublicReqListCnt(user_seq);
 	}
 
 }

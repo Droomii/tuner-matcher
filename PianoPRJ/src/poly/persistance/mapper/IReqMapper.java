@@ -10,7 +10,7 @@ public interface IReqMapper {
 
 	int insertReq(ReqDTO rDTO) throws Exception;
 
-	List<ReqDTO> getPublicReqList(String user_seq) throws Exception;
+	List<ReqDTO> getPublicReqList(ReqDTO rDTO) throws Exception;
 
 	ReqDTO getReqDetail(String req_seq) throws Exception;
 
@@ -29,5 +29,7 @@ public interface IReqMapper {
 	int declineReq(String req_seq, String tuner_seq) throws Exception;
 
 	int getReqCurrVal() throws Exception;
+
+	int getPublicReqListCnt(String user_seq) throws Exception;
 
 }

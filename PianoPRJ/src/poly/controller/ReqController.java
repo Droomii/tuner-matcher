@@ -40,6 +40,7 @@ import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
 import poly.util.FileUtil;
+import poly.util.Pagination;
 import poly.util.SessionUtil;
 
 @RequestMapping(value = "req/")
@@ -149,14 +150,25 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value = "UserPublicReqList")
-	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
+	public String UserPublicReqList(HttpSession session, HttpServletRequest request, ModelMap model, @RequestParam(defaultValue = "1") int page) throws Exception{
 		if (SessionUtil.verify(session, "0", model) != null) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
 		
 		String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
-		List<ReqDTO> reqList = reqService.getPublicReqList(user_seq);
+		
+		// 페이징
+		int listCnt =  reqService.getPublicReqListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page);
+		model.addAttribute("pg", pg);
+		
+		ReqDTO rDTO = new ReqDTO();
+		rDTO.setStartIndex(pg.getStartIndex());
+		rDTO.setCntPerPage(pg.getPageSize());
+		rDTO.setUser_seq(user_seq);
+		
+		List<ReqDTO> reqList = reqService.getPublicReqList(rDTO);
 		
 		
 		if(reqList==null)

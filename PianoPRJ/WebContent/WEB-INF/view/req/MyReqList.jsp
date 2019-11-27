@@ -7,6 +7,8 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	ArrayList<ReqDTO> reqList = (ArrayList<ReqDTO>)request.getAttribute("reqList");
+	Pagination pg = (Pagination)request.getAttribute("pg");
+	String pageName = "UserPublicReqList";
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -80,7 +82,9 @@
                         </div>
                         <%if(reqList.size()==0) {%>
                             <div class="card-text text-xs-center">- 요청 이력이 없습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+                        <%@include file="/WEB-INF/view/Pagination.jsp" %>
+                        <%} %>
 					<div class="float-xs-right">
                 		<button class="btn btn-primary" onclick="location.href='/req/NewPublicReq.do'">새 요청</button>
                 	</div>

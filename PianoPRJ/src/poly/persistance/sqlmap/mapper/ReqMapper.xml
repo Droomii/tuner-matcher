@@ -34,22 +34,53 @@
 			SELECT REQ_SEQ.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
-	<select id="getPublicReqList" parameterType="String" resultType="ReqDTO">
+	<select id="getPublicReqList" parameterType="ReqDTO" resultType="ReqDTO">
 	SELECT
-		R.REQ_SEQ AS REQ_SEQ,
-		R.PIANO_SEQ AS PIANO_SEQ,
-		P.PIANO_NAME AS PIANO_NAME,
-		R.REQ_TITLE AS REQ_TITLE,
-		R.REGDATE AS REGDATE,
-		NVL((SELECT COUNT(1) FROM DEAL WHERE DEAL_STATE=0 GROUP BY REQ_SEQ HAVING REQ_SEQ=R.REQ_SEQ),0) AS BIDS
+		REQ_SEQ,
+		PIANO_SEQ,
+		PIANO_NAME,
+		REQ_TITLE,
+		REGDATE,
+		BIDS
 	FROM
-		REQUEST R,
-		PIANO P
+		(SELECT
+			ROWNUM AS RN,
+			REQ_SEQ,
+			PIANO_SEQ,
+			PIANO_NAME,
+			REQ_TITLE,
+			REGDATE,
+			BIDS
+		FROM
+			(SELECT
+				R.REQ_SEQ AS REQ_SEQ,
+				R.PIANO_SEQ AS PIANO_SEQ,
+				P.PIANO_NAME AS PIANO_NAME,
+				R.REQ_TITLE AS REQ_TITLE,
+				R.REGDATE AS REGDATE,
+				NVL((SELECT COUNT(1) FROM DEAL WHERE DEAL_STATE=0 GROUP BY REQ_SEQ HAVING REQ_SEQ=R.REQ_SEQ),0) AS BIDS
+			FROM
+				REQUEST R,
+				PIANO P
+			WHERE
+				USER_SEQ=#{user_seq}
+				AND  R.PIANO_SEQ=P.PIANO_SEQ
+				AND R.PRIVATE_SEQ IS NULL
+				AND R.REQ_STATE=0
+			)
+		)
+	WHERE
+		RN BETWEEN #{startIndex}+1 AND #{startIndex}+#{cntPerPage}
+	</select>
+	<select id="getPublicReqListCnt" parameterType="String" resultType="Integer">
+	SELECT
+		COUNT(1)
+	FROM
+		REQUEST
 	WHERE
 		USER_SEQ=#{0}
-		AND  R.PIANO_SEQ=P.PIANO_SEQ
-		AND R.PRIVATE_SEQ IS NULL
-		AND R.REQ_STATE=0
+		AND PRIVATE_SEQ IS NULL
+		AND REQ_STATE=0
 	</select>
 	<select id="getPrivateReqList" parameterType="String" resultType="ReqDTO">
 	SELECT

@@ -372,10 +372,7 @@ public class DealController {
 		DealDTO dDTO = new DealDTO();
 		dDTO.setStartIndex(pg.getStartIndex());
 		dDTO.setCntPerPage(pg.getPageSize());
-		dDTO.setCnt(listCnt);
 		dDTO.setRequester_seq(user_seq);
-		log.info("start index : " + dDTO.getStartIndex());
-		log.info("count per page : " + dDTO.getCntPerPage());
 		
 		List<DealDTO> dList = dealService.getUserDealList(dDTO);
 		if(dList==null) {

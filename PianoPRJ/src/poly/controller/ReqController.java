@@ -180,7 +180,8 @@ public class ReqController {
 	}
 	
 	@RequestMapping(value = "ReqDetail")
-	public String Detail(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+	public String Detail(HttpServletRequest request, ModelMap model, HttpSession session,
+			@RequestParam(defaultValue = "1")int page) throws Exception {
 		if (SessionUtil.verify(session, model) != null) {
 			model = SessionUtil.verify(session, model);
 			return "/redirect";
@@ -193,8 +194,18 @@ public class ReqController {
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
 		
 		
+		
+		
 		if(user_type.equals("0")) {
-			List<DealDTO> dList = dealService.getReqBid(req_seq);
+			// 페이징
+			int listCnt = dealService.getReqBidCnt(req_seq);
+			Pagination pg = new Pagination(listCnt, page, 3);
+
+			int start = pg.getStartIndex() + 1;
+			int end = pg.getStartIndex() + pg.getPageSize();
+			model.addAttribute("pg", pg);
+			
+			List<DealDTO> dList = dealService.getReqBid(req_seq, start, end);
 			log.info("dList size : " + dList.size());
 			model.addAttribute("dList", dList);
 		}
@@ -207,6 +218,34 @@ public class ReqController {
 		
 		return "/req/ReqDetail";
 	
+	}
+	
+	@RequestMapping(value = "GetReqBid")
+	public String GetReqBid(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".GetReqBid start");
+		
+		if (SessionUtil.verify(session, "0", model) != null) {
+			model = SessionUtil.verify(session, "0", model);
+			return "/redirect";
+		}
+		String req_seq = request.getParameter("req_seq");
+		
+		// 페이징
+		int listCnt = dealService.getReqBidCnt(req_seq);
+		Pagination pg = new Pagination(listCnt, page, 3);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		List<DealDTO> dList = dealService.getReqBid(req_seq, start, end);
+		log.info("dList size : " + dList.size());
+		model.addAttribute("dList", dList);
+		
+		log.info(this.getClass().getName() + ".GetReqBid end");
+		return "/req/ReqBidTable";
 	}
 	
 	@RequestMapping(value = "ReqBidDetail")

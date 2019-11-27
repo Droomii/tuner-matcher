@@ -91,6 +91,10 @@
    	table, th, td{
    		border:2px solid rgb(150,150,150);
    	}
+   	
+   	.checked{
+   		color:orange;
+   	}
 </style>
 
 

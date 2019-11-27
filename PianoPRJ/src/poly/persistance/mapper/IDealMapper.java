@@ -21,7 +21,7 @@ public interface IDealMapper {
 
 	List<DealDTO> getPastDeals(@Param("tuner_seq")String tuner_seq, @Param("start") int start, @Param("end") int end) throws Exception;
 
-	List<DealDTO> getReqBid(String req_seq) throws Exception;
+	List<DealDTO> getReqBid(@Param("req_seq") String req_seq, @Param("start") int start, @Param("end") int end) throws Exception;
 
 	int auctionOff(String deal_seq, String req_seq, String user_seq) throws Exception;
 
@@ -54,5 +54,7 @@ public interface IDealMapper {
 	int getBiddingListCnt(String user_seq) throws Exception;
 
 	int getPastDealsCnt(String tuner_seq) throws Exception;
+
+	int getReqBidCnt(String req_seq) throws Exception;
 
 }

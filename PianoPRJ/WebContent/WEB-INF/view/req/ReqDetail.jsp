@@ -1,3 +1,4 @@
+<%@page import="poly.util.Pagination"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.Iterator"%>
@@ -27,6 +28,8 @@
 		dList=new ArrayList<>();
 	}
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
+	
+	Pagination pg = (Pagination)request.getAttribute("pg");
 	
 %>
 <!DOCTYPE html>
@@ -216,7 +219,7 @@
 					<h4 class="card-title" id="basic-layout-form">입찰 현황</h4>
 				</div>
 	            <div class="card-body collapse in">
-	                <div class="card-block card-dashboard">
+	                <div class="card-block card-dashboard" id="bid-container">
                         <div class="table">
                             <div class="table-row">
                                     <div class="table-head-cell"><strong>조율사 성명</strong></div>
@@ -234,7 +237,9 @@
                         </div>
                         <%if(dList.size()==0) {%>
                             <div class="card-text text-xs-center">- 아무도 입찰하지 않았습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+	                        <%@include file="/WEB-INF/view/Pagination-ajax.jsp"%>
+	                        <%} %>
                 	</div>
 	                
 	            </div>
@@ -505,6 +510,20 @@
 			  updatePrice();
 		  })
 		});
+	<%}else{%>
+	function gotoPage(el){
+		var page = el.getAttribute('data-page');
+		$.ajax({
+			url : "GetReqBid.do",
+			data : {page : page,
+				req_seq : "<%=rDTO.getReq_seq()%>"},
+			type : "post",
+			success : function(data){
+				$("#bid-container").html(data);
+			}
+			
+		})
+	}
 	<%}%>
 	
 	</script>

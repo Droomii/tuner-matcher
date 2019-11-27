@@ -362,8 +362,7 @@
 					</div>
 					<%} %>
 					<%} %>
-		            </div>
-		            <div class="card-footer text-xs-center">
+					<div class="card-footer text-xs-center">
 					<span>
 						<a href="/deal/UserDealList.do" class="button btn btn-info">뒤로 </a>
 					</span>
@@ -376,6 +375,8 @@
 					</span>
 					<%} %>
 				</div>
+		            </div>
+		            
 				</div>
 			</div>
 		</div>
@@ -496,9 +497,13 @@
 			alert('친절 만족도를 선택해주세요');
 			return false;
 		}
-		form.review_content.value = form.temp_content.value.replace(/\n/g, " ");
-		if(confirm("리뷰를 " +type+"하시겠습니까?"))
+		form.review_content.value = form.temp_content.value.trim().replace(/\n/g, " ").replace(/<br>/g, " ");
+		if(confirm("리뷰를 " +type+"하시겠습니까?")){
 			form.submit();
+		}
+		else{
+			return false;
+		}
 		
 	}
 	

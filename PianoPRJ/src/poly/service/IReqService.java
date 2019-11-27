@@ -25,7 +25,7 @@ public interface IReqService {
 
 	List<ReqDTO> getPrivateReqList(ReqDTO rDTO) throws Exception;
 
-	List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception;
+	List<ReqDTO> getTunerPrivateReqList(String tuner_seq, int start, int end) throws Exception;
 
 	int declineReq(String req_seq, String tuner_seq) throws Exception;
 
@@ -34,5 +34,7 @@ public interface IReqService {
 	int getPublicReqListCnt(String user_seq) throws Exception;
 
 	int getPrivateReqListCnt(String user_seq) throws Exception;
+
+	int getTunerPrivateReqListCnt(String tuner_seq) throws Exception;
 
 }

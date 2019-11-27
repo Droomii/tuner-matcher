@@ -617,7 +617,8 @@ public class ReqController {
 	
 	//1:1 요청서
 	@RequestMapping(value = "TunerPrivateReqList")
-	public String TunerPrivateReqList(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+	public String TunerPrivateReqList(HttpServletRequest request, ModelMap model, HttpSession session,
+			@RequestParam(defaultValue = "1") int page) throws Exception {
 		log.info(this.getClass().getName() + ".TunerPrivateReqList start");
 		if (SessionUtil.verify(session, "1", model) != null) {
 			model = SessionUtil.verify(session, "1", model);
@@ -627,8 +628,16 @@ public class ReqController {
 		String tuner_seq = (String)session.getAttribute("user_seq");
 		log.info("tuner_seq : "+tuner_seq);
 		
+		// 페이징
+		int listCnt = reqService.getTunerPrivateReqListCnt(tuner_seq);
+		Pagination pg = new Pagination(listCnt, page);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
 		// 요청목록
-		List<ReqDTO> rList = reqService.getTunerPrivateReqList(tuner_seq);
+		List<ReqDTO> rList = reqService.getTunerPrivateReqList(tuner_seq, start, end);
 		model.addAttribute("rList", rList);
 		return "/req/TunerPrivateReqList";
 	}

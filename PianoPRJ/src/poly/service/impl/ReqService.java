@@ -124,8 +124,8 @@ public class ReqService implements IReqService {
 	}
 
 	@Override
-	public List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception {
-		return reqMapper.getTunerPrivateReqList(tuner_seq);
+	public List<ReqDTO> getTunerPrivateReqList(String tuner_seq, int start, int end) throws Exception {
+		return reqMapper.getTunerPrivateReqList(tuner_seq, start, end);
 	}
 
 	@Override
@@ -146,6 +146,11 @@ public class ReqService implements IReqService {
 	@Override
 	public int getPrivateReqListCnt(String user_seq) throws Exception {
 		return reqMapper.getPrivateReqListCnt(user_seq);
+	}
+
+	@Override
+	public int getTunerPrivateReqListCnt(String tuner_seq) throws Exception {
+		return reqMapper.getTunerPrivateReqListCnt(tuner_seq);
 	}
 
 }

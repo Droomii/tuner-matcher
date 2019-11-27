@@ -1,3 +1,4 @@
+<%@page import="poly.util.Pagination"%>
 <%@page import="poly.dto.ReqDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.NoticeDTO"%>
@@ -7,6 +8,9 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	ArrayList<ReqDTO> rList = (ArrayList<ReqDTO>)request.getAttribute("rList");
+	Pagination pg = (Pagination)request.getAttribute("pg");
+	String pageName = "TunerPrivateReqList";
+	
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -84,7 +88,9 @@
                         </div>
                         <%if(rList.size()==0) {%>
                             <div class="card-text text-xs-center">- 1:1 요청이 없습니다 - </div>
-                            <%} %>
+                            <%}else{ %>
+                        <%@include file="/WEB-INF/view/Pagination.jsp"%>
+                        <%} %>
                 </div>
                 
             

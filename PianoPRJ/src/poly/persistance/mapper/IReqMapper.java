@@ -2,6 +2,8 @@ package poly.persistance.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import config.Mapper;
 import poly.dto.ReqDTO;
 
@@ -24,7 +26,7 @@ public interface IReqMapper {
 
 	List<ReqDTO> getPrivateReqList(ReqDTO rDTO) throws Exception;
 
-	List<ReqDTO> getTunerPrivateReqList(String tuner_seq) throws Exception;
+	List<ReqDTO> getTunerPrivateReqList(@Param("tuner_seq") String tuner_seq, @Param("start") int start, @Param("end") int end) throws Exception;
 
 	int declineReq(String req_seq, String tuner_seq) throws Exception;
 
@@ -33,5 +35,7 @@ public interface IReqMapper {
 	int getPublicReqListCnt(String user_seq) throws Exception;
 
 	int getPrivateReqListCnt(String user_seq) throws Exception;
+
+	int getTunerPrivateReqListCnt(String tuner_seq) throws Exception;
 
 }

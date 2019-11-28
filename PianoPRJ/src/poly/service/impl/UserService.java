@@ -179,4 +179,9 @@ public class UserService implements IUserService {
 		return userMapper.getPendingTunerList(start, end);
 	}
 
+	@Override
+	public int acceptTuner(String tuner_seq) throws Exception {
+		return userMapper.acceptTuner(tuner_seq);
+	}
+
 }

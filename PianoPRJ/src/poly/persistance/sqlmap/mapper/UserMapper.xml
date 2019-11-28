@@ -264,4 +264,12 @@
 		)
 	WHERE RN BETWEEN #{start} AND #{end}
 	</select>
+	<update id="acceptTuner" parameterType="String">
+	UPDATE
+		USERINFO
+	SET
+		USER_STATE=1
+	WHERE
+		USER_SEQ=#{0}
+	</update>
 </mapper>

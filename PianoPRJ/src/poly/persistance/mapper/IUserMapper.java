@@ -56,6 +56,8 @@ public interface IUserMapper {
 	int getPendingTunerListCnt() throws Exception;
 
 	List<TunerDTO> getPendingTunerList(@Param("start") int start, @Param("end") int end);
+
+	int acceptTuner(String tuner_seq) throws Exception;
 	
 	
 }

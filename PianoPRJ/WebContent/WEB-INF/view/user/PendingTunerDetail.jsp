@@ -79,7 +79,7 @@
 					</div>
 					<span class="col-xs-4 text-xs-center">
 						<button class="button btn btn-warning">반려 </button>
-						<button class="button btn btn-success">승인 </button>
+						<button class="button btn btn-success" onclick="accept();">승인 </button>
 					</span>
 					</div>
 					
@@ -96,7 +96,13 @@
 	
 	
 	
-	
+	<script type="text/javascript">
+	function accept(){
+		if(confirm("가입을 승인하시겠습니까?")){
+			location.href = "/user/AcceptTuner.do?tuner_seq=<%=tDTO.getTuner_seq()%>"
+		}
+	}
+	</script>
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
 </body>

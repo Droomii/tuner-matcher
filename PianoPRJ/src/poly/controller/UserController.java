@@ -767,6 +767,11 @@ public class UserController {
 	@RequestMapping(value = "PendingTunerDetail")
 	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
 		String user_seq = request.getParameter("tuner_seq");
 
 		UserDTO uDTO = userService.getUserInfo(user_seq);
@@ -779,5 +784,40 @@ public class UserController {
 		model.addAttribute("sggGrouped", sggGrouped);
 
 		return "/user/PendingTunerDetail";
+	}
+	
+	@RequestMapping(value = "AcceptTuner")
+	public String AcceptTuner(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".AcceptTuner start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String tuner_seq = request.getParameter("tuner_seq");
+		
+		int res = 0;
+		
+		try {
+			res = userService.acceptTuner(tuner_seq);
+		}catch (Exception e) {
+			log.info(e.toString());
+		}
+		String url = "/user/PendingTunerList.do";
+		String msg = "";
+		if (res == 0) {
+			msg = "승인에 실패하였습니다.";
+			url = "/user/PendingTunerDetail.do?tuner_seq=" + tuner_seq;
+		} else {
+			msg = "승인하였습니다.";
+		}
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		log.info(this.getClass().getName() + ".AcceptTuner end");
+		return "/redirect";
 	}
 }

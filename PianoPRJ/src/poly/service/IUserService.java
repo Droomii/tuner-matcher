@@ -51,5 +51,7 @@ public interface IUserService {
 
 	List<TunerDTO> getPendingTunerList(int start, int end) throws Exception;
 
+	int acceptTuner(String tuner_seq) throws Exception;
+
 
 }

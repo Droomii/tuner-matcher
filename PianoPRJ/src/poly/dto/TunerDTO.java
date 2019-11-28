@@ -24,8 +24,16 @@ public class TunerDTO {
 	private String emd_name;
 	private String li_name;
 	private String score;
+	private String regdate;
 	
 	
+	
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
 	public String getScore() {
 		return score;
 	}

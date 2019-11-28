@@ -1,5 +1,7 @@
 package poly.service;
 
+import java.util.List;
+
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
 
@@ -44,6 +46,10 @@ public interface IUserService {
 	int updateUser(UserDTO uDTO) throws Exception;
 
 	TunerDTO getTunerAddr(String tuner_seq) throws Exception;
+
+	int getPendingTunerListCnt() throws Exception;
+
+	List<TunerDTO> getPendingTunerList(int start, int end) throws Exception;
 
 
 }

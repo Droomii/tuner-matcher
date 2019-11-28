@@ -93,6 +93,7 @@ public class UserController {
 		session.setAttribute("user_seq", uDTO.getUser_seq());
 		session.setAttribute("user_type", uDTO.getUser_type());
 		session.setAttribute("user_nick", uDTO.getUser_nick());
+		session.setAttribute("user_state", uDTO.getUser_state());
 		return "1";
 	}
 
@@ -495,9 +496,31 @@ public class UserController {
 	
 	@RequestMapping(value = "DoTunerInfoEdit")
 	public String DoTunerInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO, @RequestParam(value = "profile_img") MultipartFile mf) throws Exception {
+			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO,
+			@RequestParam(value = "profile_img") MultipartFile profile_img,
+			@RequestParam(value = "profile_img") MultipartFile cert_img) throws Exception {
 
+		
 		String user_seq = (String)session.getAttribute("user_seq");
+		
+		if (!profile_img.isEmpty()) {
+			if (!FileUtil.isImage(profile_img)) {
+
+				model.addAttribute("msg", "프로필 이미지가 부적절한 파일 형식입니다.");
+				model.addAttribute("url", "/myPage/MyInfo.do");
+				return "/redirect";
+			}
+		}
+		
+		if (!cert_img.isEmpty()) {
+			if (!FileUtil.isImage(cert_img)) {
+				
+				model.addAttribute("msg", "자격증 이미지가 부적절한 파일 형식입니다.");
+				model.addAttribute("url", "/myPage/MyInfo.do");
+				return "/redirect";
+			}
+		}
+		
 		
 		if(!CmmUtil.nvl(uDTO.getPassword()).equals("")) {
 			uDTO.setPassword(EncryptUtil.encHashSHA256(uDTO.getPassword()));
@@ -546,14 +569,30 @@ public class UserController {
 		
 		log.info(uniqueSgg);
 
-		if(!mf.isEmpty()) {
+		if(!profile_img.isEmpty()) {
 			try {
 			log.info("save image file!!");
 			String path = "c:/piano_prj/tuner/" + user_seq + "/";
-			String ext = FileUtil.saveImage(mf, "profile", path);
+			String ext = FileUtil.saveImage(profile_img, "profile", path);
 			tDTO.setId_photo_dir(ext);
 			}catch(Exception e) {
-				msg = "이미지 파일 업로드에 실패했습니다.";
+				msg = "프로필 이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			
+			
+		}
+		
+		if(!cert_img.isEmpty()) {
+			try {
+				log.info("save image file!!");
+				String path = "c:/piano_prj/tuner/" + user_seq + "/";
+				String ext = FileUtil.saveImage(cert_img, "cert", path);
+				tDTO.setCert_dir(ext);
+			}catch(Exception e) {
+				msg = "자격증 이미지 파일 업로드에 실패했습니다.";
 				model.addAttribute("msg", msg);
 				model.addAttribute("url", url);
 				return "/redirect";
@@ -564,6 +603,12 @@ public class UserController {
 		
 		uDTO.setUser_seq(user_seq);
 		tDTO.setTuner_seq(user_seq);
+		
+		String user_state = (String) session.getAttribute("user_state");
+		if(user_state.equals("2")) {
+			uDTO.setUser_state("x");
+			tDTO.setReject_reason("x");
+		}
 		
 		int result = 0;
 		try {
@@ -581,6 +626,10 @@ public class UserController {
 			userService.addTunerSgg(user_seq, tDTO);
 			
 			msg = "수정하였습니다.";
+			if(user_state.equals("2")) {
+				session.setAttribute("user_state", "0");
+			}
+			
 		}
 
 		model.addAttribute("msg", msg);
@@ -683,5 +732,52 @@ public class UserController {
 		log.info(this.getClass().getName() + ".TunerDetail end");
 		return "/user/TunerDetail";
 	}
+	
+	@RequestMapping(value = "PendingTunerList")
+	public String PendingTunerList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".PendingTunerList start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		// 페이징
+		int listCnt = userService.getPendingTunerListCnt();
+		
+		Pagination pg = new Pagination(listCnt, page);
 
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		List<TunerDTO> tList = userService.getPendingTunerList(start, end);
+		if(tList==null) {
+			tList = new ArrayList<TunerDTO>();
+		}
+		log.info("tList size : " + tList.size());
+		
+		model.addAttribute("tList", tList);
+		
+		log.info(this.getClass().getName() + ".PendingTunerList end");
+		return "/user/PendingTunerList";
+	}
+
+	@RequestMapping(value = "PendingTunerDetail")
+	public String MyInfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+
+		String user_seq = request.getParameter("tuner_seq");
+
+		UserDTO uDTO = userService.getUserInfo(user_seq);
+		model.addAttribute("uDTO", uDTO);
+
+		TunerDTO tDTO = userService.getTunerInfo(user_seq);
+		model.addAttribute("tDTO", tDTO);
+		Map<String, ArrayList<String>> sggGrouped = sggService.getTunerSgg(user_seq);
+		log.info("sggGrouped : " + sggGrouped);
+		model.addAttribute("sggGrouped", sggGrouped);
+
+		return "/user/PendingTunerDetail";
+	}
 }

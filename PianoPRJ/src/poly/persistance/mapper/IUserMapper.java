@@ -1,5 +1,7 @@
 package poly.persistance.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import config.Mapper;
@@ -50,6 +52,10 @@ public interface IUserMapper {
 	int deleteUser(String user_seq) throws Exception;
 
 	TunerDTO getTunerAddr(String tuner_seq) throws Exception;
+
+	int getPendingTunerListCnt() throws Exception;
+
+	List<TunerDTO> getPendingTunerList(@Param("start") int start, @Param("end") int end);
 	
 	
 }

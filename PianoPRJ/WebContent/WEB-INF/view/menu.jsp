@@ -18,7 +18,10 @@
       <!-- 대쉬보드 설정 -->
       <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
-        <%if(user_type.equals("1")){ %>
+        <%if(user_type.equals("1")){
+        if(user_state.equals("1")){%>
+
+        
          <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
         </li>
          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
@@ -42,6 +45,14 @@
               <li><a href="/req/TunerPrivateReqList.do" class="menu-item">1:1 요청</a></li>
             </ul>
           </li>
+          <%}else{ %>
+          <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
+        </li>
+        <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
+        </li>
+        <li class=" nav-item"><a href="/myPage/MyInfo.do"><i class="icon-home3"></i><span class="menu-title">개인정보</span></a>
+        </li>
+          <%} %>
           <%} else if(user_type.equals("0")){%>
           <li class=" nav-item"><a href="/main.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">홈</span></a>
           </li>
@@ -76,7 +87,7 @@
             <ul class="menu-content">
               <li><a href="#" class="menu-item">조율사 조회</a>
               </li>
-              <li><a href="#" class="menu-item">조율사 가입요청 조회</a>
+              <li><a href="/user/PendingTunerList.do" class="menu-item">조율사 가입요청 조회</a>
               </li>
             </ul>
           </li>

@@ -8,6 +8,7 @@
 <%
 	MainDTO mDTO = (MainDTO)request.getAttribute("mDTO");
 List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
+	String reject_reason = (String)request.getAttribute("reject_reason");
 %>
 <!DOCTYPE html>
 
@@ -56,8 +57,8 @@ List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
 	
 <!-- 조율사 메인 -->
 <%if(user_type.equals("1")){
+	if(user_state.equals("1")){%>
 	
-	%>
 	<div class="app-content content container-fluid">
       <div class="content-wrapper">
         <div class="content-header row">
@@ -179,6 +180,31 @@ List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
         </div>
       </div>
     </div>
+    <%}else{ %>
+	<div class="app-content content container-fluid">
+		<div class="content-wrapper">
+			<div class="content-header row"></div>
+			<div class="content-body">
+				<!-- stats -->
+				<div class="row">
+					<div class="text-xs-center" style="color: rgb(100, 100, 100)">
+						<div>
+							<i class="icon-android-alert" style="font-size: 10rem;"></i>
+						</div>
+						<%if(user_state.equals("0")){ %>
+						<div style="font-size: 1.5rem;">가입 미승인 조율사입니다.<br>승인 이후 서비스를 사용하실 수 있습니다.</div>
+						<%}else{ %>
+						<div style="font-size: 1.5rem;">가입 요청이 반려되었습니다.</div>
+						<div style="font-size: 1.5rem;">개인정보 수정을 통해 다시 요청할 수 있습니다.</div>
+						<div style="font-size: 1.2em;">반려사유 : <%=CmmUtil.nvl(reject_reason, true) %></div>
+						<%} %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%} %>
 <%}else if(user_type.equals("0")){%>
 <div class="app-content content container-fluid">
       <div class="content-wrapper">

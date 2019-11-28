@@ -1,5 +1,7 @@
 package poly.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -165,6 +167,16 @@ public class UserService implements IUserService {
 				.replaceAll("&#41;", ")")
 				);
 		return tDTO;
+	}
+
+	@Override
+	public int getPendingTunerListCnt() throws Exception {
+		return userMapper.getPendingTunerListCnt();
+	}
+
+	@Override
+	public List<TunerDTO> getPendingTunerList(int start, int end) throws Exception {
+		return userMapper.getPendingTunerList(start, end);
 	}
 
 }

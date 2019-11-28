@@ -9,11 +9,19 @@ public class UserDTO {
 	String user_name;
 	String user_sex;
 	String user_nick;
+	String user_state;
 	String user_tel;
 	String regdate;
 	String upddate;
 	String updater_seq;
 	
+	
+	public String getUser_state() {
+		return user_state;
+	}
+	public void setUser_state(String user_state) {
+		this.user_state = user_state;
+	}
 	public String getUser_seq() {
 		return user_seq;
 	}

@@ -28,7 +28,8 @@
 				USER_TEL,
 				REGDATE,
 				UPDDATE,
-				UPDATER_SEQ
+				UPDATER_SEQ,
+				USER_STATE
 			) VALUES(
 				USER_SEQ.NEXTVAL,
 				1,
@@ -41,7 +42,8 @@
 				#{u.user_tel},
 				SYSDATE,
 				SYSDATE,
-				USER_SEQ.CURRVAL
+				USER_SEQ.CURRVAL,
+				0
 			)
 		
 			INTO TUNER(
@@ -165,6 +167,7 @@
 	<select id="getTunerInfo" parameterType="String" resultType="TunerDTO">
 	SELECT
 		TUNER_SEQ,
+		REJECT_REASON,
 		ID_PHOTO_DIR,
 		TUNER_COMMENT,
 		TUNER_LEVEL,
@@ -202,6 +205,9 @@
 		<if test="id_photo_dir!=null">
 		ID_PHOTO_DIR=#{id_photo_dir},
 		</if>
+		<if test="reject_reason!=null">
+		REJECT_REASON=NULL,
+		</if>
 		ADDR=#{addr},
 		AFFILIATION=#{affiliation},
 		X_POS=#{x_pos},
@@ -218,6 +224,9 @@
 		<if test="password!=null">
 		PASSWORD=#{password},
 		</if>
+		<if test="user_state!=null">
+		USER_STATE=0,
+		</if>
 		USER_NICK=#{user_nick},
 		USER_TEL=#{user_tel},
 		UPDDATE=SYSDATE,
@@ -226,5 +235,33 @@
 	</update>
 	<select id="getTunerAddr" parameterType="String" resultType="TunerDTO">
 	SELECT ADDR, X_POS, Y_POS FROM TUNER WHERE TUNER_SEQ=#{0}
+	</select>
+	<select id="getPendingTunerListCnt" resultType="Integer">
+	SELECT COUNT(1) FROM USERINFO WHERE USER_STATE=0
+	</select>
+	<select id="getPendingTunerList" parameterType="String" resultType="TunerDTO">
+	SELECT * FROM
+		(SELECT
+			ROWNUM AS RN,
+			TUNER_SEQ,
+			TUNER_NAME,
+			TUNER_LEVEL,
+			REGDATE
+		FROM
+			(SELECT
+				U.USER_SEQ AS TUNER_SEQ,
+				U.USER_NAME AS TUNER_NAME,
+				T.TUNER_LEVEL AS TUNER_LEVEL,
+				U.REGDATE AS REGDATE
+			FROM
+				USERINFO U, TUNER T
+			WHERE
+				U.USER_SEQ = T.TUNER_SEQ
+				AND U.USER_STATE = 0
+			ORDER BY
+				TUNER_SEQ DESC
+			)
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 </mapper>

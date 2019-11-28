@@ -154,8 +154,19 @@
 									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.nvl(tDTO.getTuner_exp()).replaceAll("<br>", "\n")%></textarea>
 									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
+								<%if(!user_state.equals("1")){ %>
+								<div class="form-group has-feedback">
+									<label>자격증 사진</label>
+									<label id="projectinput7" class="file center-block">
+										<input type="file" id="cert_img" name="cert_img" accept=".png,.gif,.jpg,.jpeg">
+										<span class="file-custom"></span>
+									</label>
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
+								</div>
+								<%} %>
 								<div class="form-group">
-									<label>프로필 사진(미변경시 공란으로 유지)</label>
+									<label>프로필 사진</label>
 									<label id="img_label"  class="file center-block">
 										<input type="file" name="profile_img" id="profile_img" accept=".png,.gif,.jpg,.jpeg">
 										<span class="file-custom"></span>

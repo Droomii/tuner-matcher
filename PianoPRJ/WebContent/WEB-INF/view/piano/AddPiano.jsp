@@ -44,7 +44,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="piano_name" class="control-label">피아노 이름<span class="red">*</span></label>
-											<input type="text" id="piano_name" maxlength="45" class="form-control" placeholder="피아노의 이름을 지어주세요" name="piano_name" required >
+											<input type="text" id="piano_name" maxlength="30" pattern="^[가-힣A-Za-z1-9]{1,}[1-9가-힣A-Za-z\s]*" data-pattern-error="영문, 한글, 숫자 및 띄어쓰기만 가능합니다(띄어쓰기로는 시작 불가능)" class="form-control" placeholder="피아노의 이름을 지어주세요" name="piano_name" required >
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>										
 										</div>
@@ -54,7 +54,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="brand">피아노 브랜드<span class="red">*</span></label>
-											<input type="text" id="brand" class="form-control" maxlength="20" placeholder="예) 삼익, 영창, 야마하" name="brand" required>
+											<input type="text" id="brand" class="form-control" maxlength="15" pattern="^[가-힣A-Za-z1-9]{1,}[1-9가-힣A-Za-z\s]*" data-pattern-error="영문, 한글, 숫자 및 띄어쓰기만 가능합니다(띄어쓰기로 시작 불가능)" placeholder="예) 삼익, 영창, 야마하" name="brand" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -62,7 +62,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="player_type">피아노 용도<span class="red">*</span></label>
-											<input type="text" id="player_type" class="form-control" maxlength="20" placeholder="예)가정용, 전공자용, 학원용, 공연용 등" name="player_type" required>
+											<input type="text" id="player_type" class="form-control" maxlength="15" pattern="^[가-힣A-Za-z1-9]{1,}[1-9가-힣A-Za-z\s]*" data-pattern-error="영문, 한글, 숫자 및 띄어쓰기만 가능합니다(띄어쓰기로 시작 불가능)" placeholder="예)가정용, 전공자용, 학원용, 공연용 등" name="player_type" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -70,7 +70,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="piano_desc">피아노 설명</label>
-											<input type="text" id="piano_desc" class="form-control" placeholder="피아노의 정보를 간략히 적어주세요(상세위치, 모델 등)" name="piano_desc">
+											<input type="text" id="piano_desc" class="form-control" maxlength="100" pattern="^[가-힣A-Za-z1-9]{1,}[1-9가-힣A-Za-z\s]*" data-pattern-error="영문, 한글, 숫자 및 띄어쓰기만 가능합니다(띄어쓰기로 시작 불가능)" placeholder="피아노의 정보를 간략히 적어주세요(상세위치, 모델 등)" name="piano_desc">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -100,7 +100,7 @@
 											  </div>
 											</div>
 											<!-- /modal -->
-											<input type="text" id="serial" class="form-control" placeholder="피아노 스케일(덮개를 열면 보이는 철재 구조물)에 적인 일련번호를 적어주세요" name="serial">
+											<input type="text" id="serial" pattern="^[A-Za-z1-9]*" class="form-control" data-pattern-error="영문 및 숫자만 입력 가능합니다" placeholder="피아노 스케일(덮개를 열면 보이는 철재 구조물)에 적인 일련번호를 적어주세요" name="serial">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>

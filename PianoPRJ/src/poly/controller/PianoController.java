@@ -61,6 +61,8 @@ public class PianoController {
 			}
 		}
 		
+		
+		pDTO.setPiano_photo_dir(FileUtil.getExt(mf));
 		res = pianoService.insertPiano(pDTO);
 		
 		if(!mf.isEmpty()) {
@@ -68,12 +70,13 @@ public class PianoController {
 			log.info("save image file!!");
 			String path = "c:/piano_prj/piano/" + pDTO.getPiano_seq() + "/";
 			String ext = FileUtil.saveImage(mf, "image", path);
+			log.info("ext : " + ext);
 			Thumbnails.of(new File(path + "image." + ext))
 			.size(800, 600)
 			.addFilter(new Canvas(600, 450, Positions.CENTER, Color.WHITE))
 			.toFile(path + "thumbnail." + ext);
 			
-			pDTO.setPiano_photo_dir(ext);
+			
 			}catch(Exception e) {
 				msg = "이미지 파일 업로드에 실패했습니다.";
 				model.addAttribute("msg", msg);
@@ -205,11 +208,23 @@ public class PianoController {
 			return "/redirect";
 		}
 		
+		String msg = "";
+		String url = "/piano/MyPianoList.do";
+		
+		
+		if(!mf.isEmpty()) {
+			if(!FileUtil.isImage(mf)) {
+				msg = "이미지 파일이 아닙니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+		}
+		
 		
 		pDTO.setOwner_seq(user_seq);
 		
-		String msg = "";
-		String url = "/piano/MyPianoList.do";
+		
 		if(!mf.isEmpty()) {
 			
 			try {

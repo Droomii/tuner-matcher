@@ -126,6 +126,9 @@
 		PIANO_TYPE = #{piano_type},
 		ADDR = #{addr},
 		PLAYER_TYPE = #{player_type},
+	<if test="piano_photo_dir!=null">
+		PIANO_PHOTO_DIR = #{piano_photo_dir},
+	</if>
 		LAST_TUNED_DATE = #{last_tuned_date},
 		SGG_CODE = #{sgg_code},
 		X_POS = #{x_pos},

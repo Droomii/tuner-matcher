@@ -384,6 +384,7 @@
    	
     $('#regForm').validator().on('submit', function (e) {
     	  if (e.isDefaultPrevented()) {
+    		  alert('필수항목을 입력해주세요')
     	  } else {
     		var arr = [];
    	    	$(".sgg-detail:checked").each(function () {

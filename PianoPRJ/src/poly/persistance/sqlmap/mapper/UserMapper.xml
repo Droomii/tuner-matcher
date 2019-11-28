@@ -215,6 +215,9 @@
 	<update id="updateUser" parameterType="UserDTO">
 	UPDATE USERINFO SET
 		EMAIL=#{email},
+		<if test="password!=null">
+		PASSWORD=#{password},
+		</if>
 		USER_NICK=#{user_nick},
 		USER_TEL=#{user_tel},
 		UPDDATE=SYSDATE,

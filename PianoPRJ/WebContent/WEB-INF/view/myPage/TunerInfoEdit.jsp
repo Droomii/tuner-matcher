@@ -60,7 +60,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/DoTunerInfoEdit.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" id="regForm" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/DoTunerInfoEdit.do" method="post" autocomplete="off">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -71,7 +71,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_nick()%>" type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
+											<input value="<%=uDTO.getUser_nick()%>" type="text" id="projectinput2" pattern="^[가-힣A-z][가-힣A-z0-9]{1,}$" maxlength="7" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다(숫자로 시작 불가)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -81,7 +81,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="email">이메일<span class="red">*</span></label>
-											<input value="<%=uDTO.getEmail()%>" type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/EditDupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<input value="<%=uDTO.getEmail()%>" type="text" id="email" class="form-control" maxlength="45" placeholder="이메일을 입력해주세요" name="email" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"  data-remote="/user/EditDupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
@@ -90,12 +90,30 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." name="user_tel" required onKeyUp="phoneNumberFormat(this)">
+											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[^1-9][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="password">암호(미변경시 공란으로 유지)</label>
+											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="verify_passwd">암호 확인</label>
+											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-error=" " data-match-error="암호가 일치하지 않습니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
 									</div>
 								</div>
+								
+								
 								<div class="row">
 								</div>
 
@@ -119,23 +137,25 @@
 								</div>
 								<div class="form-group has-feedback">
 									<label for="sosok">소속<span class="red">*</span></label>
-									<input value="<%=tDTO.getAffiliation()%>" type="text" id="sosok" name="affiliation" class="form-control" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
+									<input value="<%=tDTO.getAffiliation()%>" type="text" id="sosok" name="affiliation" class="form-control" maxlength="30" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 
 								<div class="form-group">
-									<label for="donationinput7">한줄 소개</label>
-									<textarea id="donationinput7" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment()))%></textarea>
+									<label for="tuner_comment">한줄 소개</label>
+									<textarea id="tuner_comment" onchange="checkBytes(this, 200);" onKeyUp="checkBytes(this, 200);" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment()))%></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/200 bytes</div>
 								</div>
 								
 								<div class="form-group">
 								<input hidden="hidden" id="tuner_exp" name="tuner_exp">
 									<label for="temp_exp">이력</label>
-									<textarea id="temp_exp" rows="20" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_exp())).replaceAll("<br>", "\n")%></textarea>
+									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_exp())).replaceAll("<br>", "\n")%></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
 								<div class="form-group">
-									<label>프로필 사진<span class="red">*</span></label>
+									<label>프로필 사진(미변경시 공란으로 유지)</label>
 									<label id="img_label"  class="file center-block">
 										<input type="file" name="profile_img" id="profile_img" accept=".png,.gif,.jpg,.jpeg">
 										<span class="file-custom"></span>
@@ -210,8 +230,18 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
+	<script src="/js/bytechecker.js" type="text/javascript"></script>
 	<script>
-    
+    $("#password").on('keyup', function(){
+    	if($("#password").val()!=""){
+    		$("#verify_passwd").attr('required', 'required');
+    	}else{
+    		$("#verify_passwd").removeAttr('required')
+    	}
+    	$("#verify_passwd").focusout();
+    })
+	
+	
     // 전화번호 형식 자동변환
     function phoneNumberFormat(obj) {
     	obj.value = obj.value.replace(/[^0-9\-]/g, "");
@@ -273,11 +303,23 @@
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
-    function doSubmit(){
-		$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
-		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
-		form.submit();
-	}
+    $('#regForm').validator().on('submit', function (e) {
+  	  if (e.isDefaultPrevented()) {
+  		  alert('필수항목을 입력해주세요')
+  	  } else {
+  		var arr = [];
+ 	    	$(".sgg-detail:checked").each(function () {
+ 	    	    arr.push($(this).val());
+ 	    	});
+ 	    	if(arr.length==0){
+ 	    		alert('최소 하나의 활동지역은 선택해야 합니다.');
+ 	    		e.preventDefault();
+ 	    		return;
+ 	    	}
+ 	    	$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
+  		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
+  	  }
+  	})
     
     // 상세 시군구코드 구하기
     function getDetailSgg(elem){
@@ -365,7 +407,6 @@
    	}
    	
    	window.onload = function(){
-   		console.log("sggkeys length : " +sggKeys.length)
    		for(var i=0; i<sggKeys.length; i++){
    			
 	   		var svcArea = document.getElementsByClassName('svc-area');
@@ -387,6 +428,9 @@
 	   		    }
 	   		}
    		}
+   		checkBytes(document.getElementById('tuner_comment'), 200)
+   		checkBytes(document.getElementById('temp_exp'), 4000)
+   		
    	}
    	
     </script>

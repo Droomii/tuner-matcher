@@ -35,6 +35,7 @@ import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.EncryptUtil;
 import poly.util.FileUtil;
 import poly.util.Pagination;
 import poly.util.SessionUtil;
@@ -498,6 +499,9 @@ public class UserController {
 
 		String user_seq = (String)session.getAttribute("user_seq");
 		
+		if(uDTO.getPassword()!=null) {
+			uDTO.setPassword(EncryptUtil.encHashSHA256(uDTO.getPassword()));
+		}
 		
 		// 지역 중첩 제거 코드
 		String[] sggCodes = tDTO.getSgg_code().split(",");

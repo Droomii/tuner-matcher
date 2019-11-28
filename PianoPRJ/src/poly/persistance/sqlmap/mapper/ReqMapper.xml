@@ -174,7 +174,9 @@
 	FROM REQUEST R, PIANO P
 	WHERE 
 		R.PIANO_SEQ=P.PIANO_SEQ
+		<if test='!sgg_code.equals("00%")'>
 		AND P.SGG_CODE LIKE #{0}
+		</if>
 		AND R.PRIVATE_SEQ IS NULL
 		AND R.REQ_STATE=0
 	</select>

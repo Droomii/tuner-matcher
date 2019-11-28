@@ -116,13 +116,13 @@
 <!-- Header footer section start -->
 <section id="header-footer">
 	<div class="row">
-			<div class="col-xs-12 col-lg-6 offset-lg-3">
-				<div class="card">
-					<div class="card-header">
-						<h4 class="card-title" id="basic-layout-form">견적 정보</h4>
-					</div>
-		            <div class="card-body collapse in">
-			            <div class="card-block">
+		<div class="col-xs-12 col-lg-6 offset-lg-3">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title" id="basic-layout-form">견적 정보</h4>
+				</div>
+				<div class="card-body collapse in">
+			    	<div class="card-block">
 			            <div>
 							<h5 class="form-section text-bold-600 float-xs-left" >조율사 정보</h5>
 							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#tuner-detail">조율사 상세정보</button>
@@ -130,57 +130,57 @@
 							<div id="modal-container"></div>
 							<!-- /modal -->
 						</div>
-							<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=tuner_name %></div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel() %></div></div>
-								</div>
+						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=tuner_name %></div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel() %></div></div>
 							</div>
 						</div>
-						<div class="card-block">
+					</div>
+					<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
-									<%if(pDTO.getPiano_photo_dir()!=null){ %>
-									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
-									<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap">
-									<%}else{ %>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
-									
-									<%} %>
-									</div>
-									
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
 							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
 							</div>
-						
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
+								<%if(pDTO.getPiano_photo_dir()!=null){ %>
+								<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
+								<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap"></div>
+								<%}else{ %>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
+								
+								<%} %>
+							</div>
+									
+						</div>
 					</div>
+						
+				</div>
 					
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">요청서 정보</h5>
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 					<%if(deal_state.equals("7")){ %>
-					<div id="review-container">
+					<div id="review-cont">
 					<%if(revDTO==null){ %>
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">고객 리뷰</h5>
@@ -357,8 +357,8 @@
 							<button onclick="reviewEdit();" class="button btn btn-sm btn-success">수정</button>
 						</span>
 						</div>
+						</div>
 						<%} %>
-					</div>
 					</div>
 					<%} %>
 					<%} %>
@@ -430,9 +430,11 @@
 					alert('비정상적인 접근입니다.');
 					return;
 				}else{
-					$("#review-container").html(data);
+					$("#review-cont").html(data);
+					checkBytes(document.getElementById('temp_content'), 500)
+					
 				}
-			}
+			},
 		});
 		
 	}
@@ -461,7 +463,15 @@
 		var s = el.value;
 		var last;
 	    for(b=i=0; c=s.charCodeAt(i);i++) {
-	    	b+=c>>11?3:c>>7?2:1;
+	    	if(s.charAt(i).match(/[<>]/)!=null){
+	    		b += 5;
+	    	}else if(s.charAt(i).match(/[\(\)']/)!=null){
+	    		b += 6;
+	    	}else if(s.charAt(i)=="\n"){
+	    		b += 12;
+	    	}else{
+	    		b+=c>>11?3:c>>7?2:1;
+	    	}
 	    	if(b > limit){
 	    		alert('글자수를 초과하였습니다.');
 		    	el.value = el.value.substring(0, i);

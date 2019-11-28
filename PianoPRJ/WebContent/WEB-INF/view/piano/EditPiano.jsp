@@ -161,7 +161,7 @@
 									<div class="form-group">
 										<label>피아노 사진 </label>
 										<label id="piano_image" class="file center-block">
-											<input type="file" id="piano_img" name="piano_img">
+											<input type="file" id="piano_img" name="piano_img" accept=".png,.gif,.jpg,.jpeg">
 											<span class="file-custom"></span>
 										</label>
 									</div>

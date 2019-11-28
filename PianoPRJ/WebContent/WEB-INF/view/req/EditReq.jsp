@@ -163,7 +163,7 @@
 								<div class="form-group">
 									<label>참고사진</label>
 									<label id="req_img_label" class="file center-block">
-										<input type="file" id="req_img" name="req_img">
+										<input type="file" id="req_img" name="req_img" accept=".png,.gif,.jpg,.jpeg">
 										<span class="file-custom"></span>
 									</label>
 								</div>

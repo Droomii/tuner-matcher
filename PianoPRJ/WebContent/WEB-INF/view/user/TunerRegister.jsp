@@ -78,7 +78,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -185,20 +185,25 @@
 									</div>
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group has-feedback">
 									<label>자격증 사진<span class="red">*</span></label>
 									<label id="projectinput7" class="file center-block">
-										<input type="file" id="file">
+										<input type="file" id="cert_img" name="cert_img" accept=".png,.gif,.jpg,.jpeg" required data-error="자격증 사진은 필수입니다.">
 										<span class="file-custom"></span>
 									</label>
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
+									
 								</div>
 								
-								<div class="form-group">
+								<div class="form-group has-feedback">
 									<label>프로필 사진<span class="red">*</span></label>
 									<label id="projectinput7" class="file center-block">
-										<input type="file" id="file">
+										<input type="file" id="profile_img" name="profile_img"accept=".png,.gif,.jpg,.jpeg" required data-error="프로필 사진은 필수입니다.">
 										<span class="file-custom"></span>
 									</label>
+									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<div class="help-block with-errors"></div>
 								</div>
 
 								<div class="form-group has-feedback">

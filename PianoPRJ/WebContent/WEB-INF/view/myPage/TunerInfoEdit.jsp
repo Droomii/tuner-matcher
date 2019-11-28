@@ -137,7 +137,7 @@
 								<div class="form-group">
 									<label>프로필 사진<span class="red">*</span></label>
 									<label id="img_label"  class="file center-block">
-										<input type="file" name="profile_img" id="profile_img">
+										<input type="file" name="profile_img" id="profile_img" accept=".png,.gif,.jpg,.jpeg">
 										<span class="file-custom"></span>
 									</label>
 								</div>

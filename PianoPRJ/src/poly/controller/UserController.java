@@ -134,8 +134,13 @@ public class UserController {
 
 	@RequestMapping(value = "TunerRegProc")
 	public String TunerRegProc(HttpServletRequest request, HttpServletResponse response, ModelMap model,
-			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO) throws Exception {
+			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO,
+			@RequestParam(value = "profile_img") MultipartFile profile_img,
+			@RequestParam(value = "cert_img") MultipartFile cert_img) throws Exception {
 
+		
+		
+		
 		// 지역 중첩 제거 코드
 		String[] sggCodes = tDTO.getSgg_code().split(",");
 		Set<String> sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
@@ -175,26 +180,48 @@ public class UserController {
 		tDTO.setSgg_code(uniqueSgg);
 
 		// 더미
-		tDTO.setId_photo_dir("dummy");
+		
 		tDTO.setCert_dir("dummy");
 		int result;
-
-		log.info("-------tunerDTO--------");
-		log.info("addr : " + tDTO.getAddr());
-		log.info("affiliation : " + tDTO.getAffiliation());
-		log.info("sgg_code : " + tDTO.getSgg_code());
-		log.info("x : " + tDTO.getX_pos());
-		log.info("y : " + tDTO.getY_pos());
-		log.info("sido : " + tDTO.getSido_name());
-		log.info("sgg : " + tDTO.getSgg_name());
-		log.info("li : " + tDTO.getLi_name());
 
 		log.info(uniqueSgg);
 
 		result = userService.regTuner(uDTO, tDTO);
-
 		String msg = "";
 		String url = "/user/UserLogin.do";
+		
+		if(!FileUtil.isImage(profile_img) || !FileUtil.isImage(cert_img)) {
+			
+			model.addAttribute("msg", "부적절한 파일 형식입니다.");
+			model.addAttribute("url", "/user/TunerRegister.do");
+			return "/redirect";
+		}
+		
+		try {
+		log.info("save image file!!");
+		String path = "c:/piano_prj/tuner/" + uDTO.getUser_seq() + "/";
+		String ext = FileUtil.saveImage(profile_img, "profile", path);
+		tDTO.setId_photo_dir(ext);
+		}catch(Exception e) {
+			msg = "프로필 사진 업로드에 실패했습니다.";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "/redirect";
+		}
+		
+		try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/tuner/" + uDTO.getUser_seq() + "/";
+			String ext = FileUtil.saveImage(cert_img, "cert", path);
+			tDTO.setCert_dir(ext);
+		}catch(Exception e) {
+			msg = "자격증 사진 업로드에 실패했습니다.";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "/redirect";
+		}
+		
+		
 		if (result == 0) {
 			msg = "가입에 실패하였습니다.";
 		} else {

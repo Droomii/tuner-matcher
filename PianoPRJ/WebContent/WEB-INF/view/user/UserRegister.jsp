@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" maxlength="13" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" onKeyUp="phoneNumberFormat(this);"required>
+											<input type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -234,6 +234,7 @@
 	    }
 	
 	    obj.value = tel;
+	    $(obj).focusout();
 	}
 
     </script>

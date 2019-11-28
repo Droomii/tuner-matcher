@@ -179,16 +179,9 @@ public class UserController {
 		// 중첩 지역 제거한 시군구코드
 		tDTO.setSgg_code(uniqueSgg);
 
-		// 더미
-		
-		tDTO.setCert_dir("dummy");
 		int result;
 
 		log.info(uniqueSgg);
-
-		result = userService.regTuner(uDTO, tDTO);
-		String msg = "";
-		String url = "/user/UserLogin.do";
 		
 		if(!FileUtil.isImage(profile_img) || !FileUtil.isImage(cert_img)) {
 			
@@ -197,11 +190,19 @@ public class UserController {
 			return "/redirect";
 		}
 		
+		tDTO.setId_photo_dir(FileUtil.getExt(profile_img));
+		tDTO.setCert_dir(FileUtil.getExt(cert_img));
+		result = userService.regTuner(uDTO, tDTO);
+		String msg = "";
+		String url = "/user/UserLogin.do";
+		
+		
+		
 		try {
-		log.info("save image file!!");
-		String path = "c:/piano_prj/tuner/" + uDTO.getUser_seq() + "/";
-		String ext = FileUtil.saveImage(profile_img, "profile", path);
-		tDTO.setId_photo_dir(ext);
+			log.info("save profile image file!!");
+			String path = "c:/piano_prj/tuner/" + uDTO.getUser_seq() + "/";
+			FileUtil.saveImage(profile_img, "profile", path);
+		
 		}catch(Exception e) {
 			msg = "프로필 사진 업로드에 실패했습니다.";
 			model.addAttribute("msg", msg);
@@ -210,10 +211,10 @@ public class UserController {
 		}
 		
 		try {
-			log.info("save image file!!");
+			log.info("save cert image file!!");
 			String path = "c:/piano_prj/tuner/" + uDTO.getUser_seq() + "/";
-			String ext = FileUtil.saveImage(cert_img, "cert", path);
-			tDTO.setCert_dir(ext);
+			FileUtil.saveImage(cert_img, "cert", path);
+			
 		}catch(Exception e) {
 			msg = "자격증 사진 업로드에 실패했습니다.";
 			model.addAttribute("msg", msg);

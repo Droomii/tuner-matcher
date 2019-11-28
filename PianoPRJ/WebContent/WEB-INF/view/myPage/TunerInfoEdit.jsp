@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" name="user_tel" required onKeyUp="phoneNumberFormat(this)">
+											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." name="user_tel" required onKeyUp="phoneNumberFormat(this)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -266,6 +266,7 @@
 	    }
 	
 	    obj.value = tel;
+	    $(obj).focusout();
 	}
 
     </script>

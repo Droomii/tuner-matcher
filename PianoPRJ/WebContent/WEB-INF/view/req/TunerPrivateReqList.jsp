@@ -79,8 +79,8 @@
                             
                             <%for(ReqDTO rDTO : rList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/PrivateReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'">
-                                    <div class="table-cell"><%=rDTO.getRequester_nick() %></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getReq_title()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getRequester_nick(), true) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getReq_title(), true) %></div>
                                     <div class="table-cell"><%=rDTO.getRegdate().substring(0,11) %></div>
                                     <div class="table-cell"><%=rDTO.getBids().equals("0") ? "미답변" : "답변완료" %></div>
                             </div>

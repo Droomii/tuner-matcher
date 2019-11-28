@@ -16,7 +16,7 @@
     
     <%for(DealDTO dDTO : dList){ %>
     <div class="table-row item" role="button" onclick="location.href='/req/ReqBidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
-            <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name())%></div>
+            <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name(), true)%></div>
             <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTotal()) %>원</div>
             <div class="table-cell"><%=CmmUtil.nvl(dDTO.getFullDate()) %></div>
     </div>

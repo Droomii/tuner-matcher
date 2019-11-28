@@ -108,11 +108,11 @@
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand()) %></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand(), true) %></div>
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial()) %></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial(), true) %></div>
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
@@ -120,7 +120,7 @@
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type()) %></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type(), true) %></div>
 								</div>
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
@@ -229,7 +229,7 @@
                             
                             <%for(DealDTO dDTO : dList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/ReqBidDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
-                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name())%></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name(), true)%></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTotal()) %>원</div>
                                     <div class="table-cell"><%=CmmUtil.nvl(dDTO.getFullDate()) %></div>
                             </div>

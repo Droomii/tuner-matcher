@@ -77,7 +77,7 @@
                             <%for(DealDTO dDTO : dList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/deal/TunerDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>&back=past'">
                                     <div class="table-cell"><%=CmmUtil.nvl(dDTO.getDeal_seq())%></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getRequester_nick()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getRequester_nick(), true) %></div>
                                     <div class="table-cell"><%=dDTO.getTotal() %>원</div>
                                     <div class="table-cell"><%=states[Integer.parseInt(dDTO.getDeal_state())] %></div>
                             </div>

@@ -62,19 +62,19 @@
 						<div class="card-block">
 						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 						<div class="card-text valign-top ml-1 float-xs-left">
-							<h5><strong><%=rDTO.getTuner_name() %></strong></h5>
+							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(), true) %></strong></h5>
 							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
 							<div class="card-text">거래 성사율 : <%=rDTO.getSuccessRate()%>%</div>
 							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate()%>%</div>
 						</div>
 						</div>
 						<div class="card-block">
-						<p class="card-text">이름 : <%=uDTO.getUser_name() %></p>
-						<p class="card-text">이메일 : <%=uDTO.getEmail() %></p>
-						<p class="card-text">전화번호 : <%=uDTO.getUser_tel() %></p>
+						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
+						<p class="card-text">이메일 : <%=CmmUtil.nvl(uDTO.getEmail(), true) %></p>
+						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel(), true) %></p>
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
-						<p class="card-text">소속 : <%=CmmUtil.revertXSS(tDTO.getAffiliation()) %></p>
-						<p class="card-text">근무지 : <%=CmmUtil.revertXSS(tDTO.getAddr()) %></p>
+						<p class="card-text">소속 : <%=CmmUtil.nvl(tDTO.getAffiliation(), true) %></p>
+						<p class="card-text">근무지 : <%=CmmUtil.nvl(tDTO.getAddr(), true) %></p>
 						<%if(!sggKeys.contains("전국")) { %>
 						<p class="card-text">활동지역 : </p>
 						<%} %>
@@ -86,10 +86,10 @@
 						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
 						<%} %>
 						<br>
-						<p class="card-text">한줄소개 : <%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment(), "없음")) %></p>
+						<p class="card-text">한줄소개 : <%=CmmUtil.nvl(tDTO.getTuner_comment(), "없음", true) %></p>
 						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
 						<%}else{ %>
-						<p class="card-text"><%=CmmUtil.revertXSS(tDTO.getTuner_exp()) %></p>
+						<p class="card-text"><%=CmmUtil.nvl(tDTO.getTuner_exp()) %></p>
 						<%} %>
 
 					</div>
@@ -227,7 +227,7 @@
 										<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;<%=revDTO.getUser_nick()%> | <%=revDTO.getRegdate().substring(0, 10) %></div>
 										</div>
 										<div class="card-text text-truncate mb-1 review-content">
-										<%=CmmUtil.nvl(revDTO.getReview_content()) %>
+										<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>
 										</div>
 										<div class="text-muted hidden eval-items">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 										<hr style="border-color:gray;margin-bottom:0.2rem;margin-top:0.2rem">

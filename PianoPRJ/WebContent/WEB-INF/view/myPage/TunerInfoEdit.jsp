@@ -71,7 +71,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_nick()%>" type="text" id="projectinput2" pattern="^[가-힣A-z][가-힣A-z0-9]{1,}$" maxlength="7" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다(숫자로 시작 불가)">
+											<input value="<%=CmmUtil.nvl(uDTO.getUser_nick(), true)%>" type="text" id="projectinput2" pattern="^[가-힣A-z][가-힣A-z0-9]{1,}$" maxlength="7" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다(숫자로 시작 불가)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -81,7 +81,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="email">이메일<span class="red">*</span></label>
-											<input value="<%=uDTO.getEmail()%>" type="text" id="email" class="form-control" maxlength="45" placeholder="이메일을 입력해주세요" name="email" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"  data-remote="/user/EditDupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<input value="<%=CmmUtil.nvl(uDTO.getEmail(), true)%>" type="text" id="email" class="form-control" maxlength="45" placeholder="이메일을 입력해주세요" name="email" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"  data-remote="/user/EditDupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[^1-9][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
+											<input value="<%=CmmUtil.nvl(uDTO.getUser_tel(), true)%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[^1-9][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -137,21 +137,21 @@
 								</div>
 								<div class="form-group has-feedback">
 									<label for="sosok">소속<span class="red">*</span></label>
-									<input value="<%=tDTO.getAffiliation()%>" type="text" id="sosok" name="affiliation" class="form-control" maxlength="30" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
+									<input value="<%=CmmUtil.nvl(tDTO.getAffiliation(), true)%>" type="text" id="sosok" name="affiliation" class="form-control" maxlength="30" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 
 								<div class="form-group">
 									<label for="tuner_comment">한줄 소개</label>
-									<textarea id="tuner_comment" onchange="checkBytes(this, 200);" onKeyUp="checkBytes(this, 200);" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment()))%></textarea>
+									<textarea id="tuner_comment" onchange="checkBytes(this, 200);" onKeyUp="checkBytes(this, 200);" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"><%=CmmUtil.nvl(tDTO.getTuner_comment(), true)%></textarea>
 									<div class="float-xs-right"><span class="byte">0</span>/200 bytes</div>
 								</div>
 								
 								<div class="form-group">
 								<input hidden="hidden" id="tuner_exp" name="tuner_exp">
 									<label for="temp_exp">이력</label>
-									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_exp())).replaceAll("<br>", "\n")%></textarea>
+									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.nvl(tDTO.getTuner_exp()).replaceAll("<br>", "\n")%></textarea>
 									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
 								<div class="form-group">
@@ -316,8 +316,8 @@
  	    		e.preventDefault();
  	    		return;
  	    	}
- 	    	$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
-  		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
+ 	    $("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>"));
+  		$("#tuner_comment").val($("#tuner_comment").val().trim());
   	  }
   	})
     

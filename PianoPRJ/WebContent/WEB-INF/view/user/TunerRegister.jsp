@@ -397,7 +397,7 @@
    	    		e.preventDefault();
    	    		return;
    	    	}
-   	    	$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
+   	    	$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>"));
     		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
     	  }
     	})

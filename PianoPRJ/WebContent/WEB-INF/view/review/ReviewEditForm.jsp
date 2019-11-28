@@ -26,7 +26,7 @@ for(int i=0; i<5; i++){ %>
 <!-- 리뷰 내용 -->
 <div class="form-group">
 	<input hidden="hidden" id="review_content" name="review_content">
-	<textarea onchange="checkBytes(this, 500);" onKeyUp="checkBytes(this, 500);" id="temp_content" rows="5" class="form-control" placeholder="리뷰 내용을 작성해주세요"><%=CmmUtil.nvl(revDTO.getReview_content()) %></textarea>
+	<textarea onchange="checkBytes(this, 500);" onKeyUp="checkBytes(this, 500);" id="temp_content" rows="5" class="form-control" placeholder="리뷰 내용을 작성해주세요"><%=CmmUtil.nvl(revDTO.getReview_content(), true) %></textarea>
 		<div class="float-xs-right"><span class="byte">0</span>/500 bytes</div>
 	</div>
 	<div class="row">

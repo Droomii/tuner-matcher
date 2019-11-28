@@ -55,16 +55,16 @@
 					<img class="img-fluid my-1" src="/resources/images/user_default.png" style="height:100px" alt="Card image cap">
 					<%} %>
 						<br>
-						<h5><%=uDTO.getUser_nick() %>(<%=userTypeKor %>)</h5>
+						<h5><%=CmmUtil.nvl(uDTO.getUser_nick(), true) %>(<%=userTypeKor %>)</h5>
 					</div>
 					<div class="card-block">
-						<p class="card-text">이름 : <%=uDTO.getUser_name() %></p>
-						<p class="card-text">이메일 : <%=uDTO.getEmail() %></p>
-						<p class="card-text">전화번호 : <%=uDTO.getUser_tel() %></p>
+						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
+						<p class="card-text">이메일 : <%=CmmUtil.nvl( uDTO.getEmail(), true) %></p>
+						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel()) %></p>
 						<%if(user_type.equals("1")){ %>
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
-						<p class="card-text">소속 : <%=CmmUtil.revertXSS(tDTO.getAffiliation()) %></p>
-						<p class="card-text">근무지 : <%=CmmUtil.revertXSS(tDTO.getAddr()) %></p>
+						<p class="card-text">소속 : <%=CmmUtil.nvl(tDTO.getAffiliation(), true) %></p>
+						<p class="card-text">근무지 : <%=CmmUtil.nvl(tDTO.getAddr(), true) %></p>
 						<%if(!sggKeys.contains("전국")) { %>
 						<p class="card-text">활동지역 : </p>
 						<%} %>
@@ -76,7 +76,7 @@
 						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
 						<%} %>
 						<br>
-						<p class="card-text">한줄소개 : <%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getTuner_comment(), "없음")) %></p>
+						<p class="card-text">한줄소개 : <%=CmmUtil.nvl(tDTO.getTuner_comment(), "없음", true) %></p>
 						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
 						<%}else{ %>
 						<p class="card-text"><%=CmmUtil.revertXSS(tDTO.getTuner_exp()) %></p>

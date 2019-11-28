@@ -79,7 +79,7 @@
                             <%for(DealDTO dDTO : dList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/deal/UserDealDetail.do?deal_seq=<%=dDTO.getDeal_seq()%>'">
                                     <div class="table-cell"><%=CmmUtil.nvl(dDTO.getDeal_seq())%></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(dDTO.getTuner_name(), true) %></div>
                                     <div class="table-cell"><%=dDTO.getFullDate() %></div>
                                     <div class="table-cell"><%=states[Integer.parseInt(dDTO.getDeal_state())] %></div>
                             </div>

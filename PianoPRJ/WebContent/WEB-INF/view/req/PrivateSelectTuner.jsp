@@ -54,10 +54,10 @@
 						<img class="rounded img-fluid img-thumbnail" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 					</div>
 					<div class="col-xs-8">
-						<h5><strong><%=tDTO.getTuner_name() %></strong></h5>
-						<div class="card-text text-muted text-truncate"><%=CmmUtil.nvl(tDTO.getTuner_comment()) %></div>
+						<h5><strong><%=CmmUtil.nvl( tDTO.getTuner_name(), true) %></strong></h5>
+						<div class="card-text text-muted text-truncate"><%=CmmUtil.nvl(tDTO.getTuner_comment(), true) %></div>
 						<div class="card-text text-truncate"><%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></div>
-						<div class="card-text text-truncate"><%=CmmUtil.nvl(tDTO.getAffiliation()) %></div>
+						<div class="card-text text-truncate"><%=CmmUtil.nvl(tDTO.getAffiliation(), true) %></div>
 						<div class="card-text text-truncate"><%=CmmUtil.nvl(tDTO.getSido_name()) %> <%=CmmUtil.nvl(tDTO.getSgg_name()) %></div>
 						<div class="card-text text-muted valign-middle"><span class="valign-middle"><%=CmmUtil.nvl(tDTO.getScore()) %></span><i class="icon-android-star valign-middle" style="font-size:1.2rem;color:orange"></i></div>
 					</div>

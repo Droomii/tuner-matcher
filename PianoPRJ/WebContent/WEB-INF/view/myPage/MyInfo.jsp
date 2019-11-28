@@ -52,7 +52,7 @@
 					<%if(user_type.equals("1")) {%>
 					<img class="rounded mx-auto d-block img-thumbnail" style="height:200px"src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 					<%}else{ %>
-					<img class="img-fluid my-1" src="/resources/images/user_default.png" alt="Card image cap">
+					<img class="img-fluid my-1" src="/resources/images/user_default.png" style="height:100px" alt="Card image cap">
 					<%} %>
 						<br>
 						<h5><%=uDTO.getUser_nick() %>(<%=userTypeKor %>)</h5>

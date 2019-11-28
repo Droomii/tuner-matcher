@@ -89,6 +89,22 @@
 											<div class="help-block with-errors"></div>
 										</div>
 									</div>
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="password">암호(미변경시 공란으로 유지)</label>
+											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group has-feedback">
+											<label for="verify_passwd">암호 확인</label>
+											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-error=" " data-match-error="암호가 일치하지 않습니다">
+											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+											<div class="help-block with-errors"></div>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 								</div>
@@ -176,92 +192,14 @@
 	    obj.value = tel;
 	    $(obj).focusout();
 	}
-
-    </script>
-    <script>
-    var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
-   	
-    function doSubmit(){
-		$("#tuner_exp").val(document.getElementById('temp_exp').value.replace(/\n/g, "<br>"));
-		$("#tuner_comment").val($("#tuner_comment").val().replace(/<br>/g, " "));
-		form.submit();
-	}
-    
-    // 상세 시군구코드 구하기
-    function getDetailSgg(elem){
-		var query = {sidoCode : elem.value};
-		console.log("sidocode : " + elem.value);
-		$.ajax({
-			url:"/addr/GetSgg.do",
-			type:"post",
-			data:query,
-			success:function(data){
-				elem.parentElement.getElementsByClassName('detail-checkboxes')[0].innerHTML = data;
-			}
-		});
-   	}
-   	
-    // 전체 선택/취소
-   	function toggleAll(elem){
-   		var checkboxes = elem.parentElement.parentElement.getElementsByClassName('sgg-detail');
-		for(var i=1; i < checkboxes.length; i++){
-			var checkbox = checkboxes[i];
-			checkbox.checked = elem.checked;
-			checkbox.disabled = elem.checked;
-			checkbox.name = elem.checked ? "" : "sgg_code";
-			
-		}
-   	}
-    
-   	function addArea(){
-   		$('#svc-area-group').append(svcAreaForm);
-   	}
-   	
-   	function delArea(elem){
-   		if(document.getElementsByClassName('svc-area').length == 1){
-   			alert("최소 한 개의 활동지역은 있어야 합니다.");
-   			return;
-   		}
-   			
-   		elem.parentElement.parentElement.remove();
-   	}
-   	
-   	// 모두 체크 되었는지 확인
-   	function checkAllChecked(elem){
-   		var subDetails = elem.parentElement.parentElement.getElementsByClassName('sub-detail');
-   		var allChecked = true;
-   		for(var i = 0; i < subDetails.length; i++){
-   			allChecked = allChecked && subDetails[i].checked;
-   		}
-   		if(allChecked){
-   			elem.parentElement.parentElement.getElementsByClassName('select-all')[0].click();
-   		}
-   	}
-   	
-   	function getDetailSggWithChecks(elem, list){
-		var query = {sidoCode : elem.value};
-		console.log("sidocode : " + elem.value);
-		$.ajax({
-			url:"/addr/GetSgg.do",
-			type:"post",
-			data:query,
-			success:function(data){
-				var detailCheckboxes = elem.parentElement.getElementsByClassName('detail-checkboxes')[0]
-				detailCheckboxes.innerHTML = data;
-				
-				var checkboxes = detailCheckboxes.querySelectorAll('input')
-		   		console.log("checkboxes");
-		   		console.log(checkboxes[0].value);
-		   		for(var i=0; i<checkboxes.length; i++){
-		   			if(list.includes(parseInt(checkboxes[i].value))){
-		   				console.log(checkboxes[i].value)
-		   				checkboxes[i].click();
-		   			}
-		   		}
-			}
-		});
-   	}
-   	
+    $("#password").on('keyup', function(){
+    	if($("#password").val()!=""){
+    		$("#verify_passwd").attr('required', 'required');
+    	}else{
+    		$("#verify_passwd").removeAttr('required')
+    	}
+    	$("#verify_passwd").focusout();
+    })
     </script>
     
      <!-- addrInput popup -->

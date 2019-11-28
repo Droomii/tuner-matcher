@@ -499,8 +499,10 @@ public class UserController {
 
 		String user_seq = (String)session.getAttribute("user_seq");
 		
-		if(uDTO.getPassword()!=null) {
+		if(!CmmUtil.nvl(uDTO.getPassword()).equals("")) {
 			uDTO.setPassword(EncryptUtil.encHashSHA256(uDTO.getPassword()));
+		}else {
+			uDTO.setPassword(null);
 		}
 		
 		// 지역 중첩 제거 코드
@@ -598,6 +600,11 @@ public class UserController {
 
 		uDTO.setUser_seq(user_seq);
 		
+		if(!CmmUtil.nvl(uDTO.getPassword()).equals("")) {
+			uDTO.setPassword(EncryptUtil.encHashSHA256(uDTO.getPassword()));
+		}else {
+			uDTO.setPassword(null);
+		}
 		
 		int result = 0;
 		try {

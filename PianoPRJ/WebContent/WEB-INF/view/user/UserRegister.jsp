@@ -180,7 +180,9 @@
     <!-- FORM VALIDATOR JS -->
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
     <script>
-    
+    $("#password").on('keyup', function(){
+    	$("#verify_passwd").focusout();
+    })
     // 전화번호 형식 자동변환
     function phoneNumberFormat(obj) {
     	obj.value = obj.value.replace(/[^0-9\-]/g, "");

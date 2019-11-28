@@ -53,4 +53,6 @@ public interface IDealService {
 
 	int getReqBidCnt(String req_seq) throws Exception;
 
+	List<DealDTO> getUserUpcomingDeals(String user_seq, String today) throws Exception;
+
 }

@@ -132,4 +132,9 @@ public class DealService implements IDealService{
 		return dealMapper.getReqBidCnt(req_seq);
 	}
 
+	@Override
+	public List<DealDTO> getUserUpcomingDeals(String user_seq, String today) throws Exception {
+		return dealMapper.getUserUpcomingDeals(user_seq, today);
+	}
+
 }

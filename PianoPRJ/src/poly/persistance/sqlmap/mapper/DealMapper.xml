@@ -240,7 +240,7 @@ SELECT DEAL_SEQ, TUNER_NAME, POSSIBLE_DATE, DEAL_STATE FROM
     WHERE
       REQUESTER_SEQ=#{requester_seq}
       AND DEAL_STATE NOT IN (0, 1, 3)
-	  ORDER BY DEAL_SEQ DESC))
+	  ORDER BY POSSIBLE_DATE DESC))
 WHERE RN BETWEEN #{startIndex}+1 AND #{startIndex}+#{cntPerPage}
 
 ]]>
@@ -291,7 +291,7 @@ SELECT * FROM
 			DEAL
 		WHERE TUNER_SEQ=#{user_seq}
 		AND DEAL_STATE IN(2, 6)
-		ORDER BY DEAL_SEQ DESC))
+		ORDER BY POSSIBLE_DATE DESC))
 WHERE RN BETWEEN #{start} AND #{end}
 </select>
 <select id="getTunerDealListCnt" parameterType="String" resultType="Integer">
@@ -374,6 +374,30 @@ SELECT COUNT(1) FROM DEAL
 	ORDER BY POSSIBLE_DATE
 ]]>
 	
+</select>
+<select id="getUserUpcomingDeals" parameterType="String" resultType="DealDTO">
+<![CDATA[
+	SELECT
+		DEAL_SEQ,
+		(SELECT USER_NAME FROM USERINFO WHERE USERINFO.USER_SEQ=DEAL.TUNER_SEQ) AS TUNER_NAME,
+		POSSIBLE_DATE,
+		DEAL_STATE,
+		TUNING_PRICE,
+		REGUL_PRICE,
+		VOICING_PRICE,
+		TRANSPORT_PRICE,
+		OTHER_PRICE,
+		TUNING_EA,
+		REGUL_EA,
+		VOICING_EA,
+		TRANSPORT_EA
+	FROM
+		DEAL
+	WHERE REQUESTER_SEQ=#{user_seq}
+	AND DEAL_STATE=2
+	AND SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
+	ORDER BY POSSIBLE_DATE
+]]>
 </select>
 <select id="getUpcomingDealDates" parameterType="String" resultType="String">
 <![CDATA[

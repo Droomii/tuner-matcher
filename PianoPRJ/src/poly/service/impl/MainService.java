@@ -19,4 +19,9 @@ public class MainService implements IMainService{
 		return mainMapper.getTunerMain(user_seq);
 	}
 
+	@Override
+	public MainDTO getUserMain(String user_seq) throws Exception {
+		return mainMapper.getUserMain(user_seq);
+	}
+
 }

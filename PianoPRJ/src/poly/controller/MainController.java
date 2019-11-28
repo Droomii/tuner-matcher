@@ -75,11 +75,27 @@ public class MainController {
 		    // 다가올 일정 날짜 받아오기
 		    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
 		    
-			if(rList==null) {
-				rList = new ArrayList<>();
+			if(dList==null) {
+				dList = new ArrayList<>();
 			}
 			model.addAttribute("dList", dList);
 
+		}else if(user_type.equals("0")) {
+			mDTO = mainService.getUserMain(user_seq);
+			
+			// 다가올 일정
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = new Date();  
+		    String today = formatter.format(date);
+		    
+		    // 다가올 일정 날짜 받아오기
+		    List<DealDTO> dList = dealService.getUserUpcomingDeals(user_seq, today);
+		    
+			if(dList==null) {
+				dList = new ArrayList<>();
+			}
+			model.addAttribute("dList", dList);
+			
 		}
 		
 		model.addAttribute("mDTO", mDTO);
@@ -101,8 +117,10 @@ public class MainController {
 			String user_type = (String)session.getAttribute("user_type");
 			
 			
+			MainDTO mDTO = null;
+			
 			if(user_type.equals("1")) {
-				MainDTO mDTO = mainService.getTunerMain(user_seq);
+				mDTO = mainService.getTunerMain(user_seq);
 				
 				// 요청목록
 				List<ReqDTO> rList = reqService.getNearReqList(user_seq);
@@ -111,8 +129,7 @@ public class MainController {
 					nearRes = rList.size();
 				}
 				mDTO.setNear_request(Integer.toString(nearRes));
-				model.addAttribute("mDTO", mDTO);
-				
+					
 				// 다가올 일정
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 			    Date date = new Date();  
@@ -121,11 +138,30 @@ public class MainController {
 			    // 다가올 일정 날짜 받아오기
 			    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
 			    
-				if(rList==null) {
-					rList = new ArrayList<>();
+				if(dList==null) {
+					dList = new ArrayList<>();
 				}
 				model.addAttribute("dList", dList);
+
+			}else if(user_type.equals("0")) {
+				mDTO = mainService.getUserMain(user_seq);
+				
+				// 다가올 일정
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+			    Date date = new Date();  
+			    String today = formatter.format(date);
+			    
+			    // 다가올 일정 날짜 받아오기
+			    List<DealDTO> dList = dealService.getUserUpcomingDeals(user_seq, today);
+			    
+				if(dList==null) {
+					dList = new ArrayList<>();
+				}
+				model.addAttribute("dList", dList);
+				
 			}
+			
+			model.addAttribute("mDTO", mDTO);
 			
 			
 			url="/main";
@@ -168,11 +204,27 @@ public class MainController {
 		    // 다가올 일정 날짜 받아오기
 		    List<DealDTO> dList = dealService.getUpcomingDeals(user_seq, today);
 		    
-			if(rList==null) {
-				rList = new ArrayList<>();
+			if(dList==null) {
+				dList = new ArrayList<>();
 			}
 			model.addAttribute("dList", dList);
 
+		}else if(user_type.equals("0")) {
+			mDTO = mainService.getUserMain(user_seq);
+			
+			// 다가올 일정
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
+		    Date date = new Date();  
+		    String today = formatter.format(date);
+		    
+		    // 다가올 일정 날짜 받아오기
+		    List<DealDTO> dList = dealService.getUserUpcomingDeals(user_seq, today);
+		    
+			if(dList==null) {
+				dList = new ArrayList<>();
+			}
+			model.addAttribute("dList", dList);
+			
 		}
 		
 		model.addAttribute("mDTO", mDTO);

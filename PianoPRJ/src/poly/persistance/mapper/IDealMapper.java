@@ -57,4 +57,6 @@ public interface IDealMapper {
 
 	int getReqBidCnt(String req_seq) throws Exception;
 
+	List<DealDTO> getUserUpcomingDeals(@Param("user_seq")String user_seq, @Param("today")String today) throws Exception;
+
 }

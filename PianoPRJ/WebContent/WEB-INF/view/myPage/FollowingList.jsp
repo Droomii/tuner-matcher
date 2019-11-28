@@ -52,7 +52,7 @@
 						<img class="rounded img-fluid img-thumbnail" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 					</div>
 					<div class="col-xs-8">
-						<h5><strong><%=tDTO.getTuner_name(), true %></strong></h5>
+						<h5><strong><%=CmmUtil.nvl(tDTO.getTuner_name(), true) %></strong></h5>
 						<div class="card-text text-muted text-truncate"><%=CmmUtil.nvl(tDTO.getTuner_comment(), true) %></div>
 						<div class="card-text text-truncate"><%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></div>
 						<div class="card-text text-truncate"><%=CmmUtil.nvl(tDTO.getAffiliation(), true) %></div>

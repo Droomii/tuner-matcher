@@ -345,7 +345,7 @@
 						<%} %>
 						</div>
 						<p>
-						<%=CmmUtil.nvl(revDTO.getReview_content()) %>
+						<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>
 						</p>
 						<div class="text-muted float-xs-left">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 						<%if(user_type.equals("0")){ %>
@@ -388,6 +388,8 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript" src="/js/bytechecker.js"></script>
+	
 	<script type="text/javascript">
 	
 	
@@ -458,33 +460,6 @@
 		document.getElementById("review_star").value = score.toString();
 	}
 	
-	function checkBytes(el, limit){
-		var b, i, c;
-		var s = el.value;
-		var last;
-	    for(b=i=0; c=s.charCodeAt(i);i++) {
-	    	if(s.charAt(i).match(/[<>]/)!=null){
-	    		b += 5;
-	    	}else if(s.charAt(i).match(/[\(\)']/)!=null){
-	    		b += 6;
-	    	}else if(s.charAt(i)=="\n"){
-	    		b += 12;
-	    	}else{
-	    		b+=c>>11?3:c>>7?2:1;
-	    	}
-	    	if(b > limit){
-	    		alert('글자수를 초과하였습니다.');
-		    	el.value = el.value.substring(0, i);
-		    	el.parentElement.querySelector('span').innerHTML = last;
-		    	return
-	    	}
-	    	last = b;
-	    }
-	    el.parentElement.querySelector('span').innerHTML = b;
-	    
-	    return b
-	}
-	
 	function submitReview(type){
 		var form = document.reviewForm;
 		if(form.review_star.value=="0"){
@@ -507,7 +482,7 @@
 			alert('친절 만족도를 선택해주세요');
 			return false;
 		}
-		form.review_content.value = form.temp_content.value.trim().replace(/\n/g, " ").replace(/<br>/g, " ");
+		form.review_content.value = form.temp_content.value.trim().replace(/\n/g, " ");
 		if(confirm("리뷰를 " +type+"하시겠습니까?")){
 			form.submit();
 		}

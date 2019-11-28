@@ -52,8 +52,8 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
-											<label for="user_name" class="control-label">이름</label>
-											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="15" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
+											<label for="user_name" class="control-label" >이름</label>
+											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="7" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>										
 										</div>
@@ -71,7 +71,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임</label>
-											<input type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
+											<input type="text" id="projectinput2" pattern="^[가-힣A-z][가-힣A-z0-9]{1,}$" class="form-control" maxlength="7" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다(숫자로 시작 불가)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -81,7 +81,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="email">이메일</label>
-											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" maxlength="45" name="email" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
@@ -90,7 +90,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호</label>
-											<input type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
+											<input type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[^1-9][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." onKeyUp="phoneNumberFormat(this);"name="user_tel" required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -133,13 +133,14 @@
 									</div>
 								</div>
 								</div>
-							<div class="form-actions text-center">
+							<div class="form-actions text-xs-center">
+							<a href="/index.do" class="btn btn-warning d-flex">
+									<i class="icon-cross2"></i> 취소
+								</a>
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 가입신청
 								</button>
-								<button type="button" class="btn btn-warning mr-1 d-flex">
-									<i class="icon-cross2"></i> 취소
-								</button>
+								
 								
 							</div>
 						</form>
@@ -259,5 +260,6 @@
 			$('#addr').attr("readonly", "readonly");
 		}
 	</script>
+	<script src="/js/bytechecker.js" type="text/javascript"></script>
   </body>
 </html>

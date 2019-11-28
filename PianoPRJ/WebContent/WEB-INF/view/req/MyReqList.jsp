@@ -73,10 +73,10 @@
                             </div>
                             <%for(ReqDTO rDTO : reqList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/ReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'">
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getPiano_name())%></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getReq_title()) %></div>
-                                    <div class="table-cell"><%=rDTO.getRegdate().substring(0,11) %></div>
-                                    <div class="table-cell"><%=rDTO.getBids() %></div>
+                                    <div class="table-cell" style="width:150px;"><%=CmmUtil.nvl(rDTO.getPiano_name(), true)%></div>
+                                    <div class="table-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><%=CmmUtil.nvl(rDTO.getReq_title(), true) %></div>
+                                    <div class="table-cell" style="width:150px;"><%=rDTO.getRegdate().substring(0,11) %></div>
+                                    <div class="table-cell" style="width:150px;"><%=rDTO.getBids() %></div>
                             </div>
                             <%} %>
                         </div>

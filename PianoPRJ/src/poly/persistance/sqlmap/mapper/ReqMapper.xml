@@ -175,7 +175,7 @@
 	WHERE 
 		R.PIANO_SEQ=P.PIANO_SEQ
 		<if test='!sgg_code.equals("00%")'>
-		AND P.SGG_CODE LIKE #{0}
+		AND P.SGG_CODE LIKE #{sgg_code}
 		</if>
 		AND R.PRIVATE_SEQ IS NULL
 		AND R.REQ_STATE=0

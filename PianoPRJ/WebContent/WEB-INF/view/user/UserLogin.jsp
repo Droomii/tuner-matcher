@@ -33,7 +33,7 @@
                 <div class="card-block">
                     <form name="loginForm" method="post" class="form-horizontal form-simple" action="/user/LoginProc.do" onsubmit="return validate();">
                         <fieldset class="form-group position-relative has-icon-left mb-0">
-                            <input type="text" class="form-control form-control-lg input-lg" id="id" name="id" placeholder="아이디">
+                            <input type="text" class="form-control form-control-lg input-lg" maxlength="20" id="id" name="id" placeholder="아이디">
                             <div class="form-control-position">
                                 <i class="icon-head"></i>
                             </div>

@@ -17,9 +17,10 @@
             </ul>
             
             <!-- 언어 설정 -->
-            <ul class="nav navbar-nav float-xs-right">
+            <ul class="nav navbar-nav float-xs-right" style="margin-top:0.5rem">
               <!-- 사용자 정보관리창 설정 -->
-              <li class="dropdown dropdown-user nav-item"><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link"><span class="avatar avatar-online"><img src="/resources/app-assets/images/portrait/small/avatar-s-1.png" alt="avatar"><i></i></span><span class="user-name"><%=user_nick %>님</span></a>
+              
+              <li class="dropdown dropdown-user nav-item"><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link dropdown-user-link" style="vertical-align:bottom"><span class="avatar avatar-online"></span><span class="user-name" style=""><%=user_nick %>님</span></a>
                 <div class="dropdown-menu dropdown-menu-right"><a href="/myPage/MyInfoEdit.do" class="dropdown-item"><i class="icon-head"></i>정보 수정</a>
                   <div class="dropdown-divider"></div><a href="/user/logout.do" class="dropdown-item"><i class="icon-power3"></i>로그아웃</a>
                 </div>

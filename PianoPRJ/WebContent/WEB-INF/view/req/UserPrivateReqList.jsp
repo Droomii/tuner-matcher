@@ -69,18 +69,17 @@
                     <div class="table-responsive">
                         <div class="table table-bordred table-striped">
                             <div class="table-row">
-                                    <div class="table-head-cell"><strong>피아노 이름</strong></div>
+                                    <div class="table-head-cell" style="width:150px;"><strong>피아노 이름</strong></div>
                                     <div class="table-head-cell"><strong>요청서 제목</strong></div>
-                                    <div class="table-head-cell"><strong>게시일</strong></div>
-                                    <div class="table-head-cell"><strong>조율사</strong></div>
-                                    <div class="table-head-cell"><strong>답변여부</strong></div>
+                                    <div class="table-head-cell" style="width:150px;"><strong>게시일</strong></div>
+                                    <div class="table-head-cell" style="width:150px;"><strong>조율사</strong></div>
+                                    <div class="table-head-cell" style="width:150px;"><strong>답변여부</strong></div>
                             </div>
                            	
                             <%for(ReqDTO rDTO : reqList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/req/PrivateReqDetail.do?req_seq=<%=rDTO.getReq_seq()%>'">
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getPiano_name())%></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getReq_title()) %></div>
-                                    
+                                    <div class="table-cell"><%=CmmUtil.nvl(rDTO.getPiano_name(), true)%></div>
+                                    <div class="table-cell" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"><%=CmmUtil.nvl(rDTO.getReq_title(), true) %></div>
                                     <div class="table-cell"><%=rDTO.getRegdate().substring(0,11) %></div>
                                     <div class="table-cell"><%=rDTO.getPrivate_tuner_name() %></div>
                                     <div class="table-cell"><%=rDTO.getReq_state().equals("2") ? "요청 거절" : rDTO.getBids().equals("0") ? "미답변" : "답변완료" %></div>

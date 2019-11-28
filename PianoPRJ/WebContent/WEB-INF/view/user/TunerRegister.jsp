@@ -78,7 +78,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" id="regForm" enctype="multipart/form-data" role="form" name="form" class="form" action="/user/TunerRegProc.do" method="post" autocomplete="off">
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
 								<div class="row">
@@ -86,7 +86,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_name" class="control-label">이름<span class="red">*</span></label>
-											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="15" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
+											<input type="text" pattern="^[가-힣]{1,}$" id="user_name" maxlength="7" class="form-control" placeholder="이름을 입력해주세요" name="user_name" required data-pattern-error="한글만 입력 가능합니다.">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>										
 										</div>
@@ -104,7 +104,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임<span class="red">*</span></label>
-											<input type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
+											<input type="text" id="projectinput2" pattern="^[가-힣A-z][가-힣A-z0-9]{1,}$" class="form-control" maxlength="7" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다(숫자로 시작 불가)">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -114,7 +114,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="email">이메일<span class="red">*</span></label>
-											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" maxlength="45" name="email" pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$" data-remote="/user/DupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
@@ -208,20 +208,22 @@
 
 								<div class="form-group has-feedback">
 									<label for="sosok">소속<span class="red">*</span></label>
-									<input type="text" id="sosok" name="affiliation" class="form-control" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
+									<input type="text" id="sosok" name="affiliation" class="form-control" maxlength="30" placeholder="예) ㅇㅇ피아노, ㅇㅇ대학교, 프리랜서 등" required data-error="필수 입력사항입니다">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 
 								<div class="form-group">
-									<label for="donationinput7">한줄 소개</label>
-									<textarea id="donationinput7" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"></textarea>
+									<label for="tuner_comment">한줄 소개</label>
+									<textarea id="tuner_comment" onchange="checkBytes(this, 200);" onKeyUp="checkBytes(this, 200);" rows="2" class="form-control square" name="tuner_comment" placeholder="본인에 대한 소개를 한 줄로 작성해주세요"></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/200 bytes</div>
 								</div>
 								
 								<div class="form-group">
 								<input hidden="hidden" id="tuner_exp" name="tuner_exp">
 									<label for="temp_exp">이력</label>
-									<textarea id="temp_exp" rows="20" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
+									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
 							
 								<h4 class="form-section"><i class="icon-clipboard4"></i> 지역 정보</h4>
@@ -268,14 +270,13 @@
 									<i class="icon-check2 d-flex"></i> 지역 추가
 								</button>
 								</div>
-							<div class="form-actions text-center">
+							<div class="form-actions text-xs-center">
+							<a href="/index.do" class="btn btn-warning d-flex">
+									<i class="icon-cross2"></i> 취소
+								</a>
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 가입신청
 								</button>
-								<button type="button" class="btn btn-warning mr-1 d-flex">
-									<i class="icon-cross2"></i> 취소
-								</button>
-								
 							</div>
 						</form>
 					</div>
@@ -381,11 +382,22 @@
     <script>
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
-    function doSubmit(){
-		$("#tuner_exp").val(document.getElementById('temp_exp').value.replace(/\n/g, "<br>"));
-		$("#tuner_comment").val($("#tuner_comment").val().replace(/<br>/g, " "));
-		form.submit();
-	}
+    $('#regForm').validator().on('submit', function (e) {
+    	  if (e.isDefaultPrevented()) {
+    	  } else {
+    		var arr = [];
+   	    	$(".sgg-detail:checked").each(function () {
+   	    	    arr.push($(this).val());
+   	    	});
+   	    	if(arr.length==0){
+   	    		alert('최소 하나의 활동지역은 선택해야 합니다.');
+   	    		e.preventDefault();
+   	    		return;
+   	    	}
+   	    	$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
+    		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
+    	  }
+    	})
     
     // 상세 시군구코드 구하기
     function getDetailSgg(elem){
@@ -466,5 +478,6 @@
 			$("#addr").focusout();
 		}
 	</script>
+	<script src="/js/bytechecker.js" type="text/javascript"></script>
   </body>
 </html>

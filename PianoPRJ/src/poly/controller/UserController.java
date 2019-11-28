@@ -142,8 +142,16 @@ public class UserController {
 		
 		
 		// 지역 중첩 제거 코드
-		String[] sggCodes = tDTO.getSgg_code().split(",");
-		Set<String> sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
+		Set<String> sggSet = null;
+		
+		try {
+			String[] sggCodes = tDTO.getSgg_code().split(",");
+			sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
+		}catch(NullPointerException e) {
+			String[] sggCodes = {"00"};
+			sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
+		}
+
 		String uniqueSgg;
 		if (sggSet.contains("00")) {
 			uniqueSgg = "00";
@@ -179,7 +187,7 @@ public class UserController {
 		// 중첩 지역 제거한 시군구코드
 		tDTO.setSgg_code(uniqueSgg);
 
-		int result;
+		int result = 0;;
 
 		log.info(uniqueSgg);
 		
@@ -192,7 +200,13 @@ public class UserController {
 		
 		tDTO.setId_photo_dir(FileUtil.getExt(profile_img));
 		tDTO.setCert_dir(FileUtil.getExt(cert_img));
+		
+		try {
 		result = userService.regTuner(uDTO, tDTO);
+		}catch(Exception e) {
+			log.info(e.toString());
+		}
+		
 		String msg = "";
 		String url = "/user/UserLogin.do";
 		
@@ -227,8 +241,7 @@ public class UserController {
 			msg = "가입에 실패하였습니다.";
 		} else {
 			userService.addTunerSgg(uDTO.getUser_seq(), tDTO);
-			msg = "가입이 완료되었습니다.";
-		}
+			msg = "가입에 성공했습니다.";		}
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -248,9 +261,13 @@ public class UserController {
 		// 조율사 초기설정
 		uDTO.setUser_type("0");
 
-		int result;
+		int result = 0;
 
-		result = userService.regUser(uDTO);
+		try {
+			result = userService.regUser(uDTO);
+		}catch(Exception e) {
+			log.info(e.toString());
+		}
 
 		String msg = "";
 		String url = "/user/UserLogin.do";
@@ -516,7 +533,7 @@ public class UserController {
 		// 중첩 지역 제거한 시군구코드
 		tDTO.setSgg_code(uniqueSgg);
 
-		int result;
+		
 
 		String msg = "";
 		String url = "/myPage/MyInfo.do";
@@ -541,7 +558,13 @@ public class UserController {
 		
 		uDTO.setUser_seq(user_seq);
 		tDTO.setTuner_seq(user_seq);
+		
+		int result = 0;
+		try {
 		result = userService.updateTuner(uDTO, tDTO);
+		}catch(Exception e) {
+			log.info(e.toString());
+		}
 
 		
 		if (result == 0) {
@@ -570,7 +593,14 @@ public class UserController {
 		String user_seq = (String)session.getAttribute("user_seq");
 
 		uDTO.setUser_seq(user_seq);
-		int result = userService.updateUser(uDTO);
+		
+		
+		int result = 0;
+		try {
+			result = userService.updateUser(uDTO);
+			}catch(Exception e) {
+				log.info(e.toString());
+			}
 		
 		String msg = "";
 		String url = "/myPage/MyInfo.do";

@@ -17,6 +17,11 @@ public class CmmUtil {
 	public static String nvl(String str) {
 		return nvl(str, "");
 	}
+	
+	public static String nvl(String str, boolean noBreaks) {
+		str = str.replaceAll("& lt;br& gt;", "&lt;br&gt;");
+		return nvl(str, "");
+	}
 
 	public static String checked(String str, String com_str) {
 		if (str.equals(com_str)) {

@@ -153,13 +153,14 @@
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="req_title">요청서 제목</label>
-									<input type="text" id="notice_title" class="form-control" placeholder="요청서 제목을 입력해주세요" required name="req_title">
+									<input type="text" id="notice_title" class="form-control" maxlength="50" placeholder="요청서 제목을 입력해주세요" required name="req_title">
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
 								<div class="form-group has-feedback">
 									<label for="req_content">요청사항</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<textarea onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>
@@ -268,5 +269,6 @@
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/js/bytechecker.js"></script>
 </body>
 </html>

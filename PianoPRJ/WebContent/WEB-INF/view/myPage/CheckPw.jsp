@@ -4,8 +4,8 @@
 
 <%
 	String action = (String)request.getAttribute("action");
-	String back = (String)request.getAttribute("back");
 	String forWhat = (String)request.getAttribute("forWhat");
+	String back = "/myPage/MyInfo.do";
 %>
 <%@ include file="../user/session.jsp" %>
 <!DOCTYPE html>
@@ -48,9 +48,9 @@
 							</div>
 
 							<div class="form-actions center">
-								<button type="button" class="btn btn-warning mr-1" onclick="href.location='<%=CmmUtil.nvl(back)%>';">
+								<a class="btn btn-warning" href="<%=CmmUtil.nvl(back)%>">
 									<i class="icon-cross2"></i> 돌아가기
-								</button>
+								</a>
 								<button type="button" class="btn btn-primary" onclick="doSubmit();">
 									<i class="icon-check2"></i> 확인
 								</button>

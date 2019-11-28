@@ -274,8 +274,8 @@
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
     function doSubmit(){
-		$("#tuner_exp").val(document.getElementById('temp_exp').value.replace(/\n/g, "<br>"));
-		$("#tuner_comment").val($("#tuner_comment").val().replace(/<br>/g, " "));
+		$("#tuner_exp").val(document.getElementById('temp_exp').value.trim().replace(/\n/g, "<br>"));
+		$("#tuner_comment").val($("#tuner_comment").val().trim().replace(/<br>/g, " "));
 		form.submit();
 	}
     

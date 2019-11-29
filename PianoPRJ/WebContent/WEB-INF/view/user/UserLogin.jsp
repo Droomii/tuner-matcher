@@ -86,12 +86,13 @@
 			data:query,
 			success:function(data){
 				console.log("data : " + data)
-				if(data=="1"){
-					console.log("validated")
+				if(data=="0"){
 					location.href = "/main.do";
-				}else{
-					console.log("login error")
+				}else if(data=="1"){
 					$("#errorMsg").html("아이디 또는 암호가 일치하지 않습니다.")
+				}else{
+					alert("해당 계정은 관리자에 의해 정지되었습니다.\n정지 사유 : " + data)
+					$("#errorMsg").html("관리자에 의해 정지된 계정입니다.")
 				}
 			}
 		});

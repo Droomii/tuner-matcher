@@ -55,5 +55,11 @@ public interface IUserService {
 
 	int rejectTuner(TunerDTO tDTO) throws Exception;
 
+	int getTunerListCnt() throws Exception;
+
+	List<TunerDTO> getTunerList(int start, int end) throws Exception;
+
+	int suspendUser(String user_seq, String reject_reason) throws Exception;
+
 
 }

@@ -142,7 +142,7 @@
 			return false;
 		}
 		
-		if(confirm("가입을 승인하시겠습니까?")){
+		if(confirm("반려하시겠습니까?")){
 			var form = document.rejectForm;
 			form.reject_reason.value = form.temp_content.value.trim().replace(/\n/g, " ");
 		}else{

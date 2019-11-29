@@ -85,7 +85,7 @@
         </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율사 관리</span></a>
             <ul class="menu-content">
-              <li><a href="#" class="menu-item">조율사 조회</a>
+              <li><a href="/user/TunerList.do" class="menu-item">조율사 조회</a>
               </li>
               <li><a href="/user/PendingTunerList.do" class="menu-item">조율사 가입요청 조회</a>
               </li>
@@ -104,14 +104,6 @@
               <li><a href="/notice/NoticeList.do" class="menu-item">공지사항 관리</a>
               </li>
               <li><a href="#" class="menu-item">리뷰 관리</a>
-              </li>
-            </ul>
-          </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
-            <ul class="menu-content">
-              <li><a href="" class="menu-item">내 주변에서 찾기</a>
-              </li>
-              <li><a href="#" class="menu-item">1:1 요청</a>
               </li>
             </ul>
           </li>

@@ -62,6 +62,12 @@ public interface IUserMapper {
 	int rejectTuner(TunerDTO tDTO) throws Exception;
 
 	int updateRejectReason(TunerDTO tDTO) throws Exception;
+
+	int getTunerListCnt() throws Exception;
+
+	List<TunerDTO> getTunerList(@Param("start") int start, @Param("end") int end) throws Exception;
+
+	int suspendUser(String user_seq, String reject_reason) throws Exception;
 	
 	
 }

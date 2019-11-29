@@ -264,11 +264,49 @@
 		)
 	WHERE RN BETWEEN #{start} AND #{end}
 	</select>
+	<select id="getTunerListCnt" resultType="Integer">
+	SELECT COUNT(1) FROM TUNER
+	</select>
+	<select id="getTunerList" parameterType="String" resultType="TunerDTO">
+	SELECT * FROM
+		(SELECT
+			ROWNUM AS RN,
+			TUNER_SEQ,
+			TUNER_NAME,
+			TUNER_LEVEL,
+			USER_STATE,
+			REGDATE
+		FROM
+			(SELECT
+				U.USER_SEQ AS TUNER_SEQ,
+				U.USER_NAME AS TUNER_NAME,
+				T.TUNER_LEVEL AS TUNER_LEVEL,
+				U.REGDATE AS REGDATE,
+				U.USER_STATE AS USER_STATE
+			FROM
+				USERINFO U, TUNER T
+			WHERE
+				U.USER_SEQ = T.TUNER_SEQ
+			ORDER BY
+				TUNER_SEQ DESC
+			)
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
 	<update id="acceptTuner" parameterType="String">
 	UPDATE
 		USERINFO
 	SET
 		USER_STATE=1
+	WHERE
+		USER_SEQ=#{0}
+	</update>
+	<update id="suspendUser" parameterType="String">
+	UPDATE
+		USERINFO
+	SET
+		USER_STATE=3,
+		SUSPEND_REASON=#{1}
 	WHERE
 		USER_SEQ=#{0}
 	</update>

@@ -197,4 +197,19 @@ public class UserService implements IUserService {
 		return res;
 	}
 
+	@Override
+	public int getTunerListCnt() throws Exception {
+		return userMapper.getTunerListCnt();
+	}
+
+	@Override
+	public List<TunerDTO> getTunerList(int start, int end) throws Exception {
+		return userMapper.getTunerList(start, end);
+	}
+
+	@Override
+	public int suspendUser(String user_seq, String reject_reason) throws Exception {
+		return userMapper.suspendUser(user_seq, reject_reason);
+	}
+
 }

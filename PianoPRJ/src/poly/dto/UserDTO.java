@@ -1,21 +1,27 @@
 package poly.dto;
 
 public class UserDTO {
-	String user_seq; 
-	String user_type;
-	String id;
-	String email;
-	String password;
-	String user_name;
-	String user_sex;
-	String user_nick;
-	String user_state;
-	String user_tel;
-	String regdate;
-	String upddate;
-	String updater_seq;
+	private String user_seq; 
+	private String user_type;
+	private String id;
+	private String email;
+	private String password;
+	private String user_name;
+	private String user_sex;
+	private String user_nick;
+	private String user_state;
+	private String user_tel;
+	private String regdate;
+	private String upddate;
+	private String updater_seq;
+	private String suspend_reason;
 	
-	
+	public String getSuspend_reason() {
+		return suspend_reason;
+	}
+	public void setSuspend_reason(String suspend_reason) {
+		this.suspend_reason = suspend_reason;
+	}
 	public String getUser_state() {
 		return user_state;
 	}

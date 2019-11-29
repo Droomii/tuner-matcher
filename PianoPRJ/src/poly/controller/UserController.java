@@ -29,6 +29,7 @@ import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
 import poly.dto.TunerDTO;
 import poly.dto.UserDTO;
+import poly.service.IFollowService;
 import poly.service.IMailService;
 import poly.service.IRepuService;
 import poly.service.IReviewService;
@@ -60,6 +61,9 @@ public class UserController {
 	
 	@Resource(name = "RepuService")
 	IRepuService repuService;
+	
+	@Resource(name = "FollowService")
+	IFollowService followService;
 
 	// ------------------------ 로그인 관련 -------------------------------
 
@@ -80,7 +84,7 @@ public class UserController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "LoginTest", method = RequestMethod.POST)
+	@RequestMapping(value = "LoginTest", method = RequestMethod.POST, produces="application/text; charset=UTF8")
 	public String loginTest(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			HttpSession session, @ModelAttribute UserDTO uDTO) throws Exception {
 		log.info(this.getClass() + ".loginTest start");
@@ -88,13 +92,18 @@ public class UserController {
 
 		// 아이디 혹은 비번 틀렸을 경우
 		if (uDTO == null) {
-			return "0";
+			return "1";
 		}
+		
+		if(uDTO.getUser_state().equals("3")) {
+			return CmmUtil.nvl(uDTO.getSuspend_reason(), true);
+		}
+		
 		session.setAttribute("user_seq", uDTO.getUser_seq());
 		session.setAttribute("user_type", uDTO.getUser_type());
 		session.setAttribute("user_nick", uDTO.getUser_nick());
 		session.setAttribute("user_state", uDTO.getUser_state());
-		return "1";
+		return "0";
 	}
 
 	@RequestMapping(value = "logout")
@@ -687,13 +696,30 @@ public class UserController {
 			throws Exception {
 		log.info(this.getClass().getName() + ".TunerDetail start");
 		
-		if (SessionUtil.verify(session, model) != null) {
-			model = SessionUtil.verify(session, model);
+		String user_type = (String) session.getAttribute("user_type");
+		
+		if (SessionUtil.verify(session, "0", model) != null && !user_type.equals("2")) {
+			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
 		
-		// 기본 정보 가져오기
+		
 		String tuner_seq = request.getParameter("tuner_seq");
+		String user_seq = (String) session.getAttribute("user_seq");
+		
+		if(user_type.equals("0")) {
+			int follow = followService.verifyFollow(tuner_seq, user_seq);
+			if(follow==0) {
+				model.addAttribute("msg", "자주 찾는 조율사가 아닙니다.");
+				model.addAttribute("url", "/myPage/FollowingList.do");
+				return "/redirect";
+			}
+		}
+		
+		
+		
+		// 기본 정보 가져오기
+		
 		UserDTO uDTO = userService.getUserInfo(tuner_seq);
 		model.addAttribute("uDTO", uDTO);
 		
@@ -732,6 +758,38 @@ public class UserController {
 		log.info(this.getClass().getName() + ".TunerDetail end");
 		return "/user/TunerDetail";
 	}
+	
+	@RequestMapping(value = "TunerList")
+	public String TunerList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".TunerList start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		// 페이징
+		int listCnt = userService.getTunerListCnt();
+		
+		Pagination pg = new Pagination(listCnt, page, 5);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		List<TunerDTO> tList = userService.getTunerList(start, end);
+		if(tList==null) {
+			tList = new ArrayList<TunerDTO>();
+		}
+		log.info("tList size : " + tList.size());
+		
+		model.addAttribute("tList", tList);
+		
+		log.info(this.getClass().getName() + ".TunerList end");
+		return "/user/TunerList";
+	}
+	
 	
 	@RequestMapping(value = "PendingTunerList")
 	public String PendingTunerList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
@@ -850,6 +908,53 @@ public class UserController {
 		model.addAttribute("url", url);
 		
 		log.info(this.getClass().getName() + ".RejectTuner end");
+		return "/redirect";
+	}
+	
+	// 회원 정지
+	@RequestMapping(value = "UserSuspend")
+	public String UserSuspend(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".UserSuspend start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String user_seq = request.getParameter("user_seq");
+		String suspend_reason = request.getParameter("suspend_reason");
+		log.info("reject reason : " + suspend_reason);
+		String type = request.getParameter("type");
+		int res = 0;
+		
+		try {
+			res = userService.suspendUser(user_seq, suspend_reason);
+		}catch (Exception e) {
+			log.info(e.toString());
+		}
+		
+		String url = "/user/UserList.do";
+		if(CmmUtil.nvl(type).equals("tuner")) {
+			url = "/user/TunerList.do";
+		}
+		String msg = "";
+		if (res == 0) {
+			msg = "회원 정지에 실패했습니다.";
+			if(type.equals("tuner")) {
+				url = "/user/TunerDetail.do?tuner_seq=" + user_seq;
+			}else {
+				url = "/user/UserDetail.do?user_seq=" + user_seq;
+			}
+		} else {
+			msg = "회원을 정지하였습니다.";
+		}
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		
+		log.info(this.getClass().getName() + ".UserSuspend end");
 		return "/redirect";
 	}
 }

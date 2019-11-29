@@ -197,10 +197,6 @@ public class MyPageController {
 		
 		return "/myPage/UserInfoEdit";
 		
-		
-		
-		
-		
 	}
 	
 	@RequestMapping(value = "MyRepu")

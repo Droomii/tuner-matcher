@@ -333,7 +333,10 @@ public class UserController {
 			log.info("EditDupCheck");
 			
 			String email = request.getParameter("email");
-			String user_seq = (String)session.getAttribute("user_seq");
+			String user_seq = request.getParameter("user_seq");
+			if(user_seq==null) {
+				user_seq = (String)session.getAttribute("user_seq");
+			}
 			log.info("email : " + email);
 
 			int result = 0;
@@ -346,8 +349,8 @@ public class UserController {
 				result = 1;
 			}
 			return Integer.toString(result);
-		}
-
+		}	
+		
 	// 아이디/암호 찾기
 	@RequestMapping(value = "Find")
 	public String find() throws Exception {
@@ -698,7 +701,7 @@ public class UserController {
 		
 		String user_type = (String) session.getAttribute("user_type");
 		
-		if (SessionUtil.verify(session, "0", model) != null && !user_type.equals("2")) {
+		if (SessionUtil.verify(session, "0", model) != null && !CmmUtil.nvl(user_type).equals("2")) {
 			model = SessionUtil.verify(session, "0", model);
 			return "/redirect";
 		}
@@ -790,6 +793,7 @@ public class UserController {
 		return "/user/TunerList";
 	}
 	
+	// -------------------관리자 시작------------------------
 	
 	@RequestMapping(value = "PendingTunerList")
 	public String PendingTunerList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
@@ -956,5 +960,223 @@ public class UserController {
 		
 		log.info(this.getClass().getName() + ".UserSuspend end");
 		return "/redirect";
+	}
+	
+	// 회원 복구
+	@RequestMapping(value = "UserRecover")
+	public String UserRecover(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".UserRecover start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String user_seq = request.getParameter("user_seq");
+		String type = request.getParameter("type");
+		int res = 0;
+		
+		try {
+			res = userService.recoverUser(user_seq);
+		}catch (Exception e) {
+			log.info(e.toString());
+		}
+		
+		String url = "/user/UserDetail.do?user_seq=" + user_seq;
+		if(CmmUtil.nvl(type).equals("tuner")) {
+			url = "/user/TunerDetail.do?tuner_seq=" + user_seq;
+		}
+		String msg = "";
+		if (res == 0) {
+			msg = "회원 정지 취소에 실패했습니다.";
+		} else {
+			msg = "회원 정지를 취소하였습니다.";
+		}
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		
+		
+		log.info(this.getClass().getName() + ".UserRecover end");
+		return "/redirect";
+	}
+	
+	@RequestMapping(value="AUserEdit")
+	public String ATunerEdit(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String user_seq = request.getParameter("user_seq");
+		
+		UserDTO uDTO = new UserDTO();
+		TunerDTO tDTO = null;
+		uDTO.setUser_seq(user_seq);
+		uDTO = userService.getUserEditInfo(uDTO);
+		model.addAttribute("uDTO", uDTO);
+		
+		String user_type = uDTO.getUser_type();
+		if(user_type.equals("1")) {
+			tDTO = userService.getTunerEditInfo(user_seq);
+			model.addAttribute("tDTO", tDTO);
+			List<SggDTO> sList = new ArrayList<>();
+			sList = sggService.getSido();
+			log.info("got sggservice");
+
+			model.addAttribute("sList", sList);
+			
+			Map<String, ArrayList<String>> sggDTOList = sggService.getTunerSggCode(user_seq);
+			model.addAttribute("sggDTOList", sggDTOList);
+			return "/user/TunerInfoEdit";
+		}
+		
+		return "/user/UserInfoEdit";
+		
+	}
+	
+	@RequestMapping(value = "ADoTunerInfoEdit")
+	public String ADoTunerInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO,
+			@RequestParam(value = "profile_img") MultipartFile profile_img,
+			@RequestParam(value = "profile_img") MultipartFile cert_img) throws Exception {
+
+		log.info("admin tuner info edit process start!!");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String user_seq = request.getParameter("user_seq");
+		
+		if (!profile_img.isEmpty()) {
+			if (!FileUtil.isImage(profile_img)) {
+
+				model.addAttribute("msg", "프로필 이미지가 부적절한 파일 형식입니다.");
+				model.addAttribute("url", "/myPage/MyInfo.do");
+				return "/redirect";
+			}
+		}
+		
+		if (!cert_img.isEmpty()) {
+			if (!FileUtil.isImage(cert_img)) {
+				
+				model.addAttribute("msg", "자격증 이미지가 부적절한 파일 형식입니다.");
+				model.addAttribute("url", "/myPage/MyInfo.do");
+				return "/redirect";
+			}
+		}
+		
+		
+		if(!CmmUtil.nvl(uDTO.getPassword()).equals("")) {
+			uDTO.setPassword(EncryptUtil.encHashSHA256(uDTO.getPassword()));
+		}else {
+			uDTO.setPassword(null);
+		}
+		
+		// 지역 중첩 제거 코드
+		String[] sggCodes = tDTO.getSgg_code().split(",");
+		Set<String> sggSet = new LinkedHashSet<String>(Arrays.asList(sggCodes));
+		String uniqueSgg;
+		if (sggSet.contains("00")) {
+			uniqueSgg = "00";
+		} else {
+			List<String> sidoCode = new ArrayList<>();
+			List<String> sggCode = new ArrayList<>();
+
+			Iterator<String> sggIter = sggSet.iterator();
+			String sggTemp;
+			while (sggIter.hasNext()) {
+				sggTemp = sggIter.next();
+				if (sggTemp.length() == 2) {
+					sidoCode.add(sggTemp);
+				} else {
+					sggCode.add(sggTemp);
+				}
+			}
+
+			for (String sido : sidoCode) {
+				for (String sgg : sggCode) {
+					if (sido.equals(sgg.substring(0, 2))) {
+						sggSet.remove(sgg);
+					}
+				}
+			}
+
+			uniqueSgg = String.join(",", sggSet);
+		}
+		// 중첩 지역 제거한 시군구코드
+		tDTO.setSgg_code(uniqueSgg);
+
+		
+
+		String msg = "";
+		String url = "/user/TunerDetail.do?tuner_seq=" + user_seq;
+		
+		log.info(uniqueSgg);
+
+		if(!profile_img.isEmpty()) {
+			try {
+			log.info("save image file!!");
+			String path = "c:/piano_prj/tuner/" + user_seq + "/";
+			String ext = FileUtil.saveImage(profile_img, "profile", path);
+			tDTO.setId_photo_dir(ext);
+			}catch(Exception e) {
+				msg = "프로필 이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			
+			
+		}
+		
+		if(!cert_img.isEmpty()) {
+			try {
+				log.info("save image file!!");
+				String path = "c:/piano_prj/tuner/" + user_seq + "/";
+				String ext = FileUtil.saveImage(cert_img, "cert", path);
+				tDTO.setCert_dir(ext);
+			}catch(Exception e) {
+				msg = "자격증 이미지 파일 업로드에 실패했습니다.";
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "/redirect";
+			}
+			
+			
+		}
+		
+		uDTO.setUser_seq(user_seq);
+		tDTO.setTuner_seq(user_seq);
+		
+		int result = 0;
+		try {
+		result = userService.updateTuner(uDTO, tDTO);
+		}catch(Exception e) {
+			log.info(e.toString());
+		}
+
+		
+		if (result == 0) {
+			msg = "수정에 실패하였습니다.";
+		} else {
+			
+			userService.clearTunerSgg(user_seq);
+			userService.addTunerSgg(user_seq, tDTO);
+			
+			msg = "수정하였습니다.";
+			
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		log.info(this.getClass());
+
+		return "/redirect";
+
 	}
 }

@@ -195,9 +195,16 @@
       this.defer($el, function () {
         var data = {}
         var key= $el.attr('name')
+        var action = $el.attr('data-remote')
+        var query = (action.split("?").length != 1) ? action.split("?")[1] : null;
+        action = query != null ? action.split("?")[0] : action;
         var keyname = (key=='id') ? "아이디" : "이메일";
         data[key] = getValue($el)
-        $.get($el.attr('data-remote'), data)
+        if(query != null){
+        	var splitquery = query.split("=");
+        	data[splitquery[0]] = splitquery[1];
+        }
+        $.get(action, data)
           .done(function(data, textStatus, jqXHR){
         	  if(data=="1"){
         		  console.log('data==1')

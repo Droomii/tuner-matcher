@@ -61,5 +61,9 @@ public interface IUserService {
 
 	int suspendUser(String user_seq, String reject_reason) throws Exception;
 
+	int recoverUser(String user_seq) throws Exception;
+
+	String getUserSeqByEmail(String email) throws Exception;
+
 
 }

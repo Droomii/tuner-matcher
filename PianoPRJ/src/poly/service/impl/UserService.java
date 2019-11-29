@@ -212,4 +212,14 @@ public class UserService implements IUserService {
 		return userMapper.suspendUser(user_seq, reject_reason);
 	}
 
+	@Override
+	public int recoverUser(String user_seq) throws Exception {
+		return userMapper.recoverUser(user_seq);
+	}
+
+	@Override
+	public String getUserSeqByEmail(String email) throws Exception {
+		return userMapper.getUserSeqByEmail(email);
+	}
+
 }

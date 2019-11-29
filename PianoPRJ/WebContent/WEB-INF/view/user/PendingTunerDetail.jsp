@@ -72,14 +72,16 @@
 						<p class="card-text">한줄소개 : <%=CmmUtil.nvl(tDTO.getTuner_comment(), "없음", true) %></p>
 						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
 						<%}else{ %>
-						<p class="card-text"><%=CmmUtil.revertXSS(tDTO.getTuner_exp()) %></p>
+						<p class="card-text"><%=CmmUtil.nvl(tDTO.getTuner_exp()) %></p>
 						<%} %>
+						<p>자격증 :</p>
+						<img src="/img/tuner/<%=tDTO.getTuner_seq() %>/cert.<%=tDTO.getCert_dir() %>" class="img-fluid mx-auto">
 					</div>
 				</div>
 				<div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
 				<div class="row text-xs-center">
 					<div class="col-xs-2 ">
-						<button class="button btn btn-primary float-xs-left">뒤로 </button>
+						<a href="/user/PendingTunerList.do" class="button btn btn-primary float-xs-left">뒤로 </a>
 					</div>
 					<div class="col-xs-8 text-xs-center">
 						<button class="button btn btn-warning" data-toggle="modal" data-target="#decline-form">반려 </button>

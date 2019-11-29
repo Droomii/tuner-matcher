@@ -131,6 +131,9 @@
 	<select id="checkEditEmail" parameterType="String" resultType="UserDTO">
 	SELECT DISTINCT(EMAIL) FROM USERINFO WHERE EMAIL = #{0} AND USER_SEQ &lt;&gt; #{1}
 	</select>
+	<select id="getUserSeqByEmail" parameterType="String" resultType="String">
+	SELECT USER_SEQ FROM USERINFO WHERE EMAIL = #{0}
+	</select>
 	<select id="findUserID" parameterType="String" resultType="String">
 	SELECT ID FROM USERINFO WHERE EMAIL = #{email} 
 	</select>
@@ -150,16 +153,20 @@
 		EMAIL,
 		USER_NAME,
 		USER_NICK,
-		USER_TEL
+		USER_TEL,
+		USER_STATE,
+		SUSPEND_REASON
 	FROM USERINFO
 	WHERE
 		USER_SEQ = #{0}
 	</select>
 		<select id="getUserEditInfo" parameterType="UserDTO" resultType="UserDTO">
 	SELECT
+		USER_SEQ,
 		EMAIL,
 		USER_NICK,
-		USER_TEL
+		USER_TEL,
+		USER_TYPE
 	FROM USERINFO
 	WHERE
 		USER_SEQ = #{user_seq}
@@ -169,6 +176,7 @@
 		TUNER_SEQ,
 		REJECT_REASON,
 		ID_PHOTO_DIR,
+		CERT_DIR,
 		TUNER_COMMENT,
 		TUNER_LEVEL,
 		TUNER_EXP,
@@ -265,7 +273,14 @@
 	WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	<select id="getTunerListCnt" resultType="Integer">
-	SELECT COUNT(1) FROM TUNER
+	SELECT
+		COUNT(1)
+	FROM
+		TUNER T,
+		USERINFO U
+	WHERE 
+		U.USER_SEQ = T.TUNER_SEQ
+		AND U.USER_STATE NOT IN(0, 2)
 	</select>
 	<select id="getTunerList" parameterType="String" resultType="TunerDTO">
 	SELECT * FROM
@@ -287,6 +302,7 @@
 				USERINFO U, TUNER T
 			WHERE
 				U.USER_SEQ = T.TUNER_SEQ
+				AND U.USER_STATE NOT IN(0, 2)
 			ORDER BY
 				TUNER_SEQ DESC
 			)
@@ -307,6 +323,15 @@
 	SET
 		USER_STATE=3,
 		SUSPEND_REASON=#{1}
+	WHERE
+		USER_SEQ=#{0}
+	</update>
+	<update id="recoverUser" parameterType="String">
+	UPDATE
+		USERINFO
+	SET
+		USER_STATE=1,
+		SUSPEND_REASON=NULL
 	WHERE
 		USER_SEQ=#{0}
 	</update>

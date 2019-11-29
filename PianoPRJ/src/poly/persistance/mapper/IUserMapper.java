@@ -68,6 +68,10 @@ public interface IUserMapper {
 	List<TunerDTO> getTunerList(@Param("start") int start, @Param("end") int end) throws Exception;
 
 	int suspendUser(String user_seq, String reject_reason) throws Exception;
+
+	int recoverUser(String user_seq) throws Exception;
+
+	String getUserSeqByEmail(String email) throws Exception;
 	
 	
 }

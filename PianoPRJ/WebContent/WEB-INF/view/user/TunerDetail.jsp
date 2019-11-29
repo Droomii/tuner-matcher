@@ -62,7 +62,10 @@
 						<div class="card-block">
 						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 						<div class="card-text valign-top ml-1 float-xs-left">
-							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(), true) %></strong></h5>
+							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(), true) %><%=uDTO.getUser_state().equals("3") ? "<span class=\"red\">(정지된 회원)</span>"  : ""%></strong></h5>
+							<%if(uDTO.getUser_state().equals("3")){ %>
+							<div class="card-text red">정지 사유 : <%=CmmUtil.nvl(uDTO.getSuspend_reason(), true) %></div>
+							<%} %>
 							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
 							<div class="card-text">거래 성사율 : <%=rDTO.getSuccessRate()%>%</div>
 							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate()%>%</div>
@@ -70,6 +73,7 @@
 						</div>
 						<div class="card-block">
 						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
+						<p class="card-text">닉네임 : <%=CmmUtil.nvl(uDTO.getUser_nick(), true) %></p>
 						<p class="card-text">이메일 : <%=CmmUtil.nvl(uDTO.getEmail(), true) %></p>
 						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel(), true) %></p>
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
@@ -258,8 +262,12 @@
 						<a class="button btn btn-info" href="/user/TunerList.do">목록</a>
 						</div>						
 						<div class="float-xs-right">
+						<%if(uDTO.getUser_state().equals("3")){ %>
+						<button class="button btn btn-warning" onclick="recoverUser();">정지 취소</button>
+						<%}else{ %>
 						<button class="button btn btn-danger" data-toggle="modal" data-target="#decline-form">회원 정지</button>
-						<a class="button btn btn-success" href="/user/AEditTuner.do?tuner_seq=<%=tDTO.getTuner_seq()%>">회원정보 수정</a>
+						<%} %>
+						<a class="button btn btn-success" href="/user/AUserEdit.do?user_seq=<%=tDTO.getTuner_seq()%>">회원정보 수정</a>
 						</div>
 						</div>
 						<!-- 회원쩡찌 모달 -->
@@ -321,6 +329,15 @@
 			return false;
 		}
 	}
+	
+	<%if(uDTO.getUser_state().equals("3")){ %>
+	function recoverUser(){
+		if(confirm("해당 회원을 복구하시겠습니까?")){
+			location.href = "/user/UserRecover.do?user_seq=<%=tDTO.getTuner_seq()%>&type=tuner"
+		}
+	}
+	
+	<%}%>
 	<%}%>
 	
 	

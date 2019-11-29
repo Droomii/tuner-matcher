@@ -85,7 +85,6 @@
 			type:"post",
 			data:query,
 			success:function(data){
-				console.log("data : " + data)
 				if(data=="0"){
 					location.href = "/main.do";
 				}else if(data=="1"){

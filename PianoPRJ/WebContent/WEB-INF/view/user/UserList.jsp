@@ -1,3 +1,4 @@
+<%@page import="poly.dto.UserDTO"%>
 <%@page import="poly.dto.TunerDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="poly.util.Pagination"%>
@@ -9,10 +10,10 @@
 <!-- session.jsp 경로 설정 -->
 <%@ include file="../user/session.jsp" %>
 <%
-	List<TunerDTO> tList = (List<TunerDTO>)request.getAttribute("tList");
+	List<UserDTO> uList = (List<UserDTO>)request.getAttribute("uList");
 	
 	Pagination pg = (Pagination)request.getAttribute("pg");
-	String pageName = "TunerList";
+	String pageName = "UserList";
 	String[] user_states = {"승인 대기중", "정상", "반려", "정지"};
 	
 %>
@@ -21,7 +22,7 @@
 <head>
 
 <meta charset="UTF-8">
-<title>조율사 목록</title>
+<title>일반회원 목록</title>
 <!-- header.jsp 경로 설정 -->
 <%@ include file="../header.jsp" %>
 <style>
@@ -66,7 +67,7 @@
     <div class="col-xs-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">조율사 목록</h4>
+                <h4 class="card-title">일반회원 목록</h4>
                 <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
             </div>
             <div class="card-body collapse in">
@@ -77,23 +78,23 @@
                             <div class="table-row">
 									<div class="table-head-cell"><strong>회원번호</strong></div>
                                     <div class="table-head-cell"><strong>이름</strong></div>
-                                    <div class="table-head-cell"><strong>기술등급</strong></div>
+                                    <div class="table-head-cell"><strong>닉네임</strong></div>
                                     <div class="table-head-cell"><strong>가입일</strong></div>
                                     <div class="table-head-cell"><strong>계정상태</strong></div>
                             </div>
                             
-                            <%for(TunerDTO tDTO : tList){ %>
-                            <div class="table-row item" role="button" onclick="location.href='/user/TunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
-                                    <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_seq()) %></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_name()) %></div>
-                                    <div class="table-cell"><%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></div>
-                                    <div class="table-cell"><%=tDTO.getRegdate().substring(0, 10)%></div>
-                                    <div class="table-cell"><%=user_states[Integer.parseInt(tDTO.getUser_state())]%></div>
+                            <%for(UserDTO uDTO : uList){ %>
+                            <div class="table-row item" role="button" onclick="location.href='/user/UserDetail.do?user_seq=<%=uDTO.getUser_seq()%>'">
+                                    <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_seq()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_name()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_nick(), true)%></div>
+                                    <div class="table-cell"><%=uDTO.getRegdate().substring(0, 10)%></div>
+                                    <div class="table-cell"><%=user_states[Integer.parseInt(uDTO.getUser_state())]%></div>
                             </div>
                             <%} %>
                         </div>
-                        <%if(tList.size()==0) {%>
-                            <div class="card-text text-xs-center">- 조율사 가입 요청이 없습니다 - </div>
+                        <%if(uList.size()==0) {%>
+                            <div class="card-text text-xs-center">- 회원이 없습니다 - </div>
                             <%}else{ %>
                         <%@include file="/WEB-INF/view/Pagination.jsp"%>
                         <%} %>

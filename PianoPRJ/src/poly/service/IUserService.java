@@ -65,5 +65,8 @@ public interface IUserService {
 
 	String getUserSeqByEmail(String email) throws Exception;
 
+	List<TunerDTO> getUserList(int start, int end) throws Exception;
+
+	int getUserListCnt() throws Exception;
 
 }

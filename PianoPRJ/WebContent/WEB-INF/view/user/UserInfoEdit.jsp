@@ -51,7 +51,7 @@
 			</div>
 			<div class="card-body collapse in">
 					<div class="card-block">
-						<form data-toggle="validator" role="form" name="form" class="form" action="/user/DoUserInfoEdit.do" method="post" autocomplete="off" onsubmit="doSubmit();">
+						<form data-toggle="validator" role="form" name="form" class="form" action="/user/ADoUserInfoEdit.do" method="post" autocomplete="off" onsubmit="doSubmit();">
 							<input value="<%=uDTO.getUser_seq()%>" name="user_seq" hidden>
 							<div class="form-body">
 								<h4 class="form-section"><i class="icon-head"></i> 기본 정보</h4>
@@ -63,7 +63,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_nick">닉네임<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_nick()%>" type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
+											<input value="<%=CmmUtil.nvl(uDTO.getUser_nick())%>" type="text" id="projectinput2" pattern="^[가-힣A-z0-9]{1,}$" class="form-control" placeholder="닉네임을 입력해주세요" name="user_nick" required data-pattern-error="한글, 영문 및 숫자만 가능합니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -73,7 +73,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="email">이메일<span class="red">*</span></label>
-											<input value="<%=uDTO.getEmail()%>" type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/EditDupCheck.do" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
+											<input value="<%=CmmUtil.nvl(uDTO.getEmail(), true)%>" type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요" name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" data-remote="/user/EditDupCheck.do?user_seq=<%=uDTO.getUser_seq() %>" data-remote-error="이미 사용중인 이메일입니다"  required data-error="유효한 이메일 주소가 아닙니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="success-msg">사용 가능한 이메일입니다.</div>
 											<div class="help-block with-errors"></div>
@@ -82,7 +82,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="user_tel">전화번호<span class="red">*</span></label>
-											<input value="<%=uDTO.getUser_tel()%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." name="user_tel" required onKeyUp="phoneNumberFormat(this);">
+											<input value="<%=CmmUtil.nvl(uDTO.getUser_tel(), true)%>" type="text" id="user_tel" class="form-control" placeholder="전화번호를 입력해주세요" pattern="[^1-9][0-9]{1,2}-[0-9]{3,4}-[0-9]{4}" data-pattern-error="올바른 전화번호가 아닙니다." name="user_tel" required onKeyUp="phoneNumberFormat(this);">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>

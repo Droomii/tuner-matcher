@@ -222,4 +222,14 @@ public class UserService implements IUserService {
 		return userMapper.getUserSeqByEmail(email);
 	}
 
+	@Override
+	public List<TunerDTO> getUserList(int start, int end) throws Exception {
+		return userMapper.getUserList(start, end);
+	}
+
+	@Override
+	public int getUserListCnt() throws Exception {
+		return userMapper.getUserListCnt();
+	}
+
 }

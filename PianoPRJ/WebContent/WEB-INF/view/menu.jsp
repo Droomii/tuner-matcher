@@ -81,7 +81,7 @@
           <%}else{ %>
           <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
         </li>
-         <li class=" nav-item"><a href="#"><i class="icon-home3"></i><span class="menu-title">회원 관리</span></a>
+         <li class=" nav-item"><a href="/user/UserList.do"><i class="icon-home3"></i><span class="menu-title">일반회원 관리</span></a>
         </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율사 관리</span></a>
             <ul class="menu-content">

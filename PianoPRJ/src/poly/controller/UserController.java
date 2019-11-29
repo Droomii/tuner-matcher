@@ -938,17 +938,17 @@ public class UserController {
 			log.info(e.toString());
 		}
 		
-		String url = "/user/UserList.do";
+		String url = "/user/UserDetail.do?user_seq=" + user_seq;
 		if(CmmUtil.nvl(type).equals("tuner")) {
-			url = "/user/TunerList.do";
+			url = "/user/TunerDetail.do?tuner_seq=" + user_seq;
 		}
 		String msg = "";
 		if (res == 0) {
 			msg = "회원 정지에 실패했습니다.";
 			if(type.equals("tuner")) {
-				url = "/user/TunerDetail.do?tuner_seq=" + user_seq;
+				
 			}else {
-				url = "/user/UserDetail.do?user_seq=" + user_seq;
+				
 			}
 		} else {
 			msg = "회원을 정지하였습니다.";
@@ -1178,5 +1178,102 @@ public class UserController {
 
 		return "/redirect";
 
+	}
+	
+	@RequestMapping(value = "ADoUserInfoEdit")
+	public String ADoUserInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@ModelAttribute UserDTO uDTO) throws Exception {
+
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String user_seq = request.getParameter("user_seq");
+		
+		uDTO.setUser_seq(user_seq);
+		
+		
+		int result = 0;
+		try {
+			result = userService.updateUser(uDTO);
+			}catch(Exception e) {
+				log.info(e.toString());
+			}
+		
+		String msg = "";
+		String url = "/user/UserDetail.do?user_seq=" + user_seq;
+		if (result == 0) {
+			msg = "수정에 실패하였습니다.";
+		} else {
+			msg = "수정에 성공했습니다.";
+		}
+
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+
+		
+		log.info(this.getClass());
+
+		return "/redirect";
+
+	}
+	
+	//관리자 회원 목록
+	@RequestMapping(value = "UserList")
+	public String UserList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".UserList start");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		// 페이징
+		int listCnt = userService.getUserListCnt();
+
+		Pagination pg = new Pagination(listCnt, page, 5);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+
+		List<TunerDTO> uList = userService.getUserList(start, end);
+		if (uList == null) {
+			uList = new ArrayList<TunerDTO>();
+		}
+		log.info("uList size : " + uList.size());
+
+		model.addAttribute("uList", uList);
+		
+		log.info(this.getClass().getName() + ".UserList end");
+		return "/user/UserList";
+	}
+	
+	@RequestMapping(value = "UserDetail")
+	public String UserDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".UserDetail start");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		
+		String user_seq = request.getParameter("user_seq");
+		log.info("user_seq : " + user_seq);
+		UserDTO uDTO = userService.getUserInfo(user_seq);
+		if (uDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 회원입니다");
+			model.addAttribute("url", "/user/UserList.do");
+			return "/redirect";
+		}
+		
+		model.addAttribute("uDTO", uDTO);
+		
+		
+		log.info(this.getClass().getName() + ".UserDetail end");
+		return "/user/UserDetail";
 	}
 }

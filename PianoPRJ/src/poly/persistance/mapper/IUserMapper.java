@@ -72,6 +72,10 @@ public interface IUserMapper {
 	int recoverUser(String user_seq) throws Exception;
 
 	String getUserSeqByEmail(String email) throws Exception;
+
+	List<TunerDTO> getUserList(@Param("start") int start, @Param("end") int end) throws Exception;
+
+	int getUserListCnt() throws Exception;
 	
 	
 }

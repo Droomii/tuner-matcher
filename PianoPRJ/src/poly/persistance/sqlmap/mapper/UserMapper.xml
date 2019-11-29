@@ -150,6 +150,7 @@
 	<!-- myPage -->
 	<select id="getUserInfo" parameterType="String" resultType="UserDTO">
 	SELECT
+		USER_SEQ,
 		EMAIL,
 		USER_NAME,
 		USER_NICK,
@@ -305,6 +306,40 @@
 				AND U.USER_STATE NOT IN(0, 2)
 			ORDER BY
 				TUNER_SEQ DESC
+			)
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getUserListCnt" resultType="Integer">
+	SELECT
+		COUNT(1)
+	FROM
+		USERINFO
+	WHERE
+		USER_TYPE=0
+	</select>
+	<select id="getUserList" parameterType="String" resultType="UserDTO">
+	SELECT * FROM
+		(SELECT
+			ROWNUM AS RN,
+			USER_SEQ,
+			USER_NAME,
+			USER_NICK,
+			USER_STATE,
+			REGDATE
+		FROM
+			(SELECT
+				USER_SEQ,
+				USER_NAME,
+				USER_NICK,
+				REGDATE,
+				USER_STATE
+			FROM
+				USERINFO
+			WHERE
+				USER_TYPE=0
+			ORDER BY
+				USER_SEQ DESC
 			)
 		)
 	WHERE RN BETWEEN #{start} AND #{end}

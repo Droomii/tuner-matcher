@@ -136,6 +136,12 @@ public class DealController {
 		}
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		if (dDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 입찰입니다");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoEditInfo(rDTO.getPiano_seq(), null);
 		model.addAttribute("dDTO",dDTO);
@@ -260,6 +266,13 @@ public class DealController {
 		log.info("back : " + back);
 		String deal_seq = request.getParameter("deal_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		if (dDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 거래입니다");
+			model.addAttribute("url", "/deal/TunerPastDeals.do");
+			return "/redirect";
+		}
+		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
@@ -428,7 +441,21 @@ public class DealController {
 		}
 		
 		String deal_seq = request.getParameter("deal_seq");
+		String user_seq = (String) session.getAttribute("user_seq");
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		if (dDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 거래입니다");
+			model.addAttribute("url", "/deal/UserDealList.do");
+			return "/redirect";
+		}
+		
+		if(!user_seq.equals(dDTO.getRequester_seq())) {
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());

@@ -65,6 +65,7 @@
 		LAST_TUNED_DATE
 	FROM PIANO
 	WHERE OWNER_SEQ=#{0}
+	AND DELETED=0
 	</select>
 	<select id="getPianoDetail" parameterType="String" resultType="PianoDTO">
 	SELECT
@@ -78,20 +79,25 @@
 		PIANO_DESC,
 		BRAND,
 		PIANO_TYPE,
-		LAST_TUNED_DATE
+		LAST_TUNED_DATE,
+		DELETED
 	FROM PIANO
 	WHERE PIANO_SEQ=#{piano_seq}
 	<if test="user_seq!=null">
 	AND OWNER_SEQ=#{user_seq}
 	</if>
 	</select>
-	<delete id="deletePiano" parameterType="String">
-	DELETE FROM PIANO
-	WHERE PIANO_SEQ=#{piano_seq}
+	<update id="deletePiano" parameterType="String">
+	UPDATE
+		PIANO
+	SET
+		DELETED=1
+	WHERE
+		PIANO_SEQ=#{piano_seq}
 	<if test="user_seq!=null">
 	AND OWNER_SEQ=#{user_seq}
 	</if>
-	</delete>
+	</update>
 	<select id="getPianoEditInfo" parameterType="String" resultType="PianoDTO">
 	SELECT
 		PIANO_SEQ,
@@ -110,7 +116,8 @@
 		SIDO_NAME,
 		SGG_NAME,
 		EMD_NAME,
-		LI_NAME
+		LI_NAME,
+		DELETED
 	FROM PIANO
 	WHERE PIANO_SEQ = #{piano_seq}
 	<if test="user_seq!=null">

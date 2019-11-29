@@ -158,7 +158,7 @@
 	WHERE REQ_SEQ=#{req_seq}
 	</update>
 	<delete id="deleteReq" parameterType="String">
-	DELETE FROM REQUEST WHERE REQ_SEQ=#{0}
+	DELETE FROM REQUEST WHERE REQ_SEQ=#{0} AND REQ_STATE=0
 	</delete>
 	<select id="getNearReqList" parameterType="String" resultType="ReqDTO">
 	SELECT

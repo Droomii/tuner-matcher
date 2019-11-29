@@ -13,7 +13,7 @@
 	
 	Pagination pg = (Pagination)request.getAttribute("pg");
 	String pageName = "TunerList";
-	String[] user_states = {"승인 대기중", "정상", "반려", "정지"};
+	String[] user_states = {"승인 대기중", "정상", "반려", "정지", "탈퇴"};
 	
 %>
 <!DOCTYPE html>

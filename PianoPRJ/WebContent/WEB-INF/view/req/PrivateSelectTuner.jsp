@@ -51,7 +51,11 @@
 				<div class="card-body">
 					<div class="card-block" style="display:flex">
 					<div class="col-xs-4" style="width:160px;min-width:160px;">
+						<%if(tDTO.getUser_state()==1){ %>
 						<img class="rounded img-fluid img-thumbnail" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
+						<%}else{ %>
+						<img class="rounded img-fluid img-thumbnail" src="/resources/images/user_default.png" alt="Card image cap">
+						<%} %>
 					</div>
 					<div class="col-xs-8">
 						<h5><strong><%=CmmUtil.nvl( tDTO.getTuner_name(), true) %></strong></h5>

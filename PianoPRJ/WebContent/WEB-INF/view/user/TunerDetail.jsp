@@ -70,7 +70,7 @@
 						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
 						<%} %>
 						<div class="card-text valign-top ml-1 float-xs-left">
-							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(admin), true) %><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></strong></h5>
+							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(admin), true) %><%if(user_type.equals("2")){%><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%><%} %></strong></h5>
 							<%if(uDTO.getUser_state()==3){ %>
 							<div class="card-text red">정지 사유 : <%=CmmUtil.nvl(uDTO.getSuspend_reason(), true) %></div>
 							<%} %>
@@ -79,6 +79,7 @@
 							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate(admin)%>%</div>
 						</div>
 						</div>
+						<%if((uDTO.getUser_state()==3 || uDTO.getUser_state()==4) && !user_type.equals("2")){}else{ %>
 						<div class="card-block">
 						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(admin), true) %></p>
 						<p class="card-text">닉네임 : <%=CmmUtil.nvl(uDTO.getUser_nick(admin), true) %></p>
@@ -87,7 +88,6 @@
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
 						<p class="card-text">소속 : <%=CmmUtil.nvl(tDTO.getAffiliation(admin), true) %></p>
 						<p class="card-text">근무지 : <%=CmmUtil.nvl(tDTO.getAddr(admin), true) %></p>
-						<%if((uDTO.getUser_state()!=3 && uDTO.getUser_state()!=4) | !user_type.equals("2")){ %>
 						<%if(!sggKeys.contains("전국")) { %>
 						<p class="card-text">활동지역 : </p>
 						<%} %>
@@ -99,14 +99,14 @@
 						<p class="card-text">&nbsp;&nbsp;&nbsp;- <%=key %> : <%=sggString.substring(1, sggString.length()-1) %></p>
 						<%} %>
 						<br>
-						<p class="card-text">한줄소개 : <%=CmmUtil.nvl(tDTO.getTuner_comment(), "없음", true) %></p>
-						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp()).equals("")){ out.print("없음");%></p>
+						<p class="card-text">한줄소개 : <%=CmmUtil.nvl(tDTO.getTuner_comment(admin), "없음", true) %></p>
+						<p class="card-text">이력 : <%if(CmmUtil.nvl(tDTO.getTuner_exp(admin)).equals("")){ out.print("없음");%></p>
 						<%}else{ %>
-						<p class="card-text"><%=CmmUtil.nvl(tDTO.getTuner_exp()) %></p>
-						<%} %>
+						<p class="card-text"><%=CmmUtil.nvl(tDTO.getTuner_exp(admin)) %></p>
 						<%} %>
 
 					</div>
+					<%} %>
 							<div class="card-block">
 								<div class="card-text"><strong>리뷰 요약정보(<%=rDTO.getTotal_reviews(admin) %>건)</strong></div>
 								<hr style="border-color:gray;margin-top:0.2rem">
@@ -222,6 +222,7 @@
 									
 								</div>
 							</div>
+							<%if((uDTO.getUser_state()==3 || uDTO.getUser_state()==4) && !user_type.equals("2")){}else{ %>
 							<div class="card-block">
 							<div class="card-text"><strong>리뷰 목록</strong></div>
 								<hr style="border-color:gray;margin-top:0.2rem;margin-bottom:0.2rem">
@@ -256,6 +257,7 @@
 								<!-- /리뷰 -->
 							
 						</div>
+						<%} %>
 						<%if(user_type.equals("0")){ %>
 						<div class="card-footer">
 						<div class="float-xs-left">

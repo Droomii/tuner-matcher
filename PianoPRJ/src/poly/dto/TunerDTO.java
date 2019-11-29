@@ -25,243 +25,305 @@ public class TunerDTO {
 	private String li_name;
 	private String score;
 	private String regdate;
-	
-	
-	
+
 	public String getRegdate() {
 		return regdate;
 	}
+
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
+
 	public String getScore() {
+		if (user_state > 2) {
+			return "0";
+		}
 		return score;
 	}
+
+	public String getScore(boolean admin) {
+		if (admin)
+			return score;
+		return getScore();
+	}
+
 	public void setScore(String score) {
 		this.score = score;
 	}
+
 	public String getTuner_name() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "(탈퇴한 조율사)";
 		}
 		return tuner_name;
 	}
+
 	public String getTuner_name(boolean admin) {
-		if(admin)
+		if (admin)
 			return tuner_name;
 		return getTuner_name();
 	}
-	
+
 	public void setTuner_name(String tuner_name) {
 		this.tuner_name = tuner_name;
 	}
+
 	public String getSido_name() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "";
 		}
 		return sido_name;
 	}
+
 	public String getSido_name(boolean admin) {
-		if(admin)
+		if (admin)
 			return sido_name;
 		return getSido_name();
 	}
+
 	public void setSido_name(String sido_name) {
 		this.sido_name = sido_name;
 	}
+
 	public String getSgg_name() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "";
 		}
 		return sgg_name;
 	}
+
 	public String getSgg_name(boolean admin) {
-		if(admin)
+		if (admin)
 			return sgg_name;
 		return getSgg_name();
 	}
+
 	public void setSgg_name(String sgg_name) {
 		this.sgg_name = sgg_name;
 	}
+
 	public String getEmd_name() {
 		return emd_name;
 	}
+
 	public void setEmd_name(String emd_name) {
 		this.emd_name = emd_name;
 	}
+
 	public String getLi_name() {
 		return li_name;
 	}
+
 	public void setLi_name(String li_name) {
 		this.li_name = li_name;
 	}
+
 	public String getX_pos() {
 		return x_pos;
 	}
+
 	public void setX_pos(String x_pos) {
 		this.x_pos = x_pos;
 	}
+
 	public String getY_pos() {
 		return y_pos;
 	}
+
 	public void setY_pos(String y_pos) {
 		this.y_pos = y_pos;
 	}
+
 	public String getTuner_seq() {
 		return tuner_seq;
 	}
+
 	public void setTuner_seq(String tuner_seq) {
 		this.tuner_seq = tuner_seq;
 	}
+
 	public int getUser_state() {
 		return user_state;
 	}
+
 	public void setUser_state(int user_state) {
 		this.user_state = user_state;
 	}
+
 	public String getReject_reason() {
 		return reject_reason;
 	}
+
 	public void setReject_reason(String reject_reason) {
 		this.reject_reason = reject_reason;
 	}
+
 	public String getId_photo_dir() {
 		return id_photo_dir;
 	}
+
 	public void setId_photo_dir(String id_photo_dir) {
 		this.id_photo_dir = id_photo_dir;
 	}
+
 	public String getCert_dir() {
 		return cert_dir;
 	}
+
 	public void setCert_dir(String cert_dir) {
 		this.cert_dir = cert_dir;
 	}
+
 	public String getTuner_comment() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "-";
 		}
 		return tuner_comment;
 	}
+
 	public String getTuner_comment(boolean admin) {
-		if(admin)
+		if (admin)
 			return tuner_comment;
 		return getTuner_comment();
 	}
+
 	public void setTuner_comment(String tuner_comment) {
 		this.tuner_comment = tuner_comment;
 	}
+
 	public String getTuner_level() {
 		return tuner_level;
 	}
+
 	public void setTuner_level(String tuner_level) {
 		this.tuner_level = tuner_level;
 	}
+
 	public String getTuner_exp() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "-";
 		}
 		return tuner_exp;
 	}
+
 	public String getTuner_exp(boolean admin) {
-		if(admin)
+		if (admin)
 			return tuner_exp;
 		return getTuner_exp();
 	}
+
 	public void setTuner_exp(String tuner_exp) {
 		this.tuner_exp = tuner_exp;
 	}
+
 	public String getFollower_num() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "0";
 		}
 		return follower_num;
 	}
 
 	public String getFollower_num(boolean admin) {
-		if(admin)
+		if (admin)
 			return follower_num;
 		return getFollower_num();
 	}
+
 	public void setFollower_num(String follower_num) {
 		this.follower_num = follower_num;
 	}
+
 	public String getFeedback_score() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "0";
 		}
 		return feedback_score;
 	}
+
 	public String getFeedback_score(boolean admin) {
-		if(admin)
+		if (admin)
 			return feedback_score;
 		return getFeedback_score();
 	}
+
 	public void setFeedback_score(String feedback_score) {
 		this.feedback_score = feedback_score;
 	}
+
 	public String getDeals_num() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "0";
 		}
 		return deals_num;
 	}
+
 	public String getDeals_num(boolean admin) {
-		if(admin)
+		if (admin)
 			return deals_num;
 		return getDeals_num();
 	}
+
 	public void setDeals_num(String deals_num) {
 		this.deals_num = deals_num;
 	}
+
 	public String getAddr() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "-";
 		}
 		return addr;
 	}
+
 	public String getAddr(boolean admin) {
-		if(admin)
+		if (admin)
 			return addr;
 		return getAddr();
 	}
+
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+
 	public String getDetail_addr() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "-";
 		}
 		return detail_addr;
 	}
+
 	public String getDetail_addr(boolean admin) {
-		if(admin)
+		if (admin)
 			return detail_addr;
 		return getDetail_addr();
 	}
+
 	public void setDetail_addr(String detail_addr) {
 		this.detail_addr = detail_addr;
 	}
+
 	public String getSgg_code() {
 		return sgg_code;
 	}
+
 	public void setSgg_code(String sgg_code) {
 		this.sgg_code = sgg_code;
 	}
+
 	public String getAffiliation() {
-		if(user_state==4) {
+		if (user_state > 2) {
 			return "-";
 		}
 		return affiliation;
 	}
+
 	public String getAffiliation(boolean admin) {
-		if(admin)
+		if (admin)
 			return affiliation;
 		return getAffiliation();
 	}
+
 	public void setAffiliation(String affiliation) {
 		this.affiliation = affiliation;
 	}
-	
-	
+
 }

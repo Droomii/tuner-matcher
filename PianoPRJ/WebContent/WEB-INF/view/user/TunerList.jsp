@@ -85,7 +85,7 @@
                             <%for(TunerDTO tDTO : tList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/user/TunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
                                     <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_seq()) %></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_name()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_name(true)) %></div>
                                     <div class="table-cell"><%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></div>
                                     <div class="table-cell"><%=tDTO.getRegdate().substring(0, 10)%></div>
                                     <div class="table-cell"><%=user_states[tDTO.getUser_state()]%></div>

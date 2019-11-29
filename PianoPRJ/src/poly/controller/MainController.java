@@ -57,9 +57,9 @@ public class MainController {
 		MainDTO mDTO = null;
 		
 		if(user_type.equals("1")) {
-			String user_state = (String) session.getAttribute("user_state");
+			int user_state = (int)session.getAttribute("user_state");
 			
-			if(user_state.equals("2")) {
+			if(user_state==2) {
 				String reject_reason = userService.getTunerInfo(user_seq).getReject_reason();
 				model.addAttribute("reject_reason", reject_reason);
 			}else {

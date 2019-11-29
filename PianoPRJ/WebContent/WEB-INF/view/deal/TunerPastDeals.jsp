@@ -70,7 +70,7 @@
                         <div class="table">
                             <div class="table-row">
 									<div class="table-head-cell"><strong>거래번호</strong></div>
-                                    <div class="table-head-cell"><strong>고객 닉네임</strong></div>
+                                    <div class="table-head-cell"><strong>고객명</strong></div>
                                     <div class="table-head-cell"><strong>견적가</strong></div>
                                     <div class="table-head-cell"><strong>결과</strong></div>
                             </div>

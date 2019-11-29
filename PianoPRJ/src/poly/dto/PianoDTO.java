@@ -24,17 +24,6 @@ public class PianoDTO {
 	private String regseq;
 	private String upddate;
 	private String updseq;
-	private int deleted;
-	
-	
-
-	public int getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(int deleted) {
-		this.deleted = deleted;
-	}
 
 	public String getPiano_type() {
 		return piano_type;
@@ -77,9 +66,6 @@ public class PianoDTO {
 	}
 
 	public String getBrand() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return brand;
 	}
 
@@ -88,9 +74,6 @@ public class PianoDTO {
 	}
 
 	public String getSerial() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return serial;
 	}
 
@@ -99,9 +82,6 @@ public class PianoDTO {
 	}
 
 	public String getAddr() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return addr;
 	}
 
@@ -110,9 +90,6 @@ public class PianoDTO {
 	}
 
 	public String getPlayer_type() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return player_type;
 	}
 
@@ -121,9 +98,6 @@ public class PianoDTO {
 	}
 
 	public String getLast_tuned_date() {
-		if(this.deleted==1) {
-			return null;
-		}
 		return last_tuned_date;
 	}
 
@@ -132,9 +106,6 @@ public class PianoDTO {
 	}
 
 	public String getPiano_photo_dir() {
-		if(this.deleted==1) {
-			return null;
-		}
 		return piano_photo_dir;
 	}
 
@@ -167,9 +138,6 @@ public class PianoDTO {
 	}
 
 	public String getSido_name() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return sido_name;
 	}
 
@@ -178,9 +146,6 @@ public class PianoDTO {
 	}
 
 	public String getSgg_name() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return sgg_name;
 	}
 
@@ -189,9 +154,6 @@ public class PianoDTO {
 	}
 
 	public String getEmd_name() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return emd_name;
 	}
 
@@ -200,9 +162,6 @@ public class PianoDTO {
 	}
 
 	public String getLi_name() {
-		if(this.deleted==1) {
-			return "-";
-		}
 		return li_name;
 	}
 

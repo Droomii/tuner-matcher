@@ -28,7 +28,11 @@
 	  </div>
 	  <div class="modal-body">
 						<div class="card-block">
+						<%if(rDTO.getUser_state()==4){ %>
+						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/resources/images/user_default.png" alt="Card image cap">						
+						<%}else{ %>
 						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
+						<%} %>
 						<div class="card-text valign-top ml-1 float-xs-left">
 							<h5><strong><%=rDTO.getTuner_name() %></strong></h5>
 							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
@@ -156,7 +160,9 @@
 								<hr style="border-color:gray;margin-top:0.2rem;margin-bottom:0.2rem">
 								<!-- 리뷰 -->
 								<div id="review-container">
-								<%for(ReviewDTO revDTO : revList){ %>
+								<%for(ReviewDTO revDTO : revList){
+								if(rDTO.getUser_state()==4) break;
+								%>
 									<div role="button" class="review" onclick="toggleReview(this);" data-toggle="0">
 										<div style="font-size:1.5rem;color:gray;letter-spacing:-0.3rem;">
 										<div style="display:inline-block">
@@ -178,7 +184,7 @@
 								<%} %>
 								<%if(revList.size()==0) {%>
 								<div class="card-text text-xs-center">- 리뷰가 없습니다. -</div>
-								<%}else{ %>
+								<%}else if(rDTO.getUser_state()!=4){ %>
 	                        <%@include file="/WEB-INF/view/Pagination-ajax.jsp"%>
 	                        <%} %>
 	                        </div>

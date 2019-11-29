@@ -23,7 +23,7 @@
 		<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;<%=revDTO.getUser_nick()%> | <%=revDTO.getRegdate().substring(0, 10) %></div>
 		</div>
 		<div class="card-text text-truncate mb-1 review-content">
-		<%=CmmUtil.nvl(revDTO.getReview_content()) %>
+		<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>
 		</div>
 		<div class="text-muted hidden eval-items">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 		<hr style="border-color:gray;margin-bottom:0.2rem;margin-top:0.2rem">

@@ -9,25 +9,28 @@ public class UserDTO {
 	private String user_name;
 	private String user_sex;
 	private String user_nick;
-	private String user_state;
+	private int user_state;
 	private String user_tel;
 	private String regdate;
 	private String upddate;
 	private String updater_seq;
 	private String suspend_reason;
 	
+	
+	
+	public int getUser_state() {
+		return user_state;
+	}
+	public void setUser_state(int user_state) {
+		this.user_state = user_state;
+	}
 	public String getSuspend_reason() {
 		return suspend_reason;
 	}
 	public void setSuspend_reason(String suspend_reason) {
 		this.suspend_reason = suspend_reason;
 	}
-	public String getUser_state() {
-		return user_state;
-	}
-	public void setUser_state(String user_state) {
-		this.user_state = user_state;
-	}
+	
 	public String getUser_seq() {
 		return user_seq;
 	}
@@ -46,9 +49,17 @@ public class UserDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getEmail() {
+	public String getEmail(int admin) {
 		return email;
 	}
+	
+	public String getEmail() {
+		if(user_state==4) {
+			return "-";
+		}
+		return email;
+	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -59,6 +70,12 @@ public class UserDTO {
 		this.password = password;
 	}
 	public String getUser_name() {
+		if(user_state==4) {
+			return "(탈퇴 회원)";
+		}
+		return user_name;
+	}
+	public String getUser_name(int admin) {
 		return user_name;
 	}
 	public void setUser_name(String user_name) {
@@ -71,12 +88,24 @@ public class UserDTO {
 		this.user_sex = user_sex;
 	}
 	public String getUser_nick() {
+		if(user_state==4) {
+			return "(탈퇴 회원)";
+		}
+		return user_nick;
+	}
+	public String getUser_nick(int admin) {
 		return user_nick;
 	}
 	public void setUser_nick(String user_nick) {
 		this.user_nick = user_nick;
 	}
 	public String getUser_tel() {
+		if(user_state==4) {
+			return "-";
+		}
+		return user_tel;
+	}
+	public String getUser_tel(int admin) {
 		return user_tel;
 	}
 	public void setUser_tel(String user_tel) {

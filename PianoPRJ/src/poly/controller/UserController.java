@@ -95,7 +95,7 @@ public class UserController {
 			return "1";
 		}
 		
-		if(uDTO.getUser_state().equals("3")) {
+		if(uDTO.getUser_state()==3) {
 			return CmmUtil.nvl(uDTO.getSuspend_reason(), true);
 		}
 		
@@ -616,9 +616,9 @@ public class UserController {
 		uDTO.setUser_seq(user_seq);
 		tDTO.setTuner_seq(user_seq);
 		
-		String user_state = (String) session.getAttribute("user_state");
-		if(user_state.equals("2")) {
-			uDTO.setUser_state("x");
+		int user_state = (int) session.getAttribute("user_state");
+		if(user_state==2){
+			uDTO.setUser_state(1);
 			tDTO.setReject_reason("x");
 		}
 		
@@ -638,8 +638,8 @@ public class UserController {
 			userService.addTunerSgg(user_seq, tDTO);
 			
 			msg = "수정하였습니다.";
-			if(user_state.equals("2")) {
-				session.setAttribute("user_state", "0");
+			if(user_state==2) {
+				session.setAttribute("user_state", 0);
 			}
 			
 		}
@@ -989,9 +989,9 @@ public class UserController {
 		}
 		String msg = "";
 		if (res == 0) {
-			msg = "회원 정지 취소에 실패했습니다.";
+			msg = "회원 복구에 실패했습니다.";
 		} else {
-			msg = "회원 정지를 취소하였습니다.";
+			msg = "회원을 복구하였습니다.";
 		}
 		
 		model.addAttribute("url", url);

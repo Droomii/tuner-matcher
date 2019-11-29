@@ -44,7 +44,7 @@
 							</div>
 
 							<div class="form-actions">
-								<button onclick="href.location='/notice/NoticeList.do'" type="button" class="btn btn-warning mr-1">
+								<button onclick="location.href='/notice/NoticeList.do'" type="button" class="btn btn-warning mr-1">
 									<i class="icon-cross2"></i> 취소
 								</button>
 								<button type="button" class="btn btn-primary" onclick="submitNotice();">

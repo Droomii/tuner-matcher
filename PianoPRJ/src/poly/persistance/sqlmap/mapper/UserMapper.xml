@@ -174,18 +174,20 @@
 	</select>
 	<select id="getTunerInfo" parameterType="String" resultType="TunerDTO">
 	SELECT
-		TUNER_SEQ,
-		REJECT_REASON,
-		ID_PHOTO_DIR,
-		CERT_DIR,
-		TUNER_COMMENT,
-		TUNER_LEVEL,
-		TUNER_EXP,
-		ADDR,
-		AFFILIATION
-	FROM TUNER
+		T.TUNER_SEQ,
+		T.REJECT_REASON,
+		T.ID_PHOTO_DIR,
+		T.CERT_DIR,
+		T.TUNER_COMMENT,
+		T.TUNER_LEVEL,
+		T.TUNER_EXP,
+		T.ADDR,
+		T.AFFILIATION,
+		U.USER_STATE
+	FROM TUNER T, USERINFO U
 	WHERE
 		TUNER_SEQ = #{0}
+		AND T.TUNER_SEQ=U.USER_SEQ
 	</select>
 	<select id="getTunerEditInfo" parameterType="String" resultType="TunerDTO">
 	SELECT

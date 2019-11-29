@@ -57,7 +57,7 @@ List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
 	
 <!-- 조율사 메인 -->
 <%if(user_type.equals("1")){
-	if(user_state.equals("1")){%>
+	if(user_state==1){%>
 	
 	<div class="app-content content container-fluid">
       <div class="content-wrapper">
@@ -191,7 +191,7 @@ List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
 						<div>
 							<i class="icon-android-alert" style="font-size: 10rem;"></i>
 						</div>
-						<%if(user_state.equals("0")){ %>
+						<%if(user_state==0){ %>
 						<div style="font-size: 1.5rem;">가입 미승인 조율사입니다.<br>승인 이후 서비스를 사용하실 수 있습니다.</div>
 						<%}else{ %>
 						<div style="font-size: 1.5rem;">가입 요청이 반려되었습니다.</div>

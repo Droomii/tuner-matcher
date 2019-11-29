@@ -19,7 +19,7 @@
       <div class="main-menu-content">
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="navigation navigation-main">
         <%if(user_type.equals("1")){
-        if(user_state.equals("1")){%>
+        if(user_state==1){%>
 
         
          <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>

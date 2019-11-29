@@ -41,10 +41,10 @@
 					<div class="card-block text-xs-center">
 					<img class="img-fluid my-1" src="/resources/images/user_default.png" style="height:100px" alt="Card image cap">
 						<br>
-						<h5><%=CmmUtil.nvl(uDTO.getUser_nick(), true) %><%=uDTO.getUser_state().equals("3") ? "<span class=\"red\">(정지된 회원)</span>"  : ""%></h5>
+						<h5><%=CmmUtil.nvl(uDTO.getUser_nick(1), true) %><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></h5>
 					</div>
 					<div class="card-block">
-						<%if(uDTO.getUser_state().equals("3")){ %>
+						<%if(uDTO.getUser_state()==3){ %>
 						<p class="card-text red">정지 사유 : <%=CmmUtil.nvl(uDTO.getSuspend_reason(), true) %></p>
 						<%} %>
 						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
@@ -57,8 +57,8 @@
 						<a class="button btn btn-info" href="/user/UserList.do">목록</a>
 						</div>						
 						<div class="float-xs-right">
-						<%if(uDTO.getUser_state().equals("3")){ %>
-						<button class="button btn btn-warning" onclick="recoverUser();">정지 취소</button>
+						<%if(uDTO.getUser_state()==3 || uDTO.getUser_state()==4){ %>
+						<button class="button btn btn-warning" onclick="recoverUser();">회원 복구</button>
 						<%}else{ %>
 						<button class="button btn btn-danger" data-toggle="modal" data-target="#decline-form">회원 정지</button>
 						<%} %>
@@ -126,7 +126,7 @@
 		}
 	}
 	
-	<%if(uDTO.getUser_state().equals("3")){ %>
+	<%if(uDTO.getUser_state().matches("[34]")){ %>
 	function recoverUser(){
 		if(confirm("해당 회원을 복구하시겠습니까?")){
 			location.href = "/user/UserRecover.do?user_seq=<%=uDTO.getUser_seq()%>"

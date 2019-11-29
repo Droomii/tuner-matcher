@@ -275,7 +275,7 @@ public class DealController {
 		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
-		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
+		UserDTO uDTO = userService.getUserInfo(dDTO.getRequester_seq());
 		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
 		
 		if(back!=null) {

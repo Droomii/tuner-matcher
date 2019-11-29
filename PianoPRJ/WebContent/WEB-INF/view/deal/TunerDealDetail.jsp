@@ -122,23 +122,22 @@
 						<h4 class="card-title" id="basic-layout-form">견적 정보</h4>
 					</div>
 		            <div class="card-body collapse in">
+		            <%if(!dDTO.getDeal_state().equals("3")){ %>
 			            <div class="card-block">
 			            <div>
-							<h5 class="form-section text-bold-600 float-xs-left" >조율사 정보</h5>
-							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#tuner-detail">조율사 상세정보</button>
-							<!-- modal -->
-							<div id="modal-container"></div>
-							<!-- /modal -->
+							<h5 class="form-section text-bold-600 float-xs-left" >고객 정보</h5>
 						</div>
 							<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=CmmUtil.nvl(tuner_name, true) %></div></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=CmmUtil.nvl(uDTO.getUser_name(), true) %></div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel() %></div></div>
 								</div>
 							</div>
+						
 						</div>
+						<%} %>
 						<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
@@ -246,6 +245,7 @@
                         </tbody>
                     </table>
 					</div>
+					<%if(!dDTO.getDeal_state().equals("3")){ %>
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">위치 및 날짜 정보</h5>
 						<div class="col-xs-12 border" style="border-color:rgb(150,150,150);">
@@ -264,6 +264,8 @@
 							<div id="map" style="width:100%;height:100%;"></div>
 						</div>
 					</div>
+					<%} %>
+					
 					<%if(deal_state.equals("7")){ %>
 					<div id="review-container">
 					<%if(revDTO==null){ %>
@@ -397,27 +399,6 @@
 	<script type="text/javascript">
 	
 	
-	
-	
-	window.onload = function(){
-		var query = {tuner_seq : "<%=dDTO.getTuner_seq()%>"};
-		$.ajax({
-			url:"/repu/GetTunerRepu.do",
-			type:"post",
-			data:query,
-			success:function(data){
-				if(data==null){
-					alert('비정상적인 접근입니다.');
-					return;
-				}else{
-					$("#modal-container").html(data);
-				}
-			}
-		});
-		
-	}
-	
-	
 	<%if(user_type.equals("0") && revDTO != null){ %>
 	function reviewDelete(){
 		if(confirm("리뷰를 삭제하시겠습니까?")){
@@ -526,6 +507,7 @@
 	}
 	<%} %>
 	
+	<%if(!dDTO.getDeal_state().equals("3")){ %>
 	// 지도
 
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -559,6 +541,7 @@
 	};
 	geocoder.addressSearch('<%=CmmUtil.nvl(pDTO.getAddr()).split("&#40")[0].split(",")[0] %>', init);
 	
+	<%}%>
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
 </body>

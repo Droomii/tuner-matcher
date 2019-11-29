@@ -5,7 +5,7 @@
 	String user_seq = CmmUtil.nvl((String)session.getAttribute("user_seq"));
 	String user_type = CmmUtil.nvl((String)session.getAttribute("user_type"));
 	String user_nick = CmmUtil.nvl((String)session.getAttribute("user_nick"));
-	String user_state = CmmUtil.nvl((String)session.getAttribute("user_state"));
+	Integer user_state = (Integer)session.getAttribute("user_state");
 %>
 <%if(CmmUtil.nvl(user_seq).equals("")){ %>
 <script>

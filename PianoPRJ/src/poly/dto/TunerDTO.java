@@ -3,7 +3,7 @@ package poly.dto;
 public class TunerDTO {
 	private String tuner_name;
 	private String tuner_seq;
-	private String user_state;
+	private int user_state;
 	private String reject_reason;
 	private String id_photo_dir;
 	private String cert_dir;
@@ -41,18 +41,37 @@ public class TunerDTO {
 		this.score = score;
 	}
 	public String getTuner_name() {
+		if(user_state==4) {
+			return "(탈퇴한 조율사)";
+		}
 		return tuner_name;
 	}
+	public String getTuner_name(int admin) {
+		return tuner_name;
+	}
+	
 	public void setTuner_name(String tuner_name) {
 		this.tuner_name = tuner_name;
 	}
 	public String getSido_name() {
+		if(user_state==4) {
+			return "";
+		}
+		return sido_name;
+	}
+	public String getSido_name(int admin) {
 		return sido_name;
 	}
 	public void setSido_name(String sido_name) {
 		this.sido_name = sido_name;
 	}
 	public String getSgg_name() {
+		if(user_state==4) {
+			return "";
+		}
+		return sgg_name;
+	}
+	public String getSgg_name(int admin) {
 		return sgg_name;
 	}
 	public void setSgg_name(String sgg_name) {
@@ -88,10 +107,10 @@ public class TunerDTO {
 	public void setTuner_seq(String tuner_seq) {
 		this.tuner_seq = tuner_seq;
 	}
-	public String getUser_state() {
+	public int getUser_state() {
 		return user_state;
 	}
-	public void setUser_state(String user_state) {
+	public void setUser_state(int user_state) {
 		this.user_state = user_state;
 	}
 	public String getReject_reason() {
@@ -113,6 +132,12 @@ public class TunerDTO {
 		this.cert_dir = cert_dir;
 	}
 	public String getTuner_comment() {
+		if(user_state==4) {
+			return "-";
+		}
+		return tuner_comment;
+	}
+	public String getTuner_comment(int admin) {
 		return tuner_comment;
 	}
 	public void setTuner_comment(String tuner_comment) {
@@ -125,36 +150,73 @@ public class TunerDTO {
 		this.tuner_level = tuner_level;
 	}
 	public String getTuner_exp() {
+		if(user_state==4) {
+			return "-";
+		}
+		return tuner_exp;
+	}
+	public String getTuner_exp(int admin) {
 		return tuner_exp;
 	}
 	public void setTuner_exp(String tuner_exp) {
 		this.tuner_exp = tuner_exp;
 	}
 	public String getFollower_num() {
+		if(user_state==4) {
+			return "0";
+		}
+		return follower_num;
+	}
+
+	public String getFollower_num(int admin) {
 		return follower_num;
 	}
 	public void setFollower_num(String follower_num) {
 		this.follower_num = follower_num;
 	}
 	public String getFeedback_score() {
+		if(user_state==4) {
+			return "0";
+		}
+		return feedback_score;
+	}
+	public String getFeedback_score(int admin) {
 		return feedback_score;
 	}
 	public void setFeedback_score(String feedback_score) {
 		this.feedback_score = feedback_score;
 	}
 	public String getDeals_num() {
+		if(user_state==4) {
+			return "0";
+		}
+		return deals_num;
+	}
+	public String getDeals_num(int admin) {
 		return deals_num;
 	}
 	public void setDeals_num(String deals_num) {
 		this.deals_num = deals_num;
 	}
 	public String getAddr() {
+		if(user_state==4) {
+			return "-";
+		}
+		return addr;
+	}
+	public String getAddr(int admin) {
 		return addr;
 	}
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
 	public String getDetail_addr() {
+		if(user_state==4) {
+			return "-";
+		}
+		return detail_addr;
+	}
+	public String getDetail_addr(int admin) {
 		return detail_addr;
 	}
 	public void setDetail_addr(String detail_addr) {
@@ -167,6 +229,12 @@ public class TunerDTO {
 		this.sgg_code = sgg_code;
 	}
 	public String getAffiliation() {
+		if(user_state==4) {
+			return "-";
+		}
+		return affiliation;
+	}
+	public String getAffiliation(int admin) {
 		return affiliation;
 	}
 	public void setAffiliation(String affiliation) {

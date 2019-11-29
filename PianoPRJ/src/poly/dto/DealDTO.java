@@ -12,6 +12,7 @@ public class DealDTO {
 	private String req_seq;
 	private String requester_seq;
 	private String requester_nick;
+	private String requester_name;
 	private String tuner_nick;
 	private String tuner_name;
 	private String tuner_seq;
@@ -36,8 +37,14 @@ public class DealDTO {
 	private int cntPerPage;
 	private int cnt;
 	
-	
-	
+	public String getRequester_name() {
+		return requester_name;
+	}
+
+	public void setRequester_name(String requester_name) {
+		this.requester_name = requester_name;
+	}
+
 	public int getCnt() {
 		return cnt;
 	}

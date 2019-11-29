@@ -16,8 +16,23 @@ public class RepuDTO {
 	private String total_deals;
 	private String success_deals;
 	private String total_reviews;
+	private int user_state;
 	
+	
+	public int getUser_state() {
+		return user_state;
+	}
+
+
+	public void setUser_state(int user_state) {
+		this.user_state = user_state;
+	}
+
+
 	public String getTuner_name() {
+		if(user_state==4) {
+			return "(탈퇴한 조율사)";
+		}
 		return tuner_name;
 	}
 
@@ -27,6 +42,9 @@ public class RepuDTO {
 	}
 	
 	public int getSuccessRate() {
+		if(user_state==4) {
+			return 0;
+		}
 		int total_deals = Integer.parseInt(this.total_deals);
 		int success_deals = Integer.parseInt(this.success_deals);
 		int successRate = Math.round((float)success_deals / total_deals * 100);
@@ -35,6 +53,9 @@ public class RepuDTO {
 	
 	
 	public String getTotal_reviews() {
+		if(user_state==4) {
+			return "0";
+		}
 		return total_reviews;
 	}
 
@@ -43,6 +64,9 @@ public class RepuDTO {
 	}
 
 	public int getPositive_rate() {
+		if(user_state==4) {
+			return 0;
+		}
 		int tech_pos = Integer.parseInt(this.tech_pos);
 		int tech_neg = Integer.parseInt(this.tech_neg);
 		int punctual_pos = Integer.parseInt(this.punctual_pos);
@@ -62,6 +86,10 @@ public class RepuDTO {
 	}
 	
 	public int[] getTechRates() {
+		if(user_state==4) {
+			int[] rates = {0,0,0};
+			return rates;
+		}
 		int tech_neg = Integer.parseInt(this.tech_neg);
 		int tech_neutral = Integer.parseInt(this.tech_neutral);
 		int tech_pos = Integer.parseInt(this.tech_pos);
@@ -73,6 +101,10 @@ public class RepuDTO {
 		return rates;
 	}
 	public int[] getPunctualRates() {
+		if(user_state==4) {
+			int[] rates = {0,0,0};
+			return rates;
+		}
 		int punctual_neg = Integer.parseInt(this.punctual_neg);
 		int punctual_neutral = Integer.parseInt(this.punctual_neutral);
 		int punctual_pos = Integer.parseInt(this.punctual_pos);
@@ -84,6 +116,10 @@ public class RepuDTO {
 		return rates;
 	}
 	public int[] getKindnessRates() {
+		if(user_state==4) {
+			int[] rates = {0,0,0};
+			return rates;
+		}
 		int kindness_neg = Integer.parseInt(this.kindness_neg);
 		int kindness_neutral = Integer.parseInt(this.kindness_neutral);
 		int kindness_pos = Integer.parseInt(this.kindness_pos);
@@ -150,6 +186,9 @@ public class RepuDTO {
 		this.kindness_neg = kindness_neg;
 	}
 	public String getScore() {
+		if(user_state==4) {
+			return "0";
+		}
 		return score;
 	}
 	public void setScore(String score) {

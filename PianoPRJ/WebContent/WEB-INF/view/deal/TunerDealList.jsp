@@ -80,7 +80,7 @@
 												<strong>거래번호</strong>
 											</div>
 											<div class="table-head-cell">
-												<strong>고객 닉네임</strong>
+												<strong>고객명</strong>
 											</div>
 											<div class="table-head-cell">
 												<strong>견적가</strong>

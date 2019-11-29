@@ -21,16 +21,20 @@
 	
 	sggGrouped = (Map<String, ArrayList<String>>)request.getAttribute("sggGrouped");
 	sggKeys = sggGrouped.keySet();
-
+	boolean admin = false;
+	if(user_type.equals("2")){
+		admin=true;
+	}
 	
 
 	RepuDTO rDTO = (RepuDTO)request.getAttribute("rDTO");
-	int[] techRates = rDTO.getTechRates();
-	int[] timeRates = rDTO.getPunctualRates();
-	int[] kindnessRates = rDTO.getKindnessRates();
+	int[] techRates = rDTO.getTechRates(admin);
+	int[] timeRates = rDTO.getPunctualRates(admin);
+	int[] kindnessRates = rDTO.getKindnessRates(admin);
 	
 	List<ReviewDTO> revList = (List<ReviewDTO>)request.getAttribute("revList");  
 	Pagination pg = (Pagination)request.getAttribute("pg");
+	
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -60,25 +64,30 @@
 						</div>
 						<div class="card-body">
 						<div class="card-block">
+						<%if((uDTO.getUser_state()==3 || uDTO.getUser_state()==4)&& !user_type.equals("2")){ %>						
+						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/resources/images/user_default.png" alt="Card image cap">
+						<%}else{ %>
 						<img class="rounded float-xs-left img-thumbnail" style="height:160px" src="/img/tuner/<%=tDTO.getTuner_seq() %>/profile.<%=tDTO.getId_photo_dir() %>" alt="Card image cap">
+						<%} %>
 						<div class="card-text valign-top ml-1 float-xs-left">
-							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(), true) %><%=uDTO.getUser_state().equals("3") ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state().equals("4") ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></strong></h5>
-							<%if(uDTO.getUser_state().equals("3")){ %>
+							<h5><strong><%=CmmUtil.nvl(rDTO.getTuner_name(admin), true) %><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></strong></h5>
+							<%if(uDTO.getUser_state()==3){ %>
 							<div class="card-text red">정지 사유 : <%=CmmUtil.nvl(uDTO.getSuspend_reason(), true) %></div>
 							<%} %>
-							<div class="card-text">획득 별 : <%=rDTO.getScore() %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
-							<div class="card-text">거래 성사율 : <%=rDTO.getSuccessRate()%>%</div>
-							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate()%>%</div>
+							<div class="card-text">획득 별 : <%=rDTO.getScore(admin) %><i class="icon-android-star" style="font-size:1.2rem;color:orange"></i></div>
+							<div class="card-text">거래 성사율 : <%=rDTO.getSuccessRate(admin)%>%</div>
+							<div class="card-text">긍정적 평판 : <%=rDTO.getPositive_rate(admin)%>%</div>
 						</div>
 						</div>
 						<div class="card-block">
-						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
-						<p class="card-text">닉네임 : <%=CmmUtil.nvl(uDTO.getUser_nick(), true) %></p>
-						<p class="card-text">이메일 : <%=CmmUtil.nvl(uDTO.getEmail(), true) %></p>
-						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel(), true) %></p>
+						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(admin), true) %></p>
+						<p class="card-text">닉네임 : <%=CmmUtil.nvl(uDTO.getUser_nick(admin), true) %></p>
+						<p class="card-text">이메일 : <%=CmmUtil.nvl(uDTO.getEmail(admin), true) %></p>
+						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel(admin), true) %></p>
 						<p class="card-text">자격증 등급 : <%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></p>
-						<p class="card-text">소속 : <%=CmmUtil.nvl(tDTO.getAffiliation(), true) %></p>
-						<p class="card-text">근무지 : <%=CmmUtil.nvl(tDTO.getAddr(), true) %></p>
+						<p class="card-text">소속 : <%=CmmUtil.nvl(tDTO.getAffiliation(admin), true) %></p>
+						<p class="card-text">근무지 : <%=CmmUtil.nvl(tDTO.getAddr(admin), true) %></p>
+						<%if((uDTO.getUser_state()!=3 && uDTO.getUser_state()!=4) | !user_type.equals("2")){ %>
 						<%if(!sggKeys.contains("전국")) { %>
 						<p class="card-text">활동지역 : </p>
 						<%} %>
@@ -95,10 +104,11 @@
 						<%}else{ %>
 						<p class="card-text"><%=CmmUtil.nvl(tDTO.getTuner_exp()) %></p>
 						<%} %>
+						<%} %>
 
 					</div>
 							<div class="card-block">
-								<div class="card-text"><strong>리뷰 요약정보(<%=rDTO.getTotal_reviews() %>건)</strong></div>
+								<div class="card-text"><strong>리뷰 요약정보(<%=rDTO.getTotal_reviews(admin) %>건)</strong></div>
 								<hr style="border-color:gray;margin-top:0.2rem">
 								<div class="row">
 									<div class="col-xs-4 border-right">
@@ -262,7 +272,7 @@
 						<a class="button btn btn-info" href="/user/TunerList.do">목록</a>
 						</div>						
 						<div class="float-xs-right">
-						<%if(uDTO.getUser_state().matches("[34]")){ %>
+						<%if(uDTO.getUser_state()==3 || uDTO.getUser_state()==4){ %>
 						<button class="button btn btn-warning" onclick="recoverUser();">회원 복구</button>
 						<%}else{ %>
 						<button class="button btn btn-danger" data-toggle="modal" data-target="#decline-form">회원 정지</button>
@@ -330,7 +340,7 @@
 		}
 	}
 	
-	<%if(uDTO.getUser_state().matches("[34]")){ %>
+	<%if(uDTO.getUser_state()==3 || uDTO.getUser_state()==4){ %>
 	function recoverUser(){
 		if(confirm("해당 회원을 복구하시겠습니까?")){
 			location.href = "/user/UserRecover.do?user_seq=<%=tDTO.getTuner_seq()%>&type=tuner"

@@ -46,8 +46,10 @@ public class TunerDTO {
 		}
 		return tuner_name;
 	}
-	public String getTuner_name(int admin) {
-		return tuner_name;
+	public String getTuner_name(boolean admin) {
+		if(admin)
+			return tuner_name;
+		return getTuner_name();
 	}
 	
 	public void setTuner_name(String tuner_name) {
@@ -59,8 +61,10 @@ public class TunerDTO {
 		}
 		return sido_name;
 	}
-	public String getSido_name(int admin) {
-		return sido_name;
+	public String getSido_name(boolean admin) {
+		if(admin)
+			return sido_name;
+		return getSido_name();
 	}
 	public void setSido_name(String sido_name) {
 		this.sido_name = sido_name;
@@ -71,8 +75,10 @@ public class TunerDTO {
 		}
 		return sgg_name;
 	}
-	public String getSgg_name(int admin) {
-		return sgg_name;
+	public String getSgg_name(boolean admin) {
+		if(admin)
+			return sgg_name;
+		return getSgg_name();
 	}
 	public void setSgg_name(String sgg_name) {
 		this.sgg_name = sgg_name;
@@ -137,8 +143,10 @@ public class TunerDTO {
 		}
 		return tuner_comment;
 	}
-	public String getTuner_comment(int admin) {
-		return tuner_comment;
+	public String getTuner_comment(boolean admin) {
+		if(admin)
+			return tuner_comment;
+		return getTuner_comment();
 	}
 	public void setTuner_comment(String tuner_comment) {
 		this.tuner_comment = tuner_comment;
@@ -155,8 +163,10 @@ public class TunerDTO {
 		}
 		return tuner_exp;
 	}
-	public String getTuner_exp(int admin) {
-		return tuner_exp;
+	public String getTuner_exp(boolean admin) {
+		if(admin)
+			return tuner_exp;
+		return getTuner_exp();
 	}
 	public void setTuner_exp(String tuner_exp) {
 		this.tuner_exp = tuner_exp;
@@ -168,8 +178,10 @@ public class TunerDTO {
 		return follower_num;
 	}
 
-	public String getFollower_num(int admin) {
-		return follower_num;
+	public String getFollower_num(boolean admin) {
+		if(admin)
+			return follower_num;
+		return getFollower_num();
 	}
 	public void setFollower_num(String follower_num) {
 		this.follower_num = follower_num;
@@ -180,8 +192,10 @@ public class TunerDTO {
 		}
 		return feedback_score;
 	}
-	public String getFeedback_score(int admin) {
-		return feedback_score;
+	public String getFeedback_score(boolean admin) {
+		if(admin)
+			return feedback_score;
+		return getFeedback_score();
 	}
 	public void setFeedback_score(String feedback_score) {
 		this.feedback_score = feedback_score;
@@ -192,8 +206,10 @@ public class TunerDTO {
 		}
 		return deals_num;
 	}
-	public String getDeals_num(int admin) {
-		return deals_num;
+	public String getDeals_num(boolean admin) {
+		if(admin)
+			return deals_num;
+		return getDeals_num();
 	}
 	public void setDeals_num(String deals_num) {
 		this.deals_num = deals_num;
@@ -204,8 +220,10 @@ public class TunerDTO {
 		}
 		return addr;
 	}
-	public String getAddr(int admin) {
-		return addr;
+	public String getAddr(boolean admin) {
+		if(admin)
+			return addr;
+		return getAddr();
 	}
 	public void setAddr(String addr) {
 		this.addr = addr;
@@ -216,8 +234,10 @@ public class TunerDTO {
 		}
 		return detail_addr;
 	}
-	public String getDetail_addr(int admin) {
-		return detail_addr;
+	public String getDetail_addr(boolean admin) {
+		if(admin)
+			return detail_addr;
+		return getDetail_addr();
 	}
 	public void setDetail_addr(String detail_addr) {
 		this.detail_addr = detail_addr;
@@ -234,8 +254,10 @@ public class TunerDTO {
 		}
 		return affiliation;
 	}
-	public String getAffiliation(int admin) {
-		return affiliation;
+	public String getAffiliation(boolean admin) {
+		if(admin)
+			return affiliation;
+		return getAffiliation();
 	}
 	public void setAffiliation(String affiliation) {
 		this.affiliation = affiliation;

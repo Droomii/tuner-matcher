@@ -49,8 +49,10 @@ public class UserDTO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getEmail(int admin) {
-		return email;
+	public String getEmail(boolean admin) {
+		if(admin)
+			return email;
+		return getEmail();
 	}
 	
 	public String getEmail() {
@@ -75,8 +77,10 @@ public class UserDTO {
 		}
 		return user_name;
 	}
-	public String getUser_name(int admin) {
-		return user_name;
+	public String getUser_name(boolean admin) {
+		if(admin)
+			return user_name;
+		return getUser_name();
 	}
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
@@ -93,8 +97,10 @@ public class UserDTO {
 		}
 		return user_nick;
 	}
-	public String getUser_nick(int admin) {
-		return user_nick;
+	public String getUser_nick(boolean admin) {
+		if(admin)
+			return user_nick;
+		return getUser_nick();
 	}
 	public void setUser_nick(String user_nick) {
 		this.user_nick = user_nick;
@@ -105,8 +111,10 @@ public class UserDTO {
 		}
 		return user_tel;
 	}
-	public String getUser_tel(int admin) {
-		return user_tel;
+	public String getUser_tel(boolean admin) {
+		if(admin)
+			return user_tel;
+		return getUser_tel();
 	}
 	public void setUser_tel(String user_tel) {
 		this.user_tel = user_tel;

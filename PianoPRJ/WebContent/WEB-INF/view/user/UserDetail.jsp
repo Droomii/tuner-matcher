@@ -41,15 +41,15 @@
 					<div class="card-block text-xs-center">
 					<img class="img-fluid my-1" src="/resources/images/user_default.png" style="height:100px" alt="Card image cap">
 						<br>
-						<h5><%=CmmUtil.nvl(uDTO.getUser_nick(1), true) %><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></h5>
+						<h5><%=CmmUtil.nvl(uDTO.getUser_nick(true), true) %><%=uDTO.getUser_state()==3 ? "<span class=\"red\">(정지 회원)</span>"  : uDTO.getUser_state()==4 ? "<span class=\"red\">(탈퇴 회원)</span>" : ""%></h5>
 					</div>
 					<div class="card-block">
 						<%if(uDTO.getUser_state()==3){ %>
 						<p class="card-text red">정지 사유 : <%=CmmUtil.nvl(uDTO.getSuspend_reason(), true) %></p>
 						<%} %>
-						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(), true) %></p>
-						<p class="card-text">이메일 : <%=CmmUtil.nvl( uDTO.getEmail(), true) %></p>
-						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel()) %></p>
+						<p class="card-text">이름 : <%=CmmUtil.nvl(uDTO.getUser_name(true), true) %></p>
+						<p class="card-text">이메일 : <%=CmmUtil.nvl( uDTO.getEmail(true), true) %></p>
+						<p class="card-text">전화번호 : <%=CmmUtil.nvl(uDTO.getUser_tel(true)) %></p>
 					</div>
 				</div>
 				<div class="card-footer">
@@ -126,7 +126,7 @@
 		}
 	}
 	
-	<%if(uDTO.getUser_state().matches("[34]")){ %>
+	<%if(uDTO.getUser_state()==3 || uDTO.getUser_state()==4){ %>
 	function recoverUser(){
 		if(confirm("해당 회원을 복구하시겠습니까?")){
 			location.href = "/user/UserRecover.do?user_seq=<%=uDTO.getUser_seq()%>"

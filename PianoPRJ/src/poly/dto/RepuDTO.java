@@ -35,7 +35,13 @@ public class RepuDTO {
 		}
 		return tuner_name;
 	}
+	public String getTuner_name(boolean admin) {
+		if(admin)
+			return tuner_name;
+		return getTuner_name();
+	}
 
+	
 
 	public void setTuner_name(String tuner_name) {
 		this.tuner_name = tuner_name;
@@ -50,6 +56,15 @@ public class RepuDTO {
 		int successRate = Math.round((float)success_deals / total_deals * 100);
 		return successRate;
 	}
+	public int getSuccessRate(boolean admin) {
+		if (admin) {
+			int total_deals = Integer.parseInt(this.total_deals);
+			int success_deals = Integer.parseInt(this.success_deals);
+			int successRate = Math.round((float) success_deals / total_deals * 100);
+			return successRate;
+		}
+		return getSuccessRate();
+	}
 	
 	
 	public String getTotal_reviews() {
@@ -57,6 +72,11 @@ public class RepuDTO {
 			return "0";
 		}
 		return total_reviews;
+	}
+	public String getTotal_reviews(boolean admin) {
+		if(admin)
+			return total_reviews;
+		return getTotal_reviews();
 	}
 
 	public void setTotal_reviews(String total_reviews) {
@@ -85,6 +105,28 @@ public class RepuDTO {
 		return positiveRate;
 	}
 	
+	public int getPositive_rate(boolean admin) {
+		if(admin) {
+			int tech_pos = Integer.parseInt(this.tech_pos);
+			int tech_neg = Integer.parseInt(this.tech_neg);
+			int punctual_pos = Integer.parseInt(this.punctual_pos);
+			int punctual_neg = Integer.parseInt(this.punctual_neg);
+			int kindness_pos = Integer.parseInt(this.kindness_pos);
+			int kindness_neg = Integer.parseInt(this.kindness_neg);
+			int total = 0;
+			total +=tech_pos; 
+			total +=tech_neg;
+			total +=punctual_pos; 
+			total +=punctual_neg;
+			total +=kindness_pos;
+			total +=kindness_neg;
+			int posTotal = tech_pos + punctual_pos + kindness_pos;
+			int positiveRate = Math.round((float)posTotal / total * 100);
+			return positiveRate;
+		}
+		return getPositive_rate();
+	}
+	
 	public int[] getTechRates() {
 		if(user_state==4) {
 			int[] rates = {0,0,0};
@@ -100,6 +142,23 @@ public class RepuDTO {
 		rates[2] = Math.round((float)tech_neg / total * 100);
 		return rates;
 	}
+
+	public int[] getTechRates(boolean admin) {
+		if(admin) {
+		int tech_neg = Integer.parseInt(this.tech_neg);
+		int tech_neutral = Integer.parseInt(this.tech_neutral);
+		int tech_pos = Integer.parseInt(this.tech_pos);
+		int total = tech_neg + tech_neutral + tech_pos;
+		int[] rates = new int[3];
+		rates[0] = Math.round((float)tech_pos / total * 100);
+		rates[1] = Math.round((float)tech_neutral / total * 100);
+		rates[2] = Math.round((float)tech_neg / total * 100);
+		return rates;
+		}
+		return getTechRates();
+	}
+	
+	
 	public int[] getPunctualRates() {
 		if(user_state==4) {
 			int[] rates = {0,0,0};
@@ -115,6 +174,20 @@ public class RepuDTO {
 		rates[2] = Math.round((float)punctual_neg / total * 100);
 		return rates;
 	}
+	public int[] getPunctualRates(boolean admin) {
+		if(admin) {
+		int punctual_neg = Integer.parseInt(this.punctual_neg);
+		int punctual_neutral = Integer.parseInt(this.punctual_neutral);
+		int punctual_pos = Integer.parseInt(this.punctual_pos);
+		int total = punctual_neg + punctual_neutral + punctual_pos;
+		int[] rates = new int[3];
+		rates[0] = Math.round((float)punctual_pos / total * 100);
+		rates[1] = Math.round((float)punctual_neutral / total * 100);
+		rates[2] = Math.round((float)punctual_neg / total * 100);
+		return rates;
+		}
+		return getPunctualRates();
+	}
 	public int[] getKindnessRates() {
 		if(user_state==4) {
 			int[] rates = {0,0,0};
@@ -129,6 +202,20 @@ public class RepuDTO {
 		rates[1] = Math.round((float)kindness_neutral / total * 100);
 		rates[2] = Math.round((float)kindness_neg / total * 100);
 		return rates;
+	}
+	public int[] getKindnessRates(boolean admin) {
+		if(admin) {
+		int kindness_neg = Integer.parseInt(this.kindness_neg);
+		int kindness_neutral = Integer.parseInt(this.kindness_neutral);
+		int kindness_pos = Integer.parseInt(this.kindness_pos);
+		int total = kindness_neg + kindness_neutral + kindness_pos;
+		int[] rates = new int[3];
+		rates[0] = Math.round((float)kindness_pos / total * 100);
+		rates[1] = Math.round((float)kindness_neutral / total * 100);
+		rates[2] = Math.round((float)kindness_neg / total * 100);
+		return rates;
+		}
+		return getKindnessRates();
 	}
 	
 	public String getTech_pos() {
@@ -190,6 +277,11 @@ public class RepuDTO {
 			return "0";
 		}
 		return score;
+	}
+	public String getScore(boolean admin) {
+		if(admin)
+			return score;
+		return getScore();
 	}
 	public void setScore(String score) {
 		this.score = score;

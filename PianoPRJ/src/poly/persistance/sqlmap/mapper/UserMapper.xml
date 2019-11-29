@@ -272,4 +272,20 @@
 	WHERE
 		USER_SEQ=#{0}
 	</update>
+	<update id="rejectTuner" parameterType="TunerDTO">
+	UPDATE
+		USERINFO
+	SET
+		USER_STATE=2
+	WHERE
+		USER_SEQ=#{tuner_seq}
+	</update>
+	<update id="updateRejectReason" parameterType="TunerDTO">
+	UPDATE
+		TUNER
+	SET
+		REJECT_REASON=#{reject_reason}
+	WHERE
+		TUNER_SEQ=#{tuner_seq}
+	</update>
 </mapper>

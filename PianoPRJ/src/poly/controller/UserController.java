@@ -746,7 +746,7 @@ public class UserController {
 		// 페이징
 		int listCnt = userService.getPendingTunerListCnt();
 		
-		Pagination pg = new Pagination(listCnt, page);
+		Pagination pg = new Pagination(listCnt, page, 5);
 
 		int start = pg.getStartIndex() + 1;
 		int end = pg.getStartIndex() + pg.getPageSize();
@@ -818,6 +818,38 @@ public class UserController {
 		model.addAttribute("msg", msg);
 		
 		log.info(this.getClass().getName() + ".AcceptTuner end");
+		return "/redirect";
+	}
+	
+	@RequestMapping(value = "RejectTuner")
+	public String RejectTuner(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@ModelAttribute TunerDTO tDTO)
+			throws Exception {
+		log.info(this.getClass().getName() + ".RejectTuner start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		int res = 0;
+		try {
+			res = userService.rejectTuner(tDTO);
+		} catch (Exception e) {
+			 log.info(e.toString());
+		}
+		String msg = "반려하였습니다.";
+		String url = "/user/PendingTunerList.do";
+		
+		if (res < 2) {
+			msg = "반려에 실패했습니다";
+			url = "/user/PendingTunerDetail.do?tuner_seq=" + tDTO.getTuner_seq();
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		log.info(this.getClass().getName() + ".RejectTuner end");
 		return "/redirect";
 	}
 }

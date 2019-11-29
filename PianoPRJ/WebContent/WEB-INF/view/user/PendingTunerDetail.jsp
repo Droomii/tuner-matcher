@@ -20,7 +20,11 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
 <head>
-
+<style>
+.has-error, .has-danger{
+   		color:crimson;
+   		}
+</style>
 <meta charset="UTF-8">
 <title>페이지 타이틀</title>
 <!-- header.jsp 경로 설정 -->
@@ -73,16 +77,46 @@
 					</div>
 				</div>
 				<div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
-				<div class="row">
-					<div class="col-xs-4 text-xs-left">
-						<button class="button btn btn-primary">뒤로 </button>
+				<div class="row text-xs-center">
+					<div class="col-xs-2 ">
+						<button class="button btn btn-primary float-xs-left">뒤로 </button>
 					</div>
-					<span class="col-xs-4 text-xs-center">
-						<button class="button btn btn-warning">반려 </button>
+					<div class="col-xs-8 text-xs-center">
+						<button class="button btn btn-warning" data-toggle="modal" data-target="#decline-form">반려 </button>
 						<button class="button btn btn-success" onclick="accept();">승인 </button>
-					</span>
+						</div>
+				</div>
+					<!-- 반려 모달 -->
+					<div class="modal fade text-xs-left" id="decline-form" tabindex="-1" role="dialog" aria-labelledby="serialHelpLabel" style="display: none;" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">×</span>
+							</button>
+							<h4 class="modal-title " id="serialHelpLabel">반려사유 입력</h4>
+						  </div>
+						  <div class="modal-body no-border">
+							<form onsubmit="return reject();" autocomplete="off" data-toggle="validator" role="form" name="rejectForm" class="form no-border" action="/user/RejectTuner.do" method="post" autocomplete="off">
+						<!-- 리뷰 내용 -->
+						<input hidden value="<%=tDTO.getTuner_seq() %>" name="tuner_seq">
+						<div class="form-group col-xs-12 has-feedback no-border">
+							<input hidden="hidden" id="reject_reason" name="reject_reason">
+							<textarea onchange="checkBytesNoNl(this, 200);" onKeyUp="checkBytesNoNl(this, 200);" id="temp_content" rows="5" class="form-control" placeholder="반려 사유를 입력해주세요"></textarea>
+							<div class="float-xs-right"><span class="byte">0</span>/200 bytes</div>
+							
+						</div>
+                        <div class="modal-footer">
+                        <button type="submit" class="button btn btn-success float-xs-right">반려</button>
+							<button type="button" class="btn grey btn-outline-secondary float-xs-left" data-dismiss="modal">닫기</button>
+						  </div>
+						</form>
+						  </div>
+						  
+						</div>
+					  </div>
 					</div>
-					
+					<!-- /반려 모달 -->
 				</div>
 			</div>
 		</div>
@@ -102,8 +136,24 @@
 			location.href = "/user/AcceptTuner.do?tuner_seq=<%=tDTO.getTuner_seq()%>"
 		}
 	}
+	function reject(){
+		if($("#temp_content").val().trim().length==0){
+			alert("반려 사유를 입력해주세요");
+			return false;
+		}
+		
+		if(confirm("가입을 승인하시겠습니까?")){
+			var form = document.rejectForm;
+			form.reject_reason.value = form.temp_content.value.trim().replace(/\n/g, " ");
+		}else{
+			return false;
+		}
+	}
 	</script>
+	
+	
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
+	<script type="text/javascript" src="/resources/js/bytechecker.js"></script>
 </body>
 </html>

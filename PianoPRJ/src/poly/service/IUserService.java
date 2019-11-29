@@ -53,5 +53,7 @@ public interface IUserService {
 
 	int acceptTuner(String tuner_seq) throws Exception;
 
+	int rejectTuner(TunerDTO tDTO) throws Exception;
+
 
 }

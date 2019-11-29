@@ -184,4 +184,17 @@ public class UserService implements IUserService {
 		return userMapper.acceptTuner(tuner_seq);
 	}
 
+	@Override
+	public int rejectTuner(TunerDTO tDTO) throws Exception {
+		int res = 0;
+		try {
+			res += userMapper.rejectTuner(tDTO);
+			res += userMapper.updateRejectReason(tDTO);
+		}catch(Exception e) {
+			log.info(e.toString());
+		}
+		
+		return res;
+	}
+
 }

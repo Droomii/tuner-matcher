@@ -58,6 +58,10 @@ public interface IUserMapper {
 	List<TunerDTO> getPendingTunerList(@Param("start") int start, @Param("end") int end);
 
 	int acceptTuner(String tuner_seq) throws Exception;
+
+	int rejectTuner(TunerDTO tDTO) throws Exception;
+
+	int updateRejectReason(TunerDTO tDTO) throws Exception;
 	
 	
 }

@@ -1,20 +1,27 @@
 package poly.dto;
 
 public class ReviewDTO {
-	public String deal_seq;
-	public String writer_seq;
-	public String tuner_seq;
-	public String review_tech;
-	public String review_punctual;
-	public String review_kindness;
-	public String review_content;
-	public String regdate;
-	public String upddate;
-	public String updater_seq;
-	public String user_nick;
-	public String review_star;
+	private String deal_seq;
+	private String writer_seq;
+	private String tuner_seq;
+	private String review_tech;
+	private String review_punctual;
+	private String review_kindness;
+	private String review_content;
+	private String regdate;
+	private String upddate;
+	private String updater_seq;
+	private String user_nick;
+	private String review_star;
+	private int user_state;
 	
 	
+	public int getUser_state() {
+		return user_state;
+	}
+	public void setUser_state(int user_state) {
+		this.user_state = user_state;
+	}
 	public String getReview_star() {
 		return review_star;
 	}
@@ -82,7 +89,15 @@ public class ReviewDTO {
 		this.updater_seq = updater_seq;
 	}
 	public String getUser_nick() {
+		if(user_state>2)
+			return "(탈퇴회원)";
 		return user_nick;
+	}
+	
+	public String getUser_nick(boolean admin) {
+		if(admin)
+			return user_nick;
+		return getUser_nick();
 	}
 	public void setUser_nick(String user_nick) {
 		this.user_nick = user_nick;

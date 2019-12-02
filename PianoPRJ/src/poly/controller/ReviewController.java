@@ -1,5 +1,8 @@
 package poly.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import poly.dto.DealDTO;
 import poly.dto.ReviewDTO;
@@ -19,6 +23,7 @@ import poly.service.IFollowService;
 import poly.service.IReviewService;
 import poly.service.impl.FollowService;
 import poly.util.CmmUtil;
+import poly.util.Pagination;
 import poly.util.SessionUtil;
 
 @Controller
@@ -193,6 +198,34 @@ public class ReviewController {
 		
 		log.info(this.getClass().getName() + ".ReviewEditProc end");
 		return "/redirect";
+	}
+	
+	@RequestMapping(value = "ReviewList")
+	public String GetTunerReviewList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".ReviewList start");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		int listCnt = reviewService.getReviewListCnt();
+		Pagination pg = new Pagination(listCnt, page, 5);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		
+		// 리뷰 목록 가져옴
+		List<ReviewDTO> revList = reviewService.getReviewList(start, end);
+		if(revList==null) {
+			revList = new ArrayList<ReviewDTO>();
+		}
+		model.addAttribute("revList", revList);
+		log.info(this.getClass().getName() + ".ReviewList end");
+		return "/review/ReviewList";
 	}
 
 }

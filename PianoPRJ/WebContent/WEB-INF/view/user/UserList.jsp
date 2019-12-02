@@ -88,9 +88,9 @@
                             <div class="table-row item" role="button" onclick="location.href='/user/UserDetail.do?user_seq=<%=uDTO.getUser_seq()%>'">
                                     <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_seq()) %></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(uDTO.getId(true)) %></div>
-                                    <div class="table-cell"><%=CmmUtil.nvl(uDTO.getRegdate().substring(0, 10)) %></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_name(true)) %></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(uDTO.getUser_nick(true), true)%></div>
+									<div class="table-cell"><%=CmmUtil.nvl(uDTO.getRegdate().substring(0, 10)) %></div>
                                     <div class="table-cell"><%=user_states[uDTO.getUser_state()]%></div>
                             </div>
                             <%} %>

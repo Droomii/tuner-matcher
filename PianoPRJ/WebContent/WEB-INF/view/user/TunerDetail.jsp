@@ -239,7 +239,7 @@
 											<span><i class="icon-android-star <%=i<stars ? "checked" : "" %>"></i></span>	
 										<%} %>
 										</div>
-										<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;<%=revDTO.getUser_nick()%> | <%=revDTO.getRegdate().substring(0, 10) %></div>
+										<div id="star-msg" style="font-size:1rem;letter-spacing:0;display:inline-block;vertical-align:middle;height:2rem">&nbsp;<%=revDTO.getUser_nick(admin)%><%if(user_type.equals("2")){%><%=revDTO.getUser_state()==4 ? "(탈퇴)" : revDTO.getUser_state()==3 ? "(정지)" : "" %><%} %> | <%=revDTO.getRegdate().substring(0, 10) %></div>
 										</div>
 										<div class="card-text text-truncate mb-1 review-content">
 										<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>

@@ -747,7 +747,7 @@ public class UserController {
 		// 페이징
 		int page = 1;
 		int listCnt = reviewService.getTunerReviewListCnt(tuner_seq);
-		Pagination pg = new Pagination(listCnt, page, 3);
+		Pagination pg = new Pagination(listCnt, page, 5);
 
 		int start = pg.getStartIndex() + 1;
 		int end = pg.getStartIndex() + pg.getPageSize();

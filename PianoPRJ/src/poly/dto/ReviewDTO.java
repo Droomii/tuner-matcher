@@ -12,10 +12,25 @@ public class ReviewDTO {
 	private String upddate;
 	private String updater_seq;
 	private String user_nick;
+	private String tuner_name;
 	private String review_star;
 	private int user_state;
+	private int tuner_state;
 	
 	
+	
+	public String getTuner_name() {
+		return tuner_name;
+	}
+	public void setTuner_name(String tuner_name) {
+		this.tuner_name = tuner_name;
+	}
+	public int getTuner_state() {
+		return tuner_state;
+	}
+	public void setTuner_state(int tuner_state) {
+		this.tuner_state = tuner_state;
+	}
 	public int getUser_state() {
 		return user_state;
 	}

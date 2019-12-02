@@ -51,4 +51,14 @@ public class ReviewService implements IReviewService{
 		return reviewMapper.getTunerReviewListCnt(tuner_seq);
 	}
 
+	@Override
+	public int getReviewListCnt() throws Exception {
+		return reviewMapper.getReviewListCnt();
+	}
+
+	@Override
+	public List<ReviewDTO> getReviewList(int start, int end) throws Exception {
+		return reviewMapper.getReviewList(start, end);
+	}
+
 }

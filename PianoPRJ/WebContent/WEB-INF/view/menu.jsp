@@ -103,7 +103,7 @@
             <ul class="menu-content">
               <li><a href="/notice/NoticeList.do" class="menu-item">공지사항 관리</a>
               </li>
-              <li><a href="#" class="menu-item">리뷰 관리</a>
+              <li><a href="/review/ReviewList.do" class="menu-item">리뷰 관리</a>
               </li>
             </ul>
           </li>

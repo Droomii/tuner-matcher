@@ -22,6 +22,10 @@ public interface IReviewMapper {
 
 	List<ReviewDTO> getTunerReviewList(@Param("user_seq")String user_seq, @Param("start")int start, @Param("end")int end);
 
-	int getTunerReviewListCnt(String tuner_seq) throws Exception;
+	int getTunerReviewListCnt(@Param("user_seq") String tuner_seq) throws Exception;
+
+	int getReviewListCnt() throws Exception;
+
+	List<ReviewDTO> getReviewList(@Param("start") int start, @Param("end") int end) throws Exception;
 
 }

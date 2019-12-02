@@ -2,6 +2,7 @@ package poly.dto;
 
 public class TunerDTO {
 	private String tuner_name;
+	private String id;
 	private String tuner_seq;
 	private int user_state;
 	private String reject_reason;
@@ -25,6 +26,24 @@ public class TunerDTO {
 	private String li_name;
 	private String score;
 	private String regdate;
+
+	
+	public String getId() {
+		if(user_state>2) {
+			return "(탈퇴회원)";
+		}
+		return id;
+	}
+	
+	public String getId(boolean admin) {
+		if(admin)
+			return id;
+		return getId();
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getRegdate() {
 		return regdate;

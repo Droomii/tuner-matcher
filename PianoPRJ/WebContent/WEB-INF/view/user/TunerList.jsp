@@ -76,6 +76,7 @@
                         <div class="table">
                             <div class="table-row">
 									<div class="table-head-cell"><strong>회원번호</strong></div>
+                                    <div class="table-head-cell"><strong>아이디</strong></div>
                                     <div class="table-head-cell"><strong>이름</strong></div>
                                     <div class="table-head-cell"><strong>기술등급</strong></div>
                                     <div class="table-head-cell"><strong>가입일</strong></div>
@@ -85,6 +86,7 @@
                             <%for(TunerDTO tDTO : tList){ %>
                             <div class="table-row item" role="button" onclick="location.href='/user/TunerDetail.do?tuner_seq=<%=tDTO.getTuner_seq()%>'">
                                     <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_seq()) %></div>
+                                    <div class="table-cell"><%=CmmUtil.nvl(tDTO.getId(true)) %></div>
                                     <div class="table-cell"><%=CmmUtil.nvl(tDTO.getTuner_name(true)) %></div>
                                     <div class="table-cell"><%=tDTO.getTuner_level().equals("0") ? "기능사" : "산업기사" %></div>
                                     <div class="table-cell"><%=tDTO.getRegdate().substring(0, 10)%></div>

@@ -270,7 +270,7 @@
 				U.USER_SEQ = T.TUNER_SEQ
 				AND U.USER_STATE = 0
 			ORDER BY
-				TUNER_SEQ DESC
+				U.UPDDATE DESC
 			)
 		)
 	WHERE RN BETWEEN #{start} AND #{end}

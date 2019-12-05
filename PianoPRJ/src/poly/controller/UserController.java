@@ -510,7 +510,7 @@ public class UserController {
 	public String DoTunerInfoEdit(HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			@ModelAttribute UserDTO uDTO, @ModelAttribute TunerDTO tDTO,
 			@RequestParam(value = "profile_img") MultipartFile profile_img,
-			@RequestParam(value = "profile_img") MultipartFile cert_img) throws Exception {
+			@RequestParam(value = "cert_img") MultipartFile cert_img) throws Exception {
 
 		
 		String user_seq = (String)session.getAttribute("user_seq");

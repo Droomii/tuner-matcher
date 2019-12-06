@@ -45,7 +45,8 @@
 								 
 								<div class="form-group">
 									<label for="notice_content">공지 내용</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"><%=CmmUtil.revertXSS(rDTO.getNotice_content()).replaceAll("<br>", "\n")%></textarea>
+									<textarea id="temp_content" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"><%=CmmUtil.nvl(rDTO.getNotice_content()) %></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
 							</div>
 
@@ -74,6 +75,9 @@
 		$("#notice_title").val($("#notice_title").val().replace(/<br>/g, " "));
 		form.submit();
 	}
+	window.onload = function(){
+		checkBytes(document.getElementById('temp_content'), 4000)
+	};
 	
 	</script>
 	
@@ -84,5 +88,6 @@
 	
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
+	<script type="text/javascript" src="/js/bytechecker.js"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
 	int[] timeRates = rDTO.getPunctualRates();
 	int[] kindnessRates = rDTO.getKindnessRates();
 	TunerDTO tDTO = (TunerDTO)request.getAttribute("tDTO");
-	
+	String user_type = (String)session.getAttribute("user_type");
 	List<ReviewDTO> revList = (List<ReviewDTO>)request.getAttribute("revList");
 	Pagination pg = (Pagination)request.getAttribute("pg");
 %>
@@ -178,7 +178,14 @@
 										<div class="card-text text-truncate mb-1 review-content">
 										<%=CmmUtil.nvl(revDTO.getReview_content()) %>
 										</div>
-										<div class="text-muted hidden eval-items">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
+												<div class="row">
+												<div class="text-muted hidden eval-items col-xs-8">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
+												<%if(user_type.equals("2")){%>
+												<div class="hidden float-xs-right text-xs-right col-xs-4 deal-info">
+												<button class="btn-sm btn btn-success">거래 정보</button>
+												</div>
+												<%} %>
+												</div>
 										<hr style="border-color:gray;margin-bottom:0.2rem;margin-top:0.2rem">
 									</div>
 								<%} %>
@@ -199,46 +206,52 @@
 </div>
 <script>
 //리뷰 열고 닫고
-function toggleReview(el){
-	var state = el.getAttribute('data-toggle');
-	var content = el.getElementsByClassName('review-content')[0];
-	var evalItems = el.getElementsByClassName('eval-items')[0];
-	if(state=="0"){
-		content.classList.remove('text-truncate');
-		evalItems.classList.remove('hidden');
-		el.setAttribute('data-toggle', "1");
-		
-		var reviews = document.getElementsByClassName('review');
-		for(var i = 0 ; i < reviews.length; i++){
-			if(reviews[i]!=el)
-				closeOthers(reviews[i]);
+	function toggleReview(el){
+		var state = el.getAttribute('data-toggle');
+		var content = el.getElementsByClassName('review-content')[0];
+		var evalItems = el.getElementsByClassName('eval-items')[0];
+		<%if(user_type.equals("2")){%>var dealInfo = el.getElementsByClassName('deal-info')[0];<%}%>
+		if(state=="0"){
+			content.classList.remove('text-truncate');
+			evalItems.classList.remove('hidden');
+			<%if(user_type.equals("2")){%>dealInfo.classList.remove('hidden');<%}%>
+			el.setAttribute('data-toggle', "1");
+			
+			var reviews = document.getElementsByClassName('review');
+			for(var i = 0 ; i < reviews.length; i++){
+				if(reviews[i]!=el)
+					closeOthers(reviews[i]);
+			}
+			
+		}else{
+			content.classList.add('text-truncate');
+			evalItems.classList.add('hidden');
+			<%if(user_type.equals("2")){%>dealInfo.classList.add('hidden');<%}%>
+			el.setAttribute('data-toggle', "0");
 		}
 		
-	}else{
+	}
+	function closeOthers(el){
+		var content = el.getElementsByClassName('review-content')[0];
+		var evalItems = el.getElementsByClassName('eval-items')[0];
+		<%if(user_type.equals("2")){%>var dealInfo = el.getElementsByClassName('deal-info')[0];<%}%>
 		content.classList.add('text-truncate');
 		evalItems.classList.add('hidden');
+		<%if(user_type.equals("2")){%>dealInfo.classList.add('hidden');<%}%>
 		el.setAttribute('data-toggle', "0");
 	}
 	
-}
-function closeOthers(el){
-	var content = el.getElementsByClassName('review-content')[0];
-	var evalItems = el.getElementsByClassName('eval-items')[0];
-	content.classList.add('text-truncate');
-	evalItems.classList.add('hidden');
-	el.setAttribute('data-toggle', "0");
-}
-function gotoPage(el){
-	var page = el.getAttribute('data-page');
-	$.ajax({
-		url : "/repu/RepuReviewList.do",
-		data : {page : page,
-			tuner_seq : "<%=tDTO.getTuner_seq()%>"},
-		type : "post",
-		success : function(data){
-			$("#review-container").html(data);
-		}
-		
-	})
-}
+	function gotoPage(el){
+		var page = el.getAttribute('data-page');
+		$.ajax({
+			url : "/repu/RepuReviewList.do",
+			data : {page : page,
+				tuner_seq : "0"},
+			type : "post",
+			success : function(data){
+				$("#review-container").html(data);
+			}
+			
+		})
+	}
 </script>

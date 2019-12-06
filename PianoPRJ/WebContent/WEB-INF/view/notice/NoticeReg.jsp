@@ -30,7 +30,7 @@
 							<div class="form-body">
 								<div class="form-group">
 									<label for="notice_title">공지 제목</label>
-									<input type="text" id="notice_title" class="form-control" placeholder="공지 제목을 입력해주세요" name="notice_title">
+									<input type="text" id="notice_title" maxlength="50" class="form-control" placeholder="공지 제목을 입력해주세요" name="notice_title">
 								</div>
 								<div class="form-group">
                                     <input type="checkbox" name="top" value="Y" id="top" class="chk-remember">
@@ -39,7 +39,8 @@
 								 
 								<div class="form-group">
 									<label for="notice_content">공지 내용</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"></textarea>
+									<textarea id="temp_content" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" rows="10" class="form-control" placeholder="공지 내용을 입력해주세요"></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
 							</div>
 
@@ -78,5 +79,6 @@
 	
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
+	<script type="text/javascript" src="/js/bytechecker.js"></script>
 </body>
 </html>

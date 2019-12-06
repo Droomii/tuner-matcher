@@ -30,7 +30,14 @@
 		<div class="card-text text-truncate mb-1 review-content">
 		<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>
 		</div>
-		<div class="text-muted hidden eval-items">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
+		<div class="row">
+		<div class="text-muted hidden eval-items col-xs-8">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
+		<%if(user_type.equals("2")){%>
+		<div class="hidden float-xs-right text-xs-right col-xs-4 deal-info">
+		<button class="btn-sm btn btn-success">거래 정보</button>
+		</div>
+		<%} %>
+		</div>
 		<hr style="border-color:gray;margin-bottom:0.2rem;margin-top:0.2rem">
 	</div>
 <%} %>

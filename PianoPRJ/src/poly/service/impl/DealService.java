@@ -137,4 +137,14 @@ public class DealService implements IDealService{
 		return dealMapper.getUserUpcomingDeals(user_seq, today);
 	}
 
+	@Override
+	public int getDealListCnt() throws Exception {
+		return dealMapper.getDealListCnt();
+	}
+
+	@Override
+	public List<DealDTO> getDealList(int start, int end) throws Exception {
+		return dealMapper.getDealList(start, end);
+	}
+
 }

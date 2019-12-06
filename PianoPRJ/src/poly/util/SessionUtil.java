@@ -29,7 +29,7 @@ public class SessionUtil {
 	 * 알맞은 사용자 종류로 로그인한 상태가 아닌 경우 오류 메시지와 리다이렉트될 url을 담은 모델맵을 반환함. 정상일 경우 null
 	 */
 	public static ModelMap verify(String user_type, String rightType, ModelMap model) {
-		if(!CmmUtil.nvl(user_type).equals(rightType)) {
+		if(!CmmUtil.nvl(user_type).matches(rightType)) {
 			model.addAttribute("msg", "비정상적인 접근입니다");
 			model.addAttribute("url", "/index.do");
 			return model;

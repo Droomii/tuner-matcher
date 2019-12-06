@@ -1276,4 +1276,27 @@ public class UserController {
 		log.info(this.getClass().getName() + ".UserDetail end");
 		return "/user/UserDetail";
 	}
+	
+	@RequestMapping(value = "GetUserDetail")
+	public String GetUserDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".GetUserDetail start");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			return null;
+		}
+		
+		
+		String user_seq = request.getParameter("user_seq");
+		log.info("user_seq : " + user_seq);
+		UserDTO uDTO = userService.getUserInfo(user_seq);
+		if (uDTO == null) {
+			return null;
+		}
+		
+		model.addAttribute("uDTO", uDTO);
+		
+		
+		log.info(this.getClass().getName() + ".GetUserDetail end");
+		return "/user/UserDetailModal";
+	}
 }

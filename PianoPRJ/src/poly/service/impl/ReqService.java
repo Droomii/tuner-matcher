@@ -153,4 +153,14 @@ public class ReqService implements IReqService {
 		return reqMapper.getTunerPrivateReqListCnt(tuner_seq);
 	}
 
+	@Override
+	public int getAllReqListCnt() throws Exception {
+		return reqMapper.getAllReqListCnt();
+	}
+
+	@Override
+	public List<ReqDTO> getAllReqList(int start, int end) throws Exception {
+		return reqMapper.getAllReqList(start, end);
+	}
+
 }

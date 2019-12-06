@@ -37,4 +37,8 @@ public interface IReqService {
 
 	int getTunerPrivateReqListCnt(String tuner_seq) throws Exception;
 
+	int getAllReqListCnt() throws Exception;
+
+	List<ReqDTO> getAllReqList(int start, int end) throws Exception;
+
 }

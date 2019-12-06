@@ -34,7 +34,7 @@
 		<div class="text-muted hidden eval-items col-xs-8">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 		<%if(user_type.equals("2")){%>
 		<div class="hidden float-xs-right text-xs-right col-xs-4 deal-info">
-		<button class="btn-sm btn btn-success">거래 정보</button>
+		<button class="btn-sm btn btn-success" onclick="gotoDeal(<%=revDTO.getDeal_seq()%>)">거래 정보</button>
 		</div>
 		<%} %>
 		</div>

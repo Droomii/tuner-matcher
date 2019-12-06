@@ -38,4 +38,8 @@ public interface IReqMapper {
 
 	int getTunerPrivateReqListCnt(String tuner_seq) throws Exception;
 
+	int getAllReqListCnt() throws Exception;
+
+	List<ReqDTO> getAllReqList(@Param("start") int start, @Param("end") int end) throws Exception;
+
 }

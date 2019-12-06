@@ -55,4 +55,8 @@ public interface IDealService {
 
 	List<DealDTO> getUserUpcomingDeals(String user_seq, String today) throws Exception;
 
+	int getDealListCnt() throws Exception;
+
+	List<DealDTO> getDealList(int start, int end) throws Exception;
+
 }

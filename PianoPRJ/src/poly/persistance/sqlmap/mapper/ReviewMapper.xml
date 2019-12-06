@@ -35,7 +35,8 @@
 		REVIEW_TECH,
 		REVIEW_PUNCTUAL,
 		REVIEW_KINDNESS,
-		REVIEW_CONTENT
+		REVIEW_CONTENT,
+		DEAL_SEQ
 	FROM
 		TUNER_REVIEW
 	WHERE
@@ -44,8 +45,10 @@
 <delete id="deleteReview" parameterType="String">
 	DELETE FROM TUNER_REVIEW
 	WHERE
-		DEAL_SEQ=#{0}
-		AND WRITER_SEQ=#{1}
+		DEAL_SEQ=#{deal_seq}
+		<if test='!user_seq.equals("admin")'>
+		AND WRITER_SEQ=#{user_seq}
+		</if>
 </delete>
 <select id="getReviewEditInfo" parameterType="String" resultType="ReviewDTO">
 	SELECT
@@ -58,9 +61,10 @@
 		TUNER_REVIEW
 	WHERE
 		DEAL_SEQ=#{0}
-		AND WRITER_SEQ=#{1}
+		<if test='!param2.equals("admin")'>AND WRITER_SEQ=#{1}</if>
+		
 </select>
-<update id="updateReview">
+<update id="updateReview" parameterType="ReviewDTO">
 	UPDATE TUNER_REVIEW SET
 		REVIEW_STAR=#{review_star},
 		REVIEW_TECH=#{review_tech},
@@ -68,14 +72,19 @@
 		REVIEW_KINDNESS=#{review_kindness},
 		REVIEW_CONTENT=#{review_content},
 		UPDDATE=SYSDATE,
-		UPDATER_SEQ=#{writer_seq}
+		UPDATER_SEQ=#{updater_seq}
 	WHERE
+		
 		DEAL_SEQ=#{deal_seq}
+		<if test="writer_seq!=null">
 		AND WRITER_SEQ=#{writer_seq}
+		</if>
+		
 </update>
 <select id="getTunerReviewList" parameterType="String" resultType="ReviewDTO">
 SELECT * FROM
 	(SELECT
+		DEAL_SEQ,
 		ROWNUM AS RN,
 		REVIEW_STAR,
 		REVIEW_TECH,
@@ -87,6 +96,7 @@ SELECT * FROM
 		USER_STATE
 	FROM
 	(SELECT
+		DEAL_SEQ,
 		REVIEW_STAR,
 		REVIEW_TECH,
 		REVIEW_PUNCTUAL,
@@ -130,6 +140,7 @@ SELECT * FROM
 SELECT * FROM
 	(SELECT
 		ROWNUM AS RN,
+		DEAL_SEQ,
 		REVIEW_STAR,
 		REVIEW_TECH,
 		REVIEW_PUNCTUAL,
@@ -140,6 +151,7 @@ SELECT * FROM
 		USER_STATE
 	FROM
 	(SELECT
+		DEAL_SEQ,
 		REVIEW_STAR,
 		REVIEW_TECH,
 		REVIEW_PUNCTUAL,

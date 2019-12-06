@@ -182,7 +182,7 @@
 												<div class="text-muted hidden eval-items col-xs-8">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 												<%if(user_type.equals("2")){%>
 												<div class="hidden float-xs-right text-xs-right col-xs-4 deal-info">
-												<button class="btn-sm btn btn-success">거래 정보</button>
+												<button class="btn-sm btn btn-success" onclick="gotoDeal(<%=revDTO.getDeal_seq()%>)">거래 정보</button>
 												</div>
 												<%} %>
 												</div>
@@ -198,9 +198,57 @@
 								<!-- /리뷰 -->
 						</div>
 					</div>
+	  
+	  	<%if(user_type.equals("2")){ %>
+	  	<div class="modal-footer">
+		<div class="float-xs-right">
+		<%if(tDTO.getUser_state()==3 || tDTO.getUser_state()==4){ %>
+		<button class="button btn btn-warning" onclick="recoverUser();">회원 복구</button>
+		<%}else{ %>
+		<button class="button btn btn-danger" data-toggle="modal" data-backdrop="false" data-target="#tuner-decline-form">회원 정지</button>
+		<!-- 회원쩡찌 모달 -->
+		<div class="modal fade text-xs-left" id="tuner-decline-form" tabindex="-1" role="dialog" aria-labelledby="serialHelpLabel" style="display: none;" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title " id="serialHelpLabel">정지사유 입력</h4>
+			  </div>
+			  <div class="modal-body no-border">
+				<form onsubmit="return suspendTuner();" autocomplete="off" data-toggle="validator" role="form" name="tunerSuspendForm" class="form no-border" action="/user/UserSuspend.do" method="post" autocomplete="off">
+			<!-- 리뷰 내용 -->
+			<input hidden value="<%=tDTO.getTuner_seq() %>" name="user_seq">
+			<div class="form-group col-xs-12 has-feedback no-border">
+				<input hidden="hidden" id="suspend_reason" name="suspend_reason">
+				<textarea onchange="checkBytesNoNl(this, 200);" onKeyUp="checkBytesNoNl(this, 200);" id="tuner_temp_content" rows="5" class="form-control" placeholder="정지 사유를 입력해주세요"></textarea>
+				<div class="float-xs-right"><span class="byte">0</span>/200 bytes</div>
+				
+			</div>
+                     <div class="modal-footer">
+                     <button type="submit" class="button btn btn-danger float-xs-right">정지</button>
+				<button type="button" class="btn grey btn-outline-secondary float-xs-left" data-dismiss="modal">닫기</button>
+			  </div>
+			</form>
+			  </div>
+			  
+			</div>
+		  </div>
+		</div>
+		<!-- /반려 모달 -->
+		<%} %>
+		</div>
+		<div class="float-xs-left">
+		<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">닫기</button>
+		</div>
+	  </div>
+	  <%}else{ %>
 	  <div class="modal-footer">
 		<button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">닫기</button>
 	  </div>
+	  <%} %>
+	  
 	</div>
   </div>
 </div>
@@ -254,4 +302,19 @@
 			
 		})
 	}
+	<%if(user_type.equals("2")){%>
+	function suspendTuner(){
+		if($("#tuner_temp_content").val().trim().length==0){
+			alert("정지 사유를 입력해주세요");
+			return false;
+		}
+		
+		if(confirm("조율사를 정지하시겠습니까?")){
+			var form = document.tunerSuspendForm;
+			form.suspend_reason.value = form.tuner_temp_content.value.trim().replace(/\n/g, " ");
+		}else{
+			return false;
+		}
+	}
+	<%}%>
 </script>

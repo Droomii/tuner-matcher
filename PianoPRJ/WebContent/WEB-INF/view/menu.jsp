@@ -93,9 +93,9 @@
           </li>
           <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율 요청/견적 관리</span></a>
             <ul class="menu-content">
-              <li><a href="#" class="menu-item">조율 요청 관리</a>
+              <li><a href="/req/ReqList.do" class="menu-item">조율 요청 관리</a>
               </li>
-              <li><a href="#" class="menu-item">조율 견적 관리</a>
+              <li><a href="/deal/DealList.do" class="menu-item">조율 견적 관리</a>
               </li>
             </ul>
           </li>

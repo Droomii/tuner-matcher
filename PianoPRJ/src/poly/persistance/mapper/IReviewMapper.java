@@ -14,7 +14,7 @@ public interface IReviewMapper {
 
 	ReviewDTO getDealReview(String deal_seq) throws Exception;
 
-	int deleteReview(String deal_seq, String user_seq) throws Exception;
+	int deleteReview(@Param("deal_seq") String deal_seq, @Param("user_seq")String user_seq) throws Exception;
 
 	ReviewDTO getReviewEditInfo(String deal_seq, String user_seq) throws Exception;
 

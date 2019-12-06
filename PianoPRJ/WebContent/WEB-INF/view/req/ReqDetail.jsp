@@ -21,6 +21,9 @@
 	String proc = CmmUtil.nvl((String)session.getAttribute("proc"));
 	String back = proc.equals("public") ? "/req/" + userTypeName + "PublicReqList"
 										:"/req/" + userTypeName + "PrivateReqList";
+	if(user_type.equals("2")){
+		back = "/req/ReqList.do";
+	}
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
 	List<DealDTO> dList = (List<DealDTO>)request.getAttribute("dList");
@@ -193,7 +196,7 @@
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
-					<%if(user_type.equals("0")){ %>
+					<%if(user_type.matches("[02]")){ %>
 						<a href="<%=back %>.do" class="button btn btn-info">뒤로 </a>
 						<%if(dList.size()==0){ %>
 						<button onclick="editReq()" class="button btn btn-success">수정 </button>

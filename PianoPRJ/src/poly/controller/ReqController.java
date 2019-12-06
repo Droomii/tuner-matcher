@@ -277,14 +277,27 @@ public class ReqController {
 	
 	@RequestMapping(value = "EditReq")
 	public String EditReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception{
-		if (SessionUtil.verify(session, "0", model) != null) {
-			model = SessionUtil.verify(session, "0", model);
+		if (SessionUtil.verify(session, "[02]", model) != null) {
+			model = SessionUtil.verify(session, "[02]", model);
 			return "/redirect";
 		}
+		
+		
 		
 		log.info(this.getClass().getName() + ".EditReq start");
 		String req_seq = request.getParameter("req_seq");
 		ReqDTO rDTO = reqService.getReqDetail(req_seq);
+		
+		String user_type = (String) session.getAttribute("user_type");
+		if(!user_type.equals("2")) {
+			String user_seq = (String) session.getAttribute("user_seq");
+			if(!rDTO.getUser_seq().equals(user_seq)) {
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+		}
+		
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		log.info(prefDates);
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
@@ -296,19 +309,35 @@ public class ReqController {
 		return "/req/EditReq";
 	}
 	
-	@RequestMapping(value = "DoEditReq")
+	@RequestMapping(value = "DoEditReq", method = RequestMethod.POST)
 	public String DoEditReq(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute ReqDTO rDTO,
 			@RequestParam(value="req_img") MultipartFile mf) throws Exception{
-		if (SessionUtil.verify(session, "0", model) != null) {
-			model = SessionUtil.verify(session, "0", model);
+		if (SessionUtil.verify(session,"[02]", model) != null) {
+			model = SessionUtil.verify(session, "[02]", model);
 			return "/redirect";
 		}
+		
+		
+		
+		
 		
 		log.info(this.getClass().getName() + ".DoEditReq start");
 		String current_user = (String)session.getAttribute("user_seq");
 		String back = request.getParameter("back");
+		
 		rDTO.setUpdater_seq(current_user);
-
+		
+		
+		String user_type = (String) session.getAttribute("user_type");
+		if(!user_type.equals("2")) {
+			if(!rDTO.getUser_seq().equals(current_user)) {
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+		}else {
+			back = "/req/ReqList";
+		}
 		
 		String msg;
 		
@@ -354,10 +383,11 @@ public class ReqController {
 	
 	@RequestMapping(value="DeleteReq", method=RequestMethod.POST)
 	public String DeleteReq(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
-		if (SessionUtil.verify(session, "0", model) != null) {
-			model = SessionUtil.verify(session, "0", model);
+		if (SessionUtil.verify(session, "[02]", model) != null) {
+			model = SessionUtil.verify(session, "[02]", model);
 			return "/redirect";
 		}
+		String user_type = (String) session.getAttribute("user_type");
 		
 		log.info(this.getClass().getName() + ".DeleteReq start");
 		String msg = "";
@@ -377,12 +407,14 @@ public class ReqController {
 			}else {
 				msg = "요청서 삭제에 실패했습니다";
 			}
-			String type = private_seq==null ? "Public" : "Private";
+			if(user_type.equals("2")) {
+				model.addAttribute("url", "/req/ReqList.do");
+			}else {
+				String type = private_seq==null ? "Public" : "Private";
+				model.addAttribute("url", "/req/User" + type + "ReqList.do");
+			}
 			model.addAttribute("msg", msg);
-			model.addAttribute("url", "/req/User" + type + "ReqList.do");
 		}
-		
-		
 		return "/redirect";
 	
 	
@@ -704,6 +736,9 @@ public class ReqController {
 		
 		// 요청목록
 		List<ReqDTO> rList = reqService.getTunerPrivateReqList(tuner_seq, start, end);
+		if(rList==null) {
+			rList = new ArrayList<ReqDTO>();
+		}
 		model.addAttribute("rList", rList);
 		return "/req/TunerPrivateReqList";
 	}
@@ -741,5 +776,35 @@ public class ReqController {
 	
 	
 	//------------------------조율사 끝 --------------------------
+	
+	
+	// -----------------------관리자 시작------------------------
+	//1:1 요청서
+	@RequestMapping(value = "ReqList")
+	public String ReqList(HttpServletRequest request, ModelMap model, HttpSession session,
+			@RequestParam(defaultValue = "1") int page) throws Exception {
+		log.info(this.getClass().getName() + ".ReqList start");
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		
+		// 페이징
+		int listCnt = reqService.getAllReqListCnt();
+		Pagination pg = new Pagination(listCnt, page);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		// 요청목록
+		List<ReqDTO> rList = reqService.getAllReqList(start, end);
+		if(rList==null) {
+			rList = new ArrayList<ReqDTO>();
+		}
+		model.addAttribute("reqList", rList);
+		return "/req/ReqList";
+	}
 	
 }

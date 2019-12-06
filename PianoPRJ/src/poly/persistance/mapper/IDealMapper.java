@@ -59,4 +59,8 @@ public interface IDealMapper {
 
 	List<DealDTO> getUserUpcomingDeals(@Param("user_seq")String user_seq, @Param("today")String today) throws Exception;
 
+	int getDealListCnt() throws Exception;
+
+	List<DealDTO> getDealList(@Param("start") int start, @Param("end") int end) throws Exception;
+
 }

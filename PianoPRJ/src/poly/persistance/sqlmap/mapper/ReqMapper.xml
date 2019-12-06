@@ -226,4 +226,35 @@
 	<select id="getReqCurrVal" resultType="Integer">
 	SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME='REQ_SEQ'
 	</select>
+	<select id="getAllReqList" resultType="ReqDTO">
+	SELECT * FROM
+		(SELECT
+			ROWNUM AS RN,
+			REQ_SEQ,
+			REQ_TITLE,
+			REGDATE,
+			PRIVATE_SEQ,
+			REQUESTER_NICK,
+			BIDS
+		FROM
+			(SELECT
+				REQ_SEQ,
+				REQ_TITLE,
+				REGDATE,
+				PRIVATE_SEQ,
+				(SELECT USER_NAME FROM USERINFO WHERE USER_SEQ=REQUEST.USER_SEQ) AS REQUESTER_NICK,
+				NVL((SELECT COUNT(1) FROM DEAL WHERE DEAL_STATE=0 GROUP BY REQ_SEQ HAVING REQ_SEQ=REQUEST.REQ_SEQ),0) AS BIDS
+			FROM
+				REQUEST
+			WHERE
+				REQ_STATE=0
+			ORDER BY
+				REGDATE DESC	
+			)
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	<select id="getAllReqListCnt" resultType="Integer">
+	SELECT COUNT(1) FROM REQUEST WHERE REQ_STATE=0
+	</select>
 </mapper>

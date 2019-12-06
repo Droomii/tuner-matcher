@@ -27,6 +27,7 @@ import poly.service.IPianoService;
 import poly.service.IReqService;
 import poly.service.IReviewService;
 import poly.service.IUserService;
+import poly.util.CmmUtil;
 import poly.util.Pagination;
 import poly.util.SessionUtil;
 
@@ -653,4 +654,87 @@ public class DealController {
 		
 
 	}
+	
+	// --------------------- 관리자 ----------------------
+	
+	@RequestMapping(value = "AdminDealDetail")
+	public String AdminDealDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".AdminDealDetail start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		String deal_seq = request.getParameter("deal_seq");
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		String back = request.getParameter("back");
+		model.addAttribute("url", "/deal/AdminDealList.do");
+		if(CmmUtil.nvl(back).equals("ReviewList")) {
+			model.addAttribute("back", "/review/ReviewList.do");
+		}else if(CmmUtil.nvl(back).equals("TunerDetail")){
+			String tuner_seq = request.getParameter("tuner_seq");
+			model.addAttribute("back","/user/TunerDetail.do?tuner_seq=" + tuner_seq);
+		}else if(CmmUtil.nvl(back).equals("deal")){
+			model.addAttribute("back", "/deal/DealList.do");
+		}else {
+			model.addAttribute("back", "/deal/DealList.do");
+		}
+		
+		if (dDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 거래입니다");
+			return "/redirect";
+		}
+
+		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
+		UserDTO tDTO = userService.getUserInfo(dDTO.getTuner_seq());
+		UserDTO uDTO = userService.getUserInfo(dDTO.getRequester_seq());
+		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
+		
+		model.addAttribute("revDTO", revDTO);
+		model.addAttribute("uDTO", uDTO);
+		model.addAttribute("tDTO", tDTO);
+		model.addAttribute("dDTO", dDTO);
+		model.addAttribute("rDTO", rDTO);
+		model.addAttribute("pDTO", pDTO);
+		
+		
+		log.info(this.getClass().getName() + ".AdminDealDetail end");
+		return "/deal/AdminDealDetail";
+	}
+	
+	@RequestMapping(value = "DealList")
+	public String DealList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1") int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".DealList start");
+		
+		if (SessionUtil.verify(session, "2", model) != null) {
+			model = SessionUtil.verify(session, "2", model);
+			return "/redirect";
+		}
+		
+		// 페이징
+		int listCnt = dealService.getDealListCnt();
+		Pagination pg = new Pagination(listCnt, page);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		List<DealDTO> dList = dealService.getDealList(start, end);
+		if(dList==null) {
+			dList = new ArrayList<DealDTO>();
+		}
+
+		model.addAttribute("pg", pg);
+		model.addAttribute("dList", dList);
+		
+		log.info(this.getClass().getName() + ".DealList end");
+		return "/deal/DealList";
+	}
+	
+	
 }

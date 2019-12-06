@@ -21,16 +21,13 @@
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	DealDTO dDTO = (DealDTO)request.getAttribute("dDTO");	
 	String back = (String)request.getAttribute("back");
-	back = back==null ? "/deal/TunerDealList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
+	UserDTO tDTO = (UserDTO)request.getAttribute("tDTO");
 	ReviewDTO revDTO = (ReviewDTO)request.getAttribute("revDTO");
 	
 	
 	String deal_state = dDTO.getDeal_state();
-	
-	String tuner_name = uDTO.getUser_name();
-	
-	
+
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"};
 	
 	String date = dDTO.getPossible_date();
@@ -116,70 +113,88 @@
 <!-- Header footer section start -->
 <section id="header-footer">
 	<div class="row">
-			<div class="col-xs-12 col-lg-6 offset-lg-3">
-				<div class="card">
-					<div class="card-header">
-						<h4 class="card-title" id="basic-layout-form">견적 정보</h4>
+		<div class="col-xs-12 col-lg-6 offset-lg-3">
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title" id="basic-layout-form">견적 정보</h4>
+				</div>
+				<div class="card-body collapse in">
+			    	<div class="card-block">
+			            <div>
+							<h5 class="form-section text-bold-600 float-xs-left" >조율사 정보</h5>
+							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#tuner-detail">조율사 상세정보</button>
+							<!-- modal -->
+							<div id="tuner-modal-container"></div>
+							<!-- /modal -->
+						</div>
+						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=CmmUtil.nvl(tDTO.getUser_name(), true) %></div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=tDTO.getUser_tel(true) %></div></div>
+							</div>
+						</div>
 					</div>
-		            <div class="card-body collapse in">
-		            <%if(!dDTO.getDeal_state().equals("3")){ %>
-			            <div class="card-block">
+		            <div class="card-block">
 			            <div>
 							<h5 class="form-section text-bold-600 float-xs-left" >고객 정보</h5>
+							<button class="button btn btn-sm btn-info float-xs-right" data-toggle="modal" data-target="#user-detail">고객 상세정보</button>
+							<!-- modal -->
+							<div id="user-modal-container"></div>
+							<!-- /modal -->
 						</div>
 							<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 								<div class="row" style="display:flex;">
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">성명</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=CmmUtil.nvl(uDTO.getUser_name(), true) %></div></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=CmmUtil.nvl(uDTO.getUser_name(true), true) %></div></div>
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">연락처</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel() %></div></div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 desc"><div style="margin:auto"><%=uDTO.getUser_tel(true) %></div></div>
 								</div>
 							</div>
-						
 						</div>
-						<%} %>
-						<div class="card-block">
+					<div class="card-block">
 						<h5 class="form-section text-bold-600">피아노 정보</h5>
 						<div class="piano-table col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand(), true) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial(), true) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type(), true) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
-								</div>
-								<div class="row" style="display:flex;">
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
-									<%if(pDTO.getPiano_photo_dir()!=null){ %>
-									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
-									<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap">
-									<%}else{ %>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
-									
-									<%} %>
-									</div>
-									
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">브랜드</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getBrand(), true) %></div>
 							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">일련번호</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getSerial(), true) %></div>
 							</div>
-						
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">피아노 타입</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPiano_type()).equals("0")?"업라이트" : "그랜드"%></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">용도</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getPlayer_type(), true) %></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">마지막 조율 날짜</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class=" border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getLast_tuned_date()).equals("") ? "모름" : CmmUtil.nvl(pDTO.getLast_tuned_date()).substring(0,10)%></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc"><%=CmmUtil.nvl(rDTO.getSido_name()) %> <%=CmmUtil.nvl(rDTO.getSgg_name()) %></div>
+							</div>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">사진</span></div>
+								<%if(pDTO.getPiano_photo_dir()!=null){ %>
+								<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
+								<img class="img-fluid my-0" src="/img/piano/<%=pDTO.getPiano_seq() %>/image.<%=pDTO.getPiano_photo_dir() %>" alt="Card image cap"></div>
+								<%}else{ %>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
+								
+								<%} %>
+							</div>
+									
+						</div>
 					</div>
+						
+				</div>
 					
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">요청서 정보</h5>
@@ -192,11 +207,11 @@
 									<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700"><span style="margin:auto">참고사진</span></div>
 									<%if(rDTO.getPhoto_dir()!=null){ %>
 									<div style="border-color:rgb(150,150,150);padding:0" class="border col-xs-9 desc">
-									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap"></div>
+									<img class="img-fluid my-0" src="/img/req/<%=rDTO.getReq_seq() %>/image.<%=rDTO.getPhoto_dir() %>" alt="Card image cap">
 									<%}else{ %>
-									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음</div>
+									<div style="border-color:rgb(150,150,150);padding:0.5rem;" class="  border col-xs-9 desc">사진 없음
 									<%} %>
-									
+									</div>
 								</div>
 							</div>
 						
@@ -245,17 +260,16 @@
                         </tbody>
                     </table>
 					</div>
-					<%if(!dDTO.getDeal_state().equals("3")){ %>
 					<div class="card-block">
 						<h5 class="form-section text-bold-600">위치 및 날짜 정보</h5>
 						<div class="col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr(), true) %></div>
 							</div>
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
+								<div style="border-color:rgb(150,150,150);padding:0.3rem 0.3rem 0.3rem 0.5rem;"class="border col-xs-9 desc"><span class="valign-middle"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</span></div>
 							</div>
 						</div>
 					</div>
@@ -264,12 +278,10 @@
 							<div id="map" style="width:100%;height:100%;"></div>
 						</div>
 					</div>
-					<%} %>
-					
 					<%if(deal_state.equals("7")){ %>
-					<div id="review-container">
+					<div id="review-cont">
 					<%if(revDTO==null){ %>
-					<div class="card-block">
+										<div class="card-block">
 						<h5 class="form-section text-bold-600">고객 리뷰</h5>
 						<hr>
 						<div class="card-text text-xs-center">- 고객이 리뷰를 등록하지 않았습니다 -</div>
@@ -290,30 +302,23 @@
 						<%=CmmUtil.nvl(revDTO.getReview_content(), true) %>
 						</p>
 						<div class="text-muted float-xs-left">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
-						<%if(user_type.equals("0")){ %>
 						<div class="float-xs-right">
-							<span>
+						<span>
 						<button onclick="reviewDelete();" class="button btn btn-sm btn-danger">삭제 </button>
 						</span>
 						<span>
 							<button onclick="reviewEdit();" class="button btn btn-sm btn-success">수정</button>
 						</span>
 						</div>
-						<%} %>
-					</div>
+						</div>
 					</div>
 					<%} %>
 					<%} %>
 					<div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
+						<a href="<%=CmmUtil.nvl(back) %>" class="button btn btn-info">뒤로 </a>
 					</span>
 					<%if(deal_state.matches("[26]")){ %>
-					<%if(deal_state.equals("6")){ %>
-					<span>
-						<button class="button btn btn-success" disabled>완료 대기중</button>
-					</span>
-					<%}else{ %>
 					<span>
 						<button onclick="dealCancel();"class="button btn btn-danger">거래 취소 </button>
 					</span>
@@ -321,10 +326,9 @@
 						<button onclick="dealConfirm();"class="button btn btn-success">거래 완료</button>
 					</span>
 					<%} %>
+				</div>
 		            </div>
 		            
-					<%} %>
-				</div>
 				</div>
 			</div>
 		</div>
@@ -336,10 +340,60 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript" src="/js/bytechecker.js"></script>
+	
 	<script type="text/javascript">
 	
 	
-	<%if(user_type.equals("0") && revDTO != null){ %>
+	function suspendUser(){
+		if($("#temp_content").val().trim().length==0){
+			alert("정지 사유를 입력해주세요");
+			return false;
+		}
+		
+		if(confirm("회원을 정지하시겠습니까?")){
+			var form = document.userSuspendForm;
+			form.suspend_reason.value = form.temp_content.value.trim().replace(/\n/g, " ");
+		}else{
+			return false;
+		}
+	}
+	
+	function gotoDeal(deal_seq){
+		location.href = "/deal/AdminDealDetail.do?deal_seq=" + deal_seq + "&back=TunerDetail&tuner_seq=<%=dDTO.getTuner_seq()%>";
+	}
+	
+	window.onload = function(){
+		var tunerQuery = {tuner_seq : "<%=dDTO.getTuner_seq()%>"};
+		$.ajax({
+			url:"/repu/GetTunerRepu.do",
+			type:"post",
+			data:tunerQuery,
+			success:function(data){
+				if(data==null){
+					alert('비정상적인 접근입니다.');
+					return;
+				}else{
+					$("#tuner-modal-container").html(data);
+				}
+			}
+		});
+		var userQuery = {user_seq : "<%=dDTO.getRequester_seq()%>"};
+		$.ajax({
+			url:"/user/GetUserDetail.do",
+			type:"post",
+			data:userQuery,
+			success:function(data){
+				if(data==null){
+					alert('비정상적인 접근입니다.');
+					return;
+				}else{
+					$("#user-modal-container").html(data);
+				}
+			}
+		});
+		
+	}
 	function reviewDelete(){
 		if(confirm("리뷰를 삭제하시겠습니까?")){
 			location.href='/review/ReviewDelete.do?deal_seq=<%=dDTO.getDeal_seq()%>';
@@ -357,14 +411,14 @@
 					alert('비정상적인 접근입니다.');
 					return;
 				}else{
-					$("#review-container").html(data);
+					$("#review-cont").html(data);
+					checkBytes(document.getElementById('temp_content'), 500)
+					
 				}
-			}
+			},
 		});
 		
 	}
-	
-	<%}%>
 	
 	<%if(deal_state.matches("7")){ %>
 	
@@ -381,25 +435,6 @@
 			
 		}
 		document.getElementById("review_star").value = score.toString();
-	}
-	
-	function checkBytes(el, limit){
-		var b, i, c;
-		var s = el.value;
-		var last;
-	    for(b=i=0; c=s.charCodeAt(i);i++) {
-	    	b+=c>>11?3:c>>7?2:1;
-	    	if(b > limit){
-	    		alert('글자수를 초과하였습니다.');
-		    	el.value = el.value.substring(0, i);
-		    	el.parentElement.querySelector('span').innerHTML = last;
-		    	return
-	    	}
-	    	last = b;
-	    }
-	    el.parentElement.querySelector('span').innerHTML = b;
-	    
-	    return b
 	}
 	
 	function submitReview(type){
@@ -424,9 +459,13 @@
 			alert('친절 만족도를 선택해주세요');
 			return false;
 		}
-		form.review_content.value = form.temp_content.value.replace(/\n/g, " ");
-		if(confirm("리뷰를 " +type+"하시겠습니까?"))
+		form.review_content.value = form.temp_content.value.trim().replace(/\n/g, " ");
+		if(confirm("리뷰를 " +type+"하시겠습니까?")){
 			form.submit();
+		}
+		else{
+			return false;
+		}
 		
 	}
 	
@@ -436,18 +475,17 @@
 	<%if(deal_state.matches("[26]")){ %>
 	function dealCancel(){
 		if(confirm("해당 거래를 취소하시겠습니까?")){
-			location.href="/deal/TunerDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+			location.href="/deal/UserDealCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	
 	function dealConfirm(){
 		if(confirm("거래를 완료하시겠습니까?")){
-			location.href="/deal/TunerDealConfirm.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+			location.href="/deal/UserDealConfirm.do?deal_seq=<%=dDTO.getDeal_seq()%>";
 		}
 	}
 	<%} %>
 	
-	<%if(!dDTO.getDeal_state().equals("3")){ %>
 	// 지도
 
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -481,7 +519,6 @@
 	};
 	geocoder.addressSearch('<%=CmmUtil.nvl(pDTO.getAddr()).split("&#40")[0].split(",")[0] %>', init);
 	
-	<%}%>
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
 </body>

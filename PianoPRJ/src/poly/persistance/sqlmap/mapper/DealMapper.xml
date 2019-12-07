@@ -475,4 +475,13 @@ WHERE RN BETWEEN #{start} AND #{end}
 	WHERE
 		DEAL_SEQ=#{deal_seq}
 </update>
+
+<update id="setDealState" parameterType="String">
+	UPDATE
+		DEAL
+	SET
+		DEAL_STATE=#{1}
+	WHERE
+		DEAL_SEQ=#{0}
+</update>
 </mapper>

@@ -152,4 +152,9 @@ public class DealService implements IDealService{
 		return dealMapper.updateDate(rDTO);
 	}
 
+	@Override
+	public void setDealState(String deal_seq, String string) throws Exception {
+		dealMapper.setDealState(deal_seq, string);
+	}
+
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import poly.dto.FollowDTO;
 import poly.dto.TunerDTO;
-import poly.dto.UserDTO;
 
 public interface IFollowService {
 

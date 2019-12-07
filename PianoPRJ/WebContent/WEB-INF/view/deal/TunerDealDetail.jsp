@@ -258,6 +258,11 @@
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
 							</div>
 						</div>
+						<%if(deal_state.matches("[2]")){ %>
+						<div class="float-xs-right">
+						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
+						</div>
+						<%} %>
 					</div>
 					<div class="card-block">
 						<div style="height:600px">

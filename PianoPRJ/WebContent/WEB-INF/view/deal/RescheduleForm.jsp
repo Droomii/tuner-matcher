@@ -136,7 +136,7 @@
 			alert("변경일시를 선택해주세요.");
 			return false;
 		}
-		<%if(user_type.equals("2")){%>
+		<%if(!user_type.equals("2")){%>
 		if($("#temp_content").val().trim()==""){
 			alert("변경사유를 입력해주세요.")
 			return false;
@@ -145,12 +145,13 @@
 		if(!confirm("날짜변경을 요청하시겠습니까?")){
 			return false;
 		}
-		<%if(user_type.equals("2")){%>
+		<%if(!user_type.equals("2")){%>
 		$("#chg_reason").val(document.getElementById('temp_content').value.trim().replace(/\n/g, " "));
 		<%}%>
 	}
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 </body>
 </html>

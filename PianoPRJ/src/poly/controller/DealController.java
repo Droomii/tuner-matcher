@@ -662,10 +662,17 @@ public class DealController {
 			
 			rDTO.setRequester_seq(user_seq);
 			
-			res = dealService.insertReschedule(rDTO);
+			res = 0;
 			
+			try {
+				res = dealService.insertReschedule(rDTO);
+			} catch (Exception e) {
+				log.info(e.toString());
+			}
+
 			String userTypeName = user_type.equals("0") ? "User" : "Tuner"; 
 			if(res>0) {
+				dealService.setDealState(deal_seq, "10");
 				msg = "일정 변경 요청을 하였습니다.";
 				url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
 			}else {

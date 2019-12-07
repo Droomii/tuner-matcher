@@ -51,6 +51,7 @@
 			WHERE
 				F.TUNER_SEQ=#{user_seq}
 				AND U.USER_SEQ=F.USER_SEQ
+				AND U.USER_STATE=1
 			ORDER BY
 				ADD_DATE DESC
 			)

@@ -293,6 +293,45 @@ public class MyPageController {
 		return "/myPage/FollowerList";
 	}
 	
+	@RequestMapping(value = "FollowerDetail")
+	public String FollowerDetail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".FollowerDetail start");
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String) session.getAttribute("user_seq");
+		String follower_seq = request.getParameter("user_seq");
+		
+		int follow = followService.verifyFollow(user_seq, follower_seq);
+		if(follow==0) {
+			model.addAttribute("msg", "단골 고객이 아닙니다.");
+			model.addAttribute("url", "/myPage/FollowerList.do");
+			return "/redirect";
+		}
+		
+		log.info("follower_seq : " + follower_seq);
+		UserDTO uDTO = userService.getUserInfo(follower_seq);
+
+		
+		
+		if (uDTO == null) {
+			model.addAttribute("msg", "존재하지 않는 회원입니다");
+			model.addAttribute("url", "/Follower/FollowerList.do");
+			return "/redirect";
+		}
+		
+		model.addAttribute("uDTO", uDTO);
+		
+		
+		log.info(this.getClass().getName() + ".FollowerDetail end");
+		return "/myPage/FollowerDetail";
+	}
+	
+	
+	
 	@RequestMapping(value = "TunerSchedule")
 	public String TunerSchedule(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
 			throws Exception {

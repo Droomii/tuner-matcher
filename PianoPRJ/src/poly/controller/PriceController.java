@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import poly.dto.PriceDTO;
 import poly.service.IPriceService;
@@ -29,8 +30,9 @@ public class PriceController {
 	
 	Logger log = Logger.getLogger(this.getClass());
 	
+	@ResponseBody
 	@RequestMapping(value = "GetMarketPrice")
-	public String GetMarketPrice(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+	public List<PriceDTO> GetMarketPrice(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue = "day")String term)
 			throws Exception {
 		log.info(this.getClass().getName() + ".GetMarketPrice start");
@@ -50,10 +52,19 @@ public class PriceController {
 		log.info("from : " + fromDate);
 		log.info("to : " + toDate);
 		
-		List<PriceDTO> pList = priceService.getMarketPrice(fromDate, toDate);
+		List<PriceDTO> rList = priceService.getMarketPrice(fromDate, toDate);
 		
 		
 		log.info(this.getClass().getName() + ".GetMarketPrice end");
-		return null;
+		return rList;
+	}
+	
+	@RequestMapping(value = "MarketPriceTest")
+	public String MarketPriceTest(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".MarketPriceTest start");
+
+		log.info(this.getClass().getName() + ".MarketPriceTest end");
+		return "/price/MarketPriceTest";
 	}
 }

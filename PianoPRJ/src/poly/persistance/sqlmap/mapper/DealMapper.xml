@@ -408,6 +408,7 @@ SELECT COUNT(1) FROM DEAL
 		DEAL
 	WHERE
 		SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
+		AND DEAL_STATE IN(2, 6, 10)
 		AND TUNER_SEQ=#{tuner_seq}
 ]]>
 	

@@ -489,6 +489,8 @@ public class ReqController {
 		}
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		
+		Map<String, String> weatherMap = weatherService.getWeather(pDTO.getSgg_code());
+		model.addAttribute("weatherMap", weatherMap);
 		model.addAttribute("uDTO", uDTO);
 		model.addAttribute("dDTO", dDTO);
 		model.addAttribute("rDTO", rDTO);

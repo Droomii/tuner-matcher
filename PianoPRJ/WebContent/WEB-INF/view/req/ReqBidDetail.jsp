@@ -149,39 +149,35 @@
 						</div>
 					</div>
 					<div class="card-block">
-					<h5 class="form-section text-bold-600">가격</h5>
-						<table class="table table-bordered" style="border:2px solid rgb(150,150,150);">
-                        <thead>
-                            <tr style="background-color:rgb(220,220,220);">
-                                <th style="width:9rem;text-align:center;">거래번호</th>
-                                <th style="text-align:center">품목</th>
-                                <th style="width:8rem;text-align:center">수량</th>
-                                <th style="width:10rem;text-align:center">가격</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+						<div class="table mb-0">
+                        <div class="table-row" style="background-color:rgb(220,220,220)">
+                                <div class="table-head-cell" style="text-align:center">품목</div>
+                                <div class="table-head-cell" style="width:8rem;text-align:center">수량</div>
+                                <div class="table-head-cell" style="width:10rem;text-align:center">가격</div>
+                        </div>
                         <%Iterator<String> itemKeys = items.keySet().iterator(); 
                         String itemKey = itemKeys.next();%>
-                            <tr>
-                                <th rowspan="<%=itemLen%>" style="vertical-align:middle;text-align:center"><%=dDTO.getDeal_seq() %></th>
-                                <td><%=itemKey %></td>
-                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
-                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
-                            </tr>
+                            <div class="table-row">
+                                <div class="table-cell"><%=itemKey %></div>
+                                <div class="table-cell" style="text-align:center"><%=items.get(itemKey).split(",")[0] %></div>
+                                <div class="table-cell" style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</div>
+                            </div>
                             <%while(itemKeys.hasNext()){ 
                             itemKey = itemKeys.next();%>
-                            <tr>
-                                <td><%=itemKey %></td>
-                                <td style="text-align:center"><%=items.get(itemKey).split(",")[0] %></td>
-                                <td style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</td>
-                            </tr>
+                            <div class="table-row">
+                                <div class="table-cell"><%=itemKey %></div>
+                                <div class="table-cell" style="text-align:center"><%=items.get(itemKey).split(",")[0] %></div>
+                                <div class="table-cell" style="text-align:right"><%=String.format("%,d", Integer.parseInt(items.get(itemKey).split(",")[1]))%> 원</div>
+                            </div>
                             <%} %>
-                            <tr>
-                                <th colspan="3" style="background-color:rgb(220,220,220);text-align:right">총합</th>
-                                <th style="text-align:right"><%=dDTO.getTotal() %> 원</th>
-                            </tr>
-                        </tbody>
-                    </table>
+                           
+                    </div>
+                    <div class='table'>
+                    <div class="table-row">
+                                <div class="table-cell" style="background-color:rgb(220,220,220);text-align:right"><strong>총합</strong></div>
+                                <div class="table-cell" style="width:10rem;text-align:right"><%=dDTO.getTotal() %> 원</div>
+                            </div>
+                            </div>
 					</div>
 		            </div>
 		            <div class="card-footer text-xs-center">

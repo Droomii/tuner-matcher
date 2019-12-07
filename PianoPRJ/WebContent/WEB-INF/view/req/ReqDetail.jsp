@@ -80,9 +80,6 @@
 	  padding: 10px 20px 10px 20px;
 	  border-bottom: 1px solid lightgray;
 	}
-	.item:hover{
-		background-color:rgb(240,240,240);
-	}
 </style>
 
 
@@ -273,56 +270,53 @@
 								
 								<div class="form-group">
 									<label for="req_content">서비스 견적</label>
-									<table class="table mb-0" style="width:100%;">
-			                            <thead class="bg-teal bg-lighten-4">
-			                                <tr>
-			                                    <th style="width:40%;text-align:center" colspan="2">항목</th>
-			                                    <th style="text-align:center">수량</th>
-			                                    <th style="text-align:center">가격</th>
-			                                </tr>
-			                            </thead>
-			                            <tbody>
-			                                <tr class="row">
-			                                    <td style="width:40%;" colspan="2">
+									<div class="table mb-0" style="width:100%;">
+			                                <div class="table-row" style="background-color:rgb(189, 232, 255)">
+			                                    <div class="table-head-cell" style="text-align:center">항목</div>
+			                                    <div class="table-head-cell" style="text-align:center;width:150px">수량</div>
+			                                    <div class="table-head-cell" style="text-align:center;width:150px">가격</div>
+			                                </div>
+			                                <div class="table-row">
+			                                    <div class="table-cell">
 			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="tune" checked> 조율</label>
-			                                    </td>
-			                                    <td><input type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="tuning_ea" style="padding:0.1rem;width:3rem;"></td>
-			                                    <td style="display:flex;justify-content:flex-end"><input type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="tuning_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
-			                                </tr>
-			                                <tr>
-			                                    <td style="width:40%;" colspan="2">
+			                                    </div>
+			                                    <div class="table-cell"><input type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="tuning_ea" style="padding:0.1rem;width:3rem;"></div>
+			                                    <div class="table-cell" style="display:flex;justify-content:flex-end"><input type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="tuning_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</div>
+			                                </div>
+			                                <div class="table-row">
+			                                    <div class="table-cell">
 			                                     <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="regulation"> 조정</label>
-			                                    </td>
-			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="regul_ea" style="padding:0.1rem;width:3rem;"></td>
-			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="regul_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
-			                                </tr>
-			                                <tr>
-			                                    <td style="width:40%;" colspan="2">
+			                                    </div>
+			                                    <div class="table-cell"><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="regul_ea" style="padding:0.1rem;width:3rem;"></div>
+			                                    <div class="table-cell" style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="regul_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</div>
+			                                </div>
+			                                <div class="table-row">
+			                                    <div class="table-cell">
 			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="voicing"> 정음</label>
-			                                    </td>
-			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="voicing_ea" style="padding:0.1rem;width:3rem;"></td>
-			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="voicing_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
-			                                </tr>
-			                                <tr>
-			                                    <td style="width:40%;" colspan="2">
+			                                    </div>
+			                                    <div class="table-cell"><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="voicing_ea" style="padding:0.1rem;width:3rem;"></div>
+			                                    <div class="table-cell" style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="voicing_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</div>
+			                                </div>
+			                                <div class="table-row">
+			                                    <div class="table-cell">
 			                                    <label class="checkbox-inline mb-0"><input type="checkbox" class="checkbox" id="transport"> 운반</label>
-			                                    </td>
-			                                    <td><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="transport_ea" style="padding:0.1rem;width:3rem;"></td>
-			                                    <td style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="transport_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
-			                                </tr>
-			                                <tr>
-			                                    <td style="width:40%;" colspan="2">
+			                                    </div>
+			                                    <div class="table-cell"><input disabled type="number" min="1" value="1" id="projectinput2" class="form-control ea" name="transport_ea" style="padding:0.1rem;width:3rem;"></div>
+			                                    <div class="table-cell" style="display:flex;justify-content:flex-end"><input disabled type="text" maxlength="6" value="0" id="projectinput2" class="form-control price" name="transport_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</div>
+			                                </div>
+			                                <div class="table-row">
+			                                   <div class="table-cell">
 			                                    <label class="checkbox-inline mb-0"><input type="checkbox"  class="checkbox" id="repair"> 기타(수리, 부품 등)</label>
-			                                    </td>
-			                                    <td><input type="number" min="1" value="1" hidden disabled id="projectinput2" class="form-control ea" style="padding:0.1rem;width:3rem;"></td>
-			                                    <td style="display:flex;justify-content:flex-end"><input type="text" disabled value="0" maxlength="7" id="projectinput2" class="form-control price" name="other_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</td>
-			                                </tr>
-			                                <tr>
-			                                    <td colspan="5" style="text-align:right;background-color:rgb(179, 226, 255)">계 :&nbsp;<span id="total">0</span>원(<span id="koreanTotal">0</span>원)</td>
-			                                </tr>
-
-			                            </tbody>
-			                        </table>
+			                                    </div>
+			                                    <div class="table-cell"><input type="number" min="1" value="1" hidden disabled id="projectinput2" class="form-control ea" style="padding:0.1rem;width:3rem;"></div>
+			                                    <div class="table-cell" style="display:flex;justify-content:flex-end"><input type="text" disabled value="0" maxlength="7" id="projectinput2" class="form-control price" name="other_price" style="width:5rem;padding:0.1rem;text-align:right;display:inline"> 원</div>
+			                                </div>
+			                        </div>
+			                        <div class="table">
+				                        <div class="table-row">
+		                                    <div class="table-cell" style="text-align:right;background-color:rgb(179, 226, 255);font-weight:bold">계 :&nbsp;<span id="total">0</span>원(<span id="koreanTotal">0</span>원)</div>
+		                                </div>
+			                        </div>
 								</div>
 								<div id="date-group has-feedback">
 									<div class="form-group" style="margin-bottom:0" >

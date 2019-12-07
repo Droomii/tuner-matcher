@@ -96,6 +96,7 @@
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 								<div class="help-block with-errors"></div>
 								</div>
+							<%if(!user_type.equals("2")){ %>
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="temp_content">변경사유<span class="red">*</span></label>
@@ -108,10 +109,10 @@
 							<p class="card-text" style="color:crimson">
 							주의 : <%=user_type.equals("0") ? "조율사가" : "고객이"%> 거절할 경우 변경이 되지 않습니다.
 							</p>
-							
+							<%} %>
 							<div class="card-footer text-xs-center">
 								<a href="/deal/<%=user_type.equals("0") ? "User" : "Tuner" %>DealDetail.do?deal_seq=<%=deal_seq %>" class="button btn btn-info">뒤로 </a>
-								<button type="submit" class="button btn btn-success">변경 요청</button>
+								<button type="submit" class="button btn btn-success"><%=user_type.equals("2") ? "변경" : "변경 요청"%></button>
 							</div>
 						</form>
 					</div>
@@ -135,16 +136,18 @@
 			alert("변경일시를 선택해주세요.");
 			return false;
 		}
+		<%if(user_type.equals("2")){%>
 		if($("#temp_content").val().trim()==""){
 			alert("변경사유를 입력해주세요.")
 			return false;
 		}
-		
+		<%}%>
 		if(!confirm("날짜변경을 요청하시겠습니까?")){
 			return false;
 		}
-		
+		<%if(user_type.equals("2")){%>
 		$("#chg_reason").val(document.getElementById('temp_content').value.trim().replace(/\n/g, " "));
+		<%}%>
 	}
 	
 	</script>

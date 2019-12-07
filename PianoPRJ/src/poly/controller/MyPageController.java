@@ -16,8 +16,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import poly.dto.DealDTO;
+import poly.dto.FollowDTO;
 import poly.dto.RepuDTO;
 import poly.dto.ReviewDTO;
 import poly.dto.SggDTO;
@@ -258,6 +260,37 @@ public class MyPageController {
 		
 		log.info(this.getClass().getName() + ".FollowingList end");
 		return "/myPage/FollowingList";
+	}
+	
+	@RequestMapping(value = "FollowerList")
+	public String FollowerList(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model,
+			@RequestParam(defaultValue = "1")int page)
+			throws Exception {
+		log.info(this.getClass().getName() + ".FollowerList start");
+		
+		if (SessionUtil.verify(session, "1", model) != null) {
+			model = SessionUtil.verify(session, "1", model);
+			return "/redirect";
+		}
+		String user_seq = (String)session.getAttribute("user_seq");
+		
+		// 페이징
+		int listCnt = followService.getFollowerListCnt(user_seq);
+		Pagination pg = new Pagination(listCnt, page);
+
+		int start = pg.getStartIndex() + 1;
+		int end = pg.getStartIndex() + pg.getPageSize();
+		model.addAttribute("pg", pg);
+		
+		
+		List<FollowDTO> fList = followService.getFollowerList(user_seq, start, end); 
+		if(fList==null) {
+			fList = new ArrayList<FollowDTO>();
+		}
+		model.addAttribute("fList", fList);
+		
+		log.info(this.getClass().getName() + ".FollowerList end");
+		return "/myPage/FollowerList";
 	}
 	
 	@RequestMapping(value = "TunerSchedule")

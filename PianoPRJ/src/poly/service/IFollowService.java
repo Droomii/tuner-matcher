@@ -2,7 +2,9 @@ package poly.service;
 
 import java.util.List;
 
+import poly.dto.FollowDTO;
 import poly.dto.TunerDTO;
+import poly.dto.UserDTO;
 
 public interface IFollowService {
 
@@ -13,5 +15,9 @@ public interface IFollowService {
 	int removeFollow(String user_seq, String tuner_seq) throws Exception;
 
 	int verifyFollow(String tuner_seq, String user_seq) throws Exception;
+
+	List<FollowDTO> getFollowerList(String user_seq, int start, int end) throws Exception;
+
+	int getFollowerListCnt(String user_seq) throws Exception;
 
 }

@@ -59,4 +59,6 @@ public interface IDealService {
 
 	List<DealDTO> getDealList(int start, int end) throws Exception;
 
+	int updateDate(RescheduleDTO rDTO) throws Exception;
+
 }

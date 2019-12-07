@@ -155,7 +155,7 @@ public class DealController {
 
 	@RequestMapping(value="BidCancel")
 	public String BidCancel(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) throws Exception{
-		if(SessionUtil.verify(session, "0", model)==null) {
+		if(SessionUtil.verify(session, "[12]", model)!=null) {
 			model.addAttribute("msg", "비정상적인 접근입니다.");
 			model.addAttribute("url", "/index.do");
 			return "/redirect";
@@ -166,20 +166,26 @@ public class DealController {
 		String msg = "";
 		String url = "";
 		String what = "입찰 취소";
-		if(req_seq!=null) {
-			url = "/req/PrivateReqDetail.do?req_seq=" + req_seq;
-			what = "견적 삭제";
-		}else {
-			url =  "/deal/TunerBidList.do";
-		}
-		
-		if(res>0) {
-			msg = what + "에 성공했습니다";
-		}else {
-			msg = what + "에 실패했습니다";
+		String user_type = (String) session.getAttribute("user_type");
+		if (user_type.equals("2")) {
+			msg = "입착을 취소하였습니다.";
+			url = "/deal/AdminDealDetail.do?deal_seq="+ deal_seq;
+		} else {
+
+			if (req_seq != null) {
+				url = "/req/PrivateReqDetail.do?req_seq=" + req_seq;
+				what = "견적 삭제";
+			} else {
+				url = "/deal/TunerBidList.do";
+			}
+
+			if (res > 0) {
+				msg = what + "에 성공했습니다";
+			} else {
+				msg = what + "에 실패했습니다";
+			}
 		}
 		model.addAttribute("msg", msg);
-		String user_type = (String)session.getAttribute("user_type");
 		
 		model.addAttribute("url", url);
 		
@@ -584,17 +590,20 @@ public class DealController {
 		DealDTO dDTO = dealService.getDealDetail(deal_seq);
 		
 		// 정상적인 접근인지 확인
-		if(user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
-			log.info("user_type : " + user_type);
-			log.info("requester_seq : " + dDTO.getRequester_seq());
-		}else if(user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
-			log.info("user_type : " + user_type);
-			log.info("tuner_seq : " + dDTO.getTuner_seq());
-		}else{
-			model.addAttribute("url", "/index.do");
-			model.addAttribute("msg", "비정상적인 접근입니다.");
-			return "/redirect";
+		if (!user_type.equals("2")) {
+			if (user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
+				log.info("user_type : " + user_type);
+				log.info("requester_seq : " + dDTO.getRequester_seq());
+			} else if (user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
+				log.info("user_type : " + user_type);
+				log.info("tuner_seq : " + dDTO.getTuner_seq());
+			} else {
+				model.addAttribute("url", "/index.do");
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				return "/redirect";
+			}
 		}
+		
 		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
@@ -626,26 +635,44 @@ public class DealController {
 		
 		
 		// 정상적인 접근인지 확인
-		if(user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
-		}else if(user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
-		}else{
-			model.addAttribute("url", "/index.do");
-			model.addAttribute("msg", "비정상적인 접근입니다.");
-			return "/redirect";
-		}
-		
-		rDTO.setRequester_seq(user_seq);
 		int res = 0;
-		res = dealService.insertReschedule(rDTO);
 		String url = "";
 		String msg = "";
-		String userTypeName = user_type.equals("0") ? "User" : "Tuner"; 
-		if(res>0) {
-			msg = "일정 변경 요청을 하였습니다.";
-			url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+		
+		if(user_type.equals("2")) {
+			res = dealService.updateDate(rDTO);
+			url = "/deal/AdminDealDetail.do?deal_seq=" + deal_seq;
+			if(res>0) {
+				msg = "일시를 변경하였습니다.";
+			}else {
+				msg = "일시 변경에 실패했습니다";
+			}
 		}else {
-			msg = "일정 변경 요청에 실패했습니다";
-			url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+			if (user_type.equals("0") && user_seq.equals(dDTO.getRequester_seq())) {
+				log.info("user_type : " + user_type);
+				log.info("requester_seq : " + dDTO.getRequester_seq());
+			} else if (user_type.equals("1") && user_seq.equals(dDTO.getTuner_seq())) {
+				log.info("user_type : " + user_type);
+				log.info("tuner_seq : " + dDTO.getTuner_seq());
+			} else {
+				model.addAttribute("url", "/index.do");
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				return "/redirect";
+			}
+			
+			rDTO.setRequester_seq(user_seq);
+			
+			res = dealService.insertReschedule(rDTO);
+			
+			String userTypeName = user_type.equals("0") ? "User" : "Tuner"; 
+			if(res>0) {
+				msg = "일정 변경 요청을 하였습니다.";
+				url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+			}else {
+				msg = "일정 변경 요청에 실패했습니다";
+				url= String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+			}
+			
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

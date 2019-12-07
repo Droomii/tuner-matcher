@@ -36,6 +36,7 @@
                   <li><a href="/deal/TunerPastDeals.do" class="menu-item">과거 조율 내역</a></li>
                 </ul>
               </li>
+              <li><a href="/myPage/FollowerList.do" class="menu-item">단골 고객</a></li>
               <li><a href="/myPage/MyRepu.do" class="menu-item">내 평판 조회</a></li>
             </ul>
           </li>

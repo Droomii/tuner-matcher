@@ -272,6 +272,11 @@
 								<div style="border-color:rgb(150,150,150);padding:0.3rem 0.3rem 0.3rem 0.5rem;"class="border col-xs-9 desc"><span class="valign-middle"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</span></div>
 							</div>
 						</div>
+						<%if(deal_state.matches("[2]")){ %>
+						<div class="float-xs-right">
+						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 수정</button>
+						</div>
+						<%} %>
 					</div>
 					<div class="card-block">
 						<div style="height:600px">
@@ -325,6 +330,10 @@
 					<span>
 						<button onclick="dealConfirm();"class="button btn btn-success">거래 완료</button>
 					</span>
+					<%}else if(deal_state.equals("0")){ %>
+					<span>
+						<button onclick="bidCancel();"class="button btn btn-danger">입찰 취소 </button>
+					</span>
 					<%} %>
 				</div>
 		            </div>
@@ -343,7 +352,13 @@
 	<script type="text/javascript" src="/js/bytechecker.js"></script>
 	
 	<script type="text/javascript">
-	
+	<%if(deal_state.equals("0")){%>
+	function bidCancel(){
+		if(confirm("견적을 삭제하시겠습니까?")){
+			location.href="/deal/BidCancel.do?deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	<%}%>
 	
 	function suspendUser(){
 		if($("#temp_content").val().trim().length==0){

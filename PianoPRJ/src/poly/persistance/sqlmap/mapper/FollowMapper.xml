@@ -33,6 +33,38 @@
 			
 			)
 </select>
+<select id="getFollowerList" parameterType="String" resultType="FollowDTO">
+	SELECT * FROM
+		(SELECT
+			ROWNUM AS RN,
+			USER_NICK,
+			DEALS,
+			USER_SEQ,
+			ADD_DATE
+		FROM
+			(SELECT
+				U.USER_NICK,
+				(SELECT COUNT(1) FROM DEAL WHERE TUNER_SEQ=#{user_seq} AND DEAL_STATE=7) AS DEALS, 
+				F.USER_SEQ,
+				F.ADD_DATE
+			FROM USERINFO U, TUNER_FOLLOW F 
+			WHERE
+				F.TUNER_SEQ=#{user_seq}
+				AND U.USER_SEQ=F.USER_SEQ
+			ORDER BY
+				ADD_DATE DESC
+			)
+		)
+	WHERE RN BETWEEN #{start} AND #{end}
+</select>
+<select id="getFollowerListCnt" parameterType="String" resultType="Integer">
+	SELECT
+		COUNT(1)
+	FROM
+		TUNER_FOLLOW
+	WHERE
+		TUNER_SEQ=#{0}
+</select>
 <delete id="removeFollow" parameterType="String">
 	DELETE FROM TUNER_FOLLOW
 	WHERE USER_SEQ=#{0} AND TUNER_SEQ=#{1}

@@ -467,4 +467,12 @@ WHERE RN BETWEEN #{start} AND #{end}
 	FROM
 		DEAL
 </select>
+<update id="updateDate" parameterType="RescheduleDTO">
+	UPDATE
+		DEAL
+	SET
+		POSSIBLE_DATE=#{chg_date}
+	WHERE
+		DEAL_SEQ=#{deal_seq}
+</update>
 </mapper>

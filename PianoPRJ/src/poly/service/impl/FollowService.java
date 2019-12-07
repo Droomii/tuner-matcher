@@ -6,7 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import poly.dto.FollowDTO;
 import poly.dto.TunerDTO;
+import poly.dto.UserDTO;
 import poly.persistance.mapper.IFollowMapper;
 import poly.service.IFollowService;
 
@@ -33,6 +35,16 @@ public class FollowService implements IFollowService{
 	@Override
 	public int verifyFollow(String tuner_seq, String user_seq) throws Exception {
 		return followMapper.verifyFollow(tuner_seq, user_seq);
+	}
+
+	@Override
+	public List<FollowDTO> getFollowerList(String user_seq, int start, int end) throws Exception {
+		return followMapper.getFollowerList(user_seq, start, end);
+	}
+
+	@Override
+	public int getFollowerListCnt(String user_seq) throws Exception {
+		return followMapper.getFollowerListCnt(user_seq);
 	}
 
 }

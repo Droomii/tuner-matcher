@@ -248,7 +248,7 @@
 										<div class="text-muted hidden eval-items col-xs-8">기술 : <%=sat[Integer.parseInt(revDTO.getReview_tech())] %> | 시간 : <%=sat[Integer.parseInt(revDTO.getReview_punctual())] %> | 친절 : <%=sat[Integer.parseInt(revDTO.getReview_kindness())] %></div>
 										<%if(user_type.equals("2")){%>
 										<div class="hidden float-xs-right text-xs-right col-xs-4 deal-info">
-										<button class="btn-sm btn btn-success">거래 정보</button>
+										<button class="btn-sm btn btn-success" onclick="gotoDeal(<%=revDTO.getDeal_seq()%>)">거래 정보</button>
 										</div>
 										<%} %>
 										</div>
@@ -335,6 +335,9 @@
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript">
 	<%if(user_type.equals("2")){%>
+	function gotoDeal(deal_seq){
+		location.href = "/deal/AdminDealDetail.do?deal_seq=" + deal_seq + "&back=TunerDetail&tuner_seq=<%=tDTO.getTuner_seq()%>";
+	}
 	function suspendUser(){
 		if($("#temp_content").val().trim().length==0){
 			alert("정지 사유를 입력해주세요");
@@ -355,6 +358,7 @@
 			location.href = "/user/UserRecover.do?user_seq=<%=tDTO.getTuner_seq()%>&type=tuner"
 		}
 	}
+	
 	
 	<%}%>
 	<%}%>

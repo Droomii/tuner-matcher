@@ -283,6 +283,7 @@ public class NoticeController {
 		}
 		pDTO.setUpdater_seq((String)session.getAttribute("user_seq"));
 		
+		String notice_seq = pDTO.getNotice_seq();
 		log.info(this.getClass().getName() + ".NoticeUpdate start!");
 
 		String msg = "";
@@ -307,7 +308,7 @@ public class NoticeController {
 
 			// 결과 메시지 전달하기
 			model.addAttribute("msg", msg);
-			model.addAttribute("url", "/notice/NoticeList.do");
+			model.addAttribute("url", "/notice/NoticeInfo.do?notice_seq=" + notice_seq);
 
 		}
 

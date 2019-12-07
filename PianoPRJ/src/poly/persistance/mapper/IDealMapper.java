@@ -63,4 +63,6 @@ public interface IDealMapper {
 
 	List<DealDTO> getDealList(@Param("start") int start, @Param("end") int end) throws Exception;
 
+	int updateDate(RescheduleDTO rDTO) throws Exception;
+
 }

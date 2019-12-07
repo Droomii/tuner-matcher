@@ -147,4 +147,9 @@ public class DealService implements IDealService{
 		return dealMapper.getDealList(start, end);
 	}
 
+	@Override
+	public int updateDate(RescheduleDTO rDTO) throws Exception {
+		return dealMapper.updateDate(rDTO);
+	}
+
 }

@@ -17,6 +17,7 @@
 		back = "/req/UserPrivateReqList";
 	}
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
+	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -235,8 +236,8 @@
 			alert("이미 선택한 날짜입니다");
 			return;
 		}
-		var query = {date : elem.value};
-		console.log("date : " + elem.value);
+		var query = {date : elem.value,
+				sgg_code : <%=pDTO.getSgg_code()%>};
 		$.ajax({
 			url:"/req/GetHour.do",
 			type:"post",
@@ -254,7 +255,8 @@
 	var prefDates = "<%=rDTO.getPref_date()%>".split(",");
 	
 	function getInitHour(hour){
-		var query = {date : hour};
+		var query = {date : hour,
+				sgg_code : <%=pDTO.getSgg_code()%>};
 		$.ajax({
 			url:"/req/GetHour.do",
 			type:"post",

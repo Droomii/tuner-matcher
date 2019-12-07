@@ -1,7 +1,5 @@
 package poly.controller;
 
-import java.awt.Color;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.filters.Canvas;
-import net.coobird.thumbnailator.geometry.Positions;
 import poly.dto.DealDTO;
 import poly.dto.PianoDTO;
 import poly.dto.RepuDTO;
@@ -38,6 +33,7 @@ import poly.service.IReqService;
 import poly.service.IReviewService;
 import poly.service.ISggService;
 import poly.service.IUserService;
+import poly.service.IWeatherService;
 import poly.util.CmmUtil;
 import poly.util.FileUtil;
 import poly.util.Pagination;
@@ -71,6 +67,9 @@ public class ReqController {
 	@Resource(name = "ReviewService")
 	IReviewService reviewService;
 	
+	@Resource(name = "WeatherService")
+	IWeatherService weatherService;
+	
 	
 	private Logger log = Logger.getLogger(this.getClass());
 	
@@ -95,6 +94,9 @@ public class ReqController {
 	public String GetHour(HttpServletRequest request, ModelMap model) throws Exception{
 		String date = request.getParameter("date");
 		log.info("date : " + date);
+		String sgg_code = request.getParameter("sgg_code");
+		Map<String, String> weatherMap = weatherService.getWeather(sgg_code);
+		model.addAttribute("weatherMap", weatherMap);
 		model.addAttribute("date", date);
 		return "/req/GetHours";
 	}
@@ -212,6 +214,9 @@ public class ReqController {
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		log.info(prefDates);
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
+		Map<String, String> weatherMap = weatherService.getWeather(pDTO.getSgg_code());
+		
+		model.addAttribute("weatherMap", weatherMap);
 		model.addAttribute("pDTO", pDTO);
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("prefDates", prefDates);

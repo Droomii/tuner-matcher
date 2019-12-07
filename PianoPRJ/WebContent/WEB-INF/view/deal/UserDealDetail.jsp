@@ -128,6 +128,7 @@
 	
 	.table {
 	  display: table;
+	  border: 1px solid rgb(150,150,150);
 	}
 	.table-row {
 	  display: table-row;
@@ -135,13 +136,12 @@
 	.table-head-cell {
 		display: table-cell;
 		padding: 10px 20px 10px 20px;
-		border-bottom : 2px solid rgb(200,200,200);
-		border-top : 1px solid rgb(200,200,200);
+		border : 1px solid rgb(200,200,200);
 	}
 	.table-cell {
 	  display: table-cell;
 	  padding: 10px 20px 10px 20px;
-	  border-bottom: 1px solid lightgray;
+	  border: 1px solid lightgray;
 	}
 </style>
 
@@ -255,7 +255,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="card-block">
+					<div class="card-block" >
 						<div class="table mb-0">
                         <div class="table-row" style="background-color:rgb(220,220,220)">
                                 <div class="table-head-cell" style="text-align:center">품목</div>
@@ -279,7 +279,7 @@
                             <%} %>
                            
                     </div>
-                    <div class='table'>
+                    <div class='table' style="border-top:0">
                     <div class="table-row">
                                 <div class="table-cell" style="background-color:rgb(220,220,220);text-align:right"><strong>총합</strong></div>
                                 <div class="table-cell" style="width:10rem;text-align:right"><%=dDTO.getTotal() %> 원</div>
@@ -323,7 +323,7 @@
 						<%} %>
 						<%if(deal_state.matches("[2]")){ %>
 						<div class="float-xs-right">
-						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
+						<button class="button btn btn-sm btn-success" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
 						</div>
 						<%} %>
 					</div>

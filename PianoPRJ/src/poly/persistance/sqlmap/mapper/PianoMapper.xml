@@ -80,7 +80,8 @@
 		BRAND,
 		PIANO_TYPE,
 		LAST_TUNED_DATE,
-		DELETED
+		DELETED,
+		SGG_CODE
 	FROM PIANO
 	WHERE PIANO_SEQ=#{piano_seq}
 	<if test="user_seq!=null">

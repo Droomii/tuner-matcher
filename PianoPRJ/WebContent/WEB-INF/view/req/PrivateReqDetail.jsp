@@ -1,3 +1,4 @@
+<%@page import="java.util.Set"%>
 <%@page import="poly.util.FormatUtil"%>
 <%@page import="poly.dto.UserDTO"%>
 <%@page import="poly.dto.DealDTO"%>
@@ -24,7 +25,7 @@
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	Map<String, List<String>> prefDates = (Map<String, List<String>>)request.getAttribute("prefDates");
 	
-	
+	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
 	String tuner_name = uDTO.getUser_name();
 	
 	
@@ -337,7 +338,7 @@
 					</div>
 					<%}else if(rDTO.getReq_state().equals("0")){ %>
 					<div class="card-block pt-0">
-					<h4 class="card-text text-xs-center">- 조율사가 견적서를 등록하지 않았습니다 -</h4>
+					<h4 class="card-text text-xs-center">- 조율사가 견적을 등록하지 않았습니다 -</h4>
 					</div>
 					<%}else{ %>
 					<div class="card-block pt-0">
@@ -435,6 +436,7 @@
 									<label>희망일시<span class="red">*</span></label>
 									<div>
 									<%
+									Set<String> dateSet = weatherMap.keySet();
 									String ss = null;
 									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
 										ss = keyIter.next();
@@ -448,7 +450,12 @@
 									<div class="row">
 									<%for(String hour : hours){ %>
 										<div class="col-xs-3">
+										
+										<%if(dateSet.contains(ss + "h" + hour) && !weatherMap.get(ss + "h" + hour).equals("0")){%>
+										<label class="checkbox-inline" data-toggle="tooltip" data-placement="right" data-original-title="강수 확률 : <%=weatherMap.get(ss + "h" + hour)%>%"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00&nbsp;<i class="icon-rainy4" style="color:skyblue;"></i></label>
+										<%}else{ %>
 										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<%}%>
 										</div>
 									<%} %>
 									</div>
@@ -460,7 +467,7 @@
 		
 								<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 								<div class="help-block with-errors"></div>
-								</div>							
+								</div>				
 							</div>
 							
 							

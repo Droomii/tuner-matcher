@@ -211,14 +211,16 @@
 			alert("이미 선택한 날짜입니다");
 			return;
 		}
-		var query = {date : elem.value};
-		console.log("date : " + elem.value);
+		var query = {date : elem.value,
+				sgg_code : <%=pDTO.getSgg_code()%>};
 		$.ajax({
 			url:"/req/GetHour.do",
 			type:"post",
 			data:query,
 			success:function(data){
 				$("#hours").append(data);
+				$('[data-toggle="tooltip"]').tooltip();
+				
 			}
 		});
    	}

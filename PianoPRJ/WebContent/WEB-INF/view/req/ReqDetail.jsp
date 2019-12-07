@@ -1,3 +1,4 @@
+<%@page import="java.util.Set"%>
 <%@page import="poly.util.Pagination"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="poly.dto.DealDTO"%>
@@ -21,6 +22,9 @@
 	String proc = CmmUtil.nvl((String)session.getAttribute("proc"));
 	String back = proc.equals("public") ? "/req/" + userTypeName + "PublicReqList"
 										:"/req/" + userTypeName + "PrivateReqList";
+	
+	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
+	
 	if(user_type.equals("2")){
 		back = "/req/ReqList.do";
 	}
@@ -323,6 +327,7 @@
 									<label>희망일시<span class="red">*</span></label>
 									<div>
 									<%
+									Set<String> dateSet = weatherMap.keySet();
 									String ss = null;
 									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
 										ss = keyIter.next();
@@ -336,7 +341,12 @@
 									<div class="row">
 									<%for(String hour : hours){ %>
 										<div class="col-xs-3">
+										
+										<%if(dateSet.contains(ss + "h" + hour) && !weatherMap.get(ss + "h" + hour).equals("0")){%>
+										<label class="checkbox-inline" data-toggle="tooltip" data-placement="right" data-original-title="강수 확률 : <%=weatherMap.get(ss + "h" + hour)%>%"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00&nbsp;<i class="icon-rainy4" style="color:skyblue;"></i></label>
+										<%}else{ %>
 										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<%}%>
 										</div>
 									<%} %>
 									</div>

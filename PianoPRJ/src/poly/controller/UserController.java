@@ -619,7 +619,7 @@ public class UserController {
 		int user_state = (int) session.getAttribute("user_state");
 		log.info("user_state : " + user_state);
 		if(user_state==2){
-			uDTO.setUser_state(1);
+			uDTO.setUser_state(5);
 			tDTO.setReject_reason("x");
 		}
 		

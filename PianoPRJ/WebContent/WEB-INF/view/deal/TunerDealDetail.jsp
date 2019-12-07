@@ -321,7 +321,7 @@
 						<%} %>
 						<%if(deal_state.matches("[2]")){ %>
 						<div class="float-xs-right">
-						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
+						<button class="button btn btn-sm btn-success" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
 						</div>
 						<%} %>
 					</div>

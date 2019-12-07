@@ -1,3 +1,4 @@
+<%@page import="java.util.Set"%>
 <%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.LinkedHashMap"%>
@@ -20,6 +21,7 @@
 	String[] weekdays = {"일", "월", "화", "수", "목", "금", "토"}; 
 	String deal_seq = (String)request.getAttribute("deal_seq");
 	String prev_date = (String)request.getAttribute("prev_date");
+	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
 	
 %>
 <!DOCTYPE html>
@@ -72,6 +74,7 @@
 									<label>희망일시<span class="red">*</span></label>
 									<div>
 									<%
+									Set<String> dateSet = weatherMap.keySet();
 									String ss = null;
 									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
 										ss = keyIter.next();
@@ -85,7 +88,12 @@
 									<div class="row">
 									<%for(String hour : hours){ %>
 										<div class="col-xs-3">
-										<label class="checkbox-inline"><input type="radio" name="chg_date" class="pref-hour" value="<%=ss %>h<%=hour%>" <%=String.format("%sh%s", ss, hour).equals(prev_date) ? "disabled" : ""%>><%=hour %>:00</label>
+										
+										<%if(dateSet.contains(ss + "h" + hour) && !weatherMap.get(ss + "h" + hour).equals("0")){%>
+										<label class="checkbox-inline" data-toggle="tooltip" data-placement="right" data-original-title="강수 확률 : <%=weatherMap.get(ss + "h" + hour)%>%"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00&nbsp;<i class="icon-rainy4" style="color:skyblue;"></i></label>
+										<%}else{ %>
+										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<%}%>
 										</div>
 									<%} %>
 									</div>

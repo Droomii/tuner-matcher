@@ -235,7 +235,7 @@
 		<if test="password!=null">
 		PASSWORD=#{password},
 		</if>
-		<if test="user_state!=null">
+		<if test="user_state==5">
 		USER_STATE=0,
 		</if>
 		USER_NICK=#{user_nick},

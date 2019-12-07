@@ -27,6 +27,7 @@ import poly.service.IPianoService;
 import poly.service.IReqService;
 import poly.service.IReviewService;
 import poly.service.IUserService;
+import poly.service.IWeatherService;
 import poly.util.CmmUtil;
 import poly.util.Pagination;
 import poly.util.SessionUtil;
@@ -51,6 +52,9 @@ public class DealController {
 	
 	@Resource(name="ReviewService")
 	private IReviewService reviewService;
+	
+	@Resource(name = "WeatherService")
+	IWeatherService weatherService;
 	
 	@RequestMapping(value = "PlaceBid")
 	public String PlaceBid(HttpServletRequest request, ModelMap model, HttpSession session, @ModelAttribute DealDTO dDTO) throws Exception {
@@ -619,6 +623,11 @@ public class DealController {
 		
 		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
+		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
+		
+		Map<String, String> weatherMap = weatherService.getWeather(pDTO.getSgg_code());
+		model.addAttribute("weatherMap", weatherMap);
+		
 		Map<String, List<String>> prefDates = reqService.parseDates(rDTO.getPref_date());
 		model.addAttribute("rDTO", rDTO);
 		model.addAttribute("prefDates", prefDates);

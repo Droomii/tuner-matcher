@@ -96,9 +96,35 @@
    	table, th, td{
    		border:2px solid rgb(150,150,150);
    	}
+   	
    	.checked{
    		color:orange;
    	}
+   	.title{
+		max-width: 40%;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+	    
+	}
+	
+	.table {
+	  display: table;
+	}
+	.table-row {
+	  display: table-row;
+	}
+	.table-head-cell {
+		display: table-cell;
+		padding: 10px 20px 10px 20px;
+		border-bottom : 2px solid rgb(200,200,200);
+		border-top : 1px solid rgb(200,200,200);
+	}
+	.table-cell {
+	  display: table-cell;
+	  padding: 10px 20px 10px 20px;
+	  border-bottom: 1px solid lightgray;
+	}
 </style>
 
 

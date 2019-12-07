@@ -217,7 +217,8 @@ SELECT * FROM
 			WHEN (DEAL_SEQ=#{0}) THEN 2
 			WHEN (DEAL_SEQ&lt;&gt;#{0} AND DEAL_STATE=0) THEN 3
 			ELSE DEAL_STATE
-		END
+		END,
+		UPDDATE = SYSDATE
 	WHERE REQ_SEQ=#{1} AND REQUESTER_SEQ=#{2}
 </update>
 <update id="declineDeal" parameterType="String">

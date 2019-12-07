@@ -244,6 +244,7 @@
 			data:query,
 			success:function(data){
 				$("#hours").append(data);
+				$('[data-toggle="tooltip"]').tooltip();
 			}
 		});
    	}
@@ -253,6 +254,11 @@
 	var days = "<%=prefDates.keySet().toString().replaceAll(" ", "").replaceAll("[\\[\\]]", "")%>".split(",");
 	// 날짜 + 시간까지 (0000-00-00h00)
 	var prefDates = "<%=rDTO.getPref_date()%>".split(",");
+	
+	var tomorrow = new Date();
+	tomorrow.setDate(tomorrow.getDate() + 1);
+	
+	document.getElementById("date").setAttribute('min', tomorrow.toISOString().split('T')[0]);
 	
 	function getInitHour(hour){
 		var query = {date : hour,
@@ -269,7 +275,7 @@
 						dateCheckBox[i].click();
 					}
 				}
-			
+				$('[data-toggle="tooltip"]').tooltip();
 				
 			}
 		});

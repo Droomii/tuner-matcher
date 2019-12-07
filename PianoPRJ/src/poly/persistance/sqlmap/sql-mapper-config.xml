@@ -19,5 +19,6 @@
 		<typeAlias type="poly.dto.RescheduleDTO" alias="RescheduleDTO"/>
 		<typeAlias type="poly.dto.MainDTO" alias="MainDTO"/>
 		<typeAlias type="poly.dto.FollowDTO" alias="FollowDTO"/>
+		<typeAlias type="poly.dto.PriceDTO" alias="PriceDTO"/>
     </typeAliases>
 </configuration>

@@ -1,3 +1,4 @@
+<%@page import="poly.dto.RescheduleDTO"%>
 <%@page import="poly.dto.ReviewDTO"%>
 <%@page import="poly.util.FormatUtil"%>
 <%@page import="poly.dto.UserDTO"%>
@@ -24,7 +25,7 @@
 	back = back==null ? "/deal/TunerDealList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	ReviewDTO revDTO = (ReviewDTO)request.getAttribute("revDTO");
-	
+	RescheduleDTO resDTO = (RescheduleDTO)request.getAttribute("resDTO");
 	
 	String deal_state = dDTO.getDeal_state();
 	
@@ -39,6 +40,21 @@
 	c.setTime(d);
 	int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 	String weekday = weekdays[dayOfWeek-1];
+	
+	String changeDate = null;
+	Date chgDate = null;
+	Calendar chgCal = null;
+	int chgDayOfWeek;
+	String chgWeekday = null;
+	
+	if(resDTO!=null){
+		changeDate = resDTO.getChg_date();
+		chgDate = new SimpleDateFormat("yyyy-M-dd").parse(changeDate.split("h")[0]);
+		chgCal = Calendar.getInstance();
+		chgCal.setTime(chgDate);
+		chgDayOfWeek = chgCal.get(Calendar.DAY_OF_WEEK);
+		chgWeekday = weekdays[chgDayOfWeek-1];
+	}
 	
 	
 	int itemLen = 0;
@@ -277,9 +293,32 @@
 							</div>
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc">
+								<%if(dDTO.getDeal_state().equals("10")){%>
+								<strong style="color:red"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00 → <%=changeDate.split("h")[0] %>(<%=chgWeekday %>) <%=changeDate.split("h")[1] %>:00</strong>
+								<%}else{ %>
+								<%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00
+								<%} %>
+								</div>
 							</div>
+							<%if(dDTO.getDeal_state().equals("10")){%>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">변경사유</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(resDTO.getChg_reason()) %></div>
+							</div>
+							
+							<%} %>
 						</div>
+						<%if(dDTO.getDeal_state().equals("10") && !resDTO.getRequester_seq().equals(user_seq)){%>
+						<div class="row text-xs-center">
+								<span>
+							<button onclick="declineChange();" class="button btn btn-sm btn-danger">거절 </button>
+							</span>
+							<span>
+								<button onclick="acceptChange();" class="button btn btn-sm btn-success">수락</button>
+							</span>
+							</div>
+						<%} %>
 						<%if(deal_state.matches("[2]")){ %>
 						<div class="float-xs-right">
 						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
@@ -335,7 +374,7 @@
 					<span>
 						<a href="<%=back %>" class="button btn btn-info">뒤로 </a>
 					</span>
-					<%if(deal_state.matches("[26]")){ %>
+					<%if(deal_state.matches("[26]|10")){ %>
 					<%if(deal_state.equals("6")){ %>
 					<span>
 						<button class="button btn btn-success" disabled>완료 대기중</button>
@@ -364,6 +403,21 @@
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript">
+	
+	<%if(dDTO.getDeal_state().equals("10") && !resDTO.getRequester_seq().equals(user_seq)){%>
+	function acceptChange(){
+		if(confirm("일정 변경을 수락하시겠습니까?")){
+			location.href = "/deal/RescheduleResponse.do?resp=1&deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	function declineChange(){
+		if(confirm("일정 변경을 거절하시겠습니까?")){
+			location.href = "/deal/RescheduleResponse.do?resp=2&deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	<%}%>
+	
+	
 	
 	
 	<%if(user_type.equals("0") && revDTO != null){ %>

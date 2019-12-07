@@ -61,6 +61,10 @@ public interface IDealService {
 
 	int updateDate(RescheduleDTO rDTO) throws Exception;
 
-	void setDealState(String deal_seq, String string) throws Exception;
+	int setDealState(String deal_seq, String string) throws Exception;
+
+	RescheduleDTO getRescheduleInfo(String deal_seq) throws Exception;
+
+	int rescheduleRespond(RescheduleDTO resDTO, String resp) throws Exception;
 
 }

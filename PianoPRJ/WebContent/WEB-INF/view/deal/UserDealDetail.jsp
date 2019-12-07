@@ -1,3 +1,4 @@
+<%@page import="poly.dto.RescheduleDTO"%>
 <%@page import="poly.dto.ReviewDTO"%>
 <%@page import="poly.util.FormatUtil"%>
 <%@page import="poly.dto.UserDTO"%>
@@ -25,6 +26,8 @@
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	ReviewDTO revDTO = (ReviewDTO)request.getAttribute("revDTO");
 	
+	RescheduleDTO resDTO = (RescheduleDTO)request.getAttribute("resDTO");
+	
 	
 	String deal_state = dDTO.getDeal_state();
 	
@@ -39,6 +42,21 @@
 	c.setTime(d);
 	int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
 	String weekday = weekdays[dayOfWeek-1];
+	
+	String changeDate = null;
+	Date chgDate = null;
+	Calendar chgCal = null;
+	int chgDayOfWeek;
+	String chgWeekday = null;
+	
+	if(resDTO!=null){
+		changeDate = resDTO.getChg_date();
+		chgDate = new SimpleDateFormat("yyyy-M-dd").parse(changeDate.split("h")[0]);
+		chgCal = Calendar.getInstance();
+		chgCal.setTime(chgDate);
+		chgDayOfWeek = chgCal.get(Calendar.DAY_OF_WEEK);
+		chgWeekday = weekdays[chgDayOfWeek-1];
+	}
 	
 	
 	int itemLen = 0;
@@ -273,16 +291,39 @@
 						<div class="col-xs-12 border" style="border-color:rgb(150,150,150);">
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">주소</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr(), true) %></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(pDTO.getAddr()) %></div>
 							</div>
 							<div class="row" style="display:flex;">
 								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">희망일시</div></div>
-								<div style="border-color:rgb(150,150,150);padding:0.3rem 0.3rem 0.3rem 0.5rem;"class="border col-xs-9 desc"><span class="valign-middle"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00</span></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc">
+								<%if(dDTO.getDeal_state().equals("10")){%>
+								<strong style="color:red"><%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00 → <%=changeDate.split("h")[0] %>(<%=chgWeekday %>) <%=changeDate.split("h")[1] %>:00</strong>
+								<%}else{ %>
+								<%=date.split("h")[0] %>(<%=weekday %>) <%=date.split("h")[1] %>:00
+								<%} %>
+								</div>
 							</div>
+							<%if(dDTO.getDeal_state().equals("10")){%>
+							<div class="row" style="display:flex;">
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;display:flex" class="border col-xs-3 text-xs-left text-sm-center text-bold-700" ><div style="margin:auto">변경사유</div></div>
+								<div style="border-color:rgb(150,150,150);padding:0.5rem;"class="border col-xs-9 desc"><%=CmmUtil.nvl(resDTO.getChg_reason()) %></div>
+							</div>
+							
+							<%} %>
 						</div>
+						<%if(dDTO.getDeal_state().equals("10") && !resDTO.getRequester_seq().equals(user_seq)){%>
+						<div class="row text-xs-center">
+								<span>
+							<button onclick="declineChange();" class="button btn btn-sm btn-danger">거절 </button>
+							</span>
+							<span>
+								<button onclick="acceptChange();" class="button btn btn-sm btn-success">수락</button>
+							</span>
+							</div>
+						<%} %>
 						<%if(deal_state.matches("[2]")){ %>
 						<div class="float-xs-right">
-						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 수정</button>
+						<button class="button btn btn-sm btn-info" onclick="location.href='/deal/Reschedule.do?deal_seq=<%=dDTO.getDeal_seq()%>'">날짜 변경 요청</button>
 						</div>
 						<%} %>
 					</div>
@@ -393,7 +434,7 @@
 					<span>
 						<a href="/deal/UserDealList.do" class="button btn btn-info">뒤로 </a>
 					</span>
-					<%if(deal_state.matches("[26]")){ %>
+					<%if(deal_state.matches("[26]|10")){ %>
 					<span>
 						<button onclick="dealCancel();"class="button btn btn-danger">거래 취소 </button>
 					</span>
@@ -419,7 +460,18 @@
 	
 	<script type="text/javascript">
 	
-	
+	<%if(dDTO.getDeal_state().equals("10") && !resDTO.getRequester_seq().equals(user_seq)){%>
+	function acceptChange(){
+		if(confirm("일정 변경을 수락하시겠습니까?")){
+			location.href = "/deal/RescheduleResponse.do?resp=1&deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	function declineChange(){
+		if(confirm("일정 변경을 거절하시겠습니까?")){
+			location.href = "/deal/RescheduleResponse.do?resp=2&deal_seq=<%=dDTO.getDeal_seq()%>";
+		}
+	}
+	<%}%>
 	
 	
 	window.onload = function(){

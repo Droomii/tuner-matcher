@@ -280,6 +280,13 @@ public class DealController {
 			return "/redirect";
 		}
 		
+		RescheduleDTO resDTO = null;
+		if(dDTO.getDeal_state().equals("10")) {
+			resDTO = dealService.getRescheduleInfo(deal_seq);
+			model.addAttribute("resDTO", resDTO);
+		}
+		
+		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
 		PianoDTO pDTO = pianoService.getPianoDetail(rDTO.getPiano_seq(), null);
 		UserDTO uDTO = userService.getUserInfo(dDTO.getRequester_seq());
@@ -461,6 +468,12 @@ public class DealController {
 			model.addAttribute("msg", "비정상적인 접근입니다.");
 			model.addAttribute("url", "/index.do");
 			return "/redirect";
+		}
+		
+		RescheduleDTO resDTO = null;
+		if(dDTO.getDeal_state().equals("10")) {
+			resDTO = dealService.getRescheduleInfo(deal_seq);
+			model.addAttribute("resDTO", resDTO);
 		}
 		
 		ReqDTO rDTO = reqService.getReqDetail(dDTO.getReq_seq());
@@ -769,6 +782,82 @@ public class DealController {
 		log.info(this.getClass().getName() + ".DealList end");
 		return "/deal/DealList";
 	}
-	
+
+	@RequestMapping(value = "RescheduleResponse")
+	public String RescheduleResponse(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".RescheduleResponse start");
+		if (SessionUtil.verify(session, "[01]", model) != null) {
+			model = SessionUtil.verify(session, "[01]", model);
+			return "/redirect";
+		}
+		
+		String user_seq = (String) session.getAttribute("user_seq");
+		String user_type = (String) session.getAttribute("user_type");
+		String userTypeName = user_type.equals("0") ? "User" : "Tuner";
+		
+		String resp = request.getParameter("resp");
+		String respKor = resp.equals("1") ? "수락" : "거절";
+		
+		String deal_seq = request.getParameter("deal_seq");
+		
+		RescheduleDTO resDTO = dealService.getRescheduleInfo(deal_seq);
+		
+		if(resDTO==null) {
+			log.info("invalid 1");
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		DealDTO dDTO = dealService.getDealDetail(deal_seq);
+		
+		if(resDTO.getRequester_type().equals(user_type)) {
+			log.info("invalid 2");
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		if(user_type.equals("0")) {
+			if(!dDTO.getRequester_seq().equals(user_seq)) {
+				log.info("invalid 3");
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+		}else {
+			if(!dDTO.getTuner_seq().equals(user_seq)) {
+				log.info("invalid 4");
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+		}
+		
+		
+		int res = 0;
+		String msg = "";
+		String url = String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeName, deal_seq);
+		
+		try {
+			res = dealService.rescheduleRespond(resDTO, resp);
+		} catch (Exception e) {
+			log.info(e.toString());
+		}
+		
+		if(res>0) {
+			msg = "일정 변경 요청을 " +respKor + "하였습니다";
+		}else {
+			msg = "일정 변경 요청 " +respKor + "에 실패하였습니다";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		
+		log.info(this.getClass().getName() + ".RescheduleResponse end");
+		return "/redirect";
+	}
 	
 }

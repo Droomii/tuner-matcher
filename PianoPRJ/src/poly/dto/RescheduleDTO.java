@@ -12,6 +12,16 @@ public class RescheduleDTO {
 	private String upddate;
 	private String updater_seq;
 	private String req_seq;
+	private String requester_type;
+	
+	
+	
+	public String getRequester_type() {
+		return requester_type;
+	}
+	public void setRequester_type(String requester_type) {
+		this.requester_type = requester_type;
+	}
 	public String getReschedule_seq() {
 		return reschedule_seq;
 	}

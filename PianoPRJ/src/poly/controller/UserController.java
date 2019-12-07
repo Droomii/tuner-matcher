@@ -617,6 +617,7 @@ public class UserController {
 		tDTO.setTuner_seq(user_seq);
 		
 		int user_state = (int) session.getAttribute("user_state");
+		log.info("user_state : " + user_state);
 		if(user_state==2){
 			uDTO.setUser_state(1);
 			tDTO.setReject_reason("x");

@@ -65,6 +65,10 @@ public interface IDealMapper {
 
 	int updateDate(RescheduleDTO rDTO) throws Exception;
 
-	Object setDealState(String deal_seq, String string) throws Exception;
+	int setDealState(String deal_seq, String string) throws Exception;
+
+	RescheduleDTO getRescheduleInfo(String deal_seq) throws Exception;
+
+	int rescheduleRespond(String reschedule_seq, String resp) throws Exception;
 
 }

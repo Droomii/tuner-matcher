@@ -327,10 +327,11 @@ public class ReqController {
 		
 		rDTO.setUpdater_seq(current_user);
 		
+		String writer_seq = reqService.getReqDetail(rDTO.getReq_seq()).getUser_seq();
 		
 		String user_type = (String) session.getAttribute("user_type");
 		if(!user_type.equals("2")) {
-			if(!rDTO.getUser_seq().equals(current_user)) {
+			if(!writer_seq.equals(current_user)) {
 				model.addAttribute("msg", "비정상적인 접근입니다.");
 				model.addAttribute("url", "/index.do");
 				return "/redirect";

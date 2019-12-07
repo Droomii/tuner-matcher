@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import poly.dto.DealDTO;
+import poly.dto.ReqDTO;
 import poly.dto.RescheduleDTO;
 import poly.persistance.mapper.IDealMapper;
 import poly.service.IDealService;
@@ -14,6 +16,9 @@ import poly.service.IDealService;
 @Service("DealService")
 public class DealService implements IDealService{
 
+	Logger log = Logger.getLogger(this.getClass());
+	
+	
 	@Resource(name="DealMapper")
 	IDealMapper dealMapper;
 	
@@ -153,8 +158,44 @@ public class DealService implements IDealService{
 	}
 
 	@Override
-	public void setDealState(String deal_seq, String string) throws Exception {
-		dealMapper.setDealState(deal_seq, string);
+	public int setDealState(String deal_seq, String string) throws Exception {
+		return dealMapper.setDealState(deal_seq, string);
+	}
+
+	@Override
+	public RescheduleDTO getRescheduleInfo(String deal_seq) throws Exception {
+		return dealMapper.getRescheduleInfo(deal_seq);
+	}
+
+	@Override
+	public int rescheduleRespond(RescheduleDTO resDTO, String resp) throws Exception {
+		if(resp.equals("2")) {
+			
+			int res = 0;
+			try {
+				res += dealMapper.setDealState(resDTO.getDeal_seq(), "2");
+				res += dealMapper.rescheduleRespond(resDTO.getReschedule_seq(), resp);
+			} catch (Exception e) {
+				log.info(e.toString());
+			}
+			return res/2;
+			
+		}else if(resp.equals("1")){
+
+			int res = 0;
+			
+			try {
+				res += dealMapper.setDealState(resDTO.getDeal_seq(), "2");
+				res += dealMapper.rescheduleRespond(resDTO.getReschedule_seq(), resp);
+				res += dealMapper.updateDate(resDTO);
+			} catch (Exception e) {
+				log.info(e.toString());
+			}
+			return res/3;
+			
+		}else {
+			return 0;
+		}
 	}
 
 }

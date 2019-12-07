@@ -103,7 +103,7 @@
 											<div class="table-cell"><%=dDTO.getTotal()%>원
 											</div>
 											<div class="table-cell"><%=dDTO.getFullDate()%></div>
-											<div class="table-cell"><%=dDTO.getDeal_state().equals("2") ? "진행중" : "완료대기중"%></div>
+											<div class="table-cell"><%=dDTO.getDeal_state().equals("2") ? "진행중" : dDTO.getDeal_state().equals("10") ? "날짜변경요청" : "완료대기중"%></div>
 										</div>
 										<%
 											}

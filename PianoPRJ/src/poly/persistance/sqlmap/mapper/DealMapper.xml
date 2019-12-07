@@ -290,14 +290,14 @@ SELECT * FROM
 		FROM
 			DEAL
 		WHERE TUNER_SEQ=#{user_seq}
-		AND DEAL_STATE IN(2, 6)
+		AND DEAL_STATE IN(2, 6, 10)
 		ORDER BY POSSIBLE_DATE DESC))
 WHERE RN BETWEEN #{start} AND #{end}
 </select>
 <select id="getTunerDealListCnt" parameterType="String" resultType="Integer">
 SELECT COUNT(1) FROM DEAL
 	WHERE TUNER_SEQ=#{0}
-	AND DEAL_STATE IN(2, 6)
+	AND DEAL_STATE IN(2, 6, 10)
 </select>
 <update id="dealCancel">
 	UPDATE DEAL SET
@@ -369,7 +369,7 @@ SELECT COUNT(1) FROM DEAL
 	FROM
 		DEAL
 	WHERE TUNER_SEQ=#{tuner_seq}
-	AND DEAL_STATE=2
+	AND DEAL_STATE IN (2,10)
 	AND SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
 	ORDER BY POSSIBLE_DATE
 ]]>
@@ -394,7 +394,7 @@ SELECT COUNT(1) FROM DEAL
 	FROM
 		DEAL
 	WHERE REQUESTER_SEQ=#{user_seq}
-	AND DEAL_STATE=2
+	AND DEAL_STATE IN (2,10)
 	AND SUBSTR(POSSIBLE_DATE, 1, 10) >= #{today}
 	ORDER BY POSSIBLE_DATE
 ]]>
@@ -429,7 +429,7 @@ SELECT COUNT(1) FROM DEAL
 	FROM
 		DEAL
 	WHERE TUNER_SEQ=#{0}
-	AND DEAL_STATE IN(2, 6)
+	AND DEAL_STATE IN(2, 6, 10)
 	AND SUBSTR(POSSIBLE_DATE, 1, 10)=#{1}
 	ORDER BY POSSIBLE_DATE
 </select>
@@ -483,5 +483,27 @@ WHERE RN BETWEEN #{start} AND #{end}
 		DEAL_STATE=#{1}
 	WHERE
 		DEAL_SEQ=#{0}
+</update>
+<select id="getRescheduleInfo" parameterType="String" resultType="RescheduleDTO">
+	SELECT
+		RESCHEDULE_SEQ,
+		DEAL_SEQ,
+		REQUESTER_SEQ,
+		CHG_DATE,
+		CHG_REASON,
+		REQUESTER_TYPE
+	FROM
+		RESCHEDULE
+	WHERE
+		REQ_STATE=0
+		AND DEAL_SEQ=#{0}
+</select>
+<update id="rescheduleRespond" parameterType="String">
+	UPDATE
+		RESCHEDULE
+	SET
+		REQ_STATE=#{1}
+	WHERE
+		RESCHEDULE_SEQ=#{0}
 </update>
 </mapper>

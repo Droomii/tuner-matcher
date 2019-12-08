@@ -341,14 +341,16 @@ SELECT COUNT(1) FROM DEAL
 		REQUESTER_SEQ,
 		CHG_DATE,
 		CHG_REASON,
-		UPDATER_SEQ
+		UPDATER_SEQ,
+		REQUESTER_TYPE
 	)VALUES(
 		RESCHEDULE_SEQ.NEXTVAL,
 		#{deal_seq},
 		#{requester_seq},
 		#{chg_date},
 		#{chg_reason},
-		#{requester_seq}
+		#{requester_seq},
+		#{requester_type}
 	)
 </insert>
 <select id="getUpcomingDeals" parameterType="String" resultType="DealDTO">

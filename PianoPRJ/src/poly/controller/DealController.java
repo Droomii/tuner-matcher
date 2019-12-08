@@ -367,7 +367,7 @@ public class DealController {
 		String msg = "";
 		if(res>0) {
 			msg = "거래를 완료하였습니다";
-			url="/deal/TunerDealList.do";
+			url="/deal/TunerDealDetail.do?deal_seq=" + deal_seq;
 		}else {
 			msg = "거래 완료에 실패했습니다";
 			url="/deal/TunerDealDetail.do?deal_seq=" + deal_seq;
@@ -485,6 +485,9 @@ public class DealController {
 		UserDTO uDTO = userService.getUserInfo(dDTO.getTuner_seq());
 		ReviewDTO revDTO = reviewService.getDealReview(deal_seq);
 		
+		String scrollDown = request.getParameter("scrollDown");
+		model.addAttribute("scrollDown", scrollDown);
+		
 		model.addAttribute("revDTO", revDTO);
 		model.addAttribute("uDTO", uDTO);
 		model.addAttribute("dDTO", dDTO);
@@ -543,8 +546,8 @@ public class DealController {
 		String url = "";
 		String msg = "";
 		if(res>0) {
-			msg = "거래를 완료하였습니다";
-			url="/deal/UserDealList.do";
+			msg = "거래를 완료하였습니다. 리뷰 등록은 서비스 품질 향상에 도움이 됩니다.";
+			url="/deal/UserDealDetail.do?deal_seq=" + deal_seq + "&scrollDown=1";
 		}else {
 			msg = "거래 완료에 실패했습니다";
 			url="/deal/UserDealDetail.do?deal_seq=" + deal_seq;
@@ -683,6 +686,7 @@ public class DealController {
 			}
 			
 			rDTO.setRequester_seq(user_seq);
+			rDTO.setRequester_type(user_type);
 			
 			res = 0;
 			

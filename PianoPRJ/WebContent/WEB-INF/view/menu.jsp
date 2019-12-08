@@ -100,7 +100,7 @@
               </li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="#"><i class="icon-file-text2"></i><span data-i18n="nav.menu_levels.main" class="menu-title">게시판 관리</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-file-text2"></i><span data-i18n="nav.menu_levels.main" class="menu-title">게시글 관리</span></a>
             <ul class="menu-content">
               <li><a href="/notice/NoticeList.do" class="menu-item">공지사항 관리</a>
               </li>

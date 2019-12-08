@@ -1,3 +1,5 @@
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Set"%>
 <%@page import="poly.dto.DealDTO"%>
 <%@page import="java.util.Iterator"%>
@@ -76,7 +78,9 @@
 									<%
 									Set<String> dateSet = weatherMap.keySet();
 									String ss = null;
-									for(Iterator<String> keyIter = prefDates.keySet().iterator();keyIter.hasNext();){
+									List<String> keyList = new ArrayList<>(prefDates.keySet());
+									Collections.sort(keyList);
+									for(Iterator<String> keyIter = keyList.iterator();keyIter.hasNext();){
 										ss = keyIter.next();
 										List<String> hours = prefDates.get(ss);
 										Date d = new SimpleDateFormat("yyyy-M-dd").parse(ss);

@@ -25,6 +25,7 @@
 	back = back==null ? "/deal/TunerBidList.do" : back;
 	UserDTO uDTO = (UserDTO)request.getAttribute("uDTO");
 	ReviewDTO revDTO = (ReviewDTO)request.getAttribute("revDTO");
+	String scrollDown = (String)request.getAttribute("scrollDown");
 	
 	RescheduleDTO resDTO = (RescheduleDTO)request.getAttribute("resDTO");
 	
@@ -488,6 +489,9 @@
 				}
 			}
 		});
+		<%if(scrollDown!=null){%>
+		$('html, body').animate({scrollTop:$(document).height()}, 'slow');
+		<%}%>
 		
 	}
 	

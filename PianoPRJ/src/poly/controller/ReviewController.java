@@ -109,6 +109,8 @@ public class ReviewController {
 			model = SessionUtil.verify(session, "[02]", model);
 			return "/redirect";
 		}
+		
+		String userTypeEng = user_type.equals("0") ? "User" : "Admin";
 		String msg = "";
 		String deal_seq = request.getParameter("deal_seq");
 		
@@ -129,7 +131,7 @@ public class ReviewController {
 			log.info(e.toString());
 			msg = "잘못된 접근입니다.";
 		}
-		String url = String.format("/deal/AdminDealDetail.do?deal_seq=%s", deal_seq);
+		String url = String.format("/deal/%sDealDetail.do?deal_seq=%s", userTypeEng, deal_seq);
 		
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);

@@ -11,10 +11,14 @@
 <%
 	PianoDTO pDTO = (PianoDTO)request.getAttribute("pDTO");
 	String proc = (String)request.getAttribute("proc");
-	String back = "/req/User"+proc+"ReqList";
+	String back = "/req/User"+proc+"ReqList.do";
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
+	
 	if(rDTO.getPrivate_seq()!=null){
-		back = "/req/UserPrivateReqList";
+		back = "/req/UserPrivateReqList.do";
+	}
+	if(user_type.equals("2")){
+		back = "/req/ReqDetail.do?req_seq=" + rDTO.getReq_seq();
 	}
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");
 	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
@@ -128,7 +132,7 @@
 				</form>
 				<div class="card-footer text-xs-center">
 					<span>
-						<a href="<%=back %>.do" class="button btn btn-sm btn-info">뒤로 </a>
+						<a href="<%=back %>" class="button btn btn-sm btn-info">뒤로 </a>
 						
 					</span>
 				</div>
@@ -183,7 +187,7 @@
 								</div>
 							
 							<div class="form-actions">
-								<button onclick="location.href='<%=back %>.do'" type="button" class="btn btn-warning mr-1">
+								<button onclick="location.href='<%=back %>'" type="button" class="btn btn-warning mr-1">
 									<i class="icon-cross2"></i> 취소
 								</button>
 								<button type="submit" class="btn btn-primary">

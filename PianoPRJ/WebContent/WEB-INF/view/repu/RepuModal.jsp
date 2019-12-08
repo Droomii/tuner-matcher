@@ -219,6 +219,7 @@
 			  <div class="modal-body no-border">
 				<form onsubmit="return suspendTuner();" autocomplete="off" data-toggle="validator" role="form" name="tunerSuspendForm" class="form no-border" action="/user/UserSuspend.do" method="post" autocomplete="off">
 			<!-- 리뷰 내용 -->
+			<input hidden value="tuner" name="type">
 			<input hidden value="<%=tDTO.getTuner_seq() %>" name="user_seq">
 			<div class="form-group col-xs-12 has-feedback no-border">
 				<input hidden="hidden" id="suspend_reason" name="suspend_reason">

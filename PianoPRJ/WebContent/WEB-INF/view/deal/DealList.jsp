@@ -10,7 +10,7 @@
 <%@ include file="../user/session.jsp" %>
 <%
 	List<DealDTO> dList = (ArrayList<DealDTO>)request.getAttribute("dList");
-	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래취소(고객)", "거래취소(조율사)", "완료 대기중", "거래완료", "거절(조율사)", "견적 거절"};
+	String[] states = {"입찰 진행중", "입찰 취소", "거래중", "낙찰실패", "거래취소(고객)", "거래취소(조율사)", "완료 대기중", "거래완료", "거절(조율사)", "견적 거절", "일정변경요청"};
 	Pagination pg = (Pagination)request.getAttribute("pg");
 	String pageName = "DealList";
 	

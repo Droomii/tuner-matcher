@@ -26,7 +26,7 @@
 	Map<String, String> weatherMap = (Map<String, String>)request.getAttribute("weatherMap");
 	
 	if(user_type.equals("2")){
-		back = "/req/ReqList.do";
+		back = "/req/ReqList";
 	}
 	ReqDTO rDTO = (ReqDTO)request.getAttribute("rDTO");
 	Map<String, List<String>> prefDates = (LinkedHashMap<String, List<String>>)request.getAttribute("prefDates");

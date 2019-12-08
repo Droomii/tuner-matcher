@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import poly.dto.DealDTO;
 import poly.dto.MainDTO;
 import poly.dto.ReqDTO;
+import poly.dto.TunerDTO;
 import poly.service.IDealService;
 import poly.service.IMainService;
 import poly.service.IReqService;
@@ -104,6 +105,18 @@ public class MainController {
 			}
 			model.addAttribute("dList", dList);
 			
+		}else {
+			
+			mDTO = mainService.getAdminMain();
+			
+			List<TunerDTO> tList = userService.getPendingTunerList(1, 5);
+			if(tList==null) {
+				tList = new ArrayList<TunerDTO>();
+			}
+			log.info("tList size : " + tList.size());
+			
+			model.addAttribute("tList", tList);
+			
 		}
 		
 		model.addAttribute("mDTO", mDTO);
@@ -166,6 +179,18 @@ public class MainController {
 					dList = new ArrayList<>();
 				}
 				model.addAttribute("dList", dList);
+				
+			}else {
+				
+				mDTO = mainService.getAdminMain();
+				
+				List<TunerDTO> tList = userService.getPendingTunerList(1, 5);
+				if(tList==null) {
+					tList = new ArrayList<TunerDTO>();
+				}
+				log.info("tList size : " + tList.size());
+				
+				model.addAttribute("tList", tList);
 				
 			}
 			
@@ -232,6 +257,18 @@ public class MainController {
 				dList = new ArrayList<>();
 			}
 			model.addAttribute("dList", dList);
+			
+		}else {
+			
+			mDTO = mainService.getAdminMain();
+			
+			List<TunerDTO> tList = userService.getPendingTunerList(1, 5);
+			if(tList==null) {
+				tList = new ArrayList<TunerDTO>();
+			}
+			log.info("tList size : " + tList.size());
+			
+			model.addAttribute("tList", tList);
 			
 		}
 		

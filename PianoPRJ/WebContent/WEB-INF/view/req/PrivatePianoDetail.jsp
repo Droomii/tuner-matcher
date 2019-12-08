@@ -139,7 +139,8 @@
 								</div>
 								<div class="form-group has-feedback">
 									<label for="req_content">요청사항</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<textarea onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" id="temp_content" rows="10" class="form-control" placeholder="요청사항을 입력해주세요" required></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/500 bytes</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>

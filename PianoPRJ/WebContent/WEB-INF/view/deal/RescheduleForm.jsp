@@ -90,9 +90,9 @@
 										<div class="col-xs-3">
 										
 										<%if(dateSet.contains(ss + "h" + hour) && !weatherMap.get(ss + "h" + hour).equals("0")){%>
-										<label class="checkbox-inline" data-toggle="tooltip" data-placement="right" data-original-title="강수 확률 : <%=weatherMap.get(ss + "h" + hour)%>%"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00&nbsp;<i class="icon-rainy4" style="color:skyblue;"></i></label>
+										<label class="checkbox-inline" data-toggle="tooltip" data-placement="right" data-original-title="강수 확률 : <%=weatherMap.get(ss + "h" + hour)%>%"><input type="radio" name="chg_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00&nbsp;<i class="icon-rainy4" style="color:skyblue;"></i></label>
 										<%}else{ %>
-										<label class="checkbox-inline"><input type="radio" name="possible_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
+										<label class="checkbox-inline"><input type="radio" name="chg_date" class="pref-hour" value="<%=ss %>h<%=hour%>"><%=hour %>:00</label>
 										<%}%>
 										</div>
 									<%} %>
@@ -108,7 +108,8 @@
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="temp_content">변경사유<span class="red">*</span></label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="사유을 입력해주세요" required></textarea>
+									<textarea onchange="checkBytes(this, 500);" onKeyUp="checkBytes(this, 500);" id="temp_content" rows="10" class="form-control" placeholder="사유을 입력해주세요" required></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/500 bytes</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>

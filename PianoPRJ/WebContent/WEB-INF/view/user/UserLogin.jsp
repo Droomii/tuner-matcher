@@ -25,7 +25,7 @@
         <div class="card border-grey border-lighten-3 m-0 px-2 py-3 p-0">
             <div class="card-header no-border pb-0">
                 <div class="card-title text-xs-center">
-                    <div class="p-1"><img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo"></div>
+                    <div class="p-1"><img src="/resources/app-assets/images/logo/logo.png" alt="branding logo"></div>
                 </div>
                 <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>도와조율에 로그인</span></h6>
             </div>
@@ -89,6 +89,8 @@
 					location.href = "/main.do";
 				}else if(data=="1"){
 					$("#errorMsg").html("아이디 또는 암호가 일치하지 않습니다.")
+				}else if(data=="2"){
+					$("#errorMsg").html("이메일 인증이 필요합니다.")
 				}else{
 					alert("해당 계정은 관리자에 의해 정지되었습니다.\n정지 사유 : " + data)
 					$("#errorMsg").html("관리자에 의해 정지된 계정입니다.")

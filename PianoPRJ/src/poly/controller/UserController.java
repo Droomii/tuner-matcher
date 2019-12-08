@@ -101,6 +101,9 @@ public class UserController {
 			return CmmUtil.nvl(uDTO.getSuspend_reason(), true);
 		}
 		
+		if(uDTO.getUser_state()==5) {
+			return "2";
+		}
 		session.setAttribute("user_seq", uDTO.getUser_seq());
 		session.setAttribute("user_type", uDTO.getUser_type());
 		session.setAttribute("user_nick", uDTO.getUser_nick());
@@ -253,8 +256,23 @@ public class UserController {
 		if (result == 0) {
 			msg = "가입에 실패하였습니다.";
 		} else {
-			userService.addTunerSgg(uDTO.getUser_seq(), tDTO);
-			msg = "가입에 성공했습니다.";		}
+			
+			MailDTO mDTO = new MailDTO();
+			mDTO.setTitle("도와조율 이메일 인증");
+			mDTO.setToMail(uDTO.getEmail());
+			StringBuilder content = new StringBuilder();
+			content.append("아래 링크를 클릭하시면 이메일 인증이 완료됩니다.\n");
+			content.append("http://localhost:8080/user/VerifyEmail.do?code=");
+			String id = uDTO.getId();
+			String code = EncryptUtil.encAES128CBC(id + ",0");
+			content.append(code);
+			
+			mDTO.setContents(content.toString());
+			mailService.doSendMail(mDTO);
+			
+			
+			msg = "가입이 완료되었습니다. 이메일 인증 메일을 확인해주세요.";
+		}
 
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
@@ -288,7 +306,21 @@ public class UserController {
 		if (result == 0) {
 			msg = "가입에 실패하였습니다.";
 		} else {
-			msg = "가입이 완료되었습니다.";
+			MailDTO mDTO = new MailDTO();
+			mDTO.setTitle("도와조율 이메일 인증");
+			mDTO.setToMail(uDTO.getEmail());
+			StringBuilder content = new StringBuilder();
+			content.append("아래 링크를 클릭하시면 이메일 인증이 완료됩니다.\n");
+			content.append("http://localhost:8080/user/VerifyEmail.do?code=");
+			String id = uDTO.getId();
+			String code = EncryptUtil.encAES128CBC(id + ",1");
+			content.append(code);
+			
+			mDTO.setContents(content.toString());
+			mailService.doSendMail(mDTO);
+			
+			
+			msg = "가입이 완료되었습니다. 이메일 인증 메일을 확인해주세요.";
 		}
 
 		log.info(this.getClass().getName() + ".userRegProg end!!");
@@ -297,6 +329,42 @@ public class UserController {
 
 		return "/redirect";
 
+	}
+	
+	@RequestMapping(value = "VerifyEmail")
+	public String VerifyEmail(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model)
+			throws Exception {
+		log.info(this.getClass().getName() + ".VerifyEmail start");
+		String[] decoded;
+		try {
+		String code = request.getParameter("code").replaceAll(" ", "+");
+		decoded = EncryptUtil.decAES128CBC(code).split(",");
+		}catch(Exception e){
+			model.addAttribute("msg", "잘못된 링크입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		int res = 0;
+		try {
+			res = userService.verifyEmail(decoded[0], decoded[1]);
+		}catch(Exception e) {
+			log.info(e.toString());
+			model.addAttribute("msg", "비정상적인 접근입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		if(res>0) {
+			model.addAttribute("msg", "이메일 인증에 성공했습니다.");
+			model.addAttribute("url", "/index.do");
+		}else {
+			model.addAttribute("msg", "이메일 인증에 실패했습니다.");
+			model.addAttribute("url", "/index.do");
+		}
+		
+		
+		log.info(this.getClass().getName() + ".VerifyEmail end");
+		return "/redirect";
 	}
 
 	// 아이디 및 이메일 체크 코드
@@ -438,7 +506,7 @@ public class UserController {
 			mDTO.setToMail(uDTO.getEmail());
 			StringBuilder content = new StringBuilder();
 			content.append("아래 링크를 클릭하시면 암호 초기화 페이지로 이동합니다.\n");
-			content.append("http://127.0.0.1:8080/user/RecoverPwForm.do?code=");
+			content.append("http://localhost:8080/user/RecoverPwForm.do?code=");
 			content.append(uDTO.getPassword());
 			mDTO.setContents(content.toString());
 			int res = mailService.doSendMail(mDTO);
@@ -448,6 +516,7 @@ public class UserController {
 				String id = splitEmail[0];
 				String domain = splitEmail[1];
 
+				
 				// 아이디 가리기
 				String censoredId = id.substring(0, 2);
 				if (id.length() <= 6) {

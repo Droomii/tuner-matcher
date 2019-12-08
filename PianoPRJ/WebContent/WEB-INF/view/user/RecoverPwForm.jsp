@@ -7,6 +7,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.has-error, .has-danger{
+    		color:crimson;
+    		}
+    	.success-msg{
+    		color:#3c763d;
+    		display:none;
+    		line-height:1.8;
+    	}
+
+</style>
 	<meta charset="UTF-8">
 	<title>암호 초기화</title>
 	<%@include file="../header.jsp" %>
@@ -22,26 +33,26 @@
         <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
             <div class="card-header no-border pb-0">
                 <div class="card-title text-xs-center">
-                    <img src="../../app-assets/images/logo/robust-logo-dark.png" alt="branding logo">
+                    <img src="../../app-assets/images/logo/logo.png" alt="branding logo">
                 </div>
                 <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>암호 초기화</span></h6>
             </div>
             <div class="card-body collapse in">
                 <div class="card-block">
                     <form data-toggle="validator" role="form" name="recoverForm" onsubmit="return validate();" class="form-horizontal form" action="/user/RecoverPwFormProc.do" autocomplete="off"method="post">
-                        <fieldset class="form-group position-relative has-icon-left mb-0">
-                            <input type="password" class="form-control form-control-lg input-lg" id="password" name="password" placeholder="새 암호 입력">
+                        <fieldset class="form-group position-relative has-icon-left has-feedback mb-0">
+                            <input type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*$" data-pattern-error="숫자와 영문을 조합하여 8글자 이상으로 입력해주세요" class="form-control form-control-lg input-lg" id="password" name="password" placeholder="새 암호 입력">
                             <div class="form-control-position">
                                 <i class="icon-key3"></i>
                             </div>
                             <div class="help-block with-errors"></div>
                         </fieldset>
                         <fieldset class="form-group position-relative has-icon-left has-feedback">
-                            <input type="password" class="form-control form-control-lg input-lg" id="verify_password" placeholder="암호 확인" data-match="#password" data-match-error="암호가 일치하지 않습니다" required>
+                            <input type="password" class="form-control form-control-lg input-lg" id="verify_password" placeholder="암호 확인" data-match="#password" data-error=" " data-match-error="암호가 일치하지 않습니다" required>
                             <div class="form-control-position">
                                 <i class="icon-key3"></i>
                             </div>
-                            <div class="help-block with-errors red"></div>
+                            <div class="help-block with-errors"></div>
                             <input name="code" value="<%=code %>" hidden="hidden">
                         </fieldset>
                         <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-lock4"></i>암호 초기화</button>
@@ -66,5 +77,10 @@
     <script src="/resources/app-assets/vendors/js/ui/tether.min.js" type="text/javascript"></script>
     <script src="/resources/app-assets/js/core/libraries/bootstrap.min.js" type="text/javascript"></script>
     <script src="/resources/js/validator.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $("#password").on('keyup', function(){
+    	$("#verify_password").focusout();
+    })
+    </script>
 </body>
 </html>

@@ -10,4 +10,6 @@ public interface IMainMapper {
 
 	MainDTO getUserMain(String user_seq) throws Exception;
 
+	MainDTO getAdminMain() throws Exception;
+
 }

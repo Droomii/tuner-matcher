@@ -71,4 +71,6 @@ public interface IUserService {
 
 	int verifyPwFind(String id) throws Exception;
 
+	int verifyEmail(String id, String state) throws Exception;
+
 }

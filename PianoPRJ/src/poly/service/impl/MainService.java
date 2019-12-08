@@ -24,4 +24,9 @@ public class MainService implements IMainService{
 		return mainMapper.getUserMain(user_seq);
 	}
 
+	@Override
+	public MainDTO getAdminMain() throws Exception {
+		return mainMapper.getAdminMain();
+	}
+
 }

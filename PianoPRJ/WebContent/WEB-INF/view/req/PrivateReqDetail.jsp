@@ -377,7 +377,8 @@
 							<div class="form-body">
 								<div class="form-group has-feedback">
 									<label for="temp_content">소견</label>
-									<textarea id="temp_content" rows="10" class="form-control" placeholder="소견을 입력해주세요(가격 책정 이유 등 상세히)" required></textarea>
+									<textarea onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" id="temp_content" rows="10" class="form-control" placeholder="소견을 입력해주세요(가격 책정 이유 등 상세히)" required></textarea>
+									<div class="float-xs-right"><span class="byte">0</span>/500 bytes</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 									<div class="help-block with-errors"></div>
 								</div>

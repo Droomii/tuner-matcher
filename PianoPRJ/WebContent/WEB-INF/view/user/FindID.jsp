@@ -17,7 +17,7 @@
         <div class="card border-grey border-lighten-3 px-2 py-2 m-0">
             <div class="card-header no-border pb-0">
                 <div class="card-title text-xs-center">
-                    <img src="resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo">
+                    <img src="resources/app-assets/images/logo/logo.png" alt="branding logo">
                 </div>
                 <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>이메일 주소를 입력해주세요</span></h6>
             </div>

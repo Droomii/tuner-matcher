@@ -54,7 +54,7 @@
 		<div class="card border-grey border-lighten-3 px-2 py-2 m-0">
 			<div class="card-header no-border">
 				<div class="card-title text-xs-center">
-					<img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo">
+					<img src="/resources/app-assets/images/logo/logo.png" alt="branding logo">
 				</div>
 				<h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>조율사 정보수정</span></h6>
 			</div>
@@ -98,7 +98,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="password">암호(미변경시 공란으로 유지)</label>
-											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
+											<input type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*$" data-pattern-error="숫자와 영문을 조합하여 8글자 이상으로 입력해주세요" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>

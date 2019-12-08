@@ -45,7 +45,7 @@
 	</bean>
 	
 	<!-- css, js  -->
-	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0"/>
+	<mvc:resources mapping="/resources/**" location="/resources/" cache-period="0" />
 	<mvc:resources mapping="/img/**" location="c:/piano_prj/" cache-period="0"/>
     
 	<!-- 파일업로드 기능 -->		

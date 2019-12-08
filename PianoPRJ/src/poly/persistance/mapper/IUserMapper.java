@@ -80,6 +80,8 @@ public interface IUserMapper {
 	void setFindPassword(String id, String state) throws Exception;
 
 	int verifyPwFind(String id) throws Exception;
+
+	int verifyEmail(String id, String state) throws Exception;
 	
 	
 }

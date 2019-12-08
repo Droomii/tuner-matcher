@@ -72,7 +72,7 @@
 		<div class="card border-grey border-lighten-3 px-2 py-2 m-0">
 			<div class="card-header no-border">
 				<div class="card-title text-xs-center">
-					<img src="/resources/app-assets/images/logo/robust-logo-dark.png" alt="branding logo">
+					<img src="/resources/app-assets/images/logo/logo.png" alt="branding logo">
 				</div>
 				<h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>조율사 회원가입</span></h6>
 			</div>
@@ -133,7 +133,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="password">암호<span class="red">*</span></label>
-											<input type="password" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password" required data-error="필수 입력사항입니다">
+											<input type="password" pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Za-z]).*$" data-pattern-error="숫자와 영문을 조합하여 8글자 이상으로 입력해주세요" id="password" class="form-control" placeholder="암호를 입력해주세요" name="password"  required data-error="필수 입력사항입니다">
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>
@@ -141,7 +141,7 @@
 									<div class="col-md-12">
 										<div class="form-group has-feedback">
 											<label for="verify_passwd">암호 확인<span class="red">*</span></label>
-											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-match-error="암호가 일치하지 않습니다" required>
+											<input type="password" id="verify_passwd" class="form-control" placeholder="암호를 재입력해주세요" data-match="#password" data-match-error="암호가 일치하지 않습니다" data-error=" " required>
 											<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 											<div class="help-block with-errors"></div>
 										</div>

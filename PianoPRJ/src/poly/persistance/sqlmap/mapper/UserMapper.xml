@@ -29,7 +29,6 @@
 				REGDATE,
 				UPDDATE,
 				UPDATER_SEQ,
-				USER_STATE
 			) VALUES(
 				USER_SEQ.NEXTVAL,
 				1,
@@ -43,7 +42,6 @@
 				SYSDATE,
 				SYSDATE,
 				USER_SEQ.CURRVAL,
-				0
 			)
 		
 			INTO TUNER(
@@ -113,6 +111,15 @@
 				USER_SEQ.CURRVAL
 			)
 	</insert>
+	<update id="verifyEmail" parameterType="String">
+	UPDATE
+		USERINFO
+	SET
+		USER_STATE=#{1}
+	WHERE
+		ID=#{0}
+		AND USER_STATE=5
+	</update>
 	<update id="deleteUser" parameterType="String">
 	UPDATE USERINFO SET USER_STATE=4 WHERE USER_SEQ=#{0}
 	</update>

@@ -251,4 +251,9 @@ public class UserService implements IUserService {
 		return userMapper.verifyPwFind(id);
 	}
 
+	@Override
+	public int verifyEmail(String id, String state) throws Exception {
+		return userMapper.verifyEmail(id, state);
+	}
+
 }

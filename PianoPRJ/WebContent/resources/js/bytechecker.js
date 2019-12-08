@@ -15,12 +15,12 @@ function checkBytes(el, limit){
     	if(b > limit){
     		alert('글자수를 초과하였습니다.');
 	    	el.value = el.value.substring(0, i);
-	    	el.parentElement.querySelector('span').innerHTML = last;
+	    	el.parentElement.getElementsByClassName('byte')[0].innerHTML = last;
 	    	return
     	}
     	last = b;
     }
-    el.parentElement.querySelector('span').innerHTML = b;
+    el.parentElement.getElementsByClassName('byte')[0].innerHTML = b;
     
     return b
 }
@@ -41,12 +41,12 @@ function checkBytesNoNl(el, limit){
 		if(b > limit){
 			alert('글자수를 초과하였습니다.');
 			el.value = el.value.substring(0, i);
-			el.parentElement.querySelector('span').innerHTML = last;
+			el.parentElement.getElementsByClassName('byte')[0].innerHTML = last;
 			return
 		}
 		last = b;
 	}
-	el.parentElement.querySelector('span').innerHTML = b;
+	el.parentElement.getElementsByClassName('byte')[0].innerHTML = b;
 	
 	return b
 }

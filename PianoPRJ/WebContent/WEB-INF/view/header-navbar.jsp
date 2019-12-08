@@ -5,7 +5,7 @@
         <div class="navbar-header">
           <ul class="nav navbar-nav">
             <li class="nav-item mobile-menu hidden-md-up float-xs-left"><a class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="icon-menu5 font-large-1"></i></a></li>
-            <li class="nav-item"><a href="/home.do" class="navbar-brand nav-link"><img alt="branding logo" src="" data-expand="" data-collapse="/resources/app-assets/images/logo/logo_small.png" class="brand-logo"></a></li>
+            <li class="nav-item"><a href="/home.do" class="navbar-brand nav-link"><img alt="branding logo" src="/resources/app-assets/images/logo/logo-light.png" data-expand="/resources/app-assets/images/logo/logo-light.png" data-collapse="/resources/app-assets/images/logo/logo-small.png" class="brand-logo"></a></li>
             <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-mobile" class="nav-link open-navbar-container"><i class="icon-ellipsis pe-2x icon-icon-rotate-right-right"></i></a></li>
           </ul>
         </div>
@@ -13,7 +13,6 @@
           <div id="navbar-mobile" class="collapse navbar-toggleable-sm">
             <ul class="nav navbar-nav">
               <li class="nav-item hidden-sm-down"><a class="nav-link nav-menu-main menu-toggle hidden-xs"><i class="icon-menu5">         </i></a></li>
-              <li class="nav-item hidden-sm-down"><a href="#" class="nav-link nav-link-expand"><i class="ficon icon-expand2"></i></a></li>
             </ul>
             
             <!-- 언어 설정 -->

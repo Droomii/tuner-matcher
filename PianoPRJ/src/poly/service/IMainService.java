@@ -8,4 +8,6 @@ public interface IMainService {
 
 	MainDTO getUserMain(String user_seq) throws Exception;
 
+	MainDTO getAdminMain() throws Exception;
+
 }

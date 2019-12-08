@@ -1,7 +1,9 @@
 package poly.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -464,6 +466,8 @@ public class UserController {
 				String censoredEmail = censoredId + "@" + domain;
 				StringBuilder msg = new StringBuilder("아래 이메일로 초기화 링크를 보내드렸습니다:<br>");
 				msg.append(censoredEmail);
+				msg.append("<br>");
+				msg.append("암호 초기화 링크는 20분간 유효합니다.");
 
 				model.addAttribute("msg", msg.toString());
 				model.addAttribute("status", "0");
@@ -473,21 +477,113 @@ public class UserController {
 		}
 	}
 
+	
 	@RequestMapping(value = "RecoverPwForm")
 	public String recoverPwForm(HttpServletRequest request, ModelMap model) throws Exception {
-		String code = request.getParameter("code");
-		model.addAttribute("code", code);
+		
+		String code = request.getParameter("code").replaceAll(" ", "+");
+		log.info("code : " + code);
+		try {
+			
+			String[] decoded = EncryptUtil.decAES128CBC(code).split(",");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+
+			Date d = sdf.parse(decoded[0]);
+			String id = decoded[1];
+			Date now = new Date();
+			
+			log.info("link date : " + sdf.format(d));
+			log.info("now : " + sdf.format(now));
+			
+			if (d.compareTo(now) > 0) {
+				log.info("시간지남");
+				model.addAttribute("msg", "만료된 초기화 코드입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			int res = 0;
+			try {
+				res = userService.verifyPwFind(id);
+			} catch (Exception e) {
+				
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			if(res==0) {
+				log.info("초기화요청한적없음");
+				model.addAttribute("msg", "만료된 초기화 코드입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			model.addAttribute("code", code);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "유효하지 않은 코드입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		
 		return "/user/RecoverPwForm";
 	}
 
 	@RequestMapping(value = "RecoverPwFormProc")
 	public String recoverPwFormProc(HttpServletRequest request, ModelMap model) throws Exception {
-		String code = request.getParameter("code");
+		String code = request.getParameter("code").replaceAll(" ", "+");
 		String password = request.getParameter("password");
+		String id = null;
+		
+		try {
+			String[] decoded = EncryptUtil.decAES128CBC(code).split(",");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+
+			Date d = sdf.parse(decoded[0]);
+			id = decoded[1];
+
+			Date now = new Date();
+
+			if (d.compareTo(now) > 0) {
+				model.addAttribute("msg", "만료된 초기화 코드입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			int res = 0;
+			try {
+				res = userService.verifyPwFind(id);
+			} catch (Exception e) {
+				model.addAttribute("msg", "비정상적인 접근입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			if(res==0) {
+				model.addAttribute("msg", "만료된 초기화 코드입니다.");
+				model.addAttribute("url", "/index.do");
+				return "/redirect";
+			}
+			
+			model.addAttribute("code", code);
+			
+			
+		} catch (Exception e) {
+			model.addAttribute("msg", "유효하지 않은 코드입니다.");
+			model.addAttribute("url", "/index.do");
+			return "/redirect";
+		}
+		
+		
+		
 		
 		int result;
 		// 히새 암호화된 암호를 찾아서 새 암호로 엎어씌움
-		result = userService.recoverPwProc(password, code);
+		result = userService.recoverPwProc(id, password);
 		
 		model.addAttribute("title", "암호 초기화");
 		model.addAttribute("findType", "pwProc");

@@ -69,4 +69,6 @@ public interface IUserService {
 
 	int getUserListCnt() throws Exception;
 
+	int verifyPwFind(String id) throws Exception;
+
 }

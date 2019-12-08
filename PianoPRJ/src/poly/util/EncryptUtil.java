@@ -6,6 +6,9 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -21,7 +24,7 @@ public class EncryptUtil {
 	final static String addMessage = "Droomii"; // 심어놓을 값
 
 	final static byte[] ivBytes = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-			0x00, 0x00, };
+			0x00, 0x00};
 
 	final static String key = "PolyTechnic12345";
 
@@ -84,6 +87,15 @@ public class EncryptUtil {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		System.out.println(encHashSHA256("134457892345789234578912341892347123974891237489123489123741238947289147122345789"));
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+		Date now = new Date();
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(now);
+		
+		
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(now);
+		c2.set(Calendar.MINUTE, 30);
+		System.out.println(c2.getTime().compareTo(c1.getTime()));
 	}
 }

@@ -27,7 +27,7 @@ public interface IUserMapper {
 
 	UserDTO recoverPw(UserDTO uDTO) throws Exception;
 
-	int recoverPwProc(String password, String code) throws Exception;
+	int recoverPwProc(String id, String password) throws Exception;
 
 	void shufflePw(String accessCode, String id) throws Exception;
 
@@ -76,6 +76,10 @@ public interface IUserMapper {
 	List<TunerDTO> getUserList(@Param("start") int start, @Param("end") int end) throws Exception;
 
 	int getUserListCnt() throws Exception;
+
+	void setFindPassword(String id, String state) throws Exception;
+
+	int verifyPwFind(String id) throws Exception;
 	
 	
 }

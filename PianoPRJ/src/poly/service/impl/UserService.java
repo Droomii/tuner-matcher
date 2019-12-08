@@ -1,5 +1,8 @@
 package poly.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -76,33 +79,44 @@ public class UserService implements IUserService {
 		return userMapper.regUser(uDTO);
 	}
 
+	
+	
 	@Override
 	public UserDTO recoverPw(UserDTO uDTO) throws Exception {
 		UserDTO rDTO = new UserDTO();
 		
-		//암호화된 암호와 이메일을 불러옴
+		//아이디 + 발급날짜로 
 		rDTO = userMapper.recoverPw(uDTO);
 		if (rDTO == null) {
 			return null;
 		} else {
 			String id = uDTO.getId();
 			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmm");
+			Date d = new Date();
+			Calendar c = Calendar.getInstance();
+			c.setTime(d);
+			c.add(Calendar.MINUTE, 20);
+			
+			String timeLimit = sdf.format(c.getTime());
+			
 			// 암호화된 암호와 아이디를 섞어서 해시 코드 생성
-			String code = rDTO.getPassword();
-			String accessCode = EncryptUtil.encHashSHA256(id + code);
+			String accessCode = EncryptUtil.encAES128CBC(timeLimit + "," + id);
 			
 			// 앞서 만든 코드를 데이터베이스 암호란에 업데이트
-			userMapper.shufflePw(accessCode, id);
 			rDTO.setPassword(accessCode);
+			
+			// 암호 찾기 활성화
+			userMapper.setFindPassword(id, "1");
 			return rDTO;
 		}
 
 	}
 
 	@Override
-	public int recoverPwProc(String password, String code) throws Exception {
+	public int recoverPwProc(String id, String password) throws Exception {
 		password = EncryptUtil.encHashSHA256(password);
-		return userMapper.recoverPwProc(password, code);
+		return userMapper.recoverPwProc(id, password);
 	}
 
 	@Override
@@ -230,6 +244,11 @@ public class UserService implements IUserService {
 	@Override
 	public int getUserListCnt() throws Exception {
 		return userMapper.getUserListCnt();
+	}
+
+	@Override
+	public int verifyPwFind(String id) throws Exception {
+		return userMapper.verifyPwFind(id);
 	}
 
 }

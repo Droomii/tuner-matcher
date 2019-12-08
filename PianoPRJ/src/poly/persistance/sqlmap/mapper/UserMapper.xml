@@ -143,8 +143,20 @@
 	<update id="shufflePw" parameterType="String">
 	UPDATE USERINFO SET PASSWORD = #{0} WHERE ID = #{1}
 	</update>
+	<update id="setFindPassword" parameterType="String">
+	UPDATE USERINFO SET FIND_PW = #{1} WHERE ID = #{0}
+	</update>
+	<select id="verifyPwFind" parameterType="String" resultType="Integer">
+	SELECT COUNT(1) FROM USERINFO WHERE ID=#{0} AND FIND_PW=1
+	</select>
 	<update id="recoverPwProc" parameterType="String">
-	UPDATE USERINFO SET PASSWORD = #{0} WHERE PASSWORD = #{1}
+	UPDATE
+		USERINFO
+	SET
+		PASSWORD = #{1},
+		FIND_PW = 0
+	WHERE
+		ID = #{0}
 	</update>
 	
 	<!-- myPage -->

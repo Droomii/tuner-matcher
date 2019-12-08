@@ -256,7 +256,7 @@ public class UserController {
 		if (result == 0) {
 			msg = "가입에 실패하였습니다.";
 		} else {
-			
+			userService.addTunerSgg(uDTO.getUser_seq(), tDTO);
 			MailDTO mDTO = new MailDTO();
 			mDTO.setTitle("도와조율 이메일 인증");
 			mDTO.setToMail(uDTO.getEmail());
@@ -341,7 +341,7 @@ public class UserController {
 		decoded = EncryptUtil.decAES128CBC(code).split(",");
 		}catch(Exception e){
 			model.addAttribute("msg", "잘못된 링크입니다.");
-			model.addAttribute("url", "/index.do");
+			model.addAttribute("url", "/user/UserLogin.do");
 			return "/redirect";
 		}
 		
@@ -351,15 +351,15 @@ public class UserController {
 		}catch(Exception e) {
 			log.info(e.toString());
 			model.addAttribute("msg", "비정상적인 접근입니다.");
-			model.addAttribute("url", "/index.do");
+			model.addAttribute("url", "/user/UserLogin.do");
 			return "/redirect";
 		}
 		if(res>0) {
 			model.addAttribute("msg", "이메일 인증에 성공했습니다.");
-			model.addAttribute("url", "/index.do");
+			model.addAttribute("url", "/user/UserLogin.do");
 		}else {
 			model.addAttribute("msg", "이메일 인증에 실패했습니다.");
-			model.addAttribute("url", "/index.do");
+			model.addAttribute("url", "/user/UserLogin.do");
 		}
 		
 		
@@ -784,7 +784,7 @@ public class UserController {
 		int user_state = (int) session.getAttribute("user_state");
 		log.info("user_state : " + user_state);
 		if(user_state==2){
-			uDTO.setUser_state(5);
+			uDTO.setUser_state(-1);
 			tDTO.setReject_reason("x");
 		}
 		

@@ -28,7 +28,7 @@
 				USER_TEL,
 				REGDATE,
 				UPDDATE,
-				UPDATER_SEQ,
+				UPDATER_SEQ
 			) VALUES(
 				USER_SEQ.NEXTVAL,
 				1,
@@ -41,7 +41,7 @@
 				#{u.user_tel},
 				SYSDATE,
 				SYSDATE,
-				USER_SEQ.CURRVAL,
+				USER_SEQ.CURRVAL
 			)
 		
 			INTO TUNER(
@@ -254,7 +254,7 @@
 		<if test="password!=null">
 		PASSWORD=#{password},
 		</if>
-		<if test="user_state==5">
+		<if test="user_state==-1">
 		USER_STATE=0,
 		</if>
 		USER_NICK=#{user_nick},

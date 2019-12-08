@@ -154,7 +154,7 @@
 									<textarea id="temp_exp" rows="20" onchange="checkBytes(this, 4000);" onKeyUp="checkBytes(this, 4000);" class="form-control square" name="temp_exp" placeholder="본인의 이력을 작성해주세요"><%=CmmUtil.nvl(tDTO.getTuner_exp()).replaceAll("<br>", "\n")%></textarea>
 									<div class="float-xs-right"><span class="byte">0</span>/4000 bytes</div>
 								</div>
-								<%if(!user_state.equals("1")){ %>
+								<%if(!(user_state==1)){ %>
 								<div class="form-group has-feedback">
 									<label>자격증 사진</label>
 									<label id="projectinput7" class="file center-block">
@@ -176,7 +176,7 @@
 								<div class="form-group has-feedback" data-toggle="tooltip" data-placement="top" data-original-title="근무지 기준으로 가까운 조율 요청부터 표시됩니다." onclick="goPopup();">
 									<label for="addr">근무지 주소<span class="red">*</span></label>
 									<div class="input-group">
-										<input value="<%=CmmUtil.revertXSS(CmmUtil.nvl(tDTO.getAddr())) %>" type="text" name="addr" id="addr" class="form-control" placeholder="주소를 검색해주세요" required data-error="필수 입력사항입니다">
+										<input value="<%=CmmUtil.nvl(tDTO.getAddr()) %>" type="text" name="addr" id="addr" class="form-control" placeholder="주소를 검색해주세요" required data-error="필수 입력사항입니다">
 										<div class="input-group-btn"><button type="button" class="btn btn-primary float-xs-right">주소검색</button></div>
 									</div>
 									<span class="glyphicon form-control-feedback" aria-hidden="true"></span>

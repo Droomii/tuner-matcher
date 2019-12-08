@@ -65,7 +65,7 @@
 	<script>
 	var form = document.noticeForm
 	function submitNotice(){
-		$("#notice_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
+		$("#notice_content").val(document.getElementById('temp_content').value.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>"));
 		$("#notice_title").val($("#notice_title").val().replace(/<br>/g, " "));
 		form.submit();
 	}
@@ -79,6 +79,6 @@
 	
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
-	<script type="text/javascript" src="/js/bytechecker.js"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 </body>
 </html>

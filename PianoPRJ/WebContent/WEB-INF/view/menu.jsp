@@ -24,9 +24,9 @@
         
          <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
         </li>
-         <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
+         <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-bullhorn"></i><span class="menu-title">공지사항</span></a>
         </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">마이페이지</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-user"></i><span data-i18n="nav.menu_levels.main" class="menu-title">마이페이지</span></a>
             <ul class="menu-content">
               <li><a href="/myPage/MyInfo.do" class="menu-item">개인정보</a></li>
               <li><a href="/myPage/TunerSchedule.do" class="menu-item">조율 일정</a></li>
@@ -40,7 +40,7 @@
               <li><a href="/myPage/MyRepu.do" class="menu-item">내 평판 조회</a></li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span class="menu-title">조율하기</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-briefcase2"></i><span class="menu-title">조율하기</span></a>
             <ul class="menu-content">
               <li><a href="/deal/TunerBidList.do" class="menu-item">내 주변에서 찾기</a></li>
               <li><a href="/req/TunerPrivateReqList.do" class="menu-item">1:1 요청</a></li>
@@ -49,7 +49,7 @@
           <%}else{ %>
           <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">홈</span></a>
         </li>
-        <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span class="menu-title">공지사항</span></a>
+        <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-bullhorn"></i><span class="menu-title">공지사항</span></a>
         </li>
         <li class=" nav-item"><a href="/myPage/MyInfo.do"><i class="icon-home3"></i><span class="menu-title">개인정보</span></a>
         </li>
@@ -57,9 +57,9 @@
           <%} else if(user_type.equals("0")){%>
           <li class=" nav-item"><a href="/main.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">홈</span></a>
           </li>
-          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-home3"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">공지사항</span></a>
+          <li class=" nav-item"><a href="/notice/NoticeList.do"><i class="icon-bullhorn"></i><span data-i18n="nav.form_layouts.form_layout_basic" class="menu-title">공지사항</span></a>
           </li>
-          <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span class="menu-title">마이 페이지</span></a>
+          <li class=" nav-item"><a href="index.html"><i class="icon-user"></i><span class="menu-title">마이 페이지</span></a>
             <ul class="menu-content">
               <li><a href="/myPage/MyInfo.do" data-i18n="nav.dash.main" class="menu-item">회원 정보</a>
               </li>
@@ -71,7 +71,7 @@
               </li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="index.html"><i class="icon-home3"></i><span data-i18n="nav.dash.main" class="menu-title">조율하기</span></a>
+          <li class=" nav-item"><a href="index.html"><i class="icon-cart4"></i><span data-i18n="nav.dash.main" class="menu-title">조율받기</span></a>
             <ul class="menu-content">
               <li><a href="/req/UserPublicReqList.do" data-i18n="nav.dash.main" class="menu-item">공개 요청</a>
               </li>
@@ -82,9 +82,9 @@
           <%}else{ %>
           <li class=" nav-item"><a href="/home.do"><i class="icon-home3"></i><span class="menu-title">요약 정보</span></a>
         </li>
-         <li class=" nav-item"><a href="/user/UserList.do"><i class="icon-home3"></i><span class="menu-title">일반회원 관리</span></a>
+         <li class=" nav-item"><a href="/user/UserList.do"><i class="icon-users2"></i><span class="menu-title">일반회원 관리</span></a>
         </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율사 관리</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-user-tie"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율사 관리</span></a>
             <ul class="menu-content">
               <li><a href="/user/TunerList.do" class="menu-item">조율사 조회</a>
               </li>
@@ -92,7 +92,7 @@
               </li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율 요청/견적 관리</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-briefcase2"></i><span data-i18n="nav.menu_levels.main" class="menu-title">조율 요청/견적 관리</span></a>
             <ul class="menu-content">
               <li><a href="/req/ReqList.do" class="menu-item">조율 요청 관리</a>
               </li>
@@ -100,7 +100,7 @@
               </li>
             </ul>
           </li>
-          <li class=" nav-item"><a href="#"><i class="icon-android-funnel"></i><span data-i18n="nav.menu_levels.main" class="menu-title">게시판 관리</span></a>
+          <li class=" nav-item"><a href="#"><i class="icon-file-text2"></i><span data-i18n="nav.menu_levels.main" class="menu-title">게시판 관리</span></a>
             <ul class="menu-content">
               <li><a href="/notice/NoticeList.do" class="menu-item">공지사항 관리</a>
               </li>

@@ -371,7 +371,6 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="/WEB-INF/view/footer.jsp" %>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=166a1380ea4bddbad714a838dbb867a6&libraries=services,clusterer,drawing"></script>
-	<script type="text/javascript" src="/js/bytechecker.js"></script>
 	
 	<script type="text/javascript">
 	<%if(deal_state.equals("0")){%>
@@ -558,5 +557,6 @@
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 </body>
 </html>

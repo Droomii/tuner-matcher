@@ -226,7 +226,7 @@
 	<!-- footer.jsp 경로설정 -->
 	<%@include file="../footer.jsp" %>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
-	<script src="/js/bytechecker.js" type="text/javascript"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 	<script>
     $("#password").on('keyup', function(){
     	if($("#password").val()!=""){

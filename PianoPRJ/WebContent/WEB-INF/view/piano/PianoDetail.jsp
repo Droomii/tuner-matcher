@@ -234,7 +234,7 @@
 			return false;
 		}
 		
-		$("#req_content").val(document.getElementById('temp_content').value.replace(/\n/g, "<br>"));
+		$("#req_content").val(document.getElementById('temp_content').value.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>"));
 		$("#req_title").val($("#req_title").val().replace(/<br>/g, " "));
 	}
 	
@@ -270,6 +270,6 @@
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
-	<script type="text/javascript" src="/js/bytechecker.js"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 </body>
 </html>

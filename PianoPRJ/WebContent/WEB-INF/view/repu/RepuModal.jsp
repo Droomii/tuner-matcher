@@ -318,3 +318,4 @@
 	}
 	<%}%>
 </script>
+<script src="/resources/js/bytechecker.js" type="text/javascript"></script>

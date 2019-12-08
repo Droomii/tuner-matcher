@@ -69,3 +69,4 @@ for(int i=0; i<5; i++){ %>
                    
 	</form>
 </div>
+<script src="/resources/js/bytechecker.js" type="text/javascript"></script>

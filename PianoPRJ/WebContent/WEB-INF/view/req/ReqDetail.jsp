@@ -414,7 +414,7 @@
 			return false;
 		}
 		
-		$("#diagnosis_content").val(document.getElementById('temp_content').value.trim().replace(/\n/g, "<br>"));
+		$("#diagnosis_content").val(document.getElementById('temp_content').value.trim().replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>"));
 	}
 	function totalPrice(total, elem){
 		return total+(parseInt(elem.value) || 0);	
@@ -537,6 +537,6 @@
 	
 	</script>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
-	<script type="text/javascript" src="/js/bytechecker.js"></script>
+	<script src="/resources/js/bytechecker.js" type="text/javascript"></script>
 </body>
 </html>

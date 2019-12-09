@@ -95,7 +95,7 @@
 							<button type="submit" class="btn btn-primary">
 									<i class="icon-check2 d-flex"></i> 정보수정
 								</button>
-								<button type="button" class="btn btn-warning mr-1 d-flex">
+								<button type="button" onclick="location.href='UserDetail.do?user_seq=<%=uDTO.getUser_seq() %>'" class="btn btn-warning mr-1 d-flex">
 									<i class="icon-cross2"></i> 취소
 								</button>
 								

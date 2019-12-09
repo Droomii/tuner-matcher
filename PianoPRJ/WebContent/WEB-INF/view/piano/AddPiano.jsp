@@ -206,6 +206,15 @@
 	<%@include file="../footer.jsp" %>
 	<script src="/resources/js/validator.js" type="text/javascript"></script>
     <script>
+    window.onload = function(){
+    	var tomorrow = new Date();
+    	tomorrow.setDate(tomorrow.getDate());
+    	
+    	document.getElementById("last_tuned_date").setAttribute('max', tomorrow.toISOString().split('T')[0]);
+    	
+    }
+    
+    
     var svcAreaForm = document.getElementById("svc-area-group").innerHTML;
    	
     function doSubmit(){

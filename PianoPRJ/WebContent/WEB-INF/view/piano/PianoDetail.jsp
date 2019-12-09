@@ -222,7 +222,7 @@
 	<%}else{%>
 	
 	var tomorrow = new Date();
-	tomorrow.setDate(tomorrow.getDate() + 1);
+	tomorrow.setDate(tomorrow.getDate());
 	
 	document.getElementById("date").setAttribute('min', tomorrow.toISOString().split('T')[0]);
 	

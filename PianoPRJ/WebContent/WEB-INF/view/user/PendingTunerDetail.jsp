@@ -109,7 +109,7 @@
 							
 						</div>
                         <div class="modal-footer">
-                        <button type="submit" class="button btn btn-success float-xs-right">반려</button>
+                        <button type="submit" class="button btn btn-warning float-xs-right">반려</button>
 							<button type="button" class="btn grey btn-outline-secondary float-xs-left" data-dismiss="modal">닫기</button>
 						  </div>
 						</form>

@@ -91,7 +91,7 @@ public class ReviewController {
 			log.info(e.toString());
 			msg = "리뷰 등록에 실패했습니다.";
 		}finally {
-			url = String.format("/deal/UserDealDetail.do?deal_seq=%s", revDTO.getDeal_seq());
+			url = String.format("/deal/UserDealDetail.do?deal_seq=%s&scrollDown=1", revDTO.getDeal_seq());
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 		}
@@ -210,7 +210,7 @@ public class ReviewController {
 			log.info(e.toString());
 			msg = "리뷰 수정에 실패했습니다.";
 		}finally {
-			String redirectUrl = user_type.equals("2") ? "/deal/AdminDealDetail.do?deal_seq=%s":"/deal/UserDealDetail.do?deal_seq=%s";
+			String redirectUrl = user_type.equals("2") ? "/deal/AdminDealDetail.do?deal_seq=%s":"/deal/UserDealDetail.do?deal_seq=%s&scrollDown=1";
 			url = String.format(redirectUrl, revDTO.getDeal_seq());
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);

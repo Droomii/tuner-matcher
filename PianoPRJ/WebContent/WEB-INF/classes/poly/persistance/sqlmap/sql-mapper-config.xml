@@ -2,8 +2,23 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<settings>
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
     <typeAliases>
     	<!-- 사용할 DTO 등록  -->
 		<typeAlias type="poly.dto.NoticeDTO" alias="NoticeDTO"/>
+		<typeAlias type="poly.dto.SggDTO" alias="SggDTO"/>
+		<typeAlias type="poly.dto.UserDTO" alias="UserDTO"/>
+		<typeAlias type="poly.dto.TunerDTO" alias="TunerDTO"/>
+		<typeAlias type="poly.dto.PianoDTO" alias="PianoDTO"/>
+		<typeAlias type="poly.dto.ReqDTO" alias="ReqDTO"/>
+		<typeAlias type="poly.dto.DealDTO" alias="DealDTO"/>
+		<typeAlias type="poly.dto.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="poly.dto.RepuDTO" alias="RepuDTO"/>
+		<typeAlias type="poly.dto.RescheduleDTO" alias="RescheduleDTO"/>
+		<typeAlias type="poly.dto.MainDTO" alias="MainDTO"/>
+		<typeAlias type="poly.dto.FollowDTO" alias="FollowDTO"/>
+		<typeAlias type="poly.dto.PriceDTO" alias="PriceDTO"/>
     </typeAliases>
 </configuration>

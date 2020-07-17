@@ -2,6 +2,8 @@
 /Servers/
 /PianoPRJ/target/
 /PianoPRJ/.classpath
+/PianoPRJ/WebContent/WEB-INF/classes
 /hanium-speech-74b3005e8b45.json
 .DS_Store
 /RemoteSystemsTempFiles/
+/PianoPRJ/tuner-matcher/PianoPRJ/src/poly/util/PrivateUtil.java

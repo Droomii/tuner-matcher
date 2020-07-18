@@ -40,6 +40,7 @@ public class MailService implements IMailService{
 		
 		String toMail = CmmUtil.nvl(pDTO.getToMail());
 		
+		// not working
 		Properties props = new Properties();
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.auth", "true");

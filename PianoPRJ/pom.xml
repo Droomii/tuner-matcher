@@ -118,11 +118,12 @@
 			<version>1.4</version>
 		</dependency>
 
-		<!-- Oracle -->
+		<!-- Mysql -->
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.1</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<!-- <version>5.1.44</version> -->
+			<version>8.0.13</version>
 		</dependency>
 
 		<!-- 오라클 DBCP 관리를 위한 c3p0 -->

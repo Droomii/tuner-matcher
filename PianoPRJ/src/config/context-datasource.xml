@@ -8,8 +8,8 @@
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
         destroy-method="close">
 	    <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	    <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl" />
-	    <property name="user" value="piano_user" /> <!-- 오라클 계정 : 아이디 -->
+	    <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/piano_prj?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;allowMultiQueries=true&amp;serverTimezone=Asia/Seoul" />
+	    <property name="user" value="piano" /> <!-- 오라클 계정 : 아이디 -->
 	    <property name="password" value="1234" /> <!-- 오라클 계정 : 비밀번호 -->
 	    <property name="initialPoolSize" value="5" />
 	    <property name="maxPoolSize" value="30" />
